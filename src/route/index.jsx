@@ -3,6 +3,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 import Header from '../layouts/Header';
+import UserReview from '../pages/User/UserReview';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
         <Outlet />
       </div>
     ),
-    children: [{}],
+    children: [
+      { path: '/review',element: <UserReview/>}],
   },
 ]);
 
