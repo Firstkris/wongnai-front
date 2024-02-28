@@ -1,9 +1,8 @@
 import React from "react";
-
-import RestaurantRegisterPage from "./pages/Restaurant/RestaurantRegisterPage";
+import Router from "./route/index";
 
 function App() {
-  return <RestaurantRegisterPage />;
+  return <Router />;
 }
 
 export default App;
