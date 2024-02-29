@@ -5,8 +5,8 @@ import {
   MessageIcon,
   SearchIcon,
   DownTriangleIcon,
-  ProfileIcon,
   DownTriangleSolidIcon,
+  ProfileWithCircleIcon,
 } from "../icons/icon";
 
 export default function Header() {
@@ -16,11 +16,11 @@ export default function Header() {
      justify-around border-b-2
     "
     >
-      <button className="flex">
+      <Link to={"/"} className="flex">
         <div className="text-xl pt-1">Wong</div>
 
         <MessageIcon className="w-10 h-10 fill-red_primary" />
-      </button>
+      </Link>
       <div className="flex gap-5">
         <div className="flex relative">
           <LocationIcon className="absolute w-8 h-8 pt-1.5 pl-2 fill-gray_secondary" />
@@ -43,7 +43,7 @@ export default function Header() {
       </div>
       <Link to={"/profile"} className="flex gap-2">
         <div className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2">
-          <ProfileIcon />
+          <ProfileWithCircleIcon />
           <div>เข้าสู่ระบบ</div>
         </div>
         <div className="border rounded-full px-2">

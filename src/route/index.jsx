@@ -6,6 +6,9 @@ import Header from "../layouts/Header";
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
+import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
+import ReviewPage from "../pages/ProfilePage/ReviewPage";
+import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "profile/review",
         element: <ReviewPage />,
+      },
+      {
+        path: "profile/EditProfile",
+        element: <EditProfilePage />,
       },
       { path: "/review", element: <UserReview /> },
       { path: "/login", element: <LoginPage /> },

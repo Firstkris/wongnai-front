@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function ProfileHeader() {
   return (
@@ -14,9 +15,12 @@ export default function ProfileHeader() {
           />
           <div className="flex flex-col mt-5 gap-5 items-start">
             <h1 className="text-2xl font-bold">Punnatorn Prathombut</h1>
-            <button className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md">
+            <Link
+              to={"/profile/EditProfile"}
+              className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md"
+            >
               แก้ไขโปรไฟล์
-            </button>
+            </Link>
           </div>
         </div>
       </div>

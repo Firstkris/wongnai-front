@@ -1,5 +1,5 @@
 import React from "react";
-import { StarIcon } from "../../../icons/icon";
+import { StarIcon } from "../../../../icons/icon";
 
 export default function ReviewItem() {
   return (
@@ -34,13 +34,14 @@ export default function ReviewItem() {
           เพลงเพราะ ดนตรีลึกนิดนึง บรรยากาศดีมัก เหมาะกับคนชอบฟังดนตรี
           ร้านตกแต่งชิคๆ อ่านต่อได้ที่
         </div>
-        <div className="flex justify-around mt-5">
+        <div className="flex justify-around mt-5 pb-2">
           <img
-            className="w-[400] h-[200] object-cover "
+            className="aspect-video w-2/5 h-1/5 object-cover "
             src="https://img.wongnai.com/p/400x0/2024/02/29/aa961f815e844974990ce348d50a8bf2.jpg"
           />
-          <img src="https://img.wongnai.com/p/400x0/2024/02/29/af24c23d3b37463e91419d0cb3b282fd.jpg" />
-          <div className=""></div>
+          <div className="aspect-video w-2/5 h-1/5 object-cover">
+            <img src="https://img.wongnai.com/p/400x0/2024/02/29/af24c23d3b37463e91419d0cb3b282fd.jpg" />
+          </div>
         </div>
       </div>
     </div>

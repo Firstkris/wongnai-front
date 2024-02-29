@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileHeader from "./components/ProfileHeader";
-import ProfileNavBookMark from "./components/ProfileNavBookMark";
-import BookmarkItem from "./components/BookmarkItem";
+import ProfileNavBookMark from "./components/Bookmarks/ProfileNavBookMark";
+import BookmarkItem from "./components/Bookmarks/BookmarkItem";
 
 export default function BookmarkPage() {
   return (
