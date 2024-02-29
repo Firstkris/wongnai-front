@@ -10,7 +10,7 @@ function UserReview() {
 	const handleChange = (event) => {
 		setInputLength(event.target.value.length);}
   return (
-<div className=' flex flex-col items-center '>
+<div className=' max-w-[1024] w-10/12 mx-auto flex flex-col items-center bg-gray_primary '>
 	<div className=' w-7/12 bg-white h-full p-3 my-4 rounded-md'>
 	<div className='flex justify-around '>
 							<div className='flex gap-4 w-full'>
@@ -100,7 +100,7 @@ function UserReview() {
 			</div>
 		
 	</div>
-	<div className='flex gap-2'>
+	<div className='flex gap-2 mb-6'>
 		<button className='w-32 py-1.5 px-3 rounded-md bg-blue-500 text-white hover:bg-blue-700'>บันทึกรีวิว</button>
 		<button className='w-32 py-1.5 px-3 rounded-md bg-gray-300 text-white hover:bg-gray-400'>ยกเลิก</button>
 	</div>
