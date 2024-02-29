@@ -16,16 +16,12 @@ function RegisterPage() {
                 <div className=' w-full'>
                     <p className='text-gray-400'>เพศ</p>
                     <div className='w-full flex justify-around'>
-                 <button className='border-2 w-20 text-gray-500 font-bold rounded-lg px-3 py-1 m-0 '>ชาย</button>
-                 <button className='border-2 w-20 text-gray-500 font-bold rounded-lg px-3 py-1 m-0 '>หญิง</button>
-                 <button className='border-2 w-20 text-gray-500 font-bold rounded-lg px-3 py-1 m-0  '>ไม่ระบุ</button>
+                        <button className='border-2 w-20 text-gray-500 font-bold rounded-lg px-3 py-1 m-0 '>ชาย</button>
+                         <button className='border-2 w-20 text-gray-500 font-bold rounded-lg px-3 py-1 m-0 '>หญิง</button>
+                         <button className='border-2 w-20 text-gray-500 font-bold rounded-lg px-3 py-1 m-0  '>ไม่ระบุ</button>
+                     </div>
                 </div>
-                </div>
-                
                 <button className='text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary'>ถัดไป</button>
-                
-                 
-                
             </div>
             
         </form>
