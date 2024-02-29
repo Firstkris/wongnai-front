@@ -1,29 +1,50 @@
+import { CardRestaurant } from "../components/filterPageComponents/CardRestaurant"
+import React from "react"
+import { SlideBar } from "../components/filterPageComponents/SlideBar"
+
 export const FilterPage = () => {
   return (
     //layout
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-2 bg-white py-4 my-1 md:px-10 px-4">
-        <h3 className="text-gray_secondary">breadClumb</h3>
-        <div className="font-semibold text-3xl">
-          ร้านอาหารยอดนิยม ในกรุงเทพมหานครอมรรัตนโกสินทร์
+      {/* layout subheader */}
+      <div className="w-full bg-white mt-1">
+        <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto">
+          <h3 className="text-gray_secondary">breadClumb</h3>
+          <div className="font-semibold text-3xl">
+            ร้านอาหารยอดนิยม ในกรุงเทพมหานครอมรรัตนโกสินทร์
+          </div>
         </div>
       </div>
 
-      <div className="md:mx-10  bg-pink-200 ">
-        <div className=" flex justify-around gap-4">
-          <div className=" bg-slate-200 w-1/2">
-            {/* allfilters */}
-            filter
+      {/* layout body*/}
+      <div className="md:mx-auto  bg-pink-200 ">
+        <div className=" flex justify-around gap-4 ">
+          {/* <Slidebar> */}
+          <div className=" w-1/4 ">
+            <SlideBar />
           </div>
-          <div className="flex flex-col w-full bg-slate-400 gap-4">
-            <div className="flex bg-black h-28">
+          <div className="flex flex-col w-3/4  gap-4">
+            <div className="flex bg-black h-28 rounded-lg">
               show photo pagination
               {/* show photo pagination */}
             </div>
-            <div className="flex flex-col gap-4">
-              {/* restaurants */}
-              <div>restaurants</div>
-              <div>restaurants</div>
+            <div className="flex gap-4">
+              <div className="flex flex-col gap-4 w-4/6 ">
+                {/* restaurants */}
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+                <CardRestaurant />
+              </div>
+              <div className="flex flex-col bg-white w-2/6">
+                <div className="m-1 bg-slate-300 h-36 rounded-lg">tests</div>
+              </div>
             </div>
           </div>
         </div>
