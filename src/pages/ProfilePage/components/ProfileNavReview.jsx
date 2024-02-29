@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function ProfileNavReview() {
   return (
-    <div className="flex w-3/5 m-auto py-10">
+    <div className="flex w-1/2 m-auto py-10">
       <Link
         to={"/profile"}
         className=" bg-white grow border-r-2 border-gray_primary text-center   rounded-l-lg py-4 text-lg "

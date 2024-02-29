@@ -9,6 +9,7 @@ export default function ReviewPage() {
       <ProfileHeader />
       <ProfileNavReview />
       <ReviewItem />
+      <ReviewItem />
     </div>
   );
 }

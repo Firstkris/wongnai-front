@@ -2,7 +2,7 @@ import React from "react";
 
 export default function BookmarkItem() {
   return (
-    <div className=" bg-white w-3/5 mx-auto rounded-lg mb-5">
+    <div className=" bg-white w-1/2 mx-auto rounded-lg mb-5">
       <div className="flex">
         <img
           className="w-[150px] h-[150px] rounded-l-lg"

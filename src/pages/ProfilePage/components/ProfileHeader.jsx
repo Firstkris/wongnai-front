@@ -9,14 +9,14 @@ export default function ProfileHeader() {
       <div className="flex justify-center">
         <div className="flex gap-20">
           <img
-            className="w-[150px] h-[150px] rounded-full"
+            className="w-[150px] h-[150px] object-cover rounded-full"
             src="https://www.prachachat.net/wp-content/uploads/2018/01/1-166-728x410.jpg"
           />
           <div className="flex flex-col mt-5 gap-5 items-start">
             <h1 className="text-2xl font-bold">Punnatorn Prathombut</h1>
-            <div className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md">
+            <button className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md">
               แก้ไขโปรไฟล์
-            </div>
+            </button>
           </div>
         </div>
       </div>
