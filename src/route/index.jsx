@@ -27,10 +27,15 @@ const router = createBrowserRouter([
         path: "profile/review",
         element: <ReviewPage />,
       },
+
+      // {
+      //   path: "profile/:subPage",
+      // },
       {
         path: "profile/EditProfile",
         element: <EditProfilePage />,
       },
+
       { path: "/review", element: <UserReview /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
