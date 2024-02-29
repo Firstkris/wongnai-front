@@ -4,7 +4,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 import Header from '../layouts/Header';
 import UserReview from '../pages/User/UserReview';
-
+import LoginPage from '../pages/User/LoginPage';
+import RegisterPage from '../pages/User/RegisterPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -15,7 +16,10 @@ const router = createBrowserRouter([
       </div>
     ),
     children: [
-      { path: '/review',element: <UserReview/>}],
+      { path: '/review',element: <UserReview/>},
+      { path: '/login', element: <LoginPage/>},
+      { path: '/register', element: <RegisterPage/>}],
+      
   },
 ]);
 
