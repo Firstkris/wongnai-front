@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         element: <BookmarkPage />,
       },
       {
-        path: "/review",
+        path: "profile/review",
         element: <ReviewPage />,
       },
     ],

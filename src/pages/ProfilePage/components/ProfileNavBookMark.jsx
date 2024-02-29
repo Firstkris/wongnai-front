@@ -9,7 +9,7 @@ export default function ProfileNavBookMark() {
         <div className="absolute bottom-0 inset-x-1/2 transform -translate-x-1/2 border-b-4 border-red_primary w-2/5"></div>
       </div>
       <Link
-        to={"/review"}
+        to={"/profile/review"}
         className="bg-white grow text-center border-l-2 border-gray_primary rounded-r-lg py-4 text-lg"
       >
         รีวิว
