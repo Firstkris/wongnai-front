@@ -3,9 +3,9 @@ import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import Header from "../layouts/Header";
-import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
-import ReviewPage from "../pages/ProfilePage/ReviewPage";
-
+import UserReview from "../pages/User/UserReview";
+import LoginPage from "../pages/User/LoginPage";
+import RegisterPage from "../pages/User/RegisterPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +24,9 @@ const router = createBrowserRouter([
         path: "profile/review",
         element: <ReviewPage />,
       },
+      { path: "/review", element: <UserReview /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/register", element: <RegisterPage /> },
     ],
   },
 ]);

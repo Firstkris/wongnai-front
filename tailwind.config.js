@@ -8,6 +8,7 @@ export default {
         red_secondary: "#dd4040", //hover
         gray_primary: "#f6f6f6",
         gray_secondary: "#666666",
+        blue_primary: "#0093E8",
       },
     },
   },
