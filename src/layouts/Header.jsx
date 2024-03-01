@@ -26,14 +26,14 @@ export default function Header() {
           <LocationIcon className="absolute w-8 h-8 pt-1.5 pl-2 fill-gray_secondary" />
 
           <input
-            className="rounded-lg bg-gray_primary pl-9 w-[200px]"
+            className="rounded-lg bg-gray_primary pl-9 w-[200px] focus:outline-none"
             placeholder="กรุงเทพและ..."
           />
           <DownTriangleSolidIcon className="absolute w-5 h-5 left-44 top-2.5 fill-gray_secondary" />
         </div>
         <div className="flex relative">
           <input
-            className="rounded-l-lg bg-gray_primary pl-3 w-[200px]"
+            className="rounded-l-lg bg-gray_primary pl-3 w-[200px] focus:outline-none"
             placeholder="ชื่อร้านอาหาร..."
           />
           <div className="bg-red_primary w-10 rounded-r-lg cursor-pointer">

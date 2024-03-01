@@ -1,128 +1,136 @@
 import React from "react";
 import { FacebookIcon, GoogleIcon, LineIcon } from "../../../../icons/icon";
+import EditInput from "./EditInput";
+import Card from "./Card";
+import Container from "./Container";
+import Header from "./Header";
+import { useState } from "react";
 
-export default function ProfileInfo() {
+export default function ProfileInfo({ setIsEditPassword }) {
+  const [onEditAboutMe, setOnEditAboutMe] = useState(false);
+
   return (
-    <div className=" w-3/5">
-      <div className="ml-10 mr-20 my-8 rounded-lg bg-white w-2/3 ">
-        <div className="flex flex-col gap-8 px-5 py-6">
-          <div className=" text-xl font-bold">ตั้งค่าโปรไฟล์</div>
-          <div className="flex justify-between">
-            <img
-              className="h-[50px] w-[50px] object-cover rounded-full"
-              src="https://www.prachachat.net/wp-content/uploads/2018/01/1-166-728x410.jpg"
-            />
-            <div className=" text-sm text-blue_primary w-2/3 cursor-pointer mt-5">
-              เปลี่ยนรูปโปรไฟล์
-            </div>
+    <Container>
+      <Card>
+        <Header>ตั้งค่าโปรไฟล์</Header>
+        <div className="flex justify-between">
+          <img
+            className="h-[50px] w-[50px] object-cover rounded-full"
+            src="https://www.prachachat.net/wp-content/uploads/2018/01/1-166-728x410.jpg"
+          />
+          <div className=" text-sm text-blue_primary w-2/3 cursor-pointer mt-5">
+            เปลี่ยนรูปโปรไฟล์
           </div>
-          <hr />
+        </div>
+        <hr />
 
-          <div className="flex justify-between">
-            <div>เบอร์โทรศัพท์</div>
-            <div className="flex justify-between text-sm w-2/3">
-              <div>0877994393</div>
-              <button className=" text-blue_primary">
-                เปลี่ยนเบอร์โทรศัพท์
+        <EditInput title={"เบอร์โทรศัพท์"} info={"087-799-4393"} />
+        <hr />
+
+        <div className="flex justify-between">
+          <div>ชื่อผู้ใช้</div>
+          <div className="flex justify-between text-sm w-2/3">
+            <div>aset5yneusrtuyjty</div>
+          </div>
+        </div>
+        <hr />
+
+        <div className="flex justify-between">
+          <div>อีเมล</div>
+          <div className="flex justify-between text-sm w-2/3">
+            <div>kewell700@hotmail.com</div>
+          </div>
+        </div>
+        <hr />
+
+        <EditInput title={"ชื่อ"} info={"Punnatorn Prathombut"} />
+        <hr />
+
+        <EditInput title={"เพศ"} info={"ชาย"} />
+        <hr />
+
+        <EditInput title={"วันเกิด"} info={"03/05/2542"} />
+      </Card>
+
+      <Card>
+        <div className="flex justify-between">
+          <Header>เกี่ยวกับฉัน</Header>
+          <button
+            onClick={() => setOnEditAboutMe((c) => !c)}
+            className="text-sm text-blue_primary"
+          >
+            แก้ไข
+          </button>
+        </div>
+        <hr />
+
+        {onEditAboutMe ? (
+          <>
+            <textarea
+              focus:outline-none
+              className="py-3 px-2 border focus:outline-none focus:border-blue-500
+              focus:ring-2 focus:ring-blue-300 rounded-lg"
+              rows={4}
+              placeholder="เกี่ยวกับฉัน"
+            ></textarea>
+            <div className="flex gap-3">
+              <button
+                className="blue_primary"
+                onClick={() => setOnEditAboutMe((c) => !c)}
+              >
+                บันทึก
+              </button>
+              <button
+                className="gray_primary"
+                onClick={() => setOnEditAboutMe((c) => !c)}
+              >
+                ยกเลิก
               </button>
             </div>
-          </div>
-          <hr />
+          </>
+        ) : (
+          <div className="text-gray_secondary ">ไม่มีข้อมูล</div>
+        )}
+      </Card>
 
-          <div className="flex justify-between">
-            <div>ชื่อผู้ใช้</div>
-            <div className="flex justify-between text-sm w-2/3">
-              <div>aset5yneusrtuyjty</div>
-            </div>
-          </div>
-          <hr />
-
-          <div className="flex justify-between">
-            <div>อีเมล</div>
-            <div className="flex justify-between text-sm w-2/3">
-              <div>kewell700@hotmail.com</div>
-            </div>
-          </div>
-          <hr />
-
-          <div className="flex justify-between">
-            <div>ชื่อ</div>
-            <div className="flex justify-between text-sm w-2/3">
-              <div>Punnatorn Prathombut</div>
-              <button className=" text-blue_primary">แก้ไข</button>
-            </div>
-          </div>
-          <hr />
-
-          <div className="flex justify-between">
-            <div>เพศ</div>
-            <div className="flex justify-between text-sm w-2/3">
-              <div>ชาย</div>
-              <button className="  text-blue_primary">แก้ไข</button>
-            </div>
-          </div>
-          <hr />
-
-          <div className="flex justify-between">
-            <div>วันเกิด</div>
-            <div className="flex justify-between text-sm  w-2/3">
-              <div>03/05/2542</div>
-              <button className="  text-blue_primary">แก้ไข</button>
-            </div>
-          </div>
+      <Card>
+        <div className="flex justify-between">
+          <Header>รหัสผ่าน</Header>
+          <button
+            className="text-sm bg-blue_primary text-white px-3 rounded-lg"
+            onClick={() => setIsEditPassword((c) => !c)}
+          >
+            เปลี่ยนรหัสผ่าน
+          </button>
         </div>
-      </div>
+      </Card>
 
-      <div className="ml-10 mr-20 my-8 rounded-lg bg-white w-2/3 ">
-        <div className="flex flex-col gap-8 px-5 py-6">
-          <div className="flex justify-between">
-            <div className="text-xl font-bold">เกี่ยวกับฉัน</div>
-            <button className="text-sm text-blue_primary">แก้ไข</button>
+      <Card>
+        <Header>บัญชีที่เชื่อมต่อ</Header>
+        <div className="flex justify-between">
+          <div className="flex gap-4">
+            <FacebookIcon />
+            <div className="text-gray_secondary text-sm">เชื่อมต่อแล้ว</div>
           </div>
-          <hr />
-          <div className="text-gray_secondary">ไม่มีข้อมูล</div>
+          <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button>
         </div>
-      </div>
-
-      <div className="ml-10 mr-20 my-8 rounded-lg bg-white w-2/3 ">
-        <div className="flex flex-col gap-8 px-5 py-6">
-          <div className="flex justify-between">
-            <div className="text-xl font-bold">รหัสผ่าน</div>
-            <button className="text-sm bg-blue_primary text-white px-3 rounded-lg">
-              เปลี่ยนรหัสผ่าน
-            </button>
+        <div className="flex justify-between">
+          <div className="flex gap-4">
+            <LineIcon />
+            <div className="text-gray_secondary text-sm">เชื่อมต่อแล้ว</div>
           </div>
+          <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button>
         </div>
-      </div>
-
-      <div className="ml-10 mr-20 my-8 rounded-lg bg-white w-2/3 ">
-        <div className="flex flex-col gap-8 px-5 py-6">
-          <div className=" text-xl font-bold">บัญชีที่เชื่อมต่อ</div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <FacebookIcon />
-              <div className="text-gray_secondary text-sm">เชื่อมต่อแล้ว</div>
+        <div className="flex justify-between">
+          <div className="flex gap-4">
+            <GoogleIcon />
+            <div className=" text-blue_primary text-sm">
+              เชื่อมต่อกับ Google
             </div>
-            <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button>
           </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <LineIcon />
-              <div className="text-gray_secondary text-sm">เชื่อมต่อแล้ว</div>
-            </div>
-            <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <GoogleIcon />
-              <div className=" text-blue_primary text-sm">
-                เชื่อมต่อกับ Google
-              </div>
-            </div>
-            {/* <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button> */}
-          </div>
+          {/* <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button> */}
         </div>
-      </div>
-    </div>
+      </Card>
+    </Container>
   );
 }

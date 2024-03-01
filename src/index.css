@@ -5,3 +5,11 @@
 body {
   background-color: #f6f6f6;
 }
+
+button.blue_primary {
+  @apply bg-blue_primary px-10 py-2 text-white rounded-lg hover:bg-blue_primary_hv
+}
+
+button.gray_primary {
+  @apply bg-gray_primary px-10 py-2 rounded-lg hover:bg-gray_primary_hv
+}

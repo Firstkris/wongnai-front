@@ -28,9 +28,6 @@ const router = createBrowserRouter([
         element: <ReviewPage />,
       },
 
-      // {
-      //   path: "profile/:subPage",
-      // },
       {
         path: "profile/EditProfile",
         element: <EditProfilePage />,

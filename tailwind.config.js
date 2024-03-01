@@ -10,6 +10,7 @@ export default {
         gray_primary_hv: "#eae8e8", // hover อ่อน
         gray_secondary: "#666666", // เข้ม
         blue_primary: "#0093E8", //Button เข้ม
+        blue_primary_hv: "#0288d1", //Button เข้ม
         blue_secondary: "#bee6fa", // อ่อน
         blue_secondary_hv: "#a4dbf4", // อ่อน hover
       },
