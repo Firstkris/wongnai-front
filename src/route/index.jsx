@@ -1,6 +1,10 @@
-import React from "react";
+import React from "react"
 
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
+
+import Header from "../layouts/Header"
+import UserReview from "../pages/User/UserReview"
+import { FilterPage } from "../pages/FilterPage"
 
 import Header from "../layouts/Header";
 import UserReview from "../pages/User/UserReview";
@@ -36,10 +40,12 @@ const router = createBrowserRouter([
       { path: "/review", element: <UserReview /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
+
+      { path: "/restaurants/filter", element: <FilterPage /> },
     ],
   },
-]);
+])
 
 export default function Router() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }
