@@ -1,8 +1,45 @@
-import Select from "../Select"
+import { useRestaurant } from "../../hooks/hooks"
+import { priceLength } from "../../constants/constant"
+
 export const SlideBar = () => {
+  const { filterPageData } = useRestaurant()
+  const { facilities, districts } = filterPageData
+  const renderCheckbox = (input, limit, key, title = "title") => {
+    return (
+      <>
+        <div className="font-semibold text-xl">{title}</div>
+        {input &&
+          input.map((item, index) => {
+            return (
+              index < limit && (
+                <div className="form-control">
+                  <label className="cursor-pointer label flex gap-2 max-w-fit">
+                    <input type="checkbox" className="w-5" value={item.id} />
+                    <span className="label-text">{item[key]}</span>
+                  </label>
+                </div>
+              )
+            )
+          })}
+        {input && input.length > limit && (
+          <div className="text-blue-600 text-sm cursor-pointer">
+            ดูเพิ่มเติม ({input.length} ประเภท)
+          </div>
+        )}
+      </>
+    )
+  }
+  const showDistricts = renderCheckbox(districts, 6, "districtNameTh", "เขต")
+  const showFacilities = renderCheckbox(
+    facilities,
+    4,
+    "facilityName",
+    "คุณสมบัติ"
+  )
+  const showPriceLength = renderCheckbox(priceLength, 5, "price", "ราคา")
   return (
     <>
-      <div className="bg-white rounded-lg p-4 ">
+      <div className="bg-white rounded-lg p-4  flex flex-col gap-2">
         {/* radio */}
         <div className="flex flex-col">
           <div className="font-semibold text-xl">เรตติ้ง</div>
@@ -28,50 +65,11 @@ export const SlideBar = () => {
           </div>
         </div>
         {/* <check box /> */}
-        <div className="flex flex-col gap-2">
-          <div className="font-semibold text-xl">เขต/ย่ายบ่</div>
-          {[1, 2, 3, 4, 5].map((index) => (
-            <>
-              <div className="form-control">
-                <label className="cursor-pointer label flex gap-2">
-                  <input type="checkbox" defaultChecked className="w-5" />
-                  <span className="label-text">districts name</span>
-                </label>
-              </div>
-            </>
-          ))}
-          <div className="text-blue-600">ดูเพิ่มเติม</div>
-        </div>
+        <div className="flex flex-col gap-2">{showDistricts}</div>
         {/* end check */}
-        <div className="flex flex-col gap-2">
-          <div className="font-semibold text-xl">เขต/ย่ายบ่</div>
-          {[1, 2, 3, 4, 5].map((index) => (
-            <>
-              <div className="form-control">
-                <label className="cursor-pointer label flex gap-2">
-                  <input type="checkbox" defaultChecked className="w-5" />
-                  <span className="label-text">districts name</span>
-                </label>
-              </div>
-            </>
-          ))}
-          <div className="text-blue-600">ดูเพิ่มเติม</div>
-        </div>
-        {/* end check */}
-        <div className="flex flex-col gap-2">
-          <div className="font-semibold text-xl">เขต/ย่ายบ่</div>
-          {[1, 2, 3, 4, 5].map((index) => (
-            <>
-              <div className="form-control">
-                <label className="cursor-pointer label flex gap-2">
-                  <input type="checkbox" defaultChecked className="w-5" />
-                  <span className="label-text">districts name</span>
-                </label>
-              </div>
-            </>
-          ))}
-          <div className="text-blue-600">ดูเพิ่มเติม</div>
-        </div>
+        <div className="flex flex-col gap-2">{showFacilities}</div>
+        {/* end */}
+        <div className="flex flex-col gap-2">{showPriceLength}</div>
       </div>
     </>
   )

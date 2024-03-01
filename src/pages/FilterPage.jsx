@@ -1,8 +1,14 @@
 import { CardRestaurant } from "../components/filterPageComponents/CardRestaurant"
 import React from "react"
 import { SlideBar } from "../components/filterPageComponents/SlideBar"
-
+import { useRestaurant } from "../hooks/hooks"
+import { useEffect } from "react"
 export const FilterPage = () => {
+  const { filterPageData, fetchFilterPage } = useRestaurant()
+  const { restaurants, facilities } = filterPageData
+  useEffect(() => {
+    fetchFilterPage()
+  }, [])
   return (
     //layout
     <div className="flex flex-col gap-2">
@@ -17,7 +23,7 @@ export const FilterPage = () => {
       </div>
 
       {/* layout body*/}
-      <div className="md:mx-auto  bg-pink-200 ">
+      <div className="md:mx-auto  ">
         <div className=" flex justify-around gap-4 ">
           {/* <Slidebar> */}
           <div className=" w-1/4 ">

@@ -38,7 +38,7 @@ export const CardRestaurant = ({ children }) => {
           </div>
           <div>Facility</div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 p-1">
           <div className="justify-end flex">
             <BookmarkIcon />
           </div>
