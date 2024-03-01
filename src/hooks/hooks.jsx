@@ -7,6 +7,7 @@ export const useRestaurant = () => {
 
 export const useRenderCheckbox = () => {
   const renderCheckbox = (input, limit, key, title = "title") => {
+    const { setFilterInput } = useRestaurant()
     return (
       <>
         <div className="font-semibold text-xl">{title}</div>
@@ -14,7 +15,7 @@ export const useRenderCheckbox = () => {
           input.map((item, index) => {
             return (
               index < limit && (
-                <div className="form-control">
+                <div className="form-control" key={item.id}>
                   <label className="cursor-pointer label flex gap-2 max-w-fit">
                     <input
                       type="checkbox"

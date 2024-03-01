@@ -1,18 +1,15 @@
 import React from "react"
 
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
+import { FilterPage } from "../pages/FilterPage"
 
 import Header from "../layouts/Header"
 import UserReview from "../pages/User/UserReview"
-import { FilterPage } from "../pages/FilterPage"
-
-import Header from "../layouts/Header";
-import UserReview from "../pages/User/UserReview";
-import LoginPage from "../pages/User/LoginPage";
-import RegisterPage from "../pages/User/RegisterPage";
-import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
-import ReviewPage from "../pages/ProfilePage/ReviewPage";
-import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
+import LoginPage from "../pages/User/LoginPage"
+import RegisterPage from "../pages/User/RegisterPage"
+import BookmarkPage from "../pages/ProfilePage/BookmarkPage"
+import ReviewPage from "../pages/ProfilePage/ReviewPage"
+import EditProfilePage from "../pages/ProfilePage/EditProfilePage"
 const router = createBrowserRouter([
   {
     path: "/",
