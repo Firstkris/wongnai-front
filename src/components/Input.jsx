@@ -30,7 +30,7 @@ export default function Input({
     <div>
       <label htmlFor={name}>{label}</label>
       <input
-        className={`${defaultClasses} ${extendedClasses}`}
+        className={`focus:outline-none ${defaultClasses} ${extendedClasses}`}
         placeholder={placeholder}
         type={type}
         value={value}
@@ -41,7 +41,7 @@ export default function Input({
       />
 
       {errorMessage ? (
-        <small className='text-red-500'>{errorMessage}</small>
+        <small className="text-red-500">{errorMessage}</small>
       ) : (
         ""
       )}
