@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Inter', 'Kanit', sans-serif,system-ui;
+  font-family: 'Inter', 'Kanit', sans-serif, system-ui;
   box-sizing: border-box;
 }
 
@@ -46,4 +46,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   color: transparent;
   background: transparent;
   /* you need to disable the background becasue the icon can repeat based on input size */
+}
+
+button.blue_primary {
+  @apply bg-blue_primary text-white rounded-lg px-6 py-2 hover:bg-blue_primary_hv
+}
+
+button.gray_primary {
+  @apply bg-gray_primary rounded-lg px-6 py-2 hover:bg-gray_primary_hv
 }
