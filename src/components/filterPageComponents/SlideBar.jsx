@@ -2,7 +2,7 @@ import { useRestaurant } from "../../hooks/hooks"
 import { priceLength } from "../../constants/constant"
 
 export const SlideBar = () => {
-  const { filterPageData } = useRestaurant()
+  const { filterPageData, setFilterInput } = useRestaurant()
   const { facilities, districts } = filterPageData
   const renderCheckbox = (input, limit, key, title = "title") => {
     return (
@@ -14,7 +14,22 @@ export const SlideBar = () => {
               index < limit && (
                 <div className="form-control">
                   <label className="cursor-pointer label flex gap-2 max-w-fit">
-                    <input type="checkbox" className="w-5" value={item.id} />
+                    <input
+                      type="checkbox"
+                      className="w-5"
+                      value={item.id}
+                      onChange={(e) => {
+                        setFilterInput((prev) => ({
+                          ...prev,
+                          [key]:
+                            prev[key] && prev[key].includes(e.target.value)
+                              ? prev[key].filter(
+                                  (item) => item !== e.target.value
+                                )
+                              : [...(prev[key] || []), e.target.value],
+                        }))
+                      }}
+                    />
                     <span className="label-text">{item[key]}</span>
                   </label>
                 </div>
