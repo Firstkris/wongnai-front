@@ -7,12 +7,26 @@ export const useRestaurant = () => {
 
 export const useRenderCheckbox = () => {
   const renderCheckbox = (input, limit, key, title = "title") => {
-    const { setFilterInput } = useRestaurant()
+    const { setFilterInput, filterInput } = useRestaurant()
+
+    const handleChangeCheckbox = (e) => {
+      setFilterInput((prev) => ({
+        ...prev,
+        [key]:
+          prev[key] && prev[key].includes(e.target.value)
+            ? prev[key].filter((item) => item !== e.target.value)
+            : [...(prev[key] || []), e.target.value],
+      }))
+    }
+
     return (
       <>
-        <div className="font-semibold text-xl">{title}</div>
+        <div className="font-semibold text-xl cursor-default">{title}</div>
         {input &&
           input.map((item, index) => {
+            const check =
+              filterInput[key] && filterInput[key].includes(item[key])
+
             return (
               index < limit && (
                 <div className="form-control" key={item.id}>
@@ -20,18 +34,9 @@ export const useRenderCheckbox = () => {
                     <input
                       type="checkbox"
                       className="w-5"
-                      value={item.id}
-                      onChange={(e) => {
-                        setFilterInput((prev) => ({
-                          ...prev,
-                          [key]:
-                            prev[key] && prev[key].includes(e.target.value)
-                              ? prev[key].filter(
-                                  (item) => item !== e.target.value
-                                )
-                              : [...(prev[key] || []), e.target.value],
-                        }))
-                      }}
+                      value={item[key]}
+                      checked={check}
+                      onChange={handleChangeCheckbox}
                     />
                     <span className="label-text">{item[key]}</span>
                   </label>
