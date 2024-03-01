@@ -3,24 +3,67 @@ import Input from "../../components/Input";
 import { Link } from "react-router-dom";
 
 import FacebookLogin from "react-facebook-login";
+import { useState } from "react";
+import axios from "../../configs/axios";
+import { userLogin, userLoginWithFacebook } from "../../apis/user";
 
 function LoginPage() {
+  const [input, setInput] = useState({ username: "", password: "" });
+
   const click = () => {
     console.log("click");
   };
   const back = async (res) => {
-    console.log(res);
-    // const user = await axios.post("/loginWithFace", { id: res.id });
-    // setUser(user.data.message);
+    //
+    //
+    // const user = await axios.post("/user/loginWithFace", res);
+    const user = await userLoginWithFacebook(res);
+    // รอว่าจะใช้ context หรือ redux
+    console.log(user.data);
     // localStorage.setItem("token", user.data.token);
+    //
+    //
   };
+
+  const handleChangeInput = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      //
+      //
+      //   const response = await axios.post("/user/login", input);
+      const response = await userLogin(input);
+      // รอว่าจะใช้ context หรือ redux
+      console.log(response.data);
+      // localStorage.setItem("token", user.data.token);
+      //
+      //
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(input);
   return (
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
-      <form className=" w-8/12 bg-white h-full  my-12 flex flex-col items-center">
+      <form
+        onSubmit={handleSubmit}
+        className=" w-8/12 bg-white h-full  my-12 flex flex-col items-center"
+      >
         <div className=" mt-2 mb-6  flex flex-col items-center  w-2/4 gap-6 ">
           <h1 className="text-xl font-bold ite">เข้าสู่ระบบ</h1>
-          <Input placeholder="เบอร์โทร/อีเมล" />
-          <Input placeholder="รหัสผ่าน" />
+          <Input
+            placeholder="เบอร์โทร/อีเมล"
+            onChange={handleChangeInput}
+            name={"username"}
+          />
+          <Input
+            type="password"
+            placeholder="รหัสผ่าน"
+            onChange={handleChangeInput}
+            name={"password"}
+          />
 
           <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary cursor-pointers">
             ถัดไป
@@ -61,12 +104,19 @@ function LoginPage() {
               }
               cssClass="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black"
               textButton=" "
-              appId="702344342107870"
+              appId="411084504827647"
               autoLoad={true}
               fields="email,name"
               onClick={click}
               callback={back}
             />
+            {/* <FacebookLogin
+              appId="411084504827647"
+              autoLoad={true}
+              fields="email,name"
+              onClick={click}
+              callback={back}
+            /> */}
 
             <button className="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black">
               <svg
