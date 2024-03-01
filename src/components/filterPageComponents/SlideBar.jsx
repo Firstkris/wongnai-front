@@ -22,7 +22,7 @@ export const SlideBar = () => {
 
   return (
     <>
-      <div className="bg-white rounded-lg p-4  flex flex-col gap-2 max-w-64">
+      <div className="bg-white rounded-lg p-4  flex flex-col gap-2 w-60">
         {
           // Object.keys(filterInput).length !== 0
           (filterInput.rating && filterInput.rating?.length != 0) ||
@@ -44,16 +44,22 @@ export const SlideBar = () => {
               </div>
               <div className="flex flex-wrap gap-1">
                 {filterInput &&
-                  Object.keys(filterInput).map((filter, index) => {
+                  Object.keys(filterInput)?.map((filter, index) => {
+                    console.log(filterInput)
                     return (
                       <>
-                        {filterInput[filter].map((item, index) => {
+                        {filterInput?.[filter]?.map((item, index) => {
                           return (
                             <div
                               key={index}
                               className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary"
                             >
-                              {item}
+                              {item === 3.5
+                                ? "⭐️ ⭐️ ⭐️ ☆"
+                                : item === 4
+                                ? "⭐️ ⭐️ ⭐️ ⭐️"
+                                : item}
+                              {/* {item} */}
                             </div>
                           )
                         })}
@@ -80,7 +86,9 @@ export const SlideBar = () => {
               <input
                 type="radio"
                 name="rating"
-                onChange={() => setFilterInput({ rating: 3.5 })}
+                onChange={() =>
+                  setFilterInput((prev) => ({ ...prev, rating: [3.5] }))
+                }
                 className="radio  checked:bg-red-500 w-4 h-4"
               />
               <span className="label-text">3.5+</span>
@@ -92,7 +100,10 @@ export const SlideBar = () => {
                 type="radio"
                 name="rating"
                 onChange={() =>
-                  setFilterInput((prev) => ({ ...prev, rating: 4 }))
+                  setFilterInput((prev) => ({
+                    ...prev,
+                    rating: [4],
+                  }))
                 }
                 className="radio checked:bg-red-500 w-4 h-4"
               />
