@@ -18,7 +18,6 @@ export const SlideBar = () => {
     "คุณสมบัติ"
   )
   const showPriceLength = renderCheckbox(priceLength, 5, "price", "ราคา")
-  console.log(filterPageData)
 
   return (
     <>
@@ -43,37 +42,69 @@ export const SlideBar = () => {
                 </a>
               </div>
               <div className="flex flex-wrap gap-1">
-                {filterInput &&
+                {/* {filterInput &&
                   Object.keys(filterInput)?.map((filter, index) => {
                     console.log(filterInput)
                     return (
                       <>
                         {filterInput?.[filter]?.map((item, index) => {
+                          console.log(item)
                           return (
                             <div
                               key={index}
                               className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary"
                             >
-                              {item === 3.5
+                              {/* {item === 3.5
                                 ? "⭐️ ⭐️ ⭐️ ☆"
                                 : item === 4
                                 ? "⭐️ ⭐️ ⭐️ ⭐️"
-                                : item}
-                              {/* {item} */}
+                                : item} }
+                              {
+                                filterPageData[filterInput[filter]][item]
+                                  ?.districtNameTh
+                              }
                             </div>
                           )
                         })}
                       </>
                     )
-                  })}
-                {/* {filterInput?.districtNameTh &&
+                  })} */}
+                {filterInput?.districtNameTh &&
                   filterInput?.districtNameTh?.map((district) => {
                     return (
                       <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                        {district}
+                        {filterPageData.districts[district - 1].districtNameTh}
                       </div>
                     )
-                  })} */}
+                  })}
+                {filterInput?.rating &&
+                  filterInput?.rating?.map((rating) => {
+                    return (
+                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
+                        {rating == 3.5
+                          ? "⭐️ ⭐️ ⭐️ ☆"
+                          : rating == 4
+                          ? "⭐️ ⭐️ ⭐️ ⭐️"
+                          : rating}
+                      </div>
+                    )
+                  })}
+                {filterInput?.price &&
+                  filterInput?.price?.map((price) => {
+                    return (
+                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
+                        {price}
+                      </div>
+                    )
+                  })}
+                {filterInput?.facilityName &&
+                  filterInput?.facilityName?.map((facility) => {
+                    return (
+                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
+                        {filterPageData.facilities[facility - 1].facilityName}
+                      </div>
+                    )
+                  })}
               </div>
             </div>
           ) : null

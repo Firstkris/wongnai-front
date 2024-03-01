@@ -24,8 +24,12 @@ export const useRenderCheckbox = () => {
         <div className="font-semibold text-xl cursor-default">{title}</div>
         {input &&
           input.map((item, index) => {
+            console.log(key, "key")
+            console.log(filterInput, "filterInput")
             const check =
-              filterInput[key] && filterInput[key].includes(item[key])
+              filterInput[key] && filterInput[key].includes(item.id.toString())
+                ? true
+                : false
 
             return (
               index < limit && (
@@ -34,7 +38,7 @@ export const useRenderCheckbox = () => {
                     <input
                       type="checkbox"
                       className="w-5"
-                      value={item[key]}
+                      value={item.id}
                       checked={check}
                       onChange={handleChangeCheckbox}
                     />
