@@ -43,16 +43,29 @@ export default function HeaderToggle() {
 
   return (
     <div className="flex gap-2 relative" ref={dropdown}>
-      <Link
+      {/* <Link
         to={"/login"}
         className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
       >
         <ProfileWithCircleIcon />
         <div>เข้าสู่ระบบ</div>
-      </Link>
+      </Link> */}
 
       {user ? (
         <>
+          <Link
+            to={"/login"}
+            className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
+          >
+            <div className="flex gap-2">
+              <img
+                alt="profileImage"
+                src="https://www.prachachat.net/wp-content/uploads/2018/01/1-166-728x410.jpg"
+                className="w-[25px] h-[25px] rounded-full object-cover"
+              />
+              <div className="font-bold">Punnatorn</div>
+            </div>
+          </Link>
           <div className="border rounded-full px-2 cursor-pointer">
             <ChatIcon className="w-6 h-6 mt-2" />
           </div>
@@ -60,19 +73,27 @@ export default function HeaderToggle() {
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => {
               setIsUserToggle((c) => !c);
-              console.log("*********************");
             }}
           >
             <DownTriangleIcon className="w-6 h-6 mt-2" />
           </div>
         </>
       ) : (
-        <div
-          className="border rounded-full px-2 cursor-pointer"
-          onClick={() => setIsToggle((c) => !c)}
-        >
-          <DownTriangleIcon className="w-6 h-6 mt-2" />
-        </div>
+        <>
+          <Link
+            to={"/login"}
+            className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
+          >
+            <ProfileWithCircleIcon />
+            <div>เข้าสู่ระบบ</div>
+          </Link>
+          <div
+            className="border rounded-full px-2 cursor-pointer"
+            onClick={() => setIsToggle((c) => !c)}
+          >
+            <DownTriangleIcon className="w-6 h-6 mt-2" />
+          </div>
+        </>
       )}
 
       {isToggle ? (
@@ -109,10 +130,10 @@ export default function HeaderToggle() {
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
                 <Link
-                  to={"/login"}
+                  to={"/profile"}
                   className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
                 >
-                  เข้าสู่ระบบ หรือ สมัครสมาชิก
+                  ดูโปรไฟล์ของฉัน {">>"}
                 </Link>
 
                 <hr />
