@@ -4,12 +4,9 @@ import {
   LocationIcon,
   MessageIcon,
   SearchIcon,
-  DownTriangleIcon,
   DownTriangleSolidIcon,
-  ProfileWithCircleIcon,
 } from "../icons/icon";
 import HeaderToggle from "../components/HeaderToggle";
-import { useState } from "react";
 
 export default function Header() {
   return (
