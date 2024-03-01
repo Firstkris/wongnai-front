@@ -1,7 +1,7 @@
 import { CardRestaurant } from "../components/filterPageComponents/CardRestaurant"
 import React from "react"
 import { SlideBar } from "../components/filterPageComponents/SlideBar"
-import { useRestaurant } from "../hooks/hooks"
+import { useRestaurant } from "../hooks/hooks.jsx"
 import { useEffect } from "react"
 export const FilterPage = () => {
   const { filterPageData, fetchFilterPage } = useRestaurant()

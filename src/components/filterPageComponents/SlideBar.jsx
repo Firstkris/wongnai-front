@@ -1,49 +1,11 @@
-import { useRestaurant } from "../../hooks/hooks"
+import { useRestaurant, useRenderCheckbox } from "../../hooks/hooks.jsx"
 import { priceLength } from "../../constants/constant"
 
 export const SlideBar = () => {
   const { filterPageData, setFilterInput } = useRestaurant()
+  const { renderCheckbox } = useRenderCheckbox()
   const { facilities, districts } = filterPageData
-  const renderCheckbox = (input, limit, key, title = "title") => {
-    return (
-      <>
-        <div className="font-semibold text-xl">{title}</div>
-        {input &&
-          input.map((item, index) => {
-            return (
-              index < limit && (
-                <div className="form-control">
-                  <label className="cursor-pointer label flex gap-2 max-w-fit">
-                    <input
-                      type="checkbox"
-                      className="w-5"
-                      value={item.id}
-                      onChange={(e) => {
-                        setFilterInput((prev) => ({
-                          ...prev,
-                          [key]:
-                            prev[key] && prev[key].includes(e.target.value)
-                              ? prev[key].filter(
-                                  (item) => item !== e.target.value
-                                )
-                              : [...(prev[key] || []), e.target.value],
-                        }))
-                      }}
-                    />
-                    <span className="label-text">{item[key]}</span>
-                  </label>
-                </div>
-              )
-            )
-          })}
-        {input && input.length > limit && (
-          <div className="text-blue-600 text-sm cursor-pointer">
-            ดูเพิ่มเติม ({input.length} ประเภท)
-          </div>
-        )}
-      </>
-    )
-  }
+  // const renderCheckbox = (input, limit, key, title = "title")
   const showDistricts = renderCheckbox(districts, 6, "districtNameTh", "เขต")
   const showFacilities = renderCheckbox(
     facilities,
