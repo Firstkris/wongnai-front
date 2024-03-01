@@ -42,15 +42,14 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
+      {
+        path: '/restaurant',
+        element: <RestaurantRegisterPage />
+      }
+
     ],
   },
 ])
-children: [{}],
-  }, {
-  path: '/restaurant',
-    element: <RestaurantRegisterPage />
-}
-]);
 
 export default function Router() {
   return <RouterProvider router={router} />
