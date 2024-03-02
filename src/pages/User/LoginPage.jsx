@@ -163,7 +163,6 @@ function LoginPage() {
     </div>
   );
 }
-import { setToken } from "../../utils/local-storage";
 import { useNavigate } from "react-router-dom";
 
 export default LoginPage;

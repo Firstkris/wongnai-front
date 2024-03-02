@@ -12,6 +12,8 @@ import RegisterPage from "../pages/User/RegisterPage";
 import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
 import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
+import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,11 +26,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <ReviewPage />,
+        element: (
+          <ProtectedProfileRoute>
+            <ReviewPage />,
+          </ProtectedProfileRoute>
+        ),
       },
       {
         path: "profile/Bookmark",
-        element: <BookmarkPage />,
+        element: (
+          <ProtectedProfileRoute>
+            <BookmarkPage />
+          </ProtectedProfileRoute>
+        ),
       },
 
       {
@@ -37,7 +47,14 @@ const router = createBrowserRouter([
       },
 
       { path: "/review", element: <UserReview /> },
-      { path: "/login", element: <LoginPage /> },
+      {
+        path: "/login",
+        element: (
+          <RedirectIfAuthenticated>
+            <LoginPage />
+          </RedirectIfAuthenticated>
+        ),
+      },
       { path: "/register", element: <RegisterPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },

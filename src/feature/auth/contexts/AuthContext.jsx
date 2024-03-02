@@ -8,7 +8,7 @@ import { createContext } from "react";
 
 const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   // const [review, setReview] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
@@ -28,9 +28,14 @@ export default function AuthContextProvider({ children }) {
     }
   }, []);
 
+  const logout = () => {
+    setUser(null);
+    Token.clearToken();
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, setUser, initialLoading, setInitialLoading }}
+      value={{ user, setUser, initialLoading, setInitialLoading, logout }}
     >
       {children}
     </AuthContext.Provider>

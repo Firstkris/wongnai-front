@@ -10,7 +10,7 @@ import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
 
 export default function ProfileInfo({ setIsEditPassword }) {
   const { user } = useAuth();
-  const [editAboutMe, setEditAboutMe] = useState(false);
+  // const [editAboutMe, setEditAboutMe] = useState(false);
   const [editImage, setEditImage] = useState(false);
 
   const [profileImage, setProfileImage] = useState("");
@@ -66,10 +66,10 @@ export default function ProfileInfo({ setIsEditPassword }) {
           </div>
           <hr />
 
-          <EditInput title={"ชื่อ"} info={user.name} />
+          <EditInput title={"ชื่อ"} info={user?.name} />
           <hr />
 
-          <EditInput title={"เพศ"} info={user.gender} />
+          <EditInput title={"เพศ"} info={user?.gender} />
           <hr />
 
           <EditInput title={"วันเกิด"} info={birthdate} />

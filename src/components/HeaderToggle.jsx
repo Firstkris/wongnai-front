@@ -14,12 +14,14 @@ import { useEffect } from "react";
 import { useAuth } from "../feature/auth/contexts/AuthContext";
 
 export default function HeaderToggle() {
-  const { user, setUser } = useAuth();
+  const { user, setUser, logout } = useAuth();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
 
   const dropdown = useRef(null);
+
+  const firstName = user?.name?.split(" ")[0];
 
   useEffect(() => {
     if (isToggle) {
@@ -65,7 +67,7 @@ export default function HeaderToggle() {
                 src={user.imgProfile}
                 className="w-[25px] h-[25px] rounded-full object-cover"
               />
-              <div className="font-bold">Punnatorn</div>
+              <div className="font-bold">{firstName}</div>
             </div>
           </Link>
           <div className="border rounded-full px-2 cursor-pointer">
@@ -156,7 +158,10 @@ export default function HeaderToggle() {
                   </Link>
                 </div>
                 <hr />
-                <div className="flex gap-4 cursor-pointer pl-5">
+                <div
+                  className="flex gap-4 cursor-pointer pl-5"
+                  onClick={logout}
+                >
                   <LogoutIcon />
                   <div>ออกจากระบบ</div>
                 </div>
