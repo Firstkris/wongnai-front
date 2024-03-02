@@ -4,11 +4,13 @@ import { SlideBar } from "../components/filterPageComponents/SlideBar"
 import { useRestaurant } from "../hooks/hooks.jsx"
 import { useEffect } from "react"
 export const FilterPage = () => {
-  const { filterPageData, fetchFilterPage } = useRestaurant()
+  const { filterPageData, fetchFilterPage, filterInput, fetchFilterData } =
+    useRestaurant()
   const { restaurants, facilities } = filterPageData
   useEffect(() => {
     fetchFilterPage()
   }, [])
+
   return (
     //layout
     <div className="flex flex-col gap-2">
