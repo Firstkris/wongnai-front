@@ -6,12 +6,17 @@ import Container from "./Container";
 import Header from "./Header";
 import { useState } from "react";
 import Model from "./Model";
+import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
 
 export default function ProfileInfo({ setIsEditPassword }) {
+  const { user } = useAuth();
   const [editAboutMe, setEditAboutMe] = useState(false);
   const [editImage, setEditImage] = useState(false);
 
   const [profileImage, setProfileImage] = useState("");
+
+  const birthdate = user.birthdate?.split("T")[0];
+  const mobile = user?.mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
 
   return (
     <>
@@ -30,7 +35,8 @@ export default function ProfileInfo({ setIsEditPassword }) {
           <div className="flex justify-between">
             <img
               className="h-[50px] w-[50px] object-cover rounded-full"
-              src={profileImage}
+              // src={profileImage}
+              src={user.imgProfile}
             />
             <div
               className=" text-sm text-blue_primary w-2/3 cursor-pointer mt-5"
@@ -41,7 +47,7 @@ export default function ProfileInfo({ setIsEditPassword }) {
           </div>
           <hr />
 
-          <EditInput title={"เบอร์โทรศัพท์"} info={"087-799-4393"} />
+          <EditInput title={"เบอร์โทรศัพท์"} info={mobile} />
           <hr />
 
           <div className="flex justify-between">
@@ -55,21 +61,21 @@ export default function ProfileInfo({ setIsEditPassword }) {
           <div className="flex justify-between">
             <div>อีเมล</div>
             <div className="flex justify-between text-sm w-2/3">
-              <div>kewell700@hotmail.com</div>
+              <div>{user.email}</div>
             </div>
           </div>
           <hr />
 
-          <EditInput title={"ชื่อ"} info={"Punnatorn Prathombut"} />
+          <EditInput title={"ชื่อ"} info={user.name} />
           <hr />
 
-          <EditInput title={"เพศ"} info={"ชาย"} />
+          <EditInput title={"เพศ"} info={user.gender} />
           <hr />
 
-          <EditInput title={"วันเกิด"} info={"03/05/2542"} />
+          <EditInput title={"วันเกิด"} info={birthdate} />
         </Card>
 
-        <Card>
+        {/* <Card>
           <div className="flex justify-between">
             <Header>เกี่ยวกับฉัน</Header>
             <button
@@ -108,7 +114,7 @@ export default function ProfileInfo({ setIsEditPassword }) {
           ) : (
             <div className="text-gray_secondary ">ไม่มีข้อมูล</div>
           )}
-        </Card>
+        </Card> */}
 
         <Card>
           <div className="flex justify-between">

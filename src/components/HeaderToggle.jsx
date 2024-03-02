@@ -11,11 +11,13 @@ import {
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useAuth } from "../feature/auth/contexts/AuthContext";
 
 export default function HeaderToggle() {
+  const { user, setUser } = useAuth();
+
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
-  const [user, setUser] = useState("a");
 
   const dropdown = useRef(null);
 
@@ -60,7 +62,7 @@ export default function HeaderToggle() {
             <div className="flex gap-2">
               <img
                 alt="profileImage"
-                src="https://www.prachachat.net/wp-content/uploads/2018/01/1-166-728x410.jpg"
+                src={user.imgProfile}
                 className="w-[25px] h-[25px] rounded-full object-cover"
               />
               <div className="font-bold">Punnatorn</div>
@@ -138,7 +140,10 @@ export default function HeaderToggle() {
 
                 <hr />
                 <div className="flex flex-col gap-5 pl-5">
-                  <Link to={"/profile"} className="flex gap-4 cursor-pointer">
+                  <Link
+                    to={"/profile/Bookmark"}
+                    className="flex gap-4 cursor-pointer"
+                  >
                     <BookmarkIcon />
                     <div>ที่บันทึกไว้</div>
                   </Link>

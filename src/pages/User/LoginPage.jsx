@@ -2,14 +2,17 @@ import React from "react";
 import Input from "../../components/Input";
 import { FacebookIcon, GoogleIcon, LineIcon } from "../../icons/icon";
 import { Link } from "react-router-dom";
-
 import FacebookLogin from "react-facebook-login";
 import { useState } from "react";
 import axios from "../../configs/axios";
 import { userLogin, userLoginWithFacebook } from "../../apis/user";
+import { useAuth } from "../../feature/auth/contexts/AuthContext";
+import * as Token from "../../../src/utils/local-storage";
 
 function LoginPage() {
+  const { setUser, user } = useAuth();
   const [input, setInput] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
 
   const click = () => {
     console.log("click");
@@ -20,7 +23,9 @@ function LoginPage() {
     // const user = await axios.post("/user/loginWithFace", res);
     const user = await userLoginWithFacebook(res);
     // รอว่าจะใช้ context หรือ redux
-    console.log(user.data);
+    Token.setToken(user.data.token);
+    setUser(user.data.user);
+
     // localStorage.setItem("token", user.data.token);
     //
     //
@@ -37,10 +42,12 @@ function LoginPage() {
       //   const response = await axios.post("/user/login", input);
       const response = await userLogin(input);
       // รอว่าจะใช้ context หรือ redux
-      console.log(response.data);
-      // localStorage.setItem("token", user.data.token);
-      //
-      //
+      Token.setToken(response.data.token);
+      setUser(response.data.user);
+      navigate("/");
+
+      // console.log("user", user.name);
+      // console.log("user", user.birthdate);
     } catch (err) {
       console.log(err);
     }
@@ -156,5 +163,7 @@ function LoginPage() {
     </div>
   );
 }
+import { setToken } from "../../utils/local-storage";
+import { useNavigate } from "react-router-dom";
 
 export default LoginPage;

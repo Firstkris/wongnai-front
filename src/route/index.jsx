@@ -24,11 +24,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <BookmarkPage />,
+        element: <ReviewPage />,
       },
       {
-        path: "profile/review",
-        element: <ReviewPage />,
+        path: "profile/Bookmark",
+        element: <BookmarkPage />,
       },
 
       {
