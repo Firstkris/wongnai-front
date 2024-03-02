@@ -2,7 +2,7 @@ import React from 'react'
 
 export function TitleRestaurantcard() {
   return (
-<div className=' w-5/12 bg-white h-full  my-4 rounded-md'>
+<div className=' w-full bg-white   my-4 rounded-md'>
 		<div className='p-4 flex flex-col gap-1 border-b-2'>
 			<div className='flex items-baseline gap-3'>
 				<h1 className='text-4xl'>Chithoe</h1>
@@ -41,7 +41,7 @@ export function TitleRestaurantcard() {
 }
 
 export function RestaurantMapcard() {
-    return (<div className=' w-5/12 bg-white h-full p-3 my-4 rounded-md'>
+    return (<div className=' w-full bg-white  p-3 my-4 rounded-md'>
     <div className='flex gap-3'>
         <div className='bg-gray-300 w-40 h-40 rounded-md'><img src='https://www.nsm.or.th/nsm/sites/default/files/2021-12/20200204-2PNG.png'/></div>
         <div>
@@ -63,8 +63,8 @@ export function RestaurantMapcard() {
 </div>)
 } 
 
-export function RestaurantDetailCard(){
-    <div className=' w-3/12 bg-white h-full  p-4 rounded-md'>
+export function RestaurantDetailCard() {
+   return( <div className=' w-full bg-white  p-4 my-4 rounded-md'>
 		<div className='flex flex-col gap-6'>
 			<div>
 				<p className='text-xs font-bold'>เวลาเปิดร้าน</p>
@@ -97,5 +97,5 @@ export function RestaurantDetailCard(){
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>)
 }
