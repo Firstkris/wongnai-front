@@ -1,7 +1,7 @@
 import { useRestaurant, useRenderCheckbox } from "../../hooks/hooks.jsx"
 import { priceLength } from "../../constants/constant"
-import { Link } from "react-router-dom"
 import { useEffect } from "react"
+import { FilterTags } from "./FilterTags.jsx"
 
 export const SlideBar = () => {
   const { filterPageData, setFilterInput, filterInput, fetchFilterData } =
@@ -9,13 +9,15 @@ export const SlideBar = () => {
   const { renderCheckbox } = useRenderCheckbox()
   const { facilities, districts } = filterPageData
 
-  // useEffect(() => {
-  //   fetchFilterData(filterInput)
-  // }, [filterInput])
+  // fetchData when checked
+  useEffect(() => {
+    console.log(filterInput, "filterInput")
+    const run = async () => {
+      await fetchFilterData(filterInput)
+    }
+    run()
+  }, [filterInput])
 
-  const clearFilters = () => {
-    setFilterInput({})
-  }
   const handleChangeRating = (e) => {
     setFilterInput((prev) => ({ ...prev, rating: [e.target.value] }))
   }
@@ -27,164 +29,12 @@ export const SlideBar = () => {
     "facilityName",
     "คุณสมบัติ"
   )
-  const showPriceLength = renderCheckbox(priceLength, 5, "price", "ราคา")
-
-  const FilterTags = ({ filterInput, filterPageData, clearFilters }) => {
-    return (
-      // filter
-      (filterInput.rating && filterInput.rating?.length != 0) ||
-        (filterInput.price && filterInput.price?.length != 0) ||
-        (filterInput.facilityName && filterInput.facilityName?.length != 0) ||
-        (filterInput?.districtNameTh &&
-          filterInput.districtNameTh?.length != 0) ? (
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-baseline">
-            <div className="font-semibold text-xl cursor-default">ตัวกรอง</div>
-            <a
-              className="text-blue-600 cursor-pointer hover:underline"
-              onClick={clearFilters}
-            >
-              ลบตัวกรอง
-            </a>
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {/* {filterInput &&
-            Object.keys(filterInput)?.map((filter, index) => {
-              console.log(filterInput)
-              return (
-                <>
-                  {filterInput?.[filter]?.map((item, index) => {
-                    console.log(item)
-                    return (
-                      <div
-                        key={index}
-                        className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary"
-                      >
-                        {/* {item === 3.5
-                          ? "⭐️ ⭐️ ⭐️ ☆"
-                          : item === 4
-                          ? "⭐️ ⭐️ ⭐️ ⭐️"
-                          : item} }
-                        {
-                          filterPageData[filterInput[filter]][item]
-                            ?.districtNameTh
-                        }
-                      </div>
-                    )
-                  })}
-                </>
-              )
-            })} */}
-            {filterInput?.districtNameTh &&
-              filterInput?.districtNameTh?.map((district) => {
-                return (
-                  <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                    {filterPageData.districts[district - 1].districtNameTh}
-                  </div>
-                )
-              })}
-            {filterInput?.rating &&
-              filterInput?.rating?.map((rating) => {
-                return (
-                  <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                    {rating == 3.5
-                      ? "⭐️ ⭐️ ⭐️ ☆"
-                      : rating == 4
-                      ? "⭐️ ⭐️ ⭐️ ⭐️"
-                      : rating}
-                  </div>
-                )
-              })}
-            {filterInput?.price &&
-              filterInput?.price?.map((price) => {
-                return (
-                  <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                    {price}
-                  </div>
-                )
-              })}
-            {filterInput?.facilityName &&
-              filterInput?.facilityName?.map((facility) => {
-                return (
-                  <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                    {filterPageData.facilities[facility - 1].facilityName}
-                  </div>
-                )
-              })}
-          </div>
-        </div>
-      ) : null
-    )
-  }
+  const showPriceLength = renderCheckbox(priceLength, 5, "priceLength", "ราคา")
 
   return (
     <>
       <div className="bg-white rounded-lg p-4  flex flex-col gap-2 w-60">
-        {/* {
-          // filter
-          (filterInput.rating && filterInput.rating?.length != 0) ||
-          (filterInput.price && filterInput.price?.length != 0) ||
-          (filterInput.facilityName && filterInput.facilityName?.length != 0) ||
-          (filterInput?.districtNameTh &&
-            filterInput.districtNameTh?.length != 0) ? (
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between items-baseline">
-                <div className="font-semibold text-xl cursor-default">
-                  ตัวกรอง
-                </div>
-                <a
-                  className="text-blue-600 cursor-pointer hover:underline"
-                  onClick={clearFilters}
-                >
-                  ลบตัวกรอง
-                </a>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {filterInput?.districtNameTh &&
-                  filterInput?.districtNameTh?.map((district) => {
-                    return (
-                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                        {filterPageData.districts[district - 1].districtNameTh}
-                      </div>
-                    )
-                  })}
-                {filterInput?.rating &&
-                  filterInput?.rating?.map((rating) => {
-                    return (
-                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                        {rating == 3.5
-                          ? "⭐️ ⭐️ ⭐️ ☆"
-                          : rating == 4
-                          ? "⭐️ ⭐️ ⭐️ ⭐️"
-                          : rating}
-                      </div>
-                    )
-                  })}
-                {filterInput?.price &&
-                  filterInput?.price?.map((price) => {
-                    return (
-                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                        {price}
-                      </div>
-                    )
-                  })}
-                {filterInput?.facilityName &&
-                  filterInput?.facilityName?.map((facility) => {
-                    return (
-                      <div className="flex border max-w-fit px-2 py-1 text-sm rounded-full cursor-pointer hover:bg-gray_primary">
-                        {filterPageData.facilities[facility - 1].facilityName}
-                      </div>
-                    )
-                  })}
-              </div>
-            </div>
-          ) : null
-        } */}
-        <FilterTags
-          filterInput={filterInput}
-          filterPageData={filterPageData}
-          clearFilters={clearFilters}
-        />
+        <FilterTags />
         {/* radio */}
         <div className="flex flex-col gap-1">
           <div className="font-semibold text-xl">เรตติ้ง</div>

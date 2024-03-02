@@ -24,8 +24,15 @@ export const RestaurantContextProvider = ({ children }) => {
       if (Object.keys(filterData).length === 0) {
         console.log("no filter")
       }
-      const response = await getFilterRestaurant(filterData)
-      console.log(response.data)
+      const filterDataParams = {
+        districtId: filterData?.districtNameTh,
+        facilityId: filterData?.facilityName,
+        rating: filterData?.rating,
+        priceLength: filterData?.priceLength,
+      }
+
+      const response = await getFilterRestaurant(filterDataParams)
+      console.log(response.data, "data after filter")
       // setFilterPageData(response.data)
       // const queryParams = Object.keys(filterData)
       //   .map((key) => {
@@ -38,7 +45,11 @@ export const RestaurantContextProvider = ({ children }) => {
       console.log(err)
     }
   }
-  console.log(filterInput)
+
+  const clearFilters = () => {
+    setFilterInput({})
+  }
+
   return (
     <RestaurantContext.Provider
       value={{
@@ -47,6 +58,7 @@ export const RestaurantContextProvider = ({ children }) => {
         fetchFilterPage,
         filterInput,
         fetchFilterData,
+        clearFilters,
       }}
     >
       {children}

@@ -6,7 +6,8 @@ import { useEffect } from "react"
 export const FilterPage = () => {
   const { filterPageData, fetchFilterPage, filterInput, fetchFilterData } =
     useRestaurant()
-  const { restaurants, facilities } = filterPageData
+  const { restaurants } = filterPageData
+
   useEffect(() => {
     fetchFilterPage()
   }, [])
@@ -26,9 +27,9 @@ export const FilterPage = () => {
 
       {/* layout body*/}
       <div className="md:mx-auto  ">
-        <div className=" flex justify-around gap-4 ">
+        <div className=" flex justify-around gap-4 w-[886px]">
           {/* <Slidebar> */}
-          <div className=" w-1/4 ">
+          <div className="flex min-w-fit ">
             <SlideBar />
           </div>
           <div className="flex flex-col w-3/4  gap-4">
@@ -37,18 +38,15 @@ export const FilterPage = () => {
               {/* show photo pagination */}
             </div>
             <div className="flex gap-4">
-              <div className="flex flex-col gap-4 w-4/6 ">
+              <div className="flex flex-col gap-4 ">
                 {/* restaurants */}
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
-                <CardRestaurant />
+                {restaurants &&
+                  restaurants?.map((restaurant) => (
+                    <CardRestaurant
+                      key={restaurant.id}
+                      restaurant={restaurant}
+                    />
+                  ))}
               </div>
               <div className="flex flex-col bg-white w-2/6">
                 <div className="m-1 bg-slate-300 h-36 rounded-lg">tests</div>
