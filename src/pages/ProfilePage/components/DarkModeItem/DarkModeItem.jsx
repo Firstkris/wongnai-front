@@ -14,7 +14,7 @@ export default function DarkModeItem() {
   return (
     <Container>
       <Card>
-        <Header>จอภาพและกาารแสลงผล</Header>
+        <Header>จอภาพ และการแสดงผล</Header>
         <div className="text-lg font-bold">โหมดสีเข้ม</div>
         <div className="flex justify-between">
           <div className="flex gap-4">

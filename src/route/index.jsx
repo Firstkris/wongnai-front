@@ -46,6 +46,11 @@ const router = createBrowserRouter([
         element: <EditProfilePage />,
       },
 
+      // {
+      //   path: "profile/:userId",
+      //   element:
+      // }
+
       { path: "/review", element: <UserReview /> },
       {
         path: "/login",

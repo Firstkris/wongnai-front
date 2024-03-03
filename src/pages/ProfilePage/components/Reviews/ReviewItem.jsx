@@ -15,7 +15,7 @@ export default function ReviewItem() {
         />
         <div>
           <div className="text-sm">
-            <span className="font-bold">{user.name}</span> รีวิว{" "}
+            <span className="font-bold">{user?.name}</span> รีวิว{" "}
             <span className="font-bold">BONHOMIE CRAFT BEER BAR</span>
           </div>
           <div className="text-xs text-gray_secondary pr-3  mt-1.5">

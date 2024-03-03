@@ -2,8 +2,20 @@ import React from "react";
 import { useRef } from "react";
 import { ImageIcon } from "../../../../icons/icon";
 
-export default function Model({ setEditImage, profileImage, setProfileImage }) {
+export default function Model({
+  setEditImage,
+  profileImage,
+  setProfileImage,
+  setUser,
+  handleSubmit,
+}) {
   const fileInput = useRef(null);
+
+  const handleOnEdit = () => {
+    setEditImage((c) => !c);
+    handleSubmit();
+    setUser((r) => ({ ...r, imgProfile: profileImage }));
+  };
 
   return (
     <>
@@ -47,12 +59,7 @@ export default function Model({ setEditImage, profileImage, setProfileImage }) {
             >
               ยกเลิก
             </button>
-            <button
-              className="blue_primary"
-              onClick={() => {
-                setEditImage((c) => !c);
-              }}
-            >
+            <button className="blue_primary" onClick={handleOnEdit}>
               บันทึก
             </button>
           </div>
