@@ -1,7 +1,10 @@
 import React from "react";
 import { StarIcon } from "../../../../icons/icon";
+import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
 
 export default function ReviewItem() {
+  const { user } = useAuth();
+
   return (
     <div className="w-1/2 mx-auto bg-white rounded-lg min-h-[300px] p-4 mb-10">
       <h1 className="font-bold text-xl mb-5">รีวิว BONHOMIE CRAFT BEER BAR</h1>
@@ -12,7 +15,7 @@ export default function ReviewItem() {
         />
         <div>
           <div className="text-sm">
-            <span className="font-bold">Punnatorn Prathombut</span> รีวิว{" "}
+            <span className="font-bold">{user.name}</span> รีวิว{" "}
             <span className="font-bold">BONHOMIE CRAFT BEER BAR</span>
           </div>
           <div className="text-xs text-gray_secondary pr-3  mt-1.5">
