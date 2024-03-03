@@ -6,8 +6,13 @@ import { useEffect } from "react"
 import { Breadcrumbs } from "../components/BreadCrumb.jsx"
 
 export const FilterPage = () => {
-  const { filterPageData, fetchFilterPage, filterInput, fetchFilterData } =
-    useRestaurant()
+  const {
+    filterPageData,
+    fetchFilterPage,
+    filterInput,
+    fetchFilterData,
+    fetchRestaurantWithUserLogin,
+  } = useRestaurant()
   const { restaurants } = filterPageData
 
   useEffect(() => {
@@ -24,6 +29,12 @@ export const FilterPage = () => {
   return (
     //layout
     <div className="flex flex-col gap-2">
+      <div
+        className="bg-yellow-400"
+        onClick={() => fetchRestaurantWithUserLogin()}
+      >
+        test
+      </div>
       {/* layout subheader */}
       <div className="w-full bg-white mt-1">
         <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto">

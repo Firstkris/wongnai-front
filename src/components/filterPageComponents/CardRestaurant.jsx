@@ -54,7 +54,7 @@ export const CardRestaurant = ({ restaurant }) => {
           </div>
           <div className="flex flex-col gap-2 p-1">
             <div className="justify-end flex">
-              <BookmarkIcon id={restaurant.id} />
+              <BookmarkIcon restaurant={restaurant} />
             </div>
             <div>0 กม.</div>
           </div>

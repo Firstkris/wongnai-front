@@ -5,3 +5,6 @@ export const filterPageGetRestaurant = async () =>
 
 export const getFilterRestaurant = async (filterData) =>
   await axios.get("/restaurants/filter", { params: filterData })
+
+export const getUserBookmark = async () =>
+  await axios.get("/restaurants/bookmark")

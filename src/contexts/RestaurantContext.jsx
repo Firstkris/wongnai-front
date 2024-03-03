@@ -2,6 +2,7 @@ import { useState, createContext } from "react"
 import {
   filterPageGetRestaurant,
   getFilterRestaurant,
+  getUserBookmark,
 } from "../apis/restaurants"
 
 export const RestaurantContext = createContext()
@@ -52,6 +53,20 @@ export const RestaurantContextProvider = ({ children }) => {
     setFilterInput({})
   }
 
+  const fetchRestaurantWithUserLogin = async () => {
+    //if user is login
+    try {
+      const response = await getUserBookmark()
+      console.log(response.data.restaurants)
+      setFilterPageData((prev) => ({
+        ...prev,
+        restaurants: response.data?.restaurants,
+      }))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <RestaurantContext.Provider
       value={{
@@ -61,6 +76,7 @@ export const RestaurantContextProvider = ({ children }) => {
         filterInput,
         fetchFilterData,
         clearFilters,
+        fetchRestaurantWithUserLogin,
       }}
     >
       {children}
