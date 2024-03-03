@@ -7,7 +7,7 @@ export const SlideBar = () => {
   const { filterPageData, setFilterInput, filterInput, fetchFilterData } =
     useRestaurant()
   const { renderCheckbox } = useRenderCheckbox()
-  const { facilities, districts } = filterPageData
+  const { facilities, districts, categories } = filterPageData
 
   // fetchData when checked
   useEffect(() => {
@@ -17,7 +17,7 @@ export const SlideBar = () => {
     }
     run()
   }, [filterInput])
-
+  console.log(filterPageData)
   const handleChangeRating = (e) => {
     setFilterInput((prev) => ({ ...prev, rating: [e.target.value] }))
   }
@@ -30,10 +30,16 @@ export const SlideBar = () => {
     "คุณสมบัติ"
   )
   const showPriceLength = renderCheckbox(priceLength, 5, "priceLength", "ราคา")
+  const showCategories = renderCheckbox(
+    categories,
+    5,
+    "categoryName",
+    "ประเภทร้านค้า"
+  )
 
   return (
     <>
-      <div className="bg-white rounded-lg p-4  flex flex-col gap-2 w-60">
+      <div className="bg-white rounded-lg p-4  flex flex-col gap-2 w-56">
         <FilterTags />
         {/* radio */}
         <div className="flex flex-col gap-1">
@@ -65,12 +71,10 @@ export const SlideBar = () => {
             </label>
           </div>
         </div>
-        {/* <check box /> */}
         <div className="flex flex-col gap-2">{showDistricts}</div>
-        {/* end check */}
-        <div className="flex flex-col gap-2">{showFacilities}</div>
-        {/* end */}
         <div className="flex flex-col gap-2">{showPriceLength}</div>
+        <div className="flex flex-col gap-2">{showCategories}</div>
+        <div className="flex flex-col gap-2">{showFacilities}</div>
       </div>
     </>
   )

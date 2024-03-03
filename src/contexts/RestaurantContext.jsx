@@ -29,20 +29,22 @@ export const RestaurantContextProvider = ({ children }) => {
         facilityId: filterData?.facilityName,
         rating: filterData?.rating,
         priceLength: filterData?.priceLength,
+        categoryId: filterData?.categoryName,
       }
 
       const response = await getFilterRestaurant(filterDataParams)
-      console.log(response.data, "data after filter")
-      // setFilterPageData(response.data)
-      // const queryParams = Object.keys(filterData)
-      //   .map((key) => {
-      //     return `${key}=${filterData[key]}`
-      //   })
-      //   .join("&")
-      // console.log(queryParams, "Params")
-      //setFilterPageData(response.data)
+      console.log(response.data?.restaurants, "restaurant after filter")
+      if (response.data?.restaurants?.length == 0) {
+        return
+      } else {
+        setFilterPageData((prev) => ({
+          ...prev,
+          restaurants: response.data?.restaurants,
+        }))
+      }
     } catch (err) {
-      console.log(err)
+      fetchFilterPage()
+      console.log("pass")
     }
   }
 

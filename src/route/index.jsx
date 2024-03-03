@@ -10,6 +10,8 @@ import RegisterPage from "../pages/User/RegisterPage"
 import BookmarkPage from "../pages/ProfilePage/BookmarkPage"
 import ReviewPage from "../pages/ProfilePage/ReviewPage"
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage"
+import { NavLink } from "react-router-dom"
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,7 +40,10 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
 
-      { path: "/restaurants/filter", element: <FilterPage /> },
+      {
+        path: "/restaurants/filter",
+        element: <FilterPage />,
+      },
     ],
   },
 ])

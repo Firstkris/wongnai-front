@@ -3,6 +3,8 @@ import React from "react"
 import { SlideBar } from "../components/filterPageComponents/SlideBar"
 import { useRestaurant } from "../hooks/hooks.jsx"
 import { useEffect } from "react"
+import { Breadcrumbs } from "../components/BreadCrumb.jsx"
+
 export const FilterPage = () => {
   const { filterPageData, fetchFilterPage, filterInput, fetchFilterData } =
     useRestaurant()
@@ -12,13 +14,22 @@ export const FilterPage = () => {
     fetchFilterPage()
   }, [])
 
+  const breadcrumbs = [
+    { label: "หน้าหลัก", link: "https://www.google.com" },
+    {
+      label: "ค้นหาร้านอาหาร",
+      link: "https://www.wongnai.com/restaurants?regions=9681",
+    },
+  ]
   return (
     //layout
     <div className="flex flex-col gap-2">
       {/* layout subheader */}
       <div className="w-full bg-white mt-1">
         <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto">
-          <h3 className="text-gray_secondary">breadClumb</h3>
+          <div className="pl-1">
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
+          </div>
           <div className="font-semibold text-3xl">
             ร้านอาหารยอดนิยม ในกรุงเทพมหานครอมรรัตนโกสินทร์
           </div>

@@ -35,6 +35,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.22.1
     version: 6.22.1(react-dom@18.2.0)(react@18.2.0)
+  use-react-router-breadcrumbs:
+    specifier: ^4.0.1
+    version: 4.0.1(react-router-dom@6.22.1)(react@18.2.0)
 
 devDependencies:
   '@types/react':
@@ -2296,6 +2299,16 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /use-react-router-breadcrumbs@4.0.1(react-router-dom@6.22.1)(react@18.2.0):
+    resolution: {integrity: sha512-Zbcy0KvWt1JePFcUHJAnTr7Z+AeO9WxmPs6A5Q/xqOVoi8edPKzpqHF87WB2opXwie/QjCxrEyTB7kFg7fgXvQ==}
+    peerDependencies:
+      react: '>=16.8'
+      react-router-dom: '>=6.0.0'
+    dependencies:
+      react: 18.2.0
+      react-router-dom: 6.22.1(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}

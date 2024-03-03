@@ -13,3 +13,7 @@ button.blue_primary {
 button.gray_primary {
   @apply bg-gray_primary px-10 py-2 rounded-lg hover:bg-gray_primary_hv;
 }
+
+.breadcrumbs {
+  @apply flex gap-2;
+}

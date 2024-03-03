@@ -4,7 +4,8 @@ export const FilterTags = () => {
   const { filterPageData, filterInput, clearFilters } = useRestaurant()
   return (
     // filter
-    (filterInput.rating && filterInput.rating?.length != 0) ||
+    (filterInput.categoryName && filterInput.categoryName?.length != 0) ||
+      (filterInput.rating && filterInput.rating?.length != 0) ||
       (filterInput.priceLength && filterInput.priceLength?.length != 0) ||
       (filterInput.facilityName && filterInput.facilityName?.length != 0) ||
       (filterInput?.districtNameTh &&
@@ -25,7 +26,7 @@ export const FilterTags = () => {
               return (
                 <FilterTag
                   key={district}
-                  text={filterPageData.districts[district - 1].districtNameTh}
+                  text={filterPageData?.districts[district - 1]?.districtNameTh}
                 />
               )
             })}
@@ -53,7 +54,16 @@ export const FilterTags = () => {
               return (
                 <FilterTag
                   key={facility}
-                  text={filterPageData.facilities[facility - 1].facilityName}
+                  text={filterPageData?.facilities[facility - 1]?.facilityName}
+                />
+              )
+            })}
+          {filterInput?.categoryName &&
+            filterInput?.categoryName?.map((id) => {
+              return (
+                <FilterTag
+                  key={id}
+                  text={filterPageData?.categories[id - 1]?.categoryName}
                 />
               )
             })}
