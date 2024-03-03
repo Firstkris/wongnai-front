@@ -15,10 +15,12 @@
     "@rollup/rollup-darwin-x64": "^4.12.0",
     "axios": "^1.6.7",
     "cloudinary": "^2.0.1",
+    "gapi-script": "^1.2.0",
     "joi": "^17.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.1"
   },

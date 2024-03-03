@@ -13,6 +13,9 @@ import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../feature/auth/contexts/AuthContext";
 import * as Token from "../../../src/utils/local-storage";
 
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { gapi } from "gapi-script";
+
 function LoginPage() {
   const [validateError, setValidateError] = useState(null);
 
@@ -20,6 +23,9 @@ function LoginPage() {
   const { setUser, user } = useAuth();
   const [input, setInput] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+
+  const clientId =
+    "360767650639-0evi93so64jv4opi2118007bjfuui5sj.apps.googleusercontent.com";
 
   const click = () => {
     console.log("click");
@@ -65,8 +71,20 @@ function LoginPage() {
       console.log(err);
     }
   };
-  console.log(useLocation().pathname);
-  console.log(useParams());
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      });
+    };
+
+    gapi.load("client:auth2", initClient);
+  }, []);
+
+  //   console.log(useLocation().pathname);
+  //   console.log(useParams());
   return (
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
       <form
@@ -160,7 +178,26 @@ function LoginPage() {
               </div>
             </button>
 
-            <button className="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black">
+            <GoogleLogin
+              clientId={clientId}
+              buttonText="sign in with google"
+              onSuccess={async (res) => {
+                // console.log(res);
+                const user = await axios.post("/user/loginWithGoogle", res);
+                // console.log(user);
+              }}
+              onFailure={(res) => {
+                console.log(res);
+              }}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
+            {/* <GoogleLogout
+              clientId={clientId}
+              buttonText="Log out"
+              onLogoutSuccess={(res) => console.log(res)}
+            /> */}
+            {/* <button className="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black">
               <svg
                 className="h-5 w-5"
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +211,7 @@ function LoginPage() {
               <div className="w-full">
                 <p>เข้าสู่ระบบด้วย Google</p>
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
       </form>
@@ -182,5 +219,6 @@ function LoginPage() {
   );
 }
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default LoginPage;
