@@ -6,27 +6,23 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
+    'plugin:react/jsx-runtime',
+    "plugin:react-hooks/recommended",
     "airbnb",
     "prettier",
-    "plugin:react-hooks/recommended",
   ],
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: [".eslintrc.{js,cjs}"],
-      parserOptions: {
-        sourceType: "script",
-      },
-    },
-  ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "react-hooks", "prettier"],
+  plugins: ["react", 'react-refresh'],
   rules: {
-    // "prettier/prettier": "error",
+    'react/jsx-no-target-blank': 'off',
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+    'react/prop-types': 0,
   },
 };

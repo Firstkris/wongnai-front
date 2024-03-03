@@ -1,14 +1,19 @@
 import React from "react";
 
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { FilterPage } from "../pages/FilterPage";
 
 import Header from "../layouts/Header";
+import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
+
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
 import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
 import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
+import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,11 +26,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <BookmarkPage />,
+        element: (
+          <ProtectedProfileRoute>
+            <ReviewPage />,
+          </ProtectedProfileRoute>
+        ),
       },
       {
-        path: "profile/review",
-        element: <ReviewPage />,
+        path: "profile/Bookmark",
+        element: (
+          <ProtectedProfileRoute>
+            <BookmarkPage />
+          </ProtectedProfileRoute>
+        ),
       },
 
       {
@@ -34,8 +47,21 @@ const router = createBrowserRouter([
       },
 
       { path: "/review", element: <UserReview /> },
-      { path: "/login", element: <LoginPage /> },
+      {
+        path: "/login",
+        element: (
+          <RedirectIfAuthenticated>
+            <LoginPage />
+          </RedirectIfAuthenticated>
+        ),
+      },
       { path: "/register", element: <RegisterPage /> },
+
+      { path: "/restaurants/filter", element: <FilterPage /> },
+      {
+        path: "/restaurant",
+        element: <RestaurantRegisterPage />,
+      },
     ],
   },
 ]);
