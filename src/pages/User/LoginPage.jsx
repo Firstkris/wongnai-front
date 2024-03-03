@@ -7,14 +7,20 @@ import FacebookLogin from "react-facebook-login";
 import { useState } from "react";
 import axios from "../../configs/axios";
 import { userLogin, userLoginWithFacebook } from "../../apis/user";
+import { validateLogin } from "../../validations/validate-login";
+import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function LoginPage() {
+  const [validateError, setValidateError] = useState(null);
   const [input, setInput] = useState({ username: "", password: "" });
 
   const click = () => {
     console.log("click");
   };
   const back = async (res) => {
+    console.log(res);
     //
     //
     // const user = await axios.post("/user/loginWithFace", res);
@@ -27,11 +33,15 @@ function LoginPage() {
   };
 
   const handleChangeInput = (e) => {
+    setValidateError("");
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      const validate = validateLogin(input);
+      if (validate) return setValidateError("Email or password invalid");
       //
       //
       //   const response = await axios.post("/user/login", input);
@@ -42,10 +52,12 @@ function LoginPage() {
       //
       //
     } catch (err) {
+      setValidateError("Email or password invalid");
       console.log(err);
     }
   };
-  console.log(input);
+  console.log(useLocation().pathname);
+  console.log(useParams());
   return (
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
       <form
@@ -65,10 +77,14 @@ function LoginPage() {
             onChange={handleChangeInput}
             name={"password"}
           />
-
-          <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary cursor-pointers">
-            ถัดไป
-          </button>
+          <div className="w-full">
+            {validateError ? (
+              <p className="text-sm text-red-500"> {validateError}</p>
+            ) : null}
+            <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary cursor-pointers">
+              ถัดไป
+            </button>
+          </div>
 
           <div className="flex justify-end w-full">
             <Link to={"/register"} className="">
