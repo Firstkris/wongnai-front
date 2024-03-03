@@ -4,7 +4,7 @@ import React from "react";
 function Card({ children }) {
   return (
     <div className='
-    flex flex-col w-full gap-4 rounded-3xl mx-auto border rounded-lg bg-gray-200 p-6'>
+    flex flex-col w-full gap-6 mx-auto border rounded-lg bg-gray-200 p-6'>
       {children}
     </div>
   );

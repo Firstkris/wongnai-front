@@ -6,17 +6,26 @@ import HrWithText from "../../components/HrWithText";
 import Button from "../../components/Button";
 import RadioBtn from "../../components/RadioBtn";
 import WeekDays from "./WeekDays";
+import useRestaurantContext from "../../hooks/useRestaurantContext";
+import { useEffect } from "react";
 
 const initialValue = {
-    name: "",
+    resName: "",
+    province: ""
 };
+
 function BusinessInfo() {
-    const [input, setInput] = useState("");
-    const [isOpen, setIsOpen] = useState("");
+    const [input, setInput] = useState(initialValue);
+    const [isOpen, setIsOpen] = useState("everyDay");
+    // const [provinces, setProvince] = useState([]);
+
+    const { fetchProvince, provinces } = useRestaurantContext()
+
+    console.log(provinces);
 
     const hdlChangeInput = (e) => {
         console.log(e.target.value);
-        setInput(e.target.value);
+        setInput(prv => ({ ...prv, [e.target.name]: e.target.value }));
     };
 
     const hldChangeRadio = (e) => {
@@ -24,8 +33,23 @@ function BusinessInfo() {
         setIsOpen(e.target.value)
     }
 
+    const hdlSubmit = (e) => {
+        e.preventDefault()
+        console.log(input);
+    }
+
+    // const onSetProvince = async () => {
+    //     const provinceData = await fetchProvince()
+    //     setProvince(provinceData)
+    // }
+
+
+    useEffect(() => {
+        fetchProvince()
+    }, [])
+
     return (
-        <form>
+        <form onSubmit={hdlSubmit}>
             <div className="w-full flex flex-col gap-6 ">
 
                 {/* รายละเอียดธุรกิจ */}
@@ -36,7 +60,7 @@ function BusinessInfo() {
                     <Input
                         placeholder='ชื่อร้านค้า'
                         name='resName'
-                        value={input.name}
+                        value={input.resName}
                         onChange={hdlChangeInput}
                         label={'ชื่อร้าน'}
                     />
@@ -67,9 +91,9 @@ function BusinessInfo() {
                     // onChange={hdlChangeInput}
                     />
 
-                    <Select label={'จังหวัด'} />
-                    <Select label={'เขต/อำเภอ'} />
-                    <Select label={'แขวง/ตำบล'} />
+                    <Select label={'จังหวัด'} name={'province'} value={input.province} onChange={hdlChangeInput} items={provinces} />
+                    {/* <Select label={'เขต/อำเภอ'} /> */}
+                    {/* <Select label={'แขวง/ตำบล'} /> */}
                 </Card>
 
                 {/* ข้อมูลติดต่อ */}
@@ -92,9 +116,6 @@ function BusinessInfo() {
                     // onChange={hdlChangeInput}
                     />
 
-                    <Select label={'จังหวัด'} />
-                    <Select label={'เขต/อำเภอ'} />
-                    <Select label={'แขวง/ตำบล'} />
                 </Card>
 
                 {/* ข้อมูลเพิ่มเติม */}
@@ -108,7 +129,10 @@ function BusinessInfo() {
                         choices={[
                             { text: 'เปิดทุกวัน', value: "everyDay" },
                             { text: 'เลือกวันเปิด', value: "selectDay" },
-                        ]} />
+                        ]}
+                        name={'openDay'}
+
+                    />
                     {isOpen === "everyDay" ?
                         <>
                             <Input
@@ -137,17 +161,38 @@ function BusinessInfo() {
                             <WeekDays label={'Sunday'} />
                         </>
                     }
-                    <Input
-                        placeholder='example@mail.com'
-                        label={"อีเมล :"}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+
+                    <RadioBtn
+                        label={'ที่จอดรถ'}
+                        name={'parking'}
+                        choices={[
+                            { text: 'จอดข้างถนน', value: "1" },
+                            { text: 'ที่จอดรถของร้าน', value: "2" },
+                            { text: 'ไม่มีที่จอดรถ', value: "3" },
+                        ]}
                     />
 
-                    <Select label={'จังหวัด'} />
-                    <Select label={'เขต/อำเภอ'} />
-                    <Select label={'แขวง/ตำบล'} />
+                    <RadioBtn
+                        label={'รับบัตรเครดิต'}
+                        name={'creditCard'}
+                        choices={[
+                            { text: 'ไม่ระบุ', value: "0" },
+                            { text: 'ใช่', value: "1" },
+                            { text: 'ไม่ใช่', value: "2" },
+                        ]}
+                    />
+                    <RadioBtn
+                        label={'รับจองล่วงหน้า'}
+                        name={'booking'}
+                        choices={[
+                            { text: 'ไม่ระบุ', value: "0" },
+                            { text: 'ใช่', value: "1" },
+                            { text: 'ไม่ใช่', value: "2" },
+                        ]}
+                    />
+
+
+
                 </Card>
 
                 <div className="w-full">
