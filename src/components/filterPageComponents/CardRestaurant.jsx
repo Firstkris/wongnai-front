@@ -1,5 +1,6 @@
 import { BookmarkIcon } from "../Bookmark"
 import { useNavigate } from "react-router-dom"
+import { ReviewScore } from "../ReviewScore"
 export const CardRestaurant = ({ restaurant }) => {
   console.log(restaurant, "restaurant")
   const navigate = useNavigate()
@@ -38,8 +39,12 @@ export const CardRestaurant = ({ restaurant }) => {
               </span>
             </div>
 
-            <div className="flex gap-2">
-              <span>{restaurant.reviewPoint / restaurant.reviewCount}⭐️</span>
+            <div className="flex gap-2 items-center">
+              <span>
+                <ReviewScore
+                  score={restaurant.reviewPoint / restaurant.reviewCount}
+                />
+              </span>
               <span>{restaurant.reviewCount} รีวิว</span>
               <span>{restaurant.priceLength}</span>
               {restaurant.isOpen ? (
