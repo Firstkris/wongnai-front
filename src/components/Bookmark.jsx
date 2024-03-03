@@ -4,6 +4,7 @@ import { userBookmark } from "../apis/user"
 export const BookmarkIcon = ({ restaurant }) => {
   const [isBookmarked, setIsBookmarked] = useState(false)
   console.log(isBookmarked)
+  let debounceTimeout
   // second render state be set
   useEffect(() => {
     setIsBookmarked(
@@ -14,16 +15,27 @@ export const BookmarkIcon = ({ restaurant }) => {
         : false
     )
   }, [restaurant.bookmarks])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(debounceTimeout) //clear timeout
+    }
+  }, [])
   const handleClickBookMark = async (e) => {
     try {
       e.stopPropagation()
-      console.log(restaurant.id)
-      const response = await userBookmark(restaurant.id)
-      setIsBookmarked(response.data?.bookmark)
+      if (debounceTimeout) {
+        clearTimeout(debounceTimeout)
+      }
+      debounceTimeout = setTimeout(async () => {
+        const response = await userBookmark(restaurant.id)
+        setIsBookmarked(response.data?.bookmark)
+      }, 500)
     } catch (err) {
       console.log(err)
     }
   }
+
   return (
     <div onClick={handleClickBookMark}>
       {!isBookmarked ? (
