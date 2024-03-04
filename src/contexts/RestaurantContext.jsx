@@ -36,7 +36,10 @@ export const RestaurantContextProvider = ({ children }) => {
       const response = await getFilterRestaurant(filterDataParams)
       console.log(response.data?.restaurants, "restaurant after filter")
       if (response.data?.restaurants?.length == 0) {
-        return
+        setFilterPageData((prev) => ({
+          ...prev,
+          restaurants: [],
+        }))
       } else {
         setFilterPageData((prev) => ({
           ...prev,

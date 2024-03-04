@@ -33,13 +33,13 @@ export const FilterPage = () => {
         className="bg-yellow-400"
         onClick={() => fetchRestaurantWithUserLogin()}
       >
-        test
+        If login
       </div>
       {/* layout subheader */}
       <div className="w-full bg-white mt-1">
         <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto">
           <div className="pl-1">
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
+            <Breadcrumbs breadcrumbs={breadcrumbs} pageName="ค้นหาร้านอาหาร" />
           </div>
           <div className="font-semibold text-3xl">
             ร้านอาหารยอดนิยม ในกรุงเทพมหานครอมรรัตนโกสินทร์
@@ -62,16 +62,21 @@ export const FilterPage = () => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-4 ">
                 {/* restaurants */}
-                {restaurants &&
+                {restaurants?.length > 0 ? (
                   restaurants?.map((restaurant) => (
                     <CardRestaurant
                       key={restaurant.id}
                       restaurant={restaurant}
                     />
-                  ))}
+                  ))
+                ) : (
+                  <div className="flex justify-center gap-2 p-4 bg-white rounded-lg font-semibold  w-[480px] text-gray-400">
+                    NO FILTERS
+                  </div>
+                )}
               </div>
               <div className="flex flex-col bg-white w-2/6">
-                <div className="m-1 bg-slate-300 h-36 rounded-lg">tests</div>
+                <div className="m-1 bg-slate-300 h-36 rounded-lg">ADS</div>
               </div>
             </div>
           </div>

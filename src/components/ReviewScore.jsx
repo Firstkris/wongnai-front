@@ -1,3 +1,5 @@
+import { AiFillStar } from "react-icons/ai"
+
 export const ReviewScore = ({ score }) => {
   const formattedScore = parseFloat(score).toFixed(1)
   const getBackgroundColorClass = (score) => {
@@ -9,12 +11,12 @@ export const ReviewScore = ({ score }) => {
       return "bg-gradient-to-r  from-orange-700 to-red-700 " // Default background color for other scores
     }
   }
-  const gradient = getBackgroundColorClass(2)
+  const gradient = getBackgroundColorClass(score)
   return (
     <div
-      className={`rounded-lg  px-1.5 font-semibold text-sm text-white ${gradient}`}
+      className={`rounded-lg  px-1.5 py-0.5 font-semibold text-sm text-white ${gradient} flex items-center gap-1`}
     >
-      {formattedScore} ⭐️
+      <span>{formattedScore}</span> <AiFillStar />
     </div>
   )
 }

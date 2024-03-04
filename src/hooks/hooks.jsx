@@ -20,18 +20,7 @@ export const useRenderCheckbox = () => {
             : [...(prev[key] || []), e.target.value],
       }))
     }
-    // const href = `/
-    //         restaurants/filter?${Object.keys(filterInput)
-    //           .map(
-    //             (key) =>
-    //               `${key}` + "=" + filterInput[key].map((item) => `${item}`)
-    //           )
-    //           .join("&")}`
-    // const navigator = useNavigate()
-    // useEffect(() => {
-    //   return () => navigator(href)
-    // }, [filterInput])
-    const { districtNameTh, facilityName, rating, price } = filterInput
+
     return (
       <>
         <div className="font-semibold text-xl cursor-default">{title}</div>
