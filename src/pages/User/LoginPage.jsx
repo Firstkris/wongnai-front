@@ -57,14 +57,15 @@ function LoginPage() {
       if (validate) return setValidateError("Email or password invalid");
       //
       //
-      //   const response = await axios.post("/user/login", input);
+      // const response = await axios.post("/user/login", input);
+
+      // console.log("user");
       const response = await userLogin(input);
       // รอว่าจะใช้ context หรือ redux
       Token.setToken(response.data.token);
       setUser(response.data.user);
       navigate("/");
 
-      // console.log("user", user.name);
       // console.log("user", user.birthdate);
     } catch (err) {
       setValidateError("Email or password invalid");
