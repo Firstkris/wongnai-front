@@ -9,6 +9,7 @@ const defaultClasses = `
                 rounded-lg
                 focus:border-blue-500
                 focus:ring-2 focus:ring-blue-300
+                mt-2
               
 `;
 export default function Input({
@@ -18,27 +19,32 @@ export default function Input({
   onChange,
   name,
   errorMessage,
+  label
+
 }) {
   const extendedClasses = errorMessage
     ? "border-red-500 focus:ring-red-300"
     : "border-gray-300 focus:border-blue-500 focus:ring-blue-300";
 
   return (
-    <>
+    <div>
+      <label htmlFor={name}>{label}</label>
       <input
-        className={`${defaultClasses} ${extendedClasses}`}
+        className={`focus:outline-none ${defaultClasses} ${extendedClasses}`}
         placeholder={placeholder}
         type={type}
         value={value}
         onChange={onChange}
         name={name}
+        id={name}
+
       />
 
       {errorMessage ? (
-        <small className='text-red-500'>{errorMessage}</small>
+        <small className="text-red-500">{errorMessage}</small>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 }

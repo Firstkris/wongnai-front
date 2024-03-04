@@ -1,12 +1,12 @@
 import React from "react";
-import BussinessInfo from "../../feature/Restuarant/BussinessInfo";
+import BusinessInfo from "../../feature/Restuarant/BusinessInfo";
 
 function RestaurantRegisterPage() {
   return (
-    <div className=' max-w-[1024] w-8/12 mx-auto '>
-      <form>
-        <BussinessInfo />
-      </form>
+    <div className=' max-w-[1024] w-8/12 mx-auto py-8'>
+
+      <BusinessInfo />
+
     </div>
   );
 }
