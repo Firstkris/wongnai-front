@@ -14,7 +14,9 @@ import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
 import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
+import GoogleMaps from "../pages/GoogleMaps";
 const router = createBrowserRouter([
+  { path: "/huntest", element: <GoogleMaps /> },
   {
     path: "/",
     element: (
