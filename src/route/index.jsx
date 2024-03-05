@@ -10,12 +10,15 @@ import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
 import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
+import RestaurantPage from "../pages/MainPage/RestaurantPage";
 import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
 import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage";
 import ProtectedProfileRoute from "../feature/ีuser/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/ีuser/components/RedirectIfAuthenticated";
+import GoogleMaps from "../pages/GoogleMaps";
 const router = createBrowserRouter([
+  { path: "/huntest", element: <GoogleMaps /> },
   {
     path: "/",
     element: (
@@ -66,10 +69,11 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
+      { path: "/restaurants", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
-        path: "/restaurant",
+        path: "/merchant",
         element: <RestaurantRegisterPage />,
       },
     ],

@@ -63,6 +63,7 @@ function LoginPage() {
       // รอว่าจะใช้ context หรือ redux
       Token.setToken(response.data.token);
       setUser(response.data.user);
+      toast.success("Login success");
       navigate("/");
 
       // console.log("user", user.birthdate);
@@ -221,5 +222,6 @@ function LoginPage() {
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUser } from "../../feature/ีuser/contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default LoginPage;
