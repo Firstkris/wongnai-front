@@ -6,17 +6,20 @@ function Select({
     onChange,
     items,
     value,
+    display,
     disabled = false,
     errorMsg,
     isRequired = "required",
     icon,
 }) {
-    console.log(items);
+    // console.log(items);
     return (
         <label className="w-full">
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
+
+
 
             {disabled
                 ? (<>
@@ -36,24 +39,44 @@ function Select({
 
                         <option disabled value="" > {label} </option>
 
-                        {items && items.map((el) => (
-                            <option key={el.id} value={el[`${name}Code`]}>{el[`${name}Code`]}  {el[`${name}NameTh`]}</option>
-                        ))}
+                        {name === "categoryId"
+                            ? <>
+
+                                {items && items.map((el) => (
+                                    <option
+                                        key={el.id}
+                                        value={el.id}
+                                    >
+                                        {el.categoryName}
+                                    </option>
+
+                                ))}
+                            </>
+                            : (
+                                <>
+                                    {items && items.map((el) => (
+                                        <option
+                                            key={el.id}
+                                            id={el[`${name}`]}
+                                            // value={el[`${name}NameTh`]}
+                                            value={el[`${name}`]}
+                                        // value={el}
+                                        >
+                                            {/* {el[`${name}Code`]} */}
+                                            {el[`${display}NameTh`]}
+                                        </option>
+
+                                    ))}
+
+
+                                </>
+                            )}
+
+
                     </select>
                 </>)}
 
 
-
-            {/* <select className="py-1.5 px-3 rounded-lg w-full  mt-2">
-                <option disabled selected>
-                    Pick one
-                </option>
-                <option>Star Wars</option>
-                <option>Harry Potter</option>
-                <option>Lord of the Rings</option>
-                <option>Planet of the Apes</option>
-                <option>Star Trek</option>
-            </select> */}
         </label>
     );
 }

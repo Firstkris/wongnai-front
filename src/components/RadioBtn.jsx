@@ -8,6 +8,7 @@ function RadioBtn({ label, choices, onChange, name }) {
                 {choices?.map((el) => (
                     <>
                         <input
+                            key={name + el.value}
                             id={name + el.value}
                             name={name}
                             type="radio"

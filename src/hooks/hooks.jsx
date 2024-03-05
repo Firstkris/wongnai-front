@@ -27,8 +27,8 @@ export const useRenderCheckbox = () => {
                           [key]:
                             prev[key] && prev[key].includes(e.target.value)
                               ? prev[key].filter(
-                                  (item) => item !== e.target.value
-                                )
+                                (item) => item !== e.target.value
+                              )
                               : [...(prev[key] || []), e.target.value],
                         }))
                       }}

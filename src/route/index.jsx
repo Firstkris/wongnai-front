@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
-        path: '/restaurant',
+        path: '/merchant',
         element: <RestaurantRegisterPage />
       }
 

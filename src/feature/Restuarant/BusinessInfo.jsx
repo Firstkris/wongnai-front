@@ -10,22 +10,46 @@ import useRestaurantContext from "../../hooks/useRestaurantContext";
 import { useEffect } from "react";
 
 const initialValue = {
-    resName: "",
-    province: ""
+    merchantId: 1,
+    restaurantName: "",
+    subtitle: "",
+    provinceCode: "",
+    districtCode: "",
+    subdistrictCode: "",
+    categoryId: "",
+    mobile: "",
+    email: null,
+    priceLength: "0-100",
+    address: "cc16"
 };
 
 function BusinessInfo() {
     const [input, setInput] = useState(initialValue);
     const [isOpen, setIsOpen] = useState("everyDay");
-    // const [provinces, setProvince] = useState([]);
+    const [geoCode, setGeocode] = useState({});
 
-    const { fetchProvince, provinces } = useRestaurantContext()
+    const {
+        provinces,
+        district,
+        fetchDistrict,
+        subDistrict,
+        fetchSubDistrict,
+        category,
+        register
+    } = useRestaurantContext();
 
-    console.log(provinces);
+    console.log(category);
+    console.log(provinces)
+    console.log(subDistrict);
 
     const hdlChangeInput = (e) => {
-        console.log(e.target.value);
-        setInput(prv => ({ ...prv, [e.target.name]: e.target.value }));
+
+        if (e.target.name === "mobile") {
+            setInput((prv => ({ ...prv, [e.target.name]: e.target.value })))
+        } else {
+
+            setInput(prv => ({ ...prv, [e.target.name]: +e.target.value ? +e.target.value : e.target.value }));
+        }
     };
 
     const hldChangeRadio = (e) => {
@@ -33,20 +57,27 @@ function BusinessInfo() {
         setIsOpen(e.target.value)
     }
 
-    const hdlSubmit = (e) => {
+    const hdlSubmit = async (e) => {
         e.preventDefault()
         console.log(input);
+        await register(input)
     }
 
-    // const onSetProvince = async () => {
-    //     const provinceData = await fetchProvince()
-    //     setProvince(provinceData)
-    // }
+    console.log(input);
+
 
 
     useEffect(() => {
-        fetchProvince()
-    }, [])
+
+        if (input.provinceCode) {
+            console.log(input.provinceCode);
+            fetchDistrict(+input.provinceCode)
+        }
+        if (input.districtCode) {
+            console.log(geoCode.district);
+            fetchSubDistrict(+input.districtCode)
+        }
+    }, [input.provinceCode, input.districtCode])
 
     return (
         <form onSubmit={hdlSubmit}>
@@ -54,20 +85,27 @@ function BusinessInfo() {
 
                 {/* รายละเอียดธุรกิจ */}
                 <Card>
-
                     <HrWithText name={'รายละเอียดธุรกิจ'} />
 
                     <Input
                         placeholder='ชื่อร้านค้า'
-                        name='resName'
-                        value={input.resName}
+                        name='restaurantName'
+                        value={input.restaurantName}
                         onChange={hdlChangeInput}
                         label={'ชื่อร้าน'}
                     />
 
-                    <Select label={'เลือกประเภทธุรกิจ'} />
-                    <Select label={'เลือกหมวดหมู่'} />
-                    <p>เลือกตำแหน่งจากแผนที่</p>
+                    <Input
+                        placeholder='รายละเอียดร้านค้า'
+                        name='subtitle'
+                        value={input.subtitle}
+                        onChange={hdlChangeInput}
+                        label={'รายละเอียดร้านค้า'}
+                    />
+
+                    {/* <Select label={'เลือกประเภทธุรกิจ'} /> */}
+                    <Select label={'เลือกหมวดหมู่'} name={"categoryId"} value={input.categoryId} items={category} onChange={hdlChangeInput} />
+
 
                 </Card>
 
@@ -75,6 +113,7 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={'ที่อยู่'} />
 
+                    <p>เลือกตำแหน่งจากแผนที่</p>
                     <Input
                         placeholder='ชื่อซอยหรือถนน พร้อมบ้านเลขที่'
                         label={'ที่อยู่ :'}
@@ -91,9 +130,15 @@ function BusinessInfo() {
                     // onChange={hdlChangeInput}
                     />
 
-                    <Select label={'จังหวัด'} name={'province'} value={input.province} onChange={hdlChangeInput} items={provinces} />
-                    {/* <Select label={'เขต/อำเภอ'} /> */}
-                    {/* <Select label={'แขวง/ตำบล'} /> */}
+                    <Select label={'จังหวัด'} name={'provinceCode'} display={'province'} value={input.provinceCode} onChange={hdlChangeInput} items={provinces} />
+                    {input.provinceCode &&
+                        <Select label={'เขต/อำเภอ'} name={'districtCode'} display={'district'} value={input.districtCode} onChange={hdlChangeInput} items={district} />
+                    }
+                    {input.districtCode &&
+                        <Select label={'แขวง/ตำบล'} name={'subdistrictCode'} display={'subdistrict'} value={input.subdistrictCode} onChange={hdlChangeInput} items={subDistrict} />
+
+                    }
+
                 </Card>
 
                 {/* ข้อมูลติดต่อ */}
@@ -103,17 +148,17 @@ function BusinessInfo() {
                     <Input
                         placeholder='เบอร์ติดต่อ'
                         label={"เบอร์ติดต่อ :"}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+                        name='mobile'
+                        value={input.mobile}
+                        onChange={hdlChangeInput}
                     />
 
                     <Input
                         placeholder='example@mail.com'
                         label={'อีเมล :'}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+                        name='email'
+                        value={input.email}
+                        onChange={hdlChangeInput}
                     />
 
                 </Card>
