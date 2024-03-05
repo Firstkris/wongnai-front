@@ -1,26 +1,26 @@
-import React from "react";
-import { DarkModeIcon, ProfileIcon } from "../../../../icons/icon";
-import { Link } from "react-router-dom";
-import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
+import React from "react"
+import { DarkModeIcon, ProfileIcon } from "../../../../icons/icon"
+import { Link } from "react-router-dom"
+import { useUser } from "../../../../feature/user/contexts/UserContext"
 
 export default function Setting({
   setIsProfileInfo,
   isProfileInfo,
   setIsEditPassword,
 }) {
-  const { user } = useUser();
+  const { user } = useUser()
 
   const className1 = isProfileInfo
     ? "text-blue_primary bg-blue_secondary hover:bg-blue_secondary_hv cursor-pointer"
-    : " hover:bg-gray_primary_hv";
+    : " hover:bg-gray_primary_hv"
   const className2 = !isProfileInfo
     ? "text-blue_primary bg-blue_secondary hover:bg-blue_secondary_hv cursor-pointer"
-    : "hover:bg-gray_primary_hv";
+    : "hover:bg-gray_primary_hv"
 
   const handleOnProfile = () => {
-    setIsProfileInfo(true);
-    setIsEditPassword(false);
-  };
+    setIsProfileInfo(true)
+    setIsEditPassword(false)
+  }
 
   return (
     <div className="pl-24 pr-10  pt-16 flex flex-col gap-5 font-bold w-1/4 border-r-2 min-h-screen">
@@ -45,5 +45,5 @@ export default function Setting({
         จอภาพและการแสดงผล
       </div>
     </div>
-  );
+  )
 }

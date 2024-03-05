@@ -26,6 +26,9 @@ dependencies:
   joi:
     specifier: ^17.12.2
     version: 17.12.2
+  lottie-react:
+    specifier: ^2.4.0
+    version: 2.4.0(react-dom@18.2.0)(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -43,10 +46,17 @@ dependencies:
     version: 5.0.1(react@18.2.0)
   react-router-dom:
     specifier: ^6.22.1
+<<<<<<< HEAD
+    version: 6.22.1(react-dom@18.2.0)(react@18.2.0)
+  use-react-router-breadcrumbs:
+    specifier: ^4.0.1
+    version: 4.0.1(react-router-dom@6.22.1)(react@18.2.0)
+=======
     version: 6.22.2(react-dom@18.2.0)(react@18.2.0)
   react-toastify:
     specifier: ^10.0.4
     version: 10.0.4(react-dom@18.2.0)(react@18.2.0)
+>>>>>>> 1df8496d990702d24cec7ea1053074afceffc6fe
 
 devDependencies:
   "@types/react":
@@ -3158,6 +3168,21 @@ packages:
     dependencies:
       js-tokens: 4.0.0
 
+  /lottie-react@2.4.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-pDJGj+AQlnlyHvOHFK7vLdsDcvbuqvwPZdMlJ360wrzGFurXeKPr8SiRCjLf3LrNYKANQtSsh5dz9UYQHuqx4w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      lottie-web: 5.12.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /lottie-web@5.12.2:
+    resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
+    dev: false
+
   /lru-cache@10.2.0:
     resolution:
       {
@@ -4388,6 +4413,16 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /use-react-router-breadcrumbs@4.0.1(react-router-dom@6.22.1)(react@18.2.0):
+    resolution: {integrity: sha512-Zbcy0KvWt1JePFcUHJAnTr7Z+AeO9WxmPs6A5Q/xqOVoi8edPKzpqHF87WB2opXwie/QjCxrEyTB7kFg7fgXvQ==}
+    peerDependencies:
+      react: '>=16.8'
+      react-router-dom: '>=6.0.0'
+    dependencies:
+      react: 18.2.0
+      react-router-dom: 6.22.1(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /util-deprecate@1.0.2:
     resolution:

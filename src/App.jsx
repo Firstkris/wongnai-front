@@ -1,9 +1,9 @@
-import React from "react";
-import Router from "./route/index";
-import ProfileContextProvider from "./feature/Profiles/context/ProfileContext";
-import UserContextProvider from "./feature/ีuser/contexts/UserContext";
-import { ToastContainer, Slide } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React from "react"
+import Router from "./route/index"
+import ProfileContextProvider from "./feature/Profiles/context/ProfileContext"
+import UserContextProvider from "./feature/user/contexts/UserContext"
+import { ToastContainer, Slide } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         </ProfileContextProvider>
       </UserContextProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
