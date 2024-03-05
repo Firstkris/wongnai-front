@@ -4,10 +4,9 @@ import {
   LocationIcon,
   MessageIcon,
   SearchIcon,
-  DownTriangleIcon,
   DownTriangleSolidIcon,
-  ProfileWithCircleIcon,
 } from "../icons/icon";
+import HeaderToggle from "../components/HeaderToggle";
 
 export default function Header() {
   return (
@@ -41,15 +40,8 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <Link to={"/profile"} className="flex gap-2">
-        <div className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2">
-          <ProfileWithCircleIcon />
-          <div>เข้าสู่ระบบ</div>
-        </div>
-        <div className="border rounded-full px-2">
-          <DownTriangleIcon className="w-6 h-6 mt-2" />
-        </div>
-      </Link>
+
+      <HeaderToggle />
     </header>
   );
 }

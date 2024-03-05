@@ -1,18 +1,27 @@
-import React from "react"
+import React from "react";
 
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
-import { FilterPage } from "../pages/FilterPage"
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { FilterPage } from "../pages/FilterPage";
 
+<<<<<<< HEAD
 import RestaurantRegisterPage from '../pages/Restaurant/RestaurantRegisterPage';
+=======
+import Header from "../layouts/Header";
+import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
+>>>>>>> f69e52e0c8a6801e330541628b6fb41443dd5f6e
 
-import Header from "../layouts/Header"
-import UserReview from "../pages/User/UserReview"
-import LoginPage from "../pages/User/LoginPage"
-import RegisterPage from "../pages/User/RegisterPage"
-import BookmarkPage from "../pages/ProfilePage/BookmarkPage"
-import ReviewPage from "../pages/ProfilePage/ReviewPage"
-import EditProfilePage from "../pages/ProfilePage/EditProfilePage"
+import UserReview from "../pages/User/UserReview";
+import LoginPage from "../pages/User/LoginPage";
+import RegisterPage from "../pages/User/RegisterPage";
+import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
+import RestaurantPage from "../pages/MainPage/RestaurantPage";
+import ReviewPage from "../pages/ProfilePage/ReviewPage";
+import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
+import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
+import GoogleMaps from "../pages/GoogleMaps";
 const router = createBrowserRouter([
+  { path: "/huntest", element: <GoogleMaps /> },
   {
     path: "/",
     element: (
@@ -24,11 +33,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <BookmarkPage />,
+        element: (
+          <ProtectedProfileRoute>
+            <ReviewPage />,
+          </ProtectedProfileRoute>
+        ),
       },
       {
-        path: "profile/review",
-        element: <ReviewPage />,
+        path: "profile/Bookmark",
+        element: (
+          <ProtectedProfileRoute>
+            <BookmarkPage />
+          </ProtectedProfileRoute>
+        ),
       },
 
       {
@@ -36,20 +53,39 @@ const router = createBrowserRouter([
         element: <EditProfilePage />,
       },
 
+      // {
+      //   path: "profile/:userId",
+      //   element:
+      // }
+
       { path: "/review", element: <UserReview /> },
-      { path: "/login", element: <LoginPage /> },
+      {
+        path: "/login",
+        element: (
+          <RedirectIfAuthenticated>
+            <LoginPage />
+          </RedirectIfAuthenticated>
+        ),
+      },
       { path: "/register", element: <RegisterPage /> },
+      { path: "/restaurants", element: <RestaurantPage />},
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
+<<<<<<< HEAD
         path: '/merchant',
         element: <RestaurantRegisterPage />
       }
 
+=======
+        path: "/restaurant",
+        element: <RestaurantRegisterPage />,
+      },
+>>>>>>> f69e52e0c8a6801e330541628b6fb41443dd5f6e
     ],
   },
-])
+]);
 
 export default function Router() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }

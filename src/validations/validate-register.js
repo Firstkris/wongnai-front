@@ -7,7 +7,7 @@ const registerShema = Joi.object({
   }),
   mobile: Joi.string()
     .required()
-    .pattern(/[0-9]{10}$/)
+    .pattern(/[0][0-9]{9}$/)
     .messages({
       "string.empty": "Mobile is require",
       "any.required": "Mobile is require",
