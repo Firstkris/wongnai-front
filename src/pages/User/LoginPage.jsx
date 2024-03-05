@@ -1,88 +1,83 @@
-import React from "react";
-import Input from "../../components/Input";
-import { FacebookIcon, GoogleIcon, LineIcon } from "../../icons/icon";
-import { Link } from "react-router-dom";
-import FacebookLogin from "react-facebook-login";
-import { useState } from "react";
-import axios from "../../configs/axios";
-import { userLogin, userLoginWithFacebook } from "../../apis/user";
-import { validateLogin } from "../../validations/validate-login";
-import { useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
-import * as Token from "../../../src/utils/local-storage";
+import React from "react"
+import Input from "../../components/Input"
+import { FacebookIcon, GoogleIcon, LineIcon } from "../../icons/icon"
+import { Link } from "react-router-dom"
+import FacebookLogin from "react-facebook-login"
+import { useState } from "react"
+import axios from "../../configs/axios"
+import { userLogin, userLoginWithFacebook } from "../../apis/user"
+import { validateLogin } from "../../validations/validate-login"
+import { useLocation } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
+import { useAuth } from "../../feature/auth/contexts/AuthContext"
+import * as Token from "../../../src/utils/local-storage"
 
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { gapi } from "gapi-script";
+import { GoogleLogin, GoogleLogout } from "react-google-login"
+import { gapi } from "gapi-script"
 
 function LoginPage() {
-  const [validateError, setValidateError] = useState(null);
+  const [validateError, setValidateError] = useState(null)
 
   // function LoginPage() {
-  const { setUser, user } = useAuth();
-  const [input, setInput] = useState({ username: "", password: "" });
-  const navigate = useNavigate();
+  const { setUser, user } = useAuth()
+  const [input, setInput] = useState({ username: "", password: "" })
+  const navigate = useNavigate()
 
   const clientId =
-    "360767650639-0evi93so64jv4opi2118007bjfuui5sj.apps.googleusercontent.com";
+    "360767650639-0evi93so64jv4opi2118007bjfuui5sj.apps.googleusercontent.com"
 
   const click = () => {
-    console.log("click");
-  };
+    console.log("click")
+  }
   const back = async (res) => {
-    console.log(res);
-    //
-    //
     // const user = await axios.post("/user/loginWithFace", res);
-    const user = await userLoginWithFacebook(res);
+    const user = await userLoginWithFacebook(res)
     // รอว่าจะใช้ context หรือ redux
-    Token.setToken(user.data.token);
-    setUser(user.data.user);
+    Token.setToken(user.data.token)
+    setUser(user.data.user)
 
     // localStorage.setItem("token", user.data.token);
     //
     //
-  };
+  }
 
   const handleChangeInput = (e) => {
-    setValidateError("");
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
+    setValidateError("")
+    setInput({ ...input, [e.target.name]: e.target.value })
+  }
   const handleSubmit = async (e) => {
     try {
-      e.preventDefault();
+      e.preventDefault()
 
-      const validate = validateLogin(input);
-      if (validate) return setValidateError("Email or password invalid");
+      const validate = validateLogin(input)
+      if (validate) return setValidateError("Email or password invalid")
       //
       //
-      // const response = await axios.post("/user/login", input);
-
-      // console.log("user");
-      const response = await userLogin(input);
+      //   const response = await axios.post("/user/login", input);
+      const response = await userLogin(input)
       // รอว่าจะใช้ context หรือ redux
-      Token.setToken(response.data.token);
-      setUser(response.data.user);
-      navigate("/");
+      Token.setToken(response.data.token)
+      setUser(response.data.user)
+      navigate("/")
 
       // console.log("user", user.birthdate);
     } catch (err) {
-      setValidateError("Email or password invalid");
-      console.log(err);
+      setValidateError("Email or password invalid")
+      console.log(err)
     }
-  };
+  }
 
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
         clientId: clientId,
         scope: "",
-      });
-    };
+      })
+    }
 
-    gapi.load("client:auth2", initClient);
-  }, []);
+    gapi.load("client:auth2", initClient)
+  }, [])
 
   //   console.log(useLocation().pathname);
   //   console.log(useParams());
@@ -184,11 +179,11 @@ function LoginPage() {
               buttonText="sign in with google"
               onSuccess={async (res) => {
                 // console.log(res);
-                const user = await axios.post("/user/loginWithGoogle", res);
+                const user = await axios.post("/user/loginWithGoogle", res)
                 // console.log(user);
               }}
               onFailure={(res) => {
-                console.log(res);
+                console.log(res)
               }}
               cookiePolicy={"single_host_origin"}
               isSignedIn={true}
@@ -217,9 +212,9 @@ function LoginPage() {
         </div>
       </form>
     </div>
-  );
+  )
 }
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
-export default LoginPage;
+export default LoginPage

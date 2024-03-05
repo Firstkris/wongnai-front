@@ -1,7 +1,7 @@
-import React from "react";
-import Router from "./route/index";
-import AuthContextProvider from "./feature/auth/contexts/AuthContext";
-import ProfileContextProvider from "./feature/Profiles/context/ProfileContext";
+import React from "react"
+import Router from "./route/index"
+import AuthContextProvider from "./feature/auth/contexts/AuthContext"
+import ProfileContextProvider from "./feature/Profiles/context/ProfileContext"
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <Router />
       </ProfileContextProvider>
     </AuthContextProvider>
-  );
+  )
 }
 
-export default App;
+export default App
