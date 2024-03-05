@@ -18,7 +18,7 @@ export const RestaurantContext = createContext()
 
 export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
-  const [filterInput, setFilterInput] = useState({})
+  const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
 
   const { user } = useUser()
