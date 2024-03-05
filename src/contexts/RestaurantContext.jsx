@@ -4,6 +4,7 @@ import {
   getFilterRestaurant,
   getUserBookmark,
 } from "../apis/restaurants"
+import { useAuth } from "../feature/auth/contexts/AuthContext"
 
 export const RestaurantContext = createContext()
 
@@ -12,9 +13,11 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterInput, setFilterInput] = useState({})
   const [isLoading, setLoading] = useState(false)
 
+  const { user } = useAuth()
+
   const fetchFilterPage = async () => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const response = await filterPageGetRestaurant()
       setFilterPageData(response.data)
     } catch (err) {
@@ -27,7 +30,9 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchFilterData = async (filterData) => {
     try {
       if (Object.keys(filterData).length === 0) {
-        console.log("no filter")
+        return console.log("no filter")
+      } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
+        return fetchFilterPage()
       }
       const filterDataParams = {
         districtId: filterData?.districtNameTh,
@@ -36,9 +41,9 @@ export const RestaurantContextProvider = ({ children }) => {
         priceLength: filterData?.priceLength,
         categoryId: filterData?.categoryName,
       }
-
+      // if no user login >> other path
       const response = await getFilterRestaurant(filterDataParams)
-      console.log(response.data?.restaurants, "restaurant after filter")
+
       if (response.data?.restaurants?.length > 0) {
         setFilterPageData((prev) => ({
           ...prev,
@@ -56,15 +61,22 @@ export const RestaurantContextProvider = ({ children }) => {
   }
 
   const clearFilters = () => {
-    setFilterInput({})
-    fetchFilterPage()
+    try {
+      setFilterInput({})
+      if (!user) {
+        fetchFilterPage()
+      } else {
+        fetchRestaurantWithUserLogin()
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const fetchRestaurantWithUserLogin = async () => {
     //if user is login
     try {
       const response = await getUserBookmark()
-      console.log(response.data.restaurants)
       setFilterPageData((prev) => ({
         ...prev,
         restaurants: response.data?.restaurants,

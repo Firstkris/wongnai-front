@@ -45,10 +45,7 @@ export const FilterPage = () => {
         <div className="w-full bg-white mt-1 ">
           <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto xl:w-[1024px]">
             <div className="pl-1">
-              <Breadcrumbs
-                breadcrumbs={breadcrumbs}
-                pageName="ค้นหาร้านอาหาร"
-              />
+              <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
             <div className="font-semibold text-3xl">
               ร้านอาหารยอดนิยม ในกรุงเทพมหานคร

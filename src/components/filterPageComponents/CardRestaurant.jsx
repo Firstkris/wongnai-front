@@ -2,7 +2,6 @@ import { BookmarkIcon } from "../Bookmark"
 import { useNavigate } from "react-router-dom"
 import { ReviewScore } from "../ReviewScore"
 export const CardRestaurant = ({ restaurant }) => {
-  console.log(restaurant, "restaurant")
   const navigate = useNavigate()
   const handleClickCard = () => {
     navigate(`/restaurants/${restaurant.id}`)
