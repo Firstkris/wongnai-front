@@ -8,6 +8,7 @@ export default function Model({
   setProfileImage,
   setUser,
   handleSubmit,
+  setProfileImage1,
 }) {
   const fileInput = useRef(null);
 
@@ -44,6 +45,7 @@ export default function Model({
               ref={fileInput}
               className="hidden"
               onChange={(e) => {
+                setProfileImage1(e.target.files[0]);
                 setProfileImage(URL.createObjectURL(e.target.files[0]));
               }}
             />

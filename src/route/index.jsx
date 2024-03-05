@@ -12,8 +12,9 @@ import RegisterPage from "../pages/User/RegisterPage";
 import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
 import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
-import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
-import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
+import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage";
+import ProtectedProfileRoute from "../feature/ีuser/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/ีuser/components/RedirectIfAuthenticated";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,10 +47,14 @@ const router = createBrowserRouter([
         element: <EditProfilePage />,
       },
 
-      // {
-      //   path: "profile/:userId",
-      //   element:
-      // }
+      {
+        path: "profile/:userId",
+        element: <OtherUserProfilePage />,
+      },
+      {
+        path: "profile/Bookmark/:userId",
+        element: <BookmarkPage />,
+      },
 
       { path: "/review", element: <UserReview /> },
       {
