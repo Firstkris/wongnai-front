@@ -7,10 +7,11 @@ import { useState } from "react"
 import axios from "../../configs/axios"
 import { userLogin, userLoginWithFacebook } from "../../apis/user"
 import { validateLogin } from "../../validations/validate-login"
-import { useLocation } from "react-router-dom"
-import { useParams } from "react-router-dom"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 import { useUser } from "../../feature/user/contexts/UserContext"
+import { toast } from "react-toastify"
+
 import * as Token from "../../../src/utils/local-storage"
 
 import { GoogleLogin, GoogleLogout } from "react-google-login"
@@ -214,9 +215,5 @@ function LoginPage() {
     </div>
   )
 }
-import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
-import { useUser } from "../../feature/user/contexts/UserContext"
-import { toast } from "react-toastify"
 
 export default LoginPage

@@ -14,8 +14,8 @@ import RestaurantPage from "../pages/MainPage/RestaurantPage"
 import ReviewPage from "../pages/ProfilePage/ReviewPage"
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage"
 import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage"
-import ProtectedProfileRoute from "../feature/ีuser/components/ProtectedProfileRoute"
-import RedirectIfAuthenticated from "../feature/ีuser/components/RedirectIfAuthenticated"
+import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute"
+import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated"
 import GoogleMaps from "../pages/GoogleMaps"
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },

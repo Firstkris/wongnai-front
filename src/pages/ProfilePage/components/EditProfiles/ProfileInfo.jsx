@@ -1,13 +1,13 @@
-import React from "react";
-import { FacebookIcon, GoogleIcon, LineIcon } from "../../../../icons/icon";
-import EditInput from "./EditInput";
-import Card from "./Card";
-import Container from "./Container";
-import Header from "./Header";
-import { useState } from "react";
-import Model from "./Model";
-import axios from "axios";
-import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
+import React from "react"
+import { FacebookIcon, GoogleIcon, LineIcon } from "../../../../icons/icon"
+import EditInput from "./EditInput"
+import Card from "./Card"
+import Container from "./Container"
+import Header from "./Header"
+import { useState } from "react"
+import Model from "./Model"
+import axios from "axios"
+import { useUser } from "../../../../feature/user/contexts/UserContext"
 
 // const initial = {
 //   name: user?.name,
@@ -15,51 +15,51 @@ import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
 // };
 
 export default function ProfileInfo({ setIsEditPassword }) {
-  const { user, setUser } = useUser();
+  const { user, setUser } = useUser()
   // const [editAboutMe, setEditAboutMe] = useState(false);
-  console.log("user", user);
-  const [editImage, setEditImage] = useState(false);
-  const [input, setInput] = useState(user);
-  const [onEditInfo, setOnEditInfo] = useState(false);
+  console.log("user", user)
+  const [editImage, setEditImage] = useState(false)
+  const [input, setInput] = useState(user)
+  const [onEditInfo, setOnEditInfo] = useState(false)
 
-  const [profileImage, setProfileImage] = useState(user.imgProfile);
-  const [profileImage1, setProfileImage1] = useState(user.imgProfile);
+  const [profileImage, setProfileImage] = useState(user.imgProfile)
+  const [profileImage1, setProfileImage1] = useState(user.imgProfile)
 
-  const birthdate = user?.birthdate?.split("T")[0];
-  console.log(birthdate);
-  const mobile = user?.mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+  const birthdate = user?.birthdate?.split("T")[0]
+  console.log(birthdate)
+  const mobile = user?.mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")
 
   const handleChangeInput = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value }); //{...[A:1,B:2,C:3]} ==>  {A:1,B:2,C:3}
-  };
+    setInput({ ...input, [e.target.name]: e.target.value }) //{...[A:1,B:2,C:3]} ==>  {A:1,B:2,C:3}
+  }
 
   const handleOnEdit = async () => {
     try {
-      setUser(input);
-      setOnEditInfo((c) => !c);
+      setUser(input)
+      setOnEditInfo((c) => !c)
       // const formData = new FormData();
       // for (let i in input) {
       //   formData.append(i, input[i]);
       // }
 
-      await axios.patch("/user", input);
+      await axios.patch("/user", input)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const handleSubmit = async () => {
-    console.log("******");
-    console.log(input.id);
-    const formData = new FormData();
-    formData.append("imgProfile", profileImage1);
-    formData.append("id", input.id);
+    console.log("******")
+    console.log(input.id)
+    const formData = new FormData()
+    formData.append("imgProfile", profileImage1)
+    formData.append("id", input.id)
 
-    console.log(formData);
+    console.log(formData)
 
-    await axios.patch("/user/user-img", formData);
-  };
-  console.log("*****************************************", user?.imgProfile);
+    await axios.patch("/user/user-img", formData)
+  }
+  console.log("*****************************************", user?.imgProfile)
   // console.log("user", user);
 
   return (
@@ -267,5 +267,5 @@ export default function ProfileInfo({ setIsEditPassword }) {
         </Card>
       </Container>
     </>
-  );
+  )
 }

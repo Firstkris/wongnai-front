@@ -1,15 +1,15 @@
-import React from "react";
-import { StarIcon } from "../../../../icons/icon";
-import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
-import { useParams } from "react-router-dom";
+import React from "react"
+import { StarIcon } from "../../../../icons/icon"
+import { useUser } from "../../../../feature/user/contexts/UserContext"
+import { useParams } from "react-router-dom"
 
 export default function ReviewItem({ otherUser, review }) {
-  const { user } = useUser();
-  const { userId } = useParams();
+  const { user } = useUser()
+  const { userId } = useParams()
 
-  const starIcon = [];
+  const starIcon = []
   for (let i = 0; i < review?.star; i++) {
-    starIcon.push(<StarIcon className="w-4 h-4 fill-red_primary" />);
+    starIcon.push(<StarIcon className="w-4 h-4 fill-red_primary" />)
   }
 
   return (
@@ -84,5 +84,5 @@ export default function ReviewItem({ otherUser, review }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

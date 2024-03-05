@@ -1,8 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import Input from "../../../../components/Input";
-import axios from "axios";
-import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
+import React from "react"
+import { useState } from "react"
+import Input from "../../../../components/Input"
+import axios from "axios"
+import { useUser } from "../../../../feature/user/contexts/UserContext"
 
 export default function EditInput({
   setInput,
@@ -13,23 +13,23 @@ export default function EditInput({
   name,
   type = "text",
 }) {
-  const { setUser } = useUser();
+  const { setUser } = useUser()
 
-  const [onEditInfo, setOnEditInfo] = useState(false);
+  const [onEditInfo, setOnEditInfo] = useState(false)
   const handleOnEdit = async () => {
     try {
-      console.log(input);
-      const data = { ...input };
-      delete data.imgProfile;
+      console.log(input)
+      const data = { ...input }
+      delete data.imgProfile
 
-      setUser(input);
-      setOnEditInfo((c) => !c);
+      setUser(input)
+      setOnEditInfo((c) => !c)
 
-      await axios.patch("/user", data);
+      await axios.patch("/user", data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   return (
     <div className="flex justify-between">
@@ -68,5 +68,5 @@ export default function EditInput({
         </div>
       )}
     </div>
-  );
+  )
 }

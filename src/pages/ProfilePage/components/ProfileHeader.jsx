@@ -1,11 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useUser } from "../../../feature/ีuser/contexts/UserContext";
-import { useParams } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
+import { useUser } from "../../../feature/user/contexts/UserContext"
+import { useParams } from "react-router-dom"
 
 export default function ProfileHeader({ otherUser }) {
-  const { user } = useUser();
-  const { userId } = useParams();
+  const { user } = useUser()
+  const { userId } = useParams()
 
   return (
     <div className="bg-white h-[220px] px-16">
@@ -41,5 +41,5 @@ export default function ProfileHeader({ otherUser }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
