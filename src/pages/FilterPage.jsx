@@ -4,7 +4,7 @@ import { SlideBar } from "../components/filterPageComponents/SlideBar"
 import { useRestaurant } from "../hooks/hooks.jsx"
 import { useEffect } from "react"
 import { Breadcrumbs } from "../components/BreadCrumb.jsx"
-import { useAuth } from "../feature/auth/contexts/AuthContext.jsx"
+import { useUser } from "../feature/user/contexts/UserContext.jsx"
 import { Loading } from "../components/Loading"
 
 const breadcrumbs = [
@@ -23,7 +23,7 @@ export const FilterPage = () => {
   } = useRestaurant()
   const { restaurants } = filterPageData
 
-  const { user } = useAuth()
+  const { user } = useUser()
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
     if (!user) {

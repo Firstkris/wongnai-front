@@ -5,13 +5,13 @@ import ProfileInfo from "./components/EditProfiles/ProfileInfo";
 import DarkModeItem from "./components/DarkModeItem/DarkModeItem";
 import { useState } from "react";
 import EditPassword from "./components/EditProfiles/EditPassword";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
+import { useUser } from "../../feature/ีuser/contexts/UserContext";
 
 export default function EditProfilePage() {
   const [isProfileInfo, setIsProfileInfo] = useState(true);
   const [isEditPassword, setIsEditPassword] = useState(false);
 
-  const { user } = useAuth();
+  const { user } = useUser();
   return (
     <div>
       {user ? <ProfileHeader /> : null}

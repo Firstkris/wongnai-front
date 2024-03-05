@@ -6,17 +6,50 @@ import HrWithText from "../../components/HrWithText";
 import Button from "../../components/Button";
 import RadioBtn from "../../components/RadioBtn";
 import WeekDays from "./WeekDays";
+import useRestaurantContext from "../../hooks/useRestaurantContext";
+import { useEffect } from "react";
 
 const initialValue = {
-    name: "",
+    merchantId: 1,
+    restaurantName: "",
+    subtitle: "",
+    provinceCode: "",
+    districtCode: "",
+    subdistrictCode: "",
+    categoryId: "",
+    mobile: "",
+    email: null,
+    priceLength: "0-100",
+    address: "cc16"
 };
+
 function BusinessInfo() {
-    const [input, setInput] = useState("");
-    const [isOpen, setIsOpen] = useState("");
+    const [input, setInput] = useState(initialValue);
+    const [isOpen, setIsOpen] = useState("everyDay");
+    const [geoCode, setGeocode] = useState({});
+
+    const {
+        provinces,
+        district,
+        fetchDistrict,
+        subDistrict,
+        fetchSubDistrict,
+        category,
+        createRestaurant
+    } = useRestaurantContext();
+
+    console.log(category);
+    console.log(provinces)
+    console.log(subDistrict);
 
     const hdlChangeInput = (e) => {
-        console.log(e.target.value);
-        setInput(e.target.value);
+
+        if (e.target.name === "mobile") {
+            setInput((prv => ({ ...prv, [e.target.name]: e.target.value })))
+        } else {
+
+            setInput(prv => ({ ...prv, [e.target.name]: +e.target.value ? +e.target.value : e.target.value }));
+        }
     };
 
     const hldChangeRadio = (e) => {
@@ -24,26 +57,55 @@ function BusinessInfo() {
         setIsOpen(e.target.value)
     }
 
+    const hdlSubmit = async (e) => {
+        e.preventDefault()
+        console.log(input);
+        await createRestaurant(input)
+    }
+
+    console.log(input);
+
+
+
+    useEffect(() => {
+
+        if (input.provinceCode) {
+            console.log(input.provinceCode);
+            fetchDistrict(+input.provinceCode)
+        }
+        if (input.districtCode) {
+            console.log(geoCode.district);
+            fetchSubDistrict(+input.districtCode)
+        }
+    }, [input.provinceCode, input.districtCode])
+
     return (
-        <form>
+        <form onSubmit={hdlSubmit}>
             <div className="w-full flex flex-col gap-6 ">
 
                 {/* รายละเอียดธุรกิจ */}
                 <Card>
-
                     <HrWithText name={'รายละเอียดธุรกิจ'} />
 
                     <Input
                         placeholder='ชื่อร้านค้า'
-                        name='resName'
-                        value={input.name}
+                        name='restaurantName'
+                        value={input.restaurantName}
                         onChange={hdlChangeInput}
                         label={'ชื่อร้าน'}
                     />
 
-                    <Select label={'เลือกประเภทธุรกิจ'} />
-                    <Select label={'เลือกหมวดหมู่'} />
-                    <p>เลือกตำแหน่งจากแผนที่</p>
+                    <Input
+                        placeholder='รายละเอียดร้านค้า'
+                        name='subtitle'
+                        value={input.subtitle}
+                        onChange={hdlChangeInput}
+                        label={'รายละเอียดร้านค้า'}
+                    />
+
+                    {/* <Select label={'เลือกประเภทธุรกิจ'} /> */}
+                    <Select label={'เลือกหมวดหมู่'} name={"categoryId"} value={input.categoryId} items={category} onChange={hdlChangeInput} />
+
 
                 </Card>
 
@@ -51,6 +113,7 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={'ที่อยู่'} />
 
+                    <p>เลือกตำแหน่งจากแผนที่</p>
                     <Input
                         placeholder='ชื่อซอยหรือถนน พร้อมบ้านเลขที่'
                         label={'ที่อยู่ :'}
@@ -67,9 +130,15 @@ function BusinessInfo() {
                     // onChange={hdlChangeInput}
                     />
 
-                    <Select label={'จังหวัด'} />
-                    <Select label={'เขต/อำเภอ'} />
-                    <Select label={'แขวง/ตำบล'} />
+                    <Select label={'จังหวัด'} name={'provinceCode'} display={'province'} value={input.provinceCode} onChange={hdlChangeInput} items={provinces} />
+                    {input.provinceCode &&
+                        <Select label={'เขต/อำเภอ'} name={'districtCode'} display={'district'} value={input.districtCode} onChange={hdlChangeInput} items={district} />
+                    }
+                    {input.districtCode &&
+                        <Select label={'แขวง/ตำบล'} name={'subdistrictCode'} display={'subdistrict'} value={input.subdistrictCode} onChange={hdlChangeInput} items={subDistrict} />
+
+                    }
+
                 </Card>
 
                 {/* ข้อมูลติดต่อ */}
@@ -79,22 +148,19 @@ function BusinessInfo() {
                     <Input
                         placeholder='เบอร์ติดต่อ'
                         label={"เบอร์ติดต่อ :"}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+                        name='mobile'
+                        value={input.mobile}
+                        onChange={hdlChangeInput}
                     />
 
                     <Input
                         placeholder='example@mail.com'
                         label={'อีเมล :'}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+                        name='email'
+                        value={input.email}
+                        onChange={hdlChangeInput}
                     />
 
-                    <Select label={'จังหวัด'} />
-                    <Select label={'เขต/อำเภอ'} />
-                    <Select label={'แขวง/ตำบล'} />
                 </Card>
 
                 {/* ข้อมูลเพิ่มเติม */}
@@ -108,7 +174,10 @@ function BusinessInfo() {
                         choices={[
                             { text: 'เปิดทุกวัน', value: "everyDay" },
                             { text: 'เลือกวันเปิด', value: "selectDay" },
-                        ]} />
+                        ]}
+                        name={'openDay'}
+
+                    />
                     {isOpen === "everyDay" ?
                         <>
                             <Input
@@ -137,17 +206,38 @@ function BusinessInfo() {
                             <WeekDays label={'Sunday'} />
                         </>
                     }
-                    <Input
-                        placeholder='example@mail.com'
-                        label={"อีเมล :"}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+
+                    <RadioBtn
+                        label={'ที่จอดรถ'}
+                        name={'parking'}
+                        choices={[
+                            { text: 'จอดข้างถนน', value: "1" },
+                            { text: 'ที่จอดรถของร้าน', value: "2" },
+                            { text: 'ไม่มีที่จอดรถ', value: "3" },
+                        ]}
                     />
 
-                    <Select label={'จังหวัด'} />
-                    <Select label={'เขต/อำเภอ'} />
-                    <Select label={'แขวง/ตำบล'} />
+                    <RadioBtn
+                        label={'รับบัตรเครดิต'}
+                        name={'creditCard'}
+                        choices={[
+                            { text: 'ไม่ระบุ', value: "0" },
+                            { text: 'ใช่', value: "1" },
+                            { text: 'ไม่ใช่', value: "2" },
+                        ]}
+                    />
+                    <RadioBtn
+                        label={'รับจองล่วงหน้า'}
+                        name={'booking'}
+                        choices={[
+                            { text: 'ไม่ระบุ', value: "0" },
+                            { text: 'ใช่', value: "1" },
+                            { text: 'ไม่ใช่', value: "2" },
+                        ]}
+                    />
+
+
+
                 </Card>
 
                 <div className="w-full">

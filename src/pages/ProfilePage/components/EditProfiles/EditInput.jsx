@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Input from "../../../../components/Input";
-import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
+import axios from "axios";
+import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
 
 export default function EditInput({
   setInput,
@@ -12,12 +13,22 @@ export default function EditInput({
   name,
   type = "text",
 }) {
-  const { setUser } = useAuth();
+  const { setUser } = useUser();
 
   const [onEditInfo, setOnEditInfo] = useState(false);
-  const handleOnEdit = () => {
-    setUser(input);
-    setOnEditInfo((c) => !c);
+  const handleOnEdit = async () => {
+    try {
+      console.log(input);
+      const data = { ...input };
+      delete data.imgProfile;
+
+      setUser(input);
+      setOnEditInfo((c) => !c);
+
+      await axios.patch("/user", data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

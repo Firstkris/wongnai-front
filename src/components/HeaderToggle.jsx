@@ -11,10 +11,10 @@ import {
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useAuth } from "../feature/auth/contexts/AuthContext";
+import { useUser } from "../feature/ีuser/contexts/UserContext";
 
 export default function HeaderToggle() {
-  const { user, setUser, logout } = useAuth();
+  const { user, setUser, logout } = useUser();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);

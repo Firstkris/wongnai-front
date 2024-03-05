@@ -10,7 +10,7 @@ import { validateLogin } from "../../validations/validate-login"
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useSearchParams } from "react-router-dom"
-import { useAuth } from "../../feature/auth/contexts/AuthContext"
+import { useUser } from "../../feature/user/contexts/UserContext"
 import * as Token from "../../../src/utils/local-storage"
 
 import { GoogleLogin, GoogleLogout } from "react-google-login"
@@ -20,7 +20,7 @@ function LoginPage() {
   const [validateError, setValidateError] = useState(null)
 
   // function LoginPage() {
-  const { setUser, user } = useAuth()
+  const { setUser, user } = useUser()
   const [input, setInput] = useState({ username: "", password: "" })
   const navigate = useNavigate()
 
@@ -216,5 +216,7 @@ function LoginPage() {
 }
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import { useUser } from "../../feature/user/contexts/UserContext"
+import { toast } from "react-toastify"
 
 export default LoginPage

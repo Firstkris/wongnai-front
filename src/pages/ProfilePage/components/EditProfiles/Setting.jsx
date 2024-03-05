@@ -1,14 +1,14 @@
 import React from "react";
 import { DarkModeIcon, ProfileIcon } from "../../../../icons/icon";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
+import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
 
 export default function Setting({
   setIsProfileInfo,
   isProfileInfo,
   setIsEditPassword,
 }) {
-  const { user } = useAuth();
+  const { user } = useUser();
 
   const className1 = isProfileInfo
     ? "text-blue_primary bg-blue_secondary hover:bg-blue_secondary_hv cursor-pointer"

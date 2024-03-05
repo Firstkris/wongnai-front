@@ -1,22 +1,56 @@
 import React from "react";
 import { StarIcon } from "../../../../icons/icon";
-import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
+import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
+import { useParams } from "react-router-dom";
 
-export default function ReviewItem() {
-  const { user } = useAuth();
+export default function ReviewItem({ otherUser, review }) {
+  const { user } = useUser();
+  const { userId } = useParams();
+
+  const starIcon = [];
+  for (let i = 0; i < review?.star; i++) {
+    starIcon.push(<StarIcon className="w-4 h-4 fill-red_primary" />);
+  }
 
   return (
     <div className="w-1/2 mx-auto bg-white rounded-lg min-h-[300px] p-4 mb-10">
-      <h1 className="font-bold text-xl mb-5">รีวิว BONHOMIE CRAFT BEER BAR</h1>
+      {userId ? (
+        <h1 className="font-bold text-xl mb-5">
+          รีวิว {review.restaurant?.restaurantName}{" "}
+        </h1>
+      ) : (
+        <h1 className="font-bold text-xl mb-5">
+          รีวิว BONHOMIE CRAFT BEER BAR
+        </h1>
+      )}
       <div className="flex gap-4">
-        <img
-          className="h-[50px] w-[50px] object-cover rounded-full"
-          src="https://www.prachachat.net/wp-content/uploads/2018/01/1-166-728x410.jpg"
-        />
+        {userId ? (
+          <img
+            className="h-[50px] w-[50px] object-cover rounded-full"
+            src={otherUser?.imgProfile}
+          />
+        ) : (
+          <img
+            className="h-[50px] w-[50px] object-cover rounded-full"
+            src={user?.imgProfile}
+          />
+        )}
         <div>
           <div className="text-sm">
-            <span className="font-bold">{user?.name}</span> รีวิว{" "}
-            <span className="font-bold">BONHOMIE CRAFT BEER BAR</span>
+            {userId ? (
+              <div>{/* {otherUser.name} */}</div>
+            ) : (
+              <>
+                <span className="font-bold">{user?.name}</span> รีวิว{" "}
+              </>
+            )}
+            {userId ? (
+              <span className="font-bold">
+                {review.restaurant?.restaurantName}{" "}
+              </span>
+            ) : (
+              <span className="font-bold">BONHOMIE CRAFT BEER BAR </span>
+            )}
           </div>
           <div className="text-xs text-gray_secondary pr-3  mt-1.5">
             เมื่อ 2 วันที่แล้ว
@@ -24,27 +58,29 @@ export default function ReviewItem() {
         </div>
       </div>
       <div className="flex gap-0.5 mt-2">
-        <StarIcon className="w-4 h-4 fill-red_primary" />
-        <StarIcon className="w-4 h-4 fill-red_primary" />
-        <StarIcon className="w-4 h-4 fill-red_primary" />
-        <StarIcon className="w-4 h-4 fill-red_primary" />
-        <StarIcon className="w-4 h-4 fill-red_primary" />
+        {userId ? (
+          <>{starIcon}</>
+        ) : (
+          <StarIcon className="w-4 h-4 fill-red_primary" />
+        )}
       </div>
       <div>
-        <div className="text-sm font-bold mt-3">ร้านดีมากครับ</div>
-        <div className="text-sm mt-3">ราคาต่อหัว : 501 - 1,000 บาท </div>
-        <div className="text-sm mt-3">
-          เพลงเพราะ ดนตรีลึกนิดนึง บรรยากาศดีมัก เหมาะกับคนชอบฟังดนตรี
-          ร้านตกแต่งชิคๆ อ่านต่อได้ที่
-        </div>
+        <div className="text-sm font-bold mt-3">{review?.title}</div>
+        {/* <div className="text-sm mt-3">ราคาต่อหัว : 501 - 1,000 บาท </div> */}
+        <div className="text-sm mt-3">{review?.description}</div>
         <div className="flex justify-around mt-5 pb-2">
-          <img
-            className="aspect-video w-2/5 h-1/5 object-cover "
-            src="https://img.wongnai.com/p/400x0/2024/02/29/aa961f815e844974990ce348d50a8bf2.jpg"
-          />
-          <div className="aspect-video w-2/5 h-1/5 object-cover">
-            <img src="https://img.wongnai.com/p/400x0/2024/02/29/af24c23d3b37463e91419d0cb3b282fd.jpg" />
-          </div>
+          {userId ? (
+            <>
+              {review.reviewImgs.map((a) => (
+                <img className="w-2/5 h-1/5 object-cover " src={a.img} />
+              ))}{" "}
+            </>
+          ) : (
+            <img
+              className="aspect-video w-2/5 h-1/5 object-cover "
+              src="https://img.wongnai.com/p/400x0/2024/02/29/aa961f815e844974990ce348d50a8bf2.jpg"
+            />
+          )}
         </div>
       </div>
     </div>
