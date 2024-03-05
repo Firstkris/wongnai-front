@@ -13,7 +13,6 @@ import {
   getSubDistrict,
   merchantCreateRestaurant,
 } from "../apis/merchant"
-import { useEffect } from "react"
 
 export const RestaurantContext = createContext()
 
@@ -55,7 +54,7 @@ export const RestaurantContextProvider = ({ children }) => {
         priceLength: filterData?.priceLength,
         categoryId: filterData?.categoryName,
       }
-      // if no user login >> other path
+
       const response = await getFilterRestaurant(filterDataParams)
 
       if (response.data?.restaurants?.length > 0) {
@@ -107,13 +106,11 @@ export const RestaurantContextProvider = ({ children }) => {
   }
 
   const fetchDistrict = async (provinceCode) => {
-    console.log(provinceCode)
     const res = await getDistrict(+provinceCode)
     setDistrict(res.data.district)
   }
 
   const fetchSubDistrict = async (districtCode) => {
-    console.log(districtCode)
     const res = await getSubDistrict(+districtCode)
     console.log(res.data.subDistrict)
     setSubDistrict(res.data.subDistrict)
@@ -129,12 +126,6 @@ export const RestaurantContextProvider = ({ children }) => {
     console.log(res)
   }
 
-  useEffect(() => {
-    fetchProvince()
-    fetchCategory()
-  }, [])
-
-  console.log(filterInput)
   return (
     <RestaurantContext.Provider
       value={{
