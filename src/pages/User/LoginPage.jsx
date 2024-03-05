@@ -6,18 +6,32 @@ import FacebookLogin from "react-facebook-login";
 import { useState } from "react";
 import axios from "../../configs/axios";
 import { userLogin, userLoginWithFacebook } from "../../apis/user";
+import { validateLogin } from "../../validations/validate-login";
+import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../feature/auth/contexts/AuthContext";
 import * as Token from "../../../src/utils/local-storage";
 
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { gapi } from "gapi-script";
+
 function LoginPage() {
+  const [validateError, setValidateError] = useState(null);
+
+  // function LoginPage() {
   const { setUser, user } = useAuth();
   const [input, setInput] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+
+  const clientId =
+    "360767650639-0evi93so64jv4opi2118007bjfuui5sj.apps.googleusercontent.com";
 
   const click = () => {
     console.log("click");
   };
   const back = async (res) => {
+    console.log(res);
     //
     //
     // const user = await axios.post("/user/loginWithFace", res);
@@ -32,27 +46,46 @@ function LoginPage() {
   };
 
   const handleChangeInput = (e) => {
+    setValidateError("");
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      const validate = validateLogin(input);
+      if (validate) return setValidateError("Email or password invalid");
       //
       //
-      //   const response = await axios.post("/user/login", input);
+      // const response = await axios.post("/user/login", input);
+
+      // console.log("user");
       const response = await userLogin(input);
       // รอว่าจะใช้ context หรือ redux
       Token.setToken(response.data.token);
       setUser(response.data.user);
       navigate("/");
 
-      // console.log("user", user.name);
       // console.log("user", user.birthdate);
     } catch (err) {
+      setValidateError("Email or password invalid");
       console.log(err);
     }
   };
-  console.log(input);
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      });
+    };
+
+    gapi.load("client:auth2", initClient);
+  }, []);
+
+  //   console.log(useLocation().pathname);
+  //   console.log(useParams());
   return (
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
       <form
@@ -72,10 +105,14 @@ function LoginPage() {
             onChange={handleChangeInput}
             name={"password"}
           />
-
-          <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary cursor-pointers">
-            ถัดไป
-          </button>
+          <div className="w-full">
+            {validateError ? (
+              <p className="text-sm text-red-500"> {validateError}</p>
+            ) : null}
+            <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary cursor-pointers">
+              ถัดไป
+            </button>
+          </div>
 
           <div className="flex justify-end w-full">
             <Link to={"/register"} className="">
@@ -142,7 +179,26 @@ function LoginPage() {
               </div>
             </button>
 
-            <button className="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black">
+            <GoogleLogin
+              clientId={clientId}
+              buttonText="sign in with google"
+              onSuccess={async (res) => {
+                // console.log(res);
+                const user = await axios.post("/user/loginWithGoogle", res);
+                // console.log(user);
+              }}
+              onFailure={(res) => {
+                console.log(res);
+              }}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
+            {/* <GoogleLogout
+              clientId={clientId}
+              buttonText="Log out"
+              onLogoutSuccess={(res) => console.log(res)}
+            /> */}
+            {/* <button className="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black">
               <svg
                 className="h-5 w-5"
                 xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +212,7 @@ function LoginPage() {
               <div className="w-full">
                 <p>เข้าสู่ระบบด้วย Google</p>
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
       </form>
@@ -164,5 +220,6 @@ function LoginPage() {
   );
 }
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default LoginPage;

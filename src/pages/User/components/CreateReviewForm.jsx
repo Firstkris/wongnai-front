@@ -1,9 +1,9 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
-import { BahtIcon } from "../../../icons/icon";
+import { useState, useRef } from "react";
 
 function CreateReviewForm() {
+  const fileInput = useRef(null);
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const [titleLength, setTitleLength] = useState(0);
@@ -35,7 +35,7 @@ function CreateReviewForm() {
                 onClick={() => setRating(ratingValue)}
               />
               <FaStar
-                color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                color={ratingValue <= (hover || rating) ? "#ef4444" : "#e4e5e9"}
                 onMouseEnter={() => setHover(ratingValue)}
                 onMouseLeave={() => setHover(null)}
                 size={50}
@@ -73,49 +73,19 @@ function CreateReviewForm() {
       </div>
 
       <div>
-        <p>ราคาต่อหัว</p>
-        <div className="flex gap-1 mb-6">
-          <svg
-            className="h-5 w-5 bg-gray-400 rounded-full hover:bg-red-600 "
-            fill="#ffffff"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-          >
-            <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
-          </svg>
-          <div className="flex gap-1">
-            <BahtIcon />
-            <svg
-              className="bg-gray-400 rounded-full w-5 h-5 hover:bg-blue-400"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-            >
-              <path
-                fill="#ffffff"
-                d="M144 0c-17.7 0-32 14.3-32 32V64H37.6C16.8 64 0 80.8 0 101.6V224v41.7V288 406.3c0 23 18.7 41.7 41.7 41.7H112v32c0 17.7 14.3 32 32 32s32-14.3 32-32V448h32c61.9 0 112-50.1 112-112c0-40.1-21.1-75.3-52.7-95.1C280.3 222.6 288 200.2 288 176c0-61.9-50.1-112-112-112V32c0-17.7-14.3-32-32-32zM112 128v96H64V128h48zm64 96V128c26.5 0 48 21.5 48 48s-21.5 48-48 48zm-64 64v96H64V288h48zm64 96V288h32c26.5 0 48 21.5 48 48s-21.5 48-48 48H176z"
-              />
-            </svg>
-            <svg
-              className="bg-gray-400 rounded-full w-5 h-5 hover:bg-blue-400"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-            >
-              <path
-                fill="#ffffff"
-                d="M144 0c-17.7 0-32 14.3-32 32V64H37.6C16.8 64 0 80.8 0 101.6V224v41.7V288 406.3c0 23 18.7 41.7 41.7 41.7H112v32c0 17.7 14.3 32 32 32s32-14.3 32-32V448h32c61.9 0 112-50.1 112-112c0-40.1-21.1-75.3-52.7-95.1C280.3 222.6 288 200.2 288 176c0-61.9-50.1-112-112-112V32c0-17.7-14.3-32-32-32zM112 128v96H64V128h48zm64 96V128c26.5 0 48 21.5 48 48s-21.5 48-48 48zm-64 64v96H64V288h48zm64 96V288h32c26.5 0 48 21.5 48 48s-21.5 48-48 48H176z"
-              />
-            </svg>
-          </div>
-        </div>
         <div>
           <div className=" font-bold pb-4 m-2 mb-4 border-b-2 ">รูปภาพ</div>
           <div className="flex justify-around ">
             <div className="flex gap-4">
               <div className="bg-gray-300 w-24 h-24 rounded-md"></div>
               <div>
-                <button className="bg-blue-200 text-blue-500 rounded-md px-3 py-1.5">
+                <input type="file" className="hidden" ref={fileInput} />
+                <div
+                  onClick={() => fileInput.current.click()}
+                  className="bg-blue-200 text-blue-500 rounded-md px-3 py-1 cursor-pointer"
+                >
                   Choose File
-                </button>
+                </div>
                 <p>No file selected</p>
                 <p>ไฟล์ GIF,JPG หรือ PNG</p>
               </div>

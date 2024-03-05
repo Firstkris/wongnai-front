@@ -12,3 +12,6 @@ export const fetchMe = () =>
   axios.get("/user/me", {
     headers: { Authorization: `Bearer ${getToken}` },
   });
+
+export const createReview = async (formData) =>
+  await axios.post("/createReview", formData);

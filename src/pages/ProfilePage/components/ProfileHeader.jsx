@@ -14,10 +14,10 @@ export default function ProfileHeader() {
         <div className="flex gap-20">
           <img
             className="w-[150px] h-[150px] object-cover rounded-full"
-            src={user.imgProfile}
+            src={user?.imgProfile}
           />
           <div className="flex flex-col mt-5 gap-5 items-start">
-            <h1 className="text-2xl font-bold">{user.name}</h1>
+            <h1 className="text-2xl font-bold">{user?.name}</h1>
             <Link
               to={"/profile/EditProfile"}
               className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md"

@@ -64,7 +64,7 @@ export default function HeaderToggle() {
             <div className="flex gap-2">
               <img
                 alt="profileImage"
-                src={user.imgProfile}
+                src={user?.imgProfile}
                 className="w-[25px] h-[25px] rounded-full object-cover"
               />
               <div className="font-bold">{firstName}</div>

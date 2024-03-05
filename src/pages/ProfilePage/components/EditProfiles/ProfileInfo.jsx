@@ -7,24 +7,65 @@ import Header from "./Header";
 import { useState } from "react";
 import Model from "./Model";
 import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
+import axios from "axios";
+
+// const initial = {
+//   name: user?.name,
+//   imgProfile: "",
+// };
 
 export default function ProfileInfo({ setIsEditPassword }) {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   // const [editAboutMe, setEditAboutMe] = useState(false);
+  console.log("user", user);
   const [editImage, setEditImage] = useState(false);
+  const [input, setInput] = useState(user);
+  const [onEditInfo, setOnEditInfo] = useState(false);
 
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(user.imgProfile);
 
-  const birthdate = user.birthdate?.split("T")[0];
+  const birthdate = user?.birthdate?.split("T")[0];
+  console.log(birthdate);
   const mobile = user?.mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+
+  const handleChangeInput = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value }); //{...[A:1,B:2,C:3]} ==>  {A:1,B:2,C:3}
+  };
+
+  const handleOnEdit = async () => {
+    try {
+      setUser(input);
+      setOnEditInfo((c) => !c);
+      const formData = new FormData();
+      for (let i in input) {
+        formData.append(i, input[i]);
+      }
+
+      // await axios.patch("/user", formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const formData = new formData();
+    formData.append("imgProfile", profileImage);
+    formData.append("id", input.id);
+
+    // await axios.patch("/user/user-profile", formData);
+  };
+  console.log("input", input);
+  console.log("user", user);
 
   return (
     <>
       {editImage ? (
         <Model
           setEditImage={setEditImage}
-          profileImage={profileImage}
+          profileImage={profileImage || user?.imgProfile}
           setProfileImage={setProfileImage}
+          setUser={setUser}
+          handleSubmit={handleSubmit}
         />
       ) : (
         ""
@@ -36,7 +77,7 @@ export default function ProfileInfo({ setIsEditPassword }) {
             <img
               className="h-[50px] w-[50px] object-cover rounded-full"
               // src={profileImage}
-              src={user.imgProfile}
+              src={user?.imgProfile}
             />
             <div
               className=" text-sm text-blue_primary w-2/3 cursor-pointer mt-5"
@@ -47,7 +88,14 @@ export default function ProfileInfo({ setIsEditPassword }) {
           </div>
           <hr />
 
-          <EditInput title={"เบอร์โทรศัพท์"} info={mobile} />
+          <EditInput
+            title={"เบอร์โทรศัพท์"}
+            info={mobile}
+            input={input}
+            name={"mobile"}
+            handleChangeInput={handleChangeInput}
+            setInput={setInput}
+          />
           <hr />
 
           <div className="flex justify-between">
@@ -61,18 +109,74 @@ export default function ProfileInfo({ setIsEditPassword }) {
           <div className="flex justify-between">
             <div>อีเมล</div>
             <div className="flex justify-between text-sm w-2/3">
-              <div>{user.email}</div>
+              <div>{user?.email}</div>
             </div>
           </div>
           <hr />
 
-          <EditInput title={"ชื่อ"} info={user?.name} />
+          <EditInput
+            title={"ชื่อ"}
+            info={user?.name}
+            input={input}
+            name={"name"}
+            handleChangeInput={handleChangeInput}
+            setInput={setInput}
+          />
           <hr />
 
-          <EditInput title={"เพศ"} info={user?.gender} />
+          <div className="flex justify-between">
+            <div>เพศ</div>
+            {onEditInfo ? (
+              <div className=" flex flex-col gap-5 w-2/3">
+                <select
+                  value={input.gender}
+                  name="gender"
+                  id="genders"
+                  onChange={handleChangeInput}
+                >
+                  <option value="MALE" name="gender">
+                    MALE
+                  </option>
+                  <option value="FEMALE" name="gender">
+                    FEMALE
+                  </option>
+                </select>
+
+                <div className="flex gap-4">
+                  <button className="blue_primary" onClick={handleOnEdit}>
+                    บันทึก
+                  </button>
+
+                  <button
+                    className="gray_primary"
+                    onClick={() => setOnEditInfo((c) => !c)}
+                  >
+                    ยกเลิก
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between text-sm w-2/3">
+                <div>{user?.gender}</div>
+                <button
+                  className="text-blue_primary"
+                  onClick={() => setOnEditInfo((c) => !c)}
+                >
+                  แก้ไข
+                </button>
+              </div>
+            )}
+          </div>
           <hr />
 
-          <EditInput title={"วันเกิด"} info={birthdate} />
+          <EditInput
+            type={"date"}
+            title={"วันเกิด"}
+            info={birthdate}
+            input={input}
+            name={"birthdate"}
+            handleChangeInput={handleChangeInput}
+          />
         </Card>
 
         {/* <Card>
