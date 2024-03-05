@@ -35,7 +35,7 @@ function BusinessInfo() {
         subDistrict,
         fetchSubDistrict,
         category,
-        register
+        createRestaurant
     } = useRestaurantContext();
 
     console.log(category);
@@ -60,7 +60,7 @@ function BusinessInfo() {
     const hdlSubmit = async (e) => {
         e.preventDefault()
         console.log(input);
-        await register(input)
+        await createRestaurant(input)
     }
 
     console.log(input);

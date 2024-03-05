@@ -1,6 +1,6 @@
 import { useState, createContext } from "react"
 import axios from "axios"
-import { getCategory, getDistrict, getProvince, getSubDistrict, merchantRegister } from "../apis/merchant"
+import { getCategory, getDistrict, getProvince, getSubDistrict, merchantCreateRestaurant } from "../apis/merchant"
 import { useEffect } from "react"
 
 export const RestaurantContext = createContext()
@@ -43,8 +43,8 @@ export const RestaurantContextProvider = ({ children }) => {
     setCategory(res.data.categories)
   }
 
-  const register = async (data) => {
-    const res = await merchantRegister(data)
+  const createRestaurant = async (data) => {
+    const res = await merchantCreateRestaurant(data)
     console.log(res);
   }
 
@@ -68,7 +68,7 @@ export const RestaurantContextProvider = ({ children }) => {
         subDistrict,
         fetchSubDistrict,
         category,
-        register
+        createRestaurant
       }}
     >
       {children}

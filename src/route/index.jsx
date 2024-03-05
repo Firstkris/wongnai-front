@@ -3,12 +3,8 @@ import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { FilterPage } from "../pages/FilterPage";
 
-<<<<<<< HEAD
-import RestaurantRegisterPage from '../pages/Restaurant/RestaurantRegisterPage';
-=======
 import Header from "../layouts/Header";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
->>>>>>> f69e52e0c8a6801e330541628b6fb41443dd5f6e
 
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
@@ -68,20 +64,14 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage />},
+      { path: "/restaurants", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
-<<<<<<< HEAD
         path: '/merchant',
         element: <RestaurantRegisterPage />
       }
 
-=======
-        path: "/restaurant",
-        element: <RestaurantRegisterPage />,
-      },
->>>>>>> f69e52e0c8a6801e330541628b6fb41443dd5f6e
     ],
   },
 ]);
