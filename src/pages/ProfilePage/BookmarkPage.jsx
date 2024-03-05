@@ -11,6 +11,7 @@ export default function BookmarkPage() {
   const { userId } = useParams();
   const [otherUser, setOtherUser] = useState({});
   const [bookmarks, setBookmarks] = useState([]);
+  const [myBookmarks, setMyBookmarks] = useState([]);
 
   useEffect(() => {
     userApi
@@ -22,14 +23,21 @@ export default function BookmarkPage() {
       .catch((err) => {
         console.log(err);
       });
+    userApi
+      .fetchMe()
+      .then((res) => {
+        setMyBookmarks(res.data.bookmarks);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
     <div>
       <ProfileHeader otherUser={otherUser} />
       <ProfileNavBookMark />
-      {/* <ProfileNavReview /> */}
-      <BookmarkList bookmarks={bookmarks} />
+      <BookmarkList bookmarks={bookmarks} myBookmarks={myBookmarks} />
     </div>
   );
 }

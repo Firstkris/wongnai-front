@@ -7,6 +7,8 @@ import ReviewItem from "./ReviewItem";
 export default function ReviewList() {
   const { userId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [myReviews, setMyReviews] = useState([]);
+
   const [otherUser, setOtherUser] = useState({});
 
   useEffect(() => {
@@ -15,8 +17,14 @@ export default function ReviewList() {
       .then((res) => {
         setOtherUser(res.data.user);
         setReviews(res.data.reviews);
-        console.log("otherUser", otherUser);
-        console.log("reviews", reviews);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    userApi
+      .fetchMe()
+      .then((res) => {
+        setMyReviews(res.data.reviews);
       })
       .catch((err) => {
         console.log(err);
@@ -25,9 +33,19 @@ export default function ReviewList() {
 
   return (
     <div>
-      {reviews.map((review) => (
-        <ReviewItem key={review.id} review={review} otherUser={otherUser} />
-      ))}
+      {!userId ? (
+        <>
+          {myReviews.map((myReview) => (
+            <ReviewItem key={myReview.id} myReview={myReview} />
+          ))}
+        </>
+      ) : (
+        <>
+          {reviews.map((review) => (
+            <ReviewItem key={review.id} review={review} otherUser={otherUser} />
+          ))}
+        </>
+      )}
     </div>
   );
 }
