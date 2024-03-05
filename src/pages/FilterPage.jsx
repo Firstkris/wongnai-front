@@ -4,84 +4,94 @@ import { SlideBar } from "../components/filterPageComponents/SlideBar"
 import { useRestaurant } from "../hooks/hooks.jsx"
 import { useEffect } from "react"
 import { Breadcrumbs } from "../components/BreadCrumb.jsx"
+import { useAuth } from "../feature/auth/contexts/AuthContext.jsx"
+import { Loading } from "../components/Loading"
 
+const breadcrumbs = [
+  { label: "หน้าหลัก", link: "https://www.google.com" },
+  {
+    label: "ค้นหาร้านอาหาร",
+    link: "https://www.wongnai.com/restaurants?regions=9681",
+  },
+]
 export const FilterPage = () => {
   const {
     filterPageData,
-    fetchFilterPage,
-    filterInput,
-    fetchFilterData,
     fetchRestaurantWithUserLogin,
+    isLoading,
+    fetchFilterPage,
   } = useRestaurant()
   const { restaurants } = filterPageData
 
+  const { user } = useAuth()
+  //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
-    fetchFilterPage()
-  }, [])
+    if (!user) {
+      fetchFilterPage()
+    } else {
+      fetchRestaurantWithUserLogin()
+    }
+  }, [user])
 
-  const breadcrumbs = [
-    { label: "หน้าหลัก", link: "https://www.google.com" },
-    {
-      label: "ค้นหาร้านอาหาร",
-      link: "https://www.wongnai.com/restaurants?regions=9681",
-    },
-  ]
   return (
     //layout
-    <div className="flex flex-col gap-2">
-      <div
-        className="bg-yellow-400"
-        onClick={() => fetchRestaurantWithUserLogin()}
-      >
-        If login
+    isLoading ? (
+      <div className=" flex justify-center items-center h-screen bg-opacity-50">
+        <Loading />
       </div>
-      {/* layout subheader */}
-      <div className="w-full bg-white mt-1">
-        <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto">
-          <div className="pl-1">
-            <Breadcrumbs breadcrumbs={breadcrumbs} pageName="ค้นหาร้านอาหาร" />
-          </div>
-          <div className="font-semibold text-3xl">
-            ร้านอาหารยอดนิยม ในกรุงเทพมหานครอมรรัตนโกสินทร์
+    ) : (
+      <div className="flex flex-col gap-2">
+        {/* layout subheader */}
+        <div className="w-full bg-white mt-1 ">
+          <div className="flex flex-col gap-2 py-4 w-[886px] md:mx-auto xl:w-[1024px]">
+            <div className="pl-1">
+              <Breadcrumbs
+                breadcrumbs={breadcrumbs}
+                pageName="ค้นหาร้านอาหาร"
+              />
+            </div>
+            <div className="font-semibold text-3xl">
+              ร้านอาหารยอดนิยม ในกรุงเทพมหานคร
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* layout body*/}
-      <div className="md:mx-auto  ">
-        <div className=" flex justify-around gap-4 w-[886px]">
-          {/* <Slidebar> */}
-          <div className="flex min-w-fit ">
-            <SlideBar />
-          </div>
-          <div className="flex flex-col w-3/4  gap-4">
-            <div className="flex bg-black h-28 rounded-lg">
-              show photo pagination
-              {/* show photo pagination */}
+        {/* layout body*/}
+        <div className="md:mx-auto  ">
+          <div className=" flex justify-around gap-4 w-[886px] xl:w-[1024px]">
+            {/* <Slidebar> */}
+            <div className="flex min-w-fit ">
+              <SlideBar />
             </div>
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-4 ">
-                {/* restaurants */}
-                {restaurants?.length > 0 ? (
-                  restaurants?.map((restaurant) => (
-                    <CardRestaurant
-                      key={restaurant.id}
-                      restaurant={restaurant}
-                    />
-                  ))
-                ) : (
-                  <div className="flex justify-center gap-2 p-4 bg-white rounded-lg font-semibold  w-[480px] text-gray-400">
-                    NO FILTERS
-                  </div>
-                )}
+            <div className="flex flex-col w-3/4  gap-4">
+              <div className="flex bg-black h-28 rounded-lg">
+                show photo pagination black area
+                {/* show photo pagination */}
               </div>
-              <div className="flex flex-col bg-white w-2/6">
-                <div className="m-1 bg-slate-300 h-36 rounded-lg">ADS</div>
+              <div className="flex gap-4 justify-around">
+                <div className="flex flex-col gap-4 ">
+                  {/* restaurants */}
+                  {restaurants?.length > 0 ? (
+                    restaurants?.map((restaurant) => (
+                      <CardRestaurant
+                        key={restaurant.id}
+                        restaurant={restaurant}
+                      />
+                    ))
+                  ) : (
+                    <div className="flex justify-center gap-2 p-4 bg-white rounded-lg font-semibold  w-[480px] text-gray-400">
+                      NO FILTERS
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col bg-white w-2/6">
+                  <div className="m-1 bg-slate-300 h-36 rounded-lg">ADS</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    )
   )
 }

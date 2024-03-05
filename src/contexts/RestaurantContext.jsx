@@ -10,13 +10,17 @@ export const RestaurantContext = createContext()
 export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
   const [filterInput, setFilterInput] = useState({})
+  const [isLoading, setLoading] = useState(false)
 
   const fetchFilterPage = async () => {
     try {
+      setLoading(true)
       const response = await filterPageGetRestaurant()
       setFilterPageData(response.data)
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -35,25 +39,25 @@ export const RestaurantContextProvider = ({ children }) => {
 
       const response = await getFilterRestaurant(filterDataParams)
       console.log(response.data?.restaurants, "restaurant after filter")
-      if (response.data?.restaurants?.length == 0) {
-        setFilterPageData((prev) => ({
-          ...prev,
-          restaurants: [],
-        }))
-      } else {
+      if (response.data?.restaurants?.length > 0) {
         setFilterPageData((prev) => ({
           ...prev,
           restaurants: response.data?.restaurants,
         }))
+      } else {
+        setFilterPageData((prev) => ({
+          ...prev,
+          restaurants: [],
+        }))
       }
     } catch (err) {
-      fetchFilterPage()
-      console.log("pass")
+      console.log("error")
     }
   }
 
   const clearFilters = () => {
     setFilterInput({})
+    fetchFilterPage()
   }
 
   const fetchRestaurantWithUserLogin = async () => {
@@ -80,6 +84,7 @@ export const RestaurantContextProvider = ({ children }) => {
         fetchFilterData,
         clearFilters,
         fetchRestaurantWithUserLogin,
+        isLoading,
       }}
     >
       {children}

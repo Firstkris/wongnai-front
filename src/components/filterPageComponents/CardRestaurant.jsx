@@ -29,7 +29,7 @@ export const CardRestaurant = ({ restaurant }) => {
             : null}
         </div>
         <div className="flex justify-between">
-          <div>
+          <div className="flex flex-col gap-1">
             <div className="group font-semibold gap-2 flex items-baseline ">
               <span className="text-xl font-semibold text-gray-600 group-hover:text-black ">
                 {restaurant.restaurantName}
@@ -40,11 +40,13 @@ export const CardRestaurant = ({ restaurant }) => {
             </div>
 
             <div className="flex gap-2 items-center">
-              <span>
-                <ReviewScore
-                  score={restaurant.reviewPoint / restaurant.reviewCount}
-                />
-              </span>
+              {restaurant.reviewPoint / restaurant.reviewCount >= 3 && (
+                <span>
+                  <ReviewScore
+                    score={restaurant.reviewPoint / restaurant.reviewCount}
+                  />
+                </span>
+              )}
               <span>{restaurant.reviewCount} รีวิว</span>
               <span>{restaurant.priceLength}</span>
               {restaurant.isOpen ? (
@@ -53,7 +55,7 @@ export const CardRestaurant = ({ restaurant }) => {
                 <span className="text-red_primary">ปิดอยู่</span>
               )}
             </div>
-            <div>
+            <div className="text-gray-500 text-sm">
               {restaurant.category ? restaurant.category.categoryName : null}
             </div>
           </div>

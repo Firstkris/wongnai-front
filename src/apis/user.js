@@ -8,9 +8,11 @@ export const userLogin = async (fromData) =>
 export const userLoginWithFacebook = async (fromData) =>
   await axios.post("/user/loginWithFace", fromData)
 
-export const fetchMe = () =>
-  axios.get("/user/me", {
-    headers: { Authorization: `Bearer ${getToken}` },
+export const fetchMe = async () =>
+  await axios.get("/user/me", {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
   })
 export const userLoginWithFace = async (fromData) =>
   await axios.post("/user/loginWithFace", fromData)

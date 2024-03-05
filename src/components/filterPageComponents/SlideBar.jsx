@@ -12,10 +12,7 @@ export const SlideBar = () => {
   // fetchData when checked
   useEffect(() => {
     console.log(filterInput, "filterInput")
-    const run = async () => {
-      await fetchFilterData(filterInput)
-    }
-    run()
+    fetchFilterData(filterInput)
   }, [filterInput])
   console.log(filterPageData)
   const handleChangeRating = (e) => {

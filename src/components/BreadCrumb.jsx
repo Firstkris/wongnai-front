@@ -9,12 +9,12 @@ export const Breadcrumbs = ({ breadcrumbs, pageName }) => {
     <div className="breadcrumbs flex items-center" key={pageName}>
       {breadcrumbs.map((breadcrumb, index) => (
         <>
-          {index > 0 && (
-            <div className="separator">
-              <IconArrowRight />
-            </div>
-          )}
           <span key={index} className="flex gap-2 items-center ">
+            {index > 0 && (
+              <div className="separator">
+                <IconArrowRight />
+              </div>
+            )}
             <div>
               {breadcrumb.link ? (
                 <Link
