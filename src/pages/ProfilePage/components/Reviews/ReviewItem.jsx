@@ -1,14 +1,14 @@
 import React from "react";
 import { StarIcon } from "../../../../icons/icon";
-import { useUser } from "../../../../feature/ีuser/contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useUser } from "../../../../feature/user/contexts/UserContext";
 
 export default function ReviewItem({ otherUser, review, myReview }) {
   const { user } = useUser();
   const { userId } = useParams();
 
-  const [isToggle, setIsToggle] = useState(true);
+  const [isToggle, setIsToggle] = useState(false);
 
   const agoTime = () => {
     let reviewPostTime;
@@ -107,7 +107,7 @@ export default function ReviewItem({ otherUser, review, myReview }) {
         <div className="relative grid grid-cols-3 gap-4 mt-5  ">
           {userId ? (
             <>
-              {isToggle ? (
+              {!isToggle ? (
                 <>
                   {review.reviewImgs.slice(0, 3).map((a) => (
                     <img
@@ -139,12 +139,35 @@ export default function ReviewItem({ otherUser, review, myReview }) {
             </>
           ) : (
             <>
-              {myReview.reviewImgs.map((a) => (
-                <img
-                  className="aspect-video object-cover h-full w-full"
-                  src={a.img}
-                />
-              ))}{" "}
+              {!isToggle ? (
+                <>
+                  {myReview.reviewImgs.slice(0, 3).map((a) => (
+                    <img
+                      className=" aspect-video object-cover h-full w-full"
+                      src={a.img}
+                      alt="Review Image"
+                    />
+                  ))}{" "}
+                  {myReview.reviewImgs.length >= 3 ? (
+                    <div
+                      className="absolute right-0 bg-black opacity-70 aspect-video h-full w-1/3 text-white text-center text-4xl pt-16 cursor-pointer"
+                      onClick={() => setIsToggle((c) => !c)}
+                    >
+                      +{myReview.reviewImgs?.length - 3}
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  {myReview.reviewImgs.map((a) => (
+                    <img
+                      className="aspect-video object-cover h-full w-full"
+                      src={a.img}
+                      alt="Review Image"
+                    />
+                  ))}{" "}
+                </>
+              )}
             </>
           )}
         </div>
