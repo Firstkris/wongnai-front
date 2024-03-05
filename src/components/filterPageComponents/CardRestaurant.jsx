@@ -19,7 +19,7 @@ export const CardRestaurant = ({ restaurant }) => {
                   {index <= 6 && (
                     <img
                       src={`${image.img}`}
-                      className="object-hover"
+                      className="object-cover w-full h-full"
                       alt={`Image ${index}`}
                     />
                   )}
