@@ -1,23 +1,40 @@
 import React from "react";
 import { useState } from "react";
 import Input from "../../../../components/Input";
-import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
+import axios from "../../../../configs/axios";
+import { useUser } from "../../../../feature/user/contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default function EditInput({
-  setInput,
   handleChangeInput,
   title,
   info,
   input,
   name,
   type = "text",
+  inputDefault,
 }) {
-  const { setUser } = useAuth();
+  const { setUser, userDefault } = useUser();
 
   const [onEditInfo, setOnEditInfo] = useState(false);
-  const handleOnEdit = () => {
-    setUser(input);
-    setOnEditInfo((c) => !c);
+  const handleOnEdit = async () => {
+    try {
+      console.log(input);
+      const data = { ...input };
+      delete data.imgProfile;
+
+      data.birthdate = data.birthdate + "T12:00:00.000Z";
+      console.log(data, "data");
+
+      await axios.patch("/user", data);
+      setUser(input);
+      setOnEditInfo((c) => !c);
+
+      toast.success("Edit profile successful");
+    } catch (error) {
+      console.log(error);
+      toast.error("Mobile invalid");
+    }
   };
 
   return (
@@ -39,7 +56,10 @@ export default function EditInput({
 
             <button
               className="gray_primary"
-              onClick={() => setOnEditInfo((c) => !c)}
+              onClick={() => {
+                setOnEditInfo((c) => !c);
+                setUser(userDefault);
+              }}
             >
               ยกเลิก
             </button>

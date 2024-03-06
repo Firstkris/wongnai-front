@@ -8,4 +8,4 @@ export const getSubDistrict = async (districtCode) => axios.post('/merchant/sub-
 
 export const getCategory = async () => axios.get('/merchant/category')
 
-export const merchantRegister = async (mercData) => axios.post('/merchant/register', mercData)
+export const merchantCreateRestaurant = async (mercData) => axios.post('/merchant/register', mercData)

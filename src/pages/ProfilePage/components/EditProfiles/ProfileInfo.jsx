@@ -6,8 +6,9 @@ import Container from "./Container";
 import Header from "./Header";
 import { useState } from "react";
 import Model from "./Model";
-import { useAuth } from "../../../../feature/auth/contexts/AuthContext";
-import axios from "axios";
+import axios from "../../../../configs/axios";
+import { useUser } from "../../../../feature/user/contexts/UserContext";
+import { toast } from "react-toastify";
 
 // const initial = {
 //   name: user?.name,
@@ -15,17 +16,17 @@ import axios from "axios";
 // };
 
 export default function ProfileInfo({ setIsEditPassword }) {
-  const { user, setUser } = useAuth();
+  const { user, setUser } = useUser();
   // const [editAboutMe, setEditAboutMe] = useState(false);
-  console.log("user", user);
   const [editImage, setEditImage] = useState(false);
   const [input, setInput] = useState(user);
   const [onEditInfo, setOnEditInfo] = useState(false);
 
   const [profileImage, setProfileImage] = useState(user.imgProfile);
+  const [profileImage1, setProfileImage1] = useState(user.imgProfile);
 
-  const birthdate = user?.birthdate?.split("T")[0];
-  console.log(birthdate);
+  user.birthdate = user?.birthdate?.split("T")[0];
+  // console.log(birthdate);
   const mobile = user?.mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
 
   const handleChangeInput = (e) => {
@@ -34,28 +35,35 @@ export default function ProfileInfo({ setIsEditPassword }) {
 
   const handleOnEdit = async () => {
     try {
+      // const formData = new FormData();
+      // for (let i in input) {
+      //   formData.append(i, input[i]);
+      // }
+
       setUser(input);
       setOnEditInfo((c) => !c);
-      const formData = new FormData();
-      for (let i in input) {
-        formData.append(i, input[i]);
-      }
 
-      // await axios.patch("/user", formData);
+      await axios.patch("/user", input);
+      toast.success("Edit profile successful");
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleSubmit = async () => {
-    const formData = new formData();
-    formData.append("imgProfile", profileImage);
+    console.log("******");
+    console.log(input.id);
+    const formData = new FormData();
+    formData.append("imgProfile", profileImage1);
     formData.append("id", input.id);
 
-    // await axios.patch("/user/user-profile", formData);
+    console.log(formData);
+
+    await axios.patch("/user/user-img", formData);
   };
-  console.log("input", input);
+  console.log("*****************************************", user?.imgProfile);
   console.log("user", user);
+  // console.log("input", input);
 
   return (
     <>
@@ -66,6 +74,8 @@ export default function ProfileInfo({ setIsEditPassword }) {
           setProfileImage={setProfileImage}
           setUser={setUser}
           handleSubmit={handleSubmit}
+          setProfileImage1={setProfileImage1}
+          // user={user}
         />
       ) : (
         ""
@@ -172,7 +182,7 @@ export default function ProfileInfo({ setIsEditPassword }) {
           <EditInput
             type={"date"}
             title={"วันเกิด"}
-            info={birthdate}
+            info={user.birthdate}
             input={input}
             name={"birthdate"}
             handleChangeInput={handleChangeInput}
