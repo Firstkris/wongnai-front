@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage /> },
+      { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {

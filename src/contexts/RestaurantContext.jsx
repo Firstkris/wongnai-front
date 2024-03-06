@@ -2,9 +2,11 @@ import { useState, createContext } from "react"
 import {
   filterPageGetRestaurant,
   getFilterRestaurant,
-  getUserBookmark,
+  getAllUserBookmark,
+  getRestaurantById,
 } from "../apis/restaurants"
 import { useUser } from "../feature/user/contexts/UserContext"
+import { userBookmark } from "../apis/user"
 
 import {
   getCategory,
@@ -20,6 +22,8 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
+
+  const [restaurantPage, setRestaurantPage] = useState({})
 
   const { user } = useUser()
 
@@ -89,7 +93,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchRestaurantWithUserLogin = async () => {
     //if user is login
     try {
-      const response = await getUserBookmark()
+      const response = await getAllUserBookmark()
       setFilterPageData((prev) => ({
         ...prev,
         restaurants: response.data?.restaurants,
@@ -98,6 +102,24 @@ export const RestaurantContextProvider = ({ children }) => {
       console.log(err)
     }
   }
+
+  const fetchRestaurantAndBookmarkById = async (restaurantId) => {
+    try {
+      const [restaurantResponse, bookmarkResponse] = await Promise.all([
+        getRestaurantById(restaurantId),
+        userBookmark(restaurantId),
+      ])
+
+      setRestaurantPage({
+        restaurant: restaurantResponse.data?.restaurant,
+        bookmarks: bookmarkResponse.data?.bookmark,
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  ////////
 
   const fetchProvince = async () => {
     const res = await getProvince()
@@ -145,6 +167,8 @@ export const RestaurantContextProvider = ({ children }) => {
         fetchSubDistrict,
         category,
         createRestaurant,
+        fetchRestaurantAndBookmarkById,
+        restaurantPage,
       }}
     >
       {children}

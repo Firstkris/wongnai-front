@@ -1,4 +1,4 @@
-import { BookmarkIcon } from "../Bookmark"
+import { BookmarkIcon } from "../BookmarkIcon"
 import { useNavigate } from "react-router-dom"
 import { ReviewScore } from "../ReviewScore"
 export const CardRestaurant = ({ restaurant }) => {

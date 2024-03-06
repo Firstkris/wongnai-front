@@ -8,13 +8,13 @@ export const BookmarkIcon = ({ restaurant }) => {
   // second render state be set
   useEffect(() => {
     setIsBookmarked(
-      restaurant.bookmarks
-        ? restaurant.bookmarks?.length == 0
+      restaurant?.bookmarks
+        ? restaurant?.bookmarks?.length == 0
           ? false
           : true
         : false
     )
-  }, [restaurant.bookmarks])
+  }, [restaurant?.bookmarks])
 
   useEffect(() => {
     return () => {
