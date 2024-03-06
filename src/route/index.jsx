@@ -3,12 +3,8 @@ import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { FilterPage } from "../pages/FilterPage";
 
-<<<<<<< HEAD
-import RestaurantRegisterPage from '../pages/Restaurant/RestaurantRegisterPage';
-=======
 import Header from "../layouts/Header";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
->>>>>>> f69e52e0c8a6801e330541628b6fb41443dd5f6e
 
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
@@ -20,8 +16,28 @@ import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
 import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
+import Chat from "../pages/Chat";
+import Chat2 from "../pages/Chat2";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
+  // {
+  //   path: "/chat1",
+  //   element: (
+  //     <div>
+  //       <Chat />
+  //       {/* <Chat2 /> */}
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   path: "/chat2",
+  //   element: (
+  //     <div>
+  //       {/* <Chat /> */}
+  //       <Chat2 />
+  //     </div>
+  //   ),
+  // },
   {
     path: "/",
     element: (
@@ -68,20 +84,13 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage />},
+      { path: "/restaurants", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
-<<<<<<< HEAD
-        path: '/merchant',
-        element: <RestaurantRegisterPage />
-      }
-
-=======
-        path: "/restaurant",
+        path: "/merchant",
         element: <RestaurantRegisterPage />,
       },
->>>>>>> f69e52e0c8a6801e330541628b6fb41443dd5f6e
     ],
   },
 ]);
