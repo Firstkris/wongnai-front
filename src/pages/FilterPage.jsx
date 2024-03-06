@@ -27,8 +27,10 @@ export const FilterPage = () => {
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
     if (!user) {
+      console.log("nullll")
       fetchFilterPage()
     } else {
+      console.log("userrrrr")
       fetchRestaurantWithUserLogin()
     }
   }, [user])

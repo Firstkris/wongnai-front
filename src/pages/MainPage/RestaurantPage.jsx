@@ -32,13 +32,16 @@ function RestaurantPage() {
           src="https://img.wongnai.com/p/1600x0/2023/03/01/17147367ec614addb6bb907136a6661a.jpg"
         />
       </div>
-      <div className="mx-auto">
-        <div className="flex  w-full gap-10">
-          <div className="w-9/12">
-            <TitleRestaurantCard restaurantData={restaurantData.restaurant} />
-            <RestaurantMapCard />
+      <div className="w-full">
+        <div className="mx-auto flex justify-center  w-full gap-10">
+          <div className="min-w-[567px]">
+            <TitleRestaurantCard
+              restaurantData={restaurantData.restaurant}
+              bookmarks={restaurantData?.bookmarks}
+            />
+            <RestaurantMapCard restaurantData={restaurantData.restaurant} />
           </div>
-          <div className="w-3/12">
+          <div className="min-w-56">
             <RestaurantDetailCard restaurantData={restaurantData.restaurant} />
           </div>
         </div>

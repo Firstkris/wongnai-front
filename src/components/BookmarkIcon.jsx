@@ -1,8 +1,10 @@
 import { FaBookmark, FaRegBookmark } from "react-icons/fa"
 import { useState, useEffect } from "react"
 import { userBookmark } from "../apis/user"
+import { useParams } from "react-router-dom"
 export const BookmarkIcon = ({ restaurant }) => {
   const [isBookmarked, setIsBookmarked] = useState(false)
+  const { id } = useParams()
 
   let debounceTimeout
   // second render state be set
@@ -14,13 +16,11 @@ export const BookmarkIcon = ({ restaurant }) => {
           : true
         : false
     )
-  }, [restaurant?.bookmarks])
-
-  useEffect(() => {
     return () => {
       clearTimeout(debounceTimeout) //clear timeout
     }
-  }, [])
+  }, [restaurant?.bookmarks])
+
   const handleClickBookMark = async (e) => {
     try {
       e.stopPropagation()
@@ -28,7 +28,8 @@ export const BookmarkIcon = ({ restaurant }) => {
         clearTimeout(debounceTimeout)
       }
       debounceTimeout = setTimeout(async () => {
-        const response = await userBookmark(restaurant.id)
+        const restaurantId = restaurant?.id || parseInt(id)
+        const response = await userBookmark(restaurantId)
         setIsBookmarked(response.data?.bookmark)
       }, 500)
     } catch (err) {

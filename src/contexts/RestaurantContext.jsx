@@ -6,7 +6,7 @@ import {
   getRestaurantById,
 } from "../apis/restaurants"
 import { useUser } from "../feature/user/contexts/UserContext"
-import { userBookmark } from "../apis/user"
+import { userBookmark, getUserBookmark } from "../apis/user"
 
 import {
   getCategory,
@@ -22,7 +22,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
-
+  console.log(filterPageData.restaurants)
   const [restaurantData, setRestaurantPage] = useState({})
 
   const { user } = useUser()
@@ -49,7 +49,7 @@ export const RestaurantContextProvider = ({ children }) => {
       if (Object.keys(filterData).length === 0) {
         return console.log("no filter")
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
-        return fetchFilterPage()
+        return user ? fetchRestaurantWithUserLogin() : fetchFilterPage()
       }
       const filterDataParams = {
         districtId: filterData?.districtNameTh,
@@ -94,6 +94,7 @@ export const RestaurantContextProvider = ({ children }) => {
     //if user is login
     try {
       const response = await getAllUserBookmark()
+      console.log(response.data.restaurants)
       setFilterPageData((prev) => ({
         ...prev,
         restaurants: response.data?.restaurants,
@@ -108,12 +109,13 @@ export const RestaurantContextProvider = ({ children }) => {
       setLoading(true)
       const [restaurantResponse, bookmarkResponse] = await Promise.all([
         getRestaurantById(restaurantId),
-        userBookmark(restaurantId),
+        getUserBookmark(restaurantId),
       ])
+      console.log(restaurantResponse.data, bookmarkResponse.data)
 
       setRestaurantPage({
         restaurant: restaurantResponse.data?.restaurant,
-        bookmarks: bookmarkResponse.data?.bookmark,
+        bookmarks: bookmarkResponse.data?.bookmarks,
       })
     } catch (err) {
       console.log(err)
