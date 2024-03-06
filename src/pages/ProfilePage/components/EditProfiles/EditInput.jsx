@@ -1,35 +1,41 @@
-import React from "react"
-import { useState } from "react"
-import Input from "../../../../components/Input"
-import axios from "axios"
-import { useUser } from "../../../../feature/user/contexts/UserContext"
+import React from "react";
+import { useState } from "react";
+import Input from "../../../../components/Input";
+import axios from "../../../../configs/axios";
+import { useUser } from "../../../../feature/user/contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default function EditInput({
-  setInput,
   handleChangeInput,
   title,
   info,
   input,
   name,
   type = "text",
+  inputDefault,
 }) {
-  const { setUser } = useUser()
+  const { setUser, userDefault } = useUser();
 
-  const [onEditInfo, setOnEditInfo] = useState(false)
+  const [onEditInfo, setOnEditInfo] = useState(false);
   const handleOnEdit = async () => {
     try {
-      console.log(input)
-      const data = { ...input }
-      delete data.imgProfile
+      console.log(input);
+      const data = { ...input };
+      delete data.imgProfile;
 
-      setUser(input)
-      setOnEditInfo((c) => !c)
+      data.birthdate = data.birthdate + "T12:00:00.000Z";
+      console.log(data, "data");
 
-      await axios.patch("/user", data)
+      await axios.patch("/user", data);
+      setUser(input);
+      setOnEditInfo((c) => !c);
+
+      toast.success("Edit profile successful");
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error("Mobile invalid");
     }
-  }
+  };
 
   return (
     <div className="flex justify-between">
@@ -50,7 +56,10 @@ export default function EditInput({
 
             <button
               className="gray_primary"
-              onClick={() => setOnEditInfo((c) => !c)}
+              onClick={() => {
+                setOnEditInfo((c) => !c);
+                setUser(userDefault);
+              }}
             >
               ยกเลิก
             </button>
@@ -68,5 +77,5 @@ export default function EditInput({
         </div>
       )}
     </div>
-  )
+  );
 }

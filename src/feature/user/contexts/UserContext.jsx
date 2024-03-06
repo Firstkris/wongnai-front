@@ -12,7 +12,8 @@ export default function UserContextProvider({ children }) {
   const { userId } = useParams();
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [userDefault, setUserDefault] = useState(null);
+  const [onFetch, setOnFetch] = useState(false);
 
   useEffect(() => {
     if (Token.getToken()) {
@@ -20,6 +21,7 @@ export default function UserContextProvider({ children }) {
         .fetchMe()
         .then((res) => {
           setUser(res.data.user);
+          setUserDefault(res.data.user);
         })
         .catch((err) => {
           console.log(err);
@@ -31,7 +33,13 @@ export default function UserContextProvider({ children }) {
   const logout = () => {
     setUser(null);
     Token.clearToken();
-    toast.success("Logout success");
+    toast.success("Logout successful");
+  };
+
+  const deleteReviewById = async (id) => {
+    await userApi.deleteReviewById(id);
+    setOnFetch((c) => !c);
+    toast.success("Delete review successful");
   };
 
   return (
@@ -42,6 +50,9 @@ export default function UserContextProvider({ children }) {
         logout,
         //  otherUser,
         userId,
+        deleteReviewById,
+        onFetch,
+        userDefault,
       }}
     >
       {children}
