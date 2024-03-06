@@ -42,6 +42,13 @@ export default function UserContextProvider({ children }) {
     toast.success("Delete review successful");
   };
 
+  const deleteBookmarkById = async (id) => {
+    console.log("id", id);
+    await userApi.deleteBookmarkById(id);
+    setOnFetch((c) => !c);
+    toast.success("Delete bookmark successful");
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -53,6 +60,7 @@ export default function UserContextProvider({ children }) {
         deleteReviewById,
         onFetch,
         userDefault,
+        deleteBookmarkById,
       }}
     >
       {children}
