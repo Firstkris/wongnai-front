@@ -9,6 +9,7 @@ import Model from "./Model";
 import axios from "../../../../configs/axios";
 import { useUser } from "../../../../feature/user/contexts/UserContext";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 // const initial = {
 //   name: user?.name,
@@ -16,7 +17,7 @@ import { toast } from "react-toastify";
 // };
 
 export default function ProfileInfo({ setIsEditPassword }) {
-  const { user, setUser } = useUser();
+  const { user, setUser, onFetch } = useUser();
   // const [editAboutMe, setEditAboutMe] = useState(false);
   const [editImage, setEditImage] = useState(false);
   const [input, setInput] = useState(user);
@@ -24,6 +25,11 @@ export default function ProfileInfo({ setIsEditPassword }) {
 
   const [profileImage, setProfileImage] = useState(user.imgProfile);
   const [profileImage1, setProfileImage1] = useState(user.imgProfile);
+
+  useEffect(() => {
+    setProfileImage(user.imgProfile);
+    setProfileImage1(user.imgProfile);
+  }, [onFetch]);
 
   user.birthdate = user?.birthdate?.split("T")[0];
   // console.log(birthdate);
@@ -33,23 +39,20 @@ export default function ProfileInfo({ setIsEditPassword }) {
     setInput({ ...input, [e.target.name]: e.target.value }); //{...[A:1,B:2,C:3]} ==>  {A:1,B:2,C:3}
   };
 
+  // เพศ
   const handleOnEdit = async () => {
     try {
-      // const formData = new FormData();
-      // for (let i in input) {
-      //   formData.append(i, input[i]);
-      // }
-
       setUser(input);
       setOnEditInfo((c) => !c);
 
-      await axios.patch("/user", input);
+      await axios.patch("/user", { gender: input.gender });
       toast.success("Edit profile successful");
     } catch (error) {
       console.log(error);
     }
   };
-
+  // console.log(user);
+  // แก้รูป
   const handleSubmit = async () => {
     console.log("******");
     console.log(input.id);
@@ -61,9 +64,9 @@ export default function ProfileInfo({ setIsEditPassword }) {
 
     await axios.patch("/user/user-img", formData);
   };
-  console.log("*****************************************", user?.imgProfile);
-  console.log("user", user);
-  // console.log("input", input);
+  // console.log("*****************************************", user?.imgProfile);
+  // console.log("user", user);
+  console.log("input", input);
 
   return (
     <>

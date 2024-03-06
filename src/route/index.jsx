@@ -17,8 +17,8 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-import Chat from "../pages/Chat";
-import Chat2 from "../pages/Chat2";
+// import Chat from "../pages/Chat";
+// import Chat2 from "../pages/Chat2";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   // {

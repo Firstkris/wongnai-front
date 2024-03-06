@@ -14,26 +14,40 @@ export default function EditInput({
   type = "text",
   inputDefault,
 }) {
-  const { setUser, userDefault } = useUser();
+  const { setUser, userDefault, setOnFetch } = useUser();
 
   const [onEditInfo, setOnEditInfo] = useState(false);
+  //
   const handleOnEdit = async () => {
     try {
-      console.log(input);
-      const data = { ...input };
-      delete data.imgProfile;
-
-      data.birthdate = data.birthdate + "T12:00:00.000Z";
-      console.log(data, "data");
-
+      const data = { [name]: input[name] };
+      if (name == "mobile") {
+        if (input[name].length != 10) {
+          toast.error("Invalid mobile");
+          return;
+        }
+      }
+      if (name == "gender") {
+        if (!(input[name] == "FEMALE" || input[name] == "MALE")) {
+          toast.error("Invalid mobile");
+          return;
+        }
+      }
+      if (name == "birthdate") {
+        if (input[name] > new Date().toISOString() + "") {
+          toast.error("Birtdate is more than current date");
+          return;
+        }
+      }
       await axios.patch("/user", data);
-      setUser(input);
+      setUser({ ...input, [name]: input[name] });
       setOnEditInfo((c) => !c);
 
       toast.success("Edit profile successful");
+      setOnFetch((r) => !r);
     } catch (error) {
       console.log(error);
-      toast.error("Mobile invalid");
+      toast.error(error.response.data.message);
     }
   };
 
@@ -58,7 +72,7 @@ export default function EditInput({
               className="gray_primary"
               onClick={() => {
                 setOnEditInfo((c) => !c);
-                setUser(userDefault);
+                // setUser(userDefault);
               }}
             >
               ยกเลิก
