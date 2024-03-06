@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 // };
 
 export default function ProfileInfo({ setIsEditPassword }) {
-  const { user, setUser, userDefault } = useUser();
+  const { user, setUser } = useUser();
   // const [editAboutMe, setEditAboutMe] = useState(false);
   const [editImage, setEditImage] = useState(false);
   const [input, setInput] = useState(user);
