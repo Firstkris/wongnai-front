@@ -6,17 +6,20 @@ import {
   TitleRestaurantCard,
 } from "../../components/RestaurantPageCard"
 import { useRestaurant } from "../../hooks/hooks"
+import { Loading } from "../../components/Loading"
 
 function RestaurantPage() {
-  const { fetchRestaurantAndBookmarkById, restaurantPage } = useRestaurant()
+  const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
+    useRestaurant()
   const params = useParams()
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.id)) //<<<<
   }, [])
 
-  console.log(restaurantPage)
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="max-w-[1024]  flex flex-col items-center bg-gray_primary">
       {/* image zone  */}
       <div className="h-[320px] flex gap-2">
@@ -32,11 +35,11 @@ function RestaurantPage() {
       <div className="mx-auto">
         <div className="flex  w-full gap-10">
           <div className="w-9/12">
-            <TitleRestaurantCard />
+            <TitleRestaurantCard restaurantData={restaurantData.restaurant} />
             <RestaurantMapCard />
           </div>
           <div className="w-3/12">
-            <RestaurantDetailCard />
+            <RestaurantDetailCard restaurantData={restaurantData.restaurant} />
           </div>
         </div>
       </div>

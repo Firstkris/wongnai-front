@@ -2,41 +2,40 @@ import React from "react"
 import { IconCamera } from "./icon-svg/IconCamera"
 import { IconMessage } from "./icon-svg/IconMessage"
 import { BookmarkIcon } from "./BookmarkIcon"
-export function TitleRestaurantCard() {
+import { IconCheckmark } from "./icon-svg/IconCheckmark"
+import { IconCrossRed } from "./icon-svg/IconCrossRed"
+import { priceLength } from "../constants/constant"
+import { IconCheckGreen } from "./icon-svg/IconCheckGreen"
+export function TitleRestaurantCard({ restaurantData }) {
   return (
     <div className=" w-full bg-white   my-4 rounded-md">
       <div className="p-4 flex flex-col gap-1 border-b-2">
         <div className="flex items-baseline gap-3">
-          <h1 className="text-4xl">Chithoe</h1>
-          <h1 className="text-2xl text-gray-500">Royal river hotel</h1>
-          <p className="bg-blue-500 text-white rounded-md px-2 flex text-xs">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m4.5 12.75 6 6 9-13.5"
-              />
-            </svg>
-            OFFICIAL
-          </p>
+          <h1 className="text-4xl">{restaurantData?.restaurantName}</h1>
+          <h1 className="text-2xl text-gray-500">{restaurantData?.address}</h1>
+          {restaurantData?.verify && (
+            <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
+              <IconCheckmark /> OFFICIAL
+            </div>
+          )}
         </div>
         <div>
-          <p className="text-gray-500 text-xs">7 เรตติ้ง (3รีวิว)</p>
+          <div className="text-gray-500 text-xs">
+            <span>{restaurantData?.reviewPoint} เรตติ้ง </span>
+            <span>({restaurantData?.reviewCount} รีวิว)</span>
+          </div>
         </div>
         <div>
           <p className="text-gray-500 text-xs">
-            อาหารฟิวชั่น,อาหารกล่อง/ข้าวกล่อง เดลิเวอรี่
+            {restaurantData?.category?.categoryName}
           </p>
         </div>
         <div>
-          <p className="text-green-500 text-xs">เปิดอยูุ่</p>
+          {restaurantData?.isOpen ? (
+            <p className="text-green-500 text-xs">เปิดอยู่</p>
+          ) : (
+            <p className="text-red-500 text-xs">ปิดอยู่</p>
+          )}
         </div>
       </div>
       <div className="p-4 flex gap-2">
@@ -101,59 +100,52 @@ export function RestaurantMapCard() {
   )
 }
 
-export function RestaurantDetailCard() {
+export function RestaurantDetailCard({ restaurantData }) {
+  ///waiting time and facility
+  const priceLengthText = restaurantData?.priceLength
+    ? priceLength
+        .find((el) => el.id === restaurantData?.priceLength)
+        .priceLength.slice(4)
+    : null
+
   return (
-    <div className=" w-full bg-white  p-4 my-4 rounded-md">
+    <div className=" w-full bg-white  p-4 my-4 rounded-md w-1/2">
       <div className="flex flex-col gap-6">
-        <div>
-          <p className="text-xs font-bold">เวลาเปิดร้าน</p>
-          <div className="flex-grow flex">
-            <p className="text-xs w-2/4 text-gray-500">อังคาร</p>
-            <p className="text-xs w-2/4 text-gray-500">11:00 - 21:00</p>
-          </div>
+        <div className="flex flex-col gap-1">
+          <p className="text-md font-bold">เวลาเปิดร้าน</p>
+          {restaurantData?.openHours ? (
+            restaurantData.openHours.map((el) => (
+              <div className=" flex ">
+                <p className="text-xs w-2/4 text-gray-500">{el.date}</p>
+                <p className="text-xs  text-gray-500">
+                  {el.openTime.slice(11, 16)}-{el.closeTime.slice(11, 16)}
+                </p>
+              </div>
+            ))
+          ) : (
+            <div>ไม่พบข้อมูล</div>
+          )}
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-3">
-            <svg
-              className="bg-green-500 w-4 h-4 text-white rounded-sm"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m4.5 12.75 6 6 9-13.5"
-              />
-            </svg>
-            <p className="text-xs ">มีที่จอดรถ</p>
-          </div>
-          <div className="flex gap-3">
-            <svg
-              className="bg-red-500 w-4 h-4 text-white rounded-sm"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-
+          {restaurantData?.facilitiesWithRestaurantId
+            ? restaurantData.facilitiesWithRestaurantId.map((el) => (
+                <div className="flex gap-2">
+                  <IconCheckGreen />{" "}
+                  <div className="flex text-sm">{el.facility.facilityName}</div>
+                </div>
+              ))
+            : null}
+          {/* <div className="flex gap-3">
+            <IconCrossRed />
             <p className="text-xs ">WIFI</p>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col">
-          <p className="text-xs font-bold">ช่วงราคา</p>
+          <p className="text-md font-bold">ช่วงราคา</p>
           <div className="flex-grow flex items-baseline gap-1">
-            ฿ <p className="text-xs  text-gray-500">(101 - 250 บาท)</p>
+            {restaurantData?.priceLength}
+            <p className="text-xs  text-gray-500">({priceLengthText} บาท) </p>
           </div>
         </div>
       </div>

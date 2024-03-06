@@ -36,9 +36,7 @@ export const FilterPage = () => {
   return (
     //layout
     isLoading ? (
-      <div className=" flex justify-center items-center h-screen bg-opacity-50">
-        <Loading />
-      </div>
+      <Loading />
     ) : (
       <div className="flex flex-col gap-2">
         {/* layout subheader */}

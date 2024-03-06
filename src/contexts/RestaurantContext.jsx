@@ -23,7 +23,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
 
-  const [restaurantPage, setRestaurantPage] = useState({})
+  const [restaurantData, setRestaurantPage] = useState({})
 
   const { user } = useUser()
 
@@ -105,6 +105,7 @@ export const RestaurantContextProvider = ({ children }) => {
 
   const fetchRestaurantAndBookmarkById = async (restaurantId) => {
     try {
+      setLoading(true)
       const [restaurantResponse, bookmarkResponse] = await Promise.all([
         getRestaurantById(restaurantId),
         userBookmark(restaurantId),
@@ -116,6 +117,8 @@ export const RestaurantContextProvider = ({ children }) => {
       })
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -168,7 +171,7 @@ export const RestaurantContextProvider = ({ children }) => {
         category,
         createRestaurant,
         fetchRestaurantAndBookmarkById,
-        restaurantPage,
+        restaurantData,
       }}
     >
       {children}

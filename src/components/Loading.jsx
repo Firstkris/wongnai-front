@@ -9,5 +9,9 @@ const style = {
 }
 
 export const Loading = () => {
-  return <Lottie animationData={groovyWalk} style={style} />
+  return (
+    <div className=" flex justify-center items-center h-screen">
+      <Lottie animationData={groovyWalk} style={style} />
+    </div>
+  )
 }
