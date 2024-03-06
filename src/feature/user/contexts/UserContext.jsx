@@ -25,10 +25,10 @@ export default function UserContextProvider({ children }) {
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => setLoading(false));
+        });
+      // .finally(() => setLoading(false));
     }
-  }, []);
+  }, [onFetch]);
 
   const logout = () => {
     setUser(null);
@@ -60,6 +60,7 @@ export default function UserContextProvider({ children }) {
         deleteReviewById,
         onFetch,
         userDefault,
+        setOnFetch,
         deleteBookmarkById,
       }}
     >

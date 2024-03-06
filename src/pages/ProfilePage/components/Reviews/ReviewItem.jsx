@@ -33,12 +33,16 @@ export default function ReviewItem({ otherUser, review, myReview }) {
 
   const otherUserStarIcon = [];
   for (let i = 0; i < review?.star; i++) {
-    otherUserStarIcon.push(<StarIcon className="w-4 h-4 fill-red_primary" />);
+    otherUserStarIcon.push(
+      <StarIcon key={i} className="w-4 h-4 fill-red_primary" />
+    );
   }
 
   const myUserStarIcon = [];
   for (let i = 0; i < myReview?.star; i++) {
-    myUserStarIcon.push(<StarIcon className="w-4 h-4 fill-red_primary" />);
+    myUserStarIcon.push(
+      <StarIcon key={i} className="w-4 h-4 fill-red_primary" />
+    );
   }
 
   return (
@@ -151,8 +155,9 @@ export default function ReviewItem({ otherUser, review, myReview }) {
             <>
               {!isToggle ? (
                 <>
-                  {myReview.reviewImgs.slice(0, 3).map((a) => (
+                  {myReview.reviewImgs.slice(0, 3).map((a, index) => (
                     <img
+                      key={index}
                       className=" aspect-video object-cover h-full w-full"
                       src={a.img}
                       alt="Review Image"
