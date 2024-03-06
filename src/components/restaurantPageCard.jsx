@@ -14,8 +14,8 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
     </div>
   )
 
-  const handleClickBookmark = (e) => {
-    console.log("fuck")
+  const handleClickBookmark = () => {
+    console.log("ikuy")
   }
 
   return (
@@ -58,12 +58,11 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
           <IconCamera />
           เพิ่มรูป
         </ButtonRestaurantPage>
-        <div onClick={handleClickBookmark}>
-          <ButtonRestaurantPage>
-            <BookmarkIcon restaurant={{ bookmarks }} />
-            บันทึก
-          </ButtonRestaurantPage>
-        </div>
+
+        <ButtonRestaurantPage onClick={handleClickBookmark}>
+          <BookmarkIcon restaurant={{ bookmarks }} />
+          บันทึก
+        </ButtonRestaurantPage>
       </div>
     </div>
   )

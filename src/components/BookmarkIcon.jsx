@@ -2,6 +2,7 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa"
 import { useState, useEffect } from "react"
 import { userBookmark } from "../apis/user"
 import { useParams } from "react-router-dom"
+
 export const BookmarkIcon = ({ restaurant }) => {
   const [isBookmarked, setIsBookmarked] = useState(false)
   const { id } = useParams()

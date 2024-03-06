@@ -3,13 +3,11 @@ export const ButtonRestaurantPage = ({
   color = "bg-gray-200 hover:bg-gray-300",
   textColor = "text-black",
   onClick,
-  ref,
 }) => {
   return (
     <button
       className={`flex ${color} ${textColor} rounded-md px-2 py-1 gap-1  items-center`}
       onClick={onClick}
-      ref={ref}
     >
       {children}
     </button>
