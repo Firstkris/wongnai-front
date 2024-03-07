@@ -2,7 +2,7 @@ import React from "react"
 import { useState } from "react"
 
 export default function NavRestaurantImg({ restaurantImage }) {
-  const array = restaurantImage
+  const array = restaurantImage?.length > 0 ? restaurantImage : []
 
   const [isToggle, setIsToggle] = useState(false)
 
@@ -13,7 +13,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
           {array.map((a) => (
             <img
               className=" aspect-video object-cover border  h-[250px] "
-              src={a.img}
+              src={a?.img}
               alt="restaurant Image"
             />
           ))}
@@ -30,12 +30,12 @@ export default function NavRestaurantImg({ restaurantImage }) {
         <>
           <img
             className="aspect-video object-cover h-[250px] border"
-            src={array[0].img}
+            src={array[0]?.img}
           />
           {array.slice(1, 3).map((a) => (
             <img
               className=" aspect-square object-cover border  h-[250px] "
-              src={a.img}
+              src={a?.img}
               alt="restaurant Image"
             />
           ))}
@@ -45,7 +45,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
                 <div key={index}>
                   <img
                     className=" aspect-square object-cover border h-[250px] "
-                    src={a.img}
+                    src={a?.img}
                     alt="restaurant Image"
                   />
                   {!(array.length - 4 == 0) ? (
@@ -66,7 +66,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
                 <div key={index}>
                   <img
                     className=" aspect-video object-cover border h-[125px] "
-                    src={a.img}
+                    src={a?.img}
                     alt="restaurant Image"
                   />
                 </div>
