@@ -15,7 +15,7 @@ function RestaurantPage() {
   const params = useParams()
 
   useEffect(() => {
-    fetchRestaurantAndBookmarkById(parseInt(params.id)) //<<<<
+    fetchRestaurantAndBookmarkById(parseInt(params.id))
   }, [])
 
   return isLoading ? (

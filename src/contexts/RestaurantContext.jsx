@@ -22,7 +22,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
-  console.log(filterPageData.restaurants)
+
   const [restaurantData, setRestaurantPage] = useState({})
 
   const { user } = useUser()
@@ -111,7 +111,6 @@ export const RestaurantContextProvider = ({ children }) => {
         getRestaurantById(restaurantId),
         getUserBookmark(restaurantId),
       ])
-      console.log(restaurantResponse.data, bookmarkResponse.data)
 
       setRestaurantPage({
         restaurant: restaurantResponse.data?.restaurant,
