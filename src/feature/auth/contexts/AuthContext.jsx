@@ -37,7 +37,7 @@ export default function AuthContextProvider({ children }) {
   const merchantLogin = async credential => {
     const res = await merchantApi.login(credential);
     setUser(res.data.merchant);
-    storeToken(res.data.accessToken);
+    Token.setToken(res.data.accessToken);
   };
   return (
     <AuthContext.Provider

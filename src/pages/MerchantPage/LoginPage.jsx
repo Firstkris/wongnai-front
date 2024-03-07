@@ -2,8 +2,7 @@ import React from "react";
 import Input from "../../components/Input";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { merchantLogin } from "../../apis/merchant";
-import { validateLogin } from "../../validations/validate-login";
+import validateLogin from '../../validations/validate-merLogin'; 
 import { useAuth } from "../../feature/auth/contexts/AuthContext";
 import * as Token from "../../../src/utils/local-storage";
 
@@ -11,7 +10,7 @@ import * as Token from "../../../src/utils/local-storage";
 function MerchantLoginPage() {
   const [validateError, setValidateError] = useState(null);
   const { setUser, user } = useAuth();
-  const [input, setInput] = useState({ username: "", password: "" });
+  const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
   const navigate = useNavigate();
   const { merchantLogin } = useAuth();
   const handleChangeInput = (e) => {
@@ -23,10 +22,10 @@ function MerchantLoginPage() {
       e.preventDefault();
 
       const validate = validateLogin(input);
-      if (validate) return setValidateError("Email or password invalid");
+      if (validate) return setValidateError("username or password invalid");
       
       const response = await merchantLogin(input);
-     
+      console.log(response)
       Token.setToken(response.data.token);
       setUser(response.data.merchant);
       navigate("/");
@@ -48,12 +47,14 @@ function MerchantLoginPage() {
           <h1 className="text-xl font-bold ite">เข้าสู่ระบบ</h1>
           <Input
             placeholder="ชื่อผู้ใช้งาน/เบอร์โทรศัพท์"
+            value={input.usernameOrMobile}
             onChange={handleChangeInput}
             name={"usernameOrMobile"}
           />
           <Input
             type="password"
             placeholder="รหัสผ่าน"
+            value={input.password}
             onChange={handleChangeInput}
             name={"password"}
           />
@@ -94,5 +95,6 @@ function MerchantLoginPage() {
 }
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 
 export default MerchantLoginPage;
