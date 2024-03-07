@@ -2,8 +2,9 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa"
 import { useState, useEffect } from "react"
 import { userBookmark } from "../apis/user"
 import { useParams } from "react-router-dom"
+import { forwardRef } from "react"
 
-export const BookmarkIcon = ({ restaurant }) => {
+export const BookmarkIcon = forwardRef(({ restaurant }, ref) => {
   const [isBookmarked, setIsBookmarked] = useState(false)
   const { id } = useParams()
 
@@ -39,7 +40,7 @@ export const BookmarkIcon = ({ restaurant }) => {
   }
 
   return (
-    <div onClick={handleClickBookMark}>
+    <div onClick={handleClickBookMark} ref={ref}>
       {!isBookmarked ? (
         <>
           {/* //false empty bookmark */}
@@ -50,4 +51,4 @@ export const BookmarkIcon = ({ restaurant }) => {
       )}
     </div>
   )
-}
+})

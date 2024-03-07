@@ -6,8 +6,10 @@ import { ButtonRestaurantPage } from "./restaurantPageComponents/ButtonRestauran
 import { priceLength } from "../constants/constant"
 import { IconCheckGreen } from "./icon-svg/IconCheckGreen"
 import { IconTel } from "./icon-svg/IconTel"
+import { useRef } from "react"
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
+  const bookmarkRef = useRef()
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
       <IconCheckmark /> OFFICIAL
@@ -15,7 +17,7 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   )
 
   const handleClickBookmark = () => {
-    console.log("ikuy")
+    bookmarkRef.current.click()
   }
 
   return (
@@ -58,11 +60,12 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
           <IconCamera />
           เพิ่มรูป
         </ButtonRestaurantPage>
-
-        <ButtonRestaurantPage onClick={handleClickBookmark}>
-          <BookmarkIcon restaurant={{ bookmarks }} />
-          บันทึก
-        </ButtonRestaurantPage>
+        <div onClick={handleClickBookmark}>
+          <ButtonRestaurantPage onClick={handleClickBookmark}>
+            <BookmarkIcon ref={bookmarkRef} restaurant={{ bookmarks }} />
+            บันทึก
+          </ButtonRestaurantPage>
+        </div>
       </div>
     </div>
   )
