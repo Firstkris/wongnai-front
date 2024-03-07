@@ -16,6 +16,8 @@ import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
 import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
+import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
+import HomePage from "../pages/HomePage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
       {
         path: "/restaurant",
         element: <RestaurantRegisterPage />,
+      },
+      {
+        path: '/homepage',
+        element: <HomePage />,
+      },
+      {
+        path: '/merchant',
+        element: <MerchantLoginPage />,
       },
     ],
   },

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
+import * as merchantApi from "../../../apis/merchant";
 import * as userApi from "../../../apis/user";
 import * as Token from "../../../../src/utils/local-storage";
 import { createContext } from "react";
@@ -33,9 +34,14 @@ export default function AuthContextProvider({ children }) {
     Token.clearToken();
   };
 
+  const merchantLogin = async credential => {
+    const res = await merchantApi.login(credential);
+    setUser(res.data.merchant);
+    storeToken(res.data.accessToken);
+  };
   return (
     <AuthContext.Provider
-      value={{ user, setUser, initialLoading, setInitialLoading, logout }}
+      value={{ user, setUser,merchantLogin, initialLoading, setInitialLoading, logout }}
     >
       {children}
     </AuthContext.Provider>
