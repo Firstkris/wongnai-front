@@ -113,6 +113,27 @@ const router = createBrowserRouter([
       { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
+      {
+        path: '/merchant',
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        )
+      },
+
+  
+      {
+        path: '/homepage',
+        element: <HomePage />,
+      },
+      {
+        path: '/merchant/login',
+        element: <MerchantLoginPage />,
+      },{
+        path: '/merchant/register',
+        element: <RegisterPageMerchant />,
+      },
     ],
   },
   {
