@@ -102,6 +102,24 @@ const router = createBrowserRouter([
 
     ],
   },
+  {
+    path: "/merchant",
+    element: (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Outlet />
+      </div>
+    ),
+    children: [
+      {
+        path: "",
+        element: <></>
+      },
+      {
+        path: "createRes"
+      }
+    ]
+  }
 ]);
 
 export default function Router() {

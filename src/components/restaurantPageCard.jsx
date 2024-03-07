@@ -107,8 +107,8 @@ export function RestaurantDetailCard({ restaurantData }) {
   ///waiting time and facility
   const priceLengthText = restaurantData?.priceLength
     ? priceLength
-        .find((el) => el.id === restaurantData?.priceLength)
-        .priceLength.slice(4)
+      .find((el) => el.id === restaurantData?.priceLength)
+      .priceLength.slice(4)
     : null
 
   return (
@@ -132,11 +132,11 @@ export function RestaurantDetailCard({ restaurantData }) {
         <div className="flex flex-col gap-2">
           {restaurantData?.facilitiesWithRestaurantId
             ? restaurantData.facilitiesWithRestaurantId.map((el) => (
-                <div className="flex gap-2" key={el.id}>
-                  <IconCheckGreen />{" "}
-                  <div className="flex text-sm">{el.facility.facilityName}</div>
-                </div>
-              ))
+              <div className="flex gap-2" key={el.id}>
+                <IconCheckGreen />{" "}
+                <div className="flex text-sm">{el.facility.facilityName}</div>
+              </div>
+            ))
             : null}
           {/* <div className="flex gap-3">
             <IconCrossRed />

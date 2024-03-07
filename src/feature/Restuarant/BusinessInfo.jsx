@@ -47,6 +47,10 @@ function BusinessInfo() {
         lng: ""
     };
 
+    const openHours = [
+        {}
+    ]
+
     const gistdaPostData = {
         "key": GISTDA_API_KEY,
         "lon": 0,
@@ -54,16 +58,11 @@ function BusinessInfo() {
         "locale": "t"
     }
 
-    // console.log(provinces);
-    // console.log(provinces?.[0]?.provinceCode);
-    // console.log(gistdaPostData);
 
     const [input, setInput] = useState(initialValue);
     const [isOpen, setIsOpen] = useState("everyDay");
     const [searchData, setSearchData] = useState(gistdaPostData)
 
-
-    // console.log("mapPosition", mapPosition);
 
 
     const hdlChangeInput = (e) => {

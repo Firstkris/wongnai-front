@@ -57,7 +57,6 @@ function MerchantContextProvider({ children }) {
         setSubDistrict([])
         console.log(data, 'data');
         const res = await gistdaApi(data)
-        // console.log(res);
         const geoData = await fetchGeoDataByName(res.data)
         console.log(geoData);
         setProvince(prv => ([...prv, geoData.data.provinceData]))
