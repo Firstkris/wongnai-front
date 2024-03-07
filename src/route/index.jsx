@@ -29,6 +29,7 @@ import MerchantContextProvider, {
 import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
+import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   // {
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
     element: (
       <div className="flex flex-col min-h-screen">
         <Header />
+        <HomePage />
         <Outlet />
       </div>
     ),
@@ -111,8 +113,20 @@ const router = createBrowserRouter([
       { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
+    ],
+  },
+  {
+    path: "/merchant/:restaurantId",
+    element: (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <MerchantHomePage />
+        <Outlet />
+      </div>
+    ),
+    children: [
       {
-        path: "/merchant",
+        path: "/merchant/createRestaurant/:merchantId",
         element: (
           <MerchantContextProvider>
             <RestaurantRegisterPage />
@@ -121,34 +135,12 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/homepage",
-        element: <HomePage />,
-      },
-      {
-        path: "/merchant",
+        path: "/merchant/login",
         element: <MerchantLoginPage />,
       },
       {
         path: "/merchant/register",
         element: <RegisterPageMerchant />,
-      },
-    ],
-  },
-  {
-    path: "/merchant",
-    element: (
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <Outlet />
-      </div>
-    ),
-    children: [
-      {
-        path: "",
-        element: <></>,
-      },
-      {
-        path: "createRes",
       },
     ],
   },
