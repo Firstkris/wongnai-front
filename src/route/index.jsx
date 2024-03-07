@@ -116,11 +116,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/merchant/:restaurantId",
+    path: "/merchant",
     element: (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <MerchantHomePage />
+        <MerchantLoginPage />
         <Outlet />
       </div>
     ),
@@ -135,8 +135,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/merchant/login",
-        element: <MerchantLoginPage />,
+        path: "/merchant/:restaurantId",
+        element: <MerchantHomePage />,
       },
       {
         path: "/merchant/register",
