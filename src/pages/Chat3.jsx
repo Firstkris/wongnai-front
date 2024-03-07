@@ -5,12 +5,12 @@ import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:8888/");
 
-function Chat2() {
+function Chat3({}) {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    socket.auth = { sender: 2 };
+    socket.auth = { sender: 3 };
 
     socket.connect();
     return () => socket.disconnect();
@@ -29,7 +29,7 @@ function Chat2() {
 
   useEffect(() => {
     socket.on("received", (msg) => {
-      // setChat([...chat, { message: msg, sender: 2, received: 1 }]);
+      //   console.log(msg);
       setChat([...chat, { ...msg }]);
     });
   }, [chat]);
@@ -43,10 +43,10 @@ function Chat2() {
       <div className="p-4">
         {chat.map((el) => (
           <div className="flex">
-            <span className={el.sender == 2 ? "text-red-500" : ""}>
-              {el.sender == 2 ? "sender : " : "received : "}
+            <span className={el.sender == 1 ? "text-red-500" : ""}>
+              {el.sender == 1 ? "sender : " : "received : "}
             </span>
-            <h1 className={`mr-4 ${el.sender == 2 ? "text-red-500" : ""}`}>
+            <h1 className={`mr-4 ${el.sender == 1 ? "text-red-500" : ""}`}>
               {el.msg}
             </h1>
           </div>
@@ -56,4 +56,4 @@ function Chat2() {
   );
 }
 
-export default Chat2;
+export default Chat3;

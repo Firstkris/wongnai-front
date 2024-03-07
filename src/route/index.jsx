@@ -17,28 +17,38 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-// import Chat from "../pages/Chat";
-// import Chat2 from "../pages/Chat2";
+import Chat from "../pages/Chat";
+import Chat2 from "../pages/Chat2";
+import Chat3 from "../pages/Chat3";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
-  // {
-  //   path: "/chat1",
-  //   element: (
-  //     <div>
-  //       <Chat />
-  //       {/* <Chat2 /> */}
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   path: "/chat2",
-  //   element: (
-  //     <div>
-  //       {/* <Chat /> */}
-  //       <Chat2 />
-  //     </div>
-  //   ),
-  // },
+  {
+    path: "/chat1",
+    element: (
+      <div>
+        <Chat />
+        {/* <Chat2 /> */}
+      </div>
+    ),
+  },
+  {
+    path: "/chat2",
+    element: (
+      <div>
+        {/* <Chat /> */}
+        <Chat2 />
+      </div>
+    ),
+  },
+  {
+    path: "/chat3",
+    element: (
+      <div>
+        {/* <Chat /> */}
+        <Chat3 />
+      </div>
+    ),
+  },
   {
     path: "/",
     element: (
