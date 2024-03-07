@@ -1,4 +1,6 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function Select({
     label,
@@ -13,6 +15,21 @@ function Select({
     icon,
 }) {
     // console.log(items);
+
+    const options = items && items.map((el) => (
+        <option
+            key={el.id}
+            id={el[`${name}`]}
+            value={el[`${name}`]}
+
+        >
+            {el[`${display}NameTh`]}
+        </option>
+
+    ))
+
+
+
     return (
         <label className="w-full">
             <div className="label">
@@ -30,10 +47,11 @@ function Select({
                 </>)
                 : (<>
                     <select
-                        onChange={onChange}
-                        value={value}
+                        onBlur={onChange}
                         name={name}
+                        defaultValue={items[0]}
                         className="select outline-none border-none rounded-lg w-full py-1.5 px-3  mt-2"
+                    // defaultValue={ }
                     // required={isRequired}
                     >
 
@@ -54,19 +72,20 @@ function Select({
                             </>
                             : (
                                 <>
-                                    {items && items.map((el) => (
+                                    {options}
+                                    {/* {items && items.map((el) => (
                                         <option
                                             key={el.id}
                                             id={el[`${name}`]}
-                                            // value={el[`${name}NameTh`]}
+                             
                                             value={el[`${name}`]}
-                                        // value={el}
+                        
                                         >
-                                            {/* {el[`${name}Code`]} */}
+                                
                                             {el[`${display}NameTh`]}
                                         </option>
 
-                                    ))}
+                                    ))} */}
 
 
                                 </>

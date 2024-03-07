@@ -20,6 +20,9 @@ import GoogleMaps from "../pages/GoogleMaps";
 import Chat from "../pages/Chat";
 import Chat2 from "../pages/Chat2";
 import Chat3 from "../pages/Chat3";
+import MerchantContextProvider, {
+  MerchantContext,
+} from "../contexts/MerchantContext";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -99,12 +102,34 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage /> },
+      { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
         path: "/merchant",
-        element: <RestaurantRegisterPage />,
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/merchant",
+    element: (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Outlet />
+      </div>
+    ),
+    children: [
+      {
+        path: "",
+        element: <></>,
+      },
+      {
+        path: "createRes",
       },
     ],
   },

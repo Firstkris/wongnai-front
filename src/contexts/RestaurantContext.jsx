@@ -2,9 +2,11 @@ import { useState, createContext } from "react";
 import {
   filterPageGetRestaurant,
   getFilterRestaurant,
-  getUserBookmark,
+  getAllUserBookmark,
+  getRestaurantById,
 } from "../apis/restaurants";
 import { useUser } from "../feature/user/contexts/UserContext";
+import { userBookmark, getUserBookmark } from "../apis/user";
 
 import {
   getCategory,
@@ -21,6 +23,8 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({});
   const [filterInput, setFilterInput] = useState({ rating: [] });
   const [isLoading, setLoading] = useState(false);
+  console.log(filterPageData.restaurants);
+  const [restaurantData, setRestaurantPage] = useState({});
 
   const { user } = useUser();
 
@@ -51,12 +55,30 @@ export const RestaurantContextProvider = ({ children }) => {
     }
   };
 
+  // const fetchProvince = async () => {
+  //   const res = await getProvince()
+  //   // console.log(res.data.province);
+  //   setProvince(res.data.province)
+  // }
+
+  // const fetchDistrict = async (provinceCode) => {
+  //   console.log(provinceCode);
+  //   const res = await getDistrict(+provinceCode)
+  //   setDistrict(res.data.district)
+  // }
+
+  // const fetchSubDistrict = async (districtCode) => {
+  //   console.log(districtCode)
+  //   const res = await getSubDistrict(+districtCode)
+  //   console.log(res.data.subDistrict)
+  //   setSubDistrict(res.data.subDistrict)
+  // }
   const fetchFilterData = async (filterData) => {
     try {
       if (Object.keys(filterData).length === 0) {
         return console.log("no filter");
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
-        return fetchFilterPage();
+        return user ? fetchRestaurantWithUserLogin() : fetchFilterPage();
       }
       const filterDataParams = {
         districtId: filterData?.districtNameTh,
@@ -100,7 +122,8 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchRestaurantWithUserLogin = async () => {
     //if user is login
     try {
-      const response = await getUserBookmark();
+      const response = await getAllUserBookmark();
+      console.log(response.data.restaurants);
       setFilterPageData((prev) => ({
         ...prev,
         restaurants: response.data?.restaurants,
@@ -109,6 +132,28 @@ export const RestaurantContextProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  const fetchRestaurantAndBookmarkById = async (restaurantId) => {
+    try {
+      setLoading(true);
+      const [restaurantResponse, bookmarkResponse] = await Promise.all([
+        getRestaurantById(restaurantId),
+        getUserBookmark(restaurantId),
+      ]);
+      console.log(restaurantResponse.data, bookmarkResponse.data);
+
+      setRestaurantPage({
+        restaurant: restaurantResponse.data?.restaurant,
+        bookmarks: bookmarkResponse.data?.bookmarks,
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  ////////
 
   const fetchProvince = async () => {
     const res = await getProvince();
@@ -127,16 +172,17 @@ export const RestaurantContextProvider = ({ children }) => {
     setSubDistrict(res.data.subDistrict);
   };
 
-  const fetchCategory = async () => {
-    const res = await getCategory();
-    setCategory(res.data.categories);
-  };
+  // const fetchCategory = async () => {
+  //   const res = await getCategory()
+  //   setCategory(res.data.categories)
+  // }
 
-  const createRestaurant = async (data) => {
-    const res = await merchantCreateRestaurant(data);
-    console.log(res);
-  };
+  // const createRestaurant = async (data) => {
+  //   const res = await merchantCreateRestaurant(data)
+  //   console.log(res);
+  // }
 
+  console.log(filterInput);
   return (
     <RestaurantContext.Provider
       value={{
@@ -148,14 +194,9 @@ export const RestaurantContextProvider = ({ children }) => {
         clearFilters,
         fetchRestaurantWithUserLogin,
         isLoading,
-        fetchProvince,
-        provinces,
-        district,
-        fetchDistrict,
-        subDistrict,
-        fetchSubDistrict,
         category,
-        createRestaurant,
+        fetchRestaurantAndBookmarkById,
+        restaurantData,
         nameRestaurant,
       }}
     >

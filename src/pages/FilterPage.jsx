@@ -27,8 +27,10 @@ export const FilterPage = () => {
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
     if (!user) {
+      console.log("nullll")
       fetchFilterPage()
     } else {
+      console.log("userrrrr")
       fetchRestaurantWithUserLogin()
     }
   }, [user])
@@ -36,9 +38,7 @@ export const FilterPage = () => {
   return (
     //layout
     isLoading ? (
-      <div className=" flex justify-center items-center h-screen bg-opacity-50">
-        <Loading />
-      </div>
+      <Loading />
     ) : (
       <div className="flex flex-col gap-2">
         {/* layout subheader */}
