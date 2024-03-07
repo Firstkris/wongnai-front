@@ -10,7 +10,7 @@
 //   const [chat, setChat] = useState([]);
 
 //   useEffect(() => {
-//     socket.auth = { sender: 2, received: 1 };
+//     socket.auth = { sender: 2 };
 
 //     socket.connect();
 //     return () => socket.disconnect();

@@ -5,13 +5,12 @@
 
 // const socket = io.connect("http://localhost:8888/");
 
-// function Chat({ received = 2 }) {
+// function Chat3({}) {
 //   const [message, setMessage] = useState("");
 //   const [chat, setChat] = useState([]);
 
-//   //   const {sender} = useAuth()
 //   useEffect(() => {
-//     socket.auth = { sender: 1, received };
+//     socket.auth = { sender: 3 };
 
 //     socket.connect();
 //     return () => socket.disconnect();
@@ -24,17 +23,15 @@
 //   const submit = async (e) => {
 //     e.preventDefault();
 
-//     await socket.emit("message", { message, received });
+//     await socket.emit("message", message);
 //     setMessage("");
 //   };
 
 //   useEffect(() => {
 //     socket.on("received", (msg) => {
 //       //   console.log(msg);
-//       console.log(msg);
 //       setChat([...chat, { ...msg }]);
 //     });
-//     console.log(socket, "socket");
 //   }, [chat]);
 
 //   return (
@@ -59,4 +56,4 @@
 //   );
 // }
 
-// export default Chat;
+// export default Chat3;

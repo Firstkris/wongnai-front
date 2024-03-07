@@ -7,14 +7,13 @@ import * as userApi from "../../../apis/user";
 import * as Token from "../../../../src/utils/local-storage";
 import { createContext } from "react";
 
-const AuthContext = createContext();
+const MerchantAuthContext = createContext();
 export default function MerchantAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   // const [review, setReview] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-   
     if (Token.getToken()) {
       merchantApi
         .fetchMe()
@@ -35,20 +34,27 @@ export default function MerchantAuthContextProvider({ children }) {
     Token.clearToken();
   };
 
-  const merchantRegister = async merchant => {
+  const merchantRegister = async (merchant) => {
     const res = await merchantApi.register(merchant);
     setUser(res.data.newUser);
     Token.setToken(res.data.accessToken);
   };
 
-  const merchantLogin = async credential => {
+  const merchantLogin = async (credential) => {
     const res = await merchantApi.login(credential);
     setUser(res.data.merchant);
     Token.setToken(res.data.accessToken);
   };
   return (
     <MerchantAuthContext.Provider
-      value={{  setUser,merchantLogin, initialLoading, merchantRegister,setInitialLoading, logout }}
+      value={{
+        setUser,
+        merchantLogin,
+        initialLoading,
+        merchantRegister,
+        setInitialLoading,
+        logout,
+      }}
     >
       {children}
     </MerchantAuthContext.Provider>

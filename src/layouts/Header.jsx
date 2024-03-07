@@ -5,14 +5,23 @@ import {
   MessageIcon,
   SearchIcon,
   DownTriangleSolidIcon,
+  BarThreeIcon,
 } from "../icons/icon";
 import HeaderToggle from "../components/HeaderToggle";
+import { useRestaurant } from "../hooks/hooks";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 export default function Header() {
+  const { nameRestaurant } = useRestaurant();
+
+  console.log(nameRestaurant);
+
   return (
     <header
       className="bg-white py-4 flex 
-     justify-around border-b-2
+     justify-between border-b-2 px-40
     "
     >
       <Link to={"/"} className="flex">
@@ -20,27 +29,33 @@ export default function Header() {
 
         <MessageIcon className="w-10 h-10 fill-red_primary" />
       </Link>
-      <div className="flex gap-5">
-        <div className="flex relative">
-          <LocationIcon className="absolute w-8 h-8 pt-1.5 pl-2 fill-gray_secondary" />
 
-          <input
-            className="rounded-lg bg-gray_primary pl-9 w-[200px] focus:outline-none"
-            placeholder="กรุงเทพและ..."
-          />
-          <DownTriangleSolidIcon className="absolute w-5 h-5 left-44 top-2.5 fill-gray_secondary" />
-        </div>
-        <div className="flex relative">
-          <input
-            className="rounded-l-lg bg-gray_primary pl-3 w-[200px] focus:outline-none"
-            placeholder="ชื่อร้านอาหาร..."
-          />
-          <div className="bg-red_primary w-10 rounded-r-lg cursor-pointer">
-            <SearchIcon className="w-6 h-6 text-white bg-red_primary mt-2 ml-2" />
-          </div>
-        </div>
-      </div>
-
+      {/* <div className="absolute top-14 ml-12 flex flex-col gap-2  bg-red-500">
+        {text
+          ? nameRestaurant
+              .filter(
+                (item) =>
+                  item.category.categoryName.includes(text) ||
+                  item.restaurantName.includes(text)
+              )
+              .slice(0, 6)
+              .map((item) => (
+                <Link to={`/restaurants/${item.id}`} key={item.id}>
+                  <div className="flex gap-6">
+                    <img
+                      src={item.profileImg}
+                      alt=""
+                      className="w-[50px] h-[50px]"
+                    />
+                    <div>
+                      <div>{item.restaurantName}</div>
+                      <div>{item.subtitle}</div>
+                    </div>
+                  </div>
+                </Link>
+              ))
+          : null}
+      </div> */}
       <HeaderToggle />
     </header>
   );

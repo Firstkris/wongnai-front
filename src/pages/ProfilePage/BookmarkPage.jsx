@@ -30,6 +30,7 @@ export default function BookmarkPage() {
     userApi
       .fetchMe()
       .then((res) => {
+        console.log(res.data.bookmarks);
         setMyBookmarks(res.data.bookmarks);
       })
       .catch((err) => {
