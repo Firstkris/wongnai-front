@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/merchant',
+        path: '/merchant/login',
         element: <MerchantLoginPage />,
       },{
         path: '/merchant/register',

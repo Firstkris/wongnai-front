@@ -7,7 +7,7 @@ import * as userApi from "../../../apis/user";
 import * as Token from "../../../../src/utils/local-storage";
 import { createContext } from "react";
 
-const AuthContext = createContext();
+const MerchantAuthContext = createContext();
 export default function MerchantAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   // const [review, setReview] = useState([]);
