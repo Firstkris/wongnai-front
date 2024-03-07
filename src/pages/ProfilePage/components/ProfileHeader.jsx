@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../feature/auth/contexts/AuthContext";
+import { useUser } from "../../../feature/user/contexts/UserContext";
+import { useParams } from "react-router-dom";
 
-export default function ProfileHeader() {
-  const { user } = useAuth();
+export default function ProfileHeader({ otherUser }) {
+  const { user } = useUser();
+  const { userId } = useParams();
 
   return (
     <div className="bg-white h-[220px] px-16">
@@ -12,18 +14,31 @@ export default function ProfileHeader() {
       </div>
       <div className="flex justify-center">
         <div className="flex gap-20">
-          <img
-            className="w-[150px] h-[150px] object-cover rounded-full"
-            src={user?.imgProfile}
-          />
+          {userId ? (
+            <img
+              className="w-[150px] h-[150px] object-cover rounded-full"
+              src={otherUser?.imgProfile}
+            />
+          ) : (
+            <img
+              className="w-[150px] h-[150px] object-cover rounded-full"
+              src={user?.imgProfile}
+            />
+          )}
           <div className="flex flex-col mt-5 gap-5 items-start">
-            <h1 className="text-2xl font-bold">{user?.name}</h1>
-            <Link
-              to={"/profile/EditProfile"}
-              className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md"
-            >
-              แก้ไขโปรไฟล์
-            </Link>
+            {userId ? (
+              <div>{otherUser?.name} </div>
+            ) : (
+              <h1 className="text-2xl font-bold">{user?.name}</h1>
+            )}
+            {userId != user?.id && userId ? null : (
+              <Link
+                to={"/profile/EditProfile"}
+                className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md"
+              >
+                แก้ไขโปรไฟล์
+              </Link>
+            )}
           </div>
         </div>
       </div>

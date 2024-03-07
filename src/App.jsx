@@ -1,16 +1,26 @@
-import React from "react";
-import Router from "./route/index";
-import AuthContextProvider from "./feature/auth/contexts/AuthContext";
-import ProfileContextProvider from "./feature/Profiles/context/ProfileContext";
+import React from "react"
+import Router from "./route/index"
+import ProfileContextProvider from "./feature/Profiles/context/ProfileContext"
+import UserContextProvider from "./feature/user/contexts/UserContext"
+import { ToastContainer, Slide } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   return (
-    <AuthContextProvider>
-      <ProfileContextProvider>
-        <Router />
-      </ProfileContextProvider>
-    </AuthContextProvider>
-  );
+    <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        theme="colored"
+        transition={Slide}
+      />
+      <UserContextProvider>
+        <ProfileContextProvider>
+          <Router />
+        </ProfileContextProvider>
+      </UserContextProvider>
+    </>
+  )
 }
 
-export default App;
+export default App

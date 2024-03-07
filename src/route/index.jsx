@@ -13,14 +13,34 @@ import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
 import RestaurantPage from "../pages/MainPage/RestaurantPage";
 import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
-import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
-import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
+import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage";
+import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
+import MerchantContextProvider, { MerchantContext } from "../contexts/MerchantContext";
 import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
+  // {
+  //   path: "/chat1",
+  //   element: (
+  //     <div>
+  //       <Chat />
+  //       {/* <Chat2 /> */}
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   path: "/chat2",
+  //   element: (
+  //     <div>
+  //       {/* <Chat /> */}
+  //       <Chat2 />
+  //     </div>
+  //   ),
+  // },
   {
     path: "/",
     element: (
@@ -52,10 +72,14 @@ const router = createBrowserRouter([
         element: <EditProfilePage />,
       },
 
-      // {
-      //   path: "profile/:userId",
-      //   element:
-      // }
+      {
+        path: "profile/:userId",
+        element: <OtherUserProfilePage />,
+      },
+      {
+        path: "profile/Bookmark/:userId",
+        element: <BookmarkPage />,
+      },
 
       { path: "/review", element: <UserReview /> },
       {
@@ -67,13 +91,19 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage />},
+      { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
-        path: "/restaurant",
-        element: <RestaurantRegisterPage />,
+        path: '/merchant',
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        )
       },
+
+  
       {
         path: '/homepage',
         element: <HomePage />,
@@ -87,6 +117,24 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/merchant",
+    element: (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Outlet />
+      </div>
+    ),
+    children: [
+      {
+        path: "",
+        element: <></>
+      },
+      {
+        path: "createRes"
+      }
+    ]
+  }
 ]);
 
 export default function Router() {
