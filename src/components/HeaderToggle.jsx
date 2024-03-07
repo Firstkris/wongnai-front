@@ -11,10 +11,10 @@ import {
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useAuth } from "../feature/auth/contexts/AuthContext";
+import { useUser } from "../feature/user/contexts/UserContext";
 
 export default function HeaderToggle() {
-  const { user, setUser, logout } = useAuth();
+  const { user, setUser, logout } = useUser();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
@@ -46,7 +46,7 @@ export default function HeaderToggle() {
   }, [isUserToggle]);
 
   return (
-    <div className="flex gap-2 relative" ref={dropdown}>
+    <div className="flex gap-2 relative z-40" ref={dropdown}>
       {/* <Link
         to={"/login"}
         className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"

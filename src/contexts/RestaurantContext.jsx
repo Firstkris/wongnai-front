@@ -1,18 +1,36 @@
 import { useState, createContext } from "react"
-import axios from "axios"
-import { getCategory, getDistrict, getProvince, getSubDistrict, merchantCreateRestaurant } from "../apis/merchant"
-import { useEffect } from "react"
+import {
+  filterPageGetRestaurant,
+  getFilterRestaurant,
+  getAllUserBookmark,
+  getRestaurantById,
+} from "../apis/restaurants"
+import { useUser } from "../feature/user/contexts/UserContext"
+import { userBookmark, getUserBookmark } from "../apis/user"
+
+import {
+  getCategory,
+  getDistrict,
+  getProvince,
+  getSubDistrict,
+  merchantCreateRestaurant,
+} from "../apis/merchant"
 
 export const RestaurantContext = createContext()
 
 export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
-  const [filterInput, setFilterInput] = useState({})
+  const [filterInput, setFilterInput] = useState({ rating: [] })
+  const [isLoading, setLoading] = useState(false)
+  console.log(filterPageData.restaurants)
+  const [restaurantData, setRestaurantPage] = useState({})
 
-  const [provinces, setProvince] = useState([]);
-  const [district, setDistrict] = useState([]);
-  const [subDistrict, setSubDistrict] = useState([]);
-  const [category, setCategory] = useState([]);
+  const { user } = useUser()
+
+  const [provinces, setProvince] = useState([])
+  const [district, setDistrict] = useState([])
+  const [subDistrict, setSubDistrict] = useState([])
+  const [category, setCategory] = useState([])
 
   const fetchFilterPage = async () => {
     const response = await axios.get(`http://localhost:8000/restaurants`)
@@ -70,5 +88,5 @@ export const RestaurantContextProvider = ({ children }) => {
     >
       {children}
     </RestaurantContext.Provider>
-  );
+  )
 }

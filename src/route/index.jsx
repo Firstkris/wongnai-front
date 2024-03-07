@@ -13,12 +13,31 @@ import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
 import RestaurantPage from "../pages/MainPage/RestaurantPage";
 import ReviewPage from "../pages/ProfilePage/ReviewPage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
-import ProtectedProfileRoute from "../feature/auth/components/ProtectedProfileRoute";
-import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthenticated";
+import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage";
+import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
 import MerchantContextProvider, { MerchantContext } from "../contexts/MerchantContext";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
+  // {
+  //   path: "/chat1",
+  //   element: (
+  //     <div>
+  //       <Chat />
+  //       {/* <Chat2 /> */}
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   path: "/chat2",
+  //   element: (
+  //     <div>
+  //       {/* <Chat /> */}
+  //       <Chat2 />
+  //     </div>
+  //   ),
+  // },
   {
     path: "/",
     element: (
@@ -50,10 +69,14 @@ const router = createBrowserRouter([
         element: <EditProfilePage />,
       },
 
-      // {
-      //   path: "profile/:userId",
-      //   element:
-      // }
+      {
+        path: "profile/:userId",
+        element: <OtherUserProfilePage />,
+      },
+      {
+        path: "profile/Bookmark/:userId",
+        element: <BookmarkPage />,
+      },
 
       { path: "/review", element: <UserReview /> },
       {
@@ -65,7 +88,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage /> },
+      { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {
