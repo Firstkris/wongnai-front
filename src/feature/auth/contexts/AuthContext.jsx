@@ -8,25 +8,13 @@ import * as Token from "../../../../src/utils/local-storage";
 import { createContext } from "react";
 
 const AuthContext = createContext();
-export default function AuthContextProvider({ children }) {
+export default function MerchantAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   // const [review, setReview] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    if (Token.getToken()) {
-      userApi
-        .fetchMe()
-        .then((res) => {
-          setUser(res.data.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => setInitialLoading(false));
-    } else {
-      setInitialLoading(false);
-    }
+   
     if (Token.getToken()) {
       merchantApi
         .fetchMe()
@@ -59,14 +47,14 @@ export default function AuthContextProvider({ children }) {
     Token.setToken(res.data.accessToken);
   };
   return (
-    <AuthContext.Provider
-      value={{ user, setUser,merchantLogin, initialLoading, merchantRegister,setInitialLoading, logout }}
+    <MerchantAuthContext.Provider
+      value={{  setUser,merchantLogin, initialLoading, merchantRegister,setInitialLoading, logout }}
     >
       {children}
-    </AuthContext.Provider>
+    </MerchantAuthContext.Provider>
   );
 }
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  return useContext(MerchantAuthContext);
 };
