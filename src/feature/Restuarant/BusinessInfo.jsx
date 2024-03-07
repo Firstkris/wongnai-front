@@ -8,41 +8,66 @@ import RadioBtn from "../../components/RadioBtn";
 import WeekDays from "./WeekDays";
 import useRestaurantContext from "../../hooks/useRestaurantContext";
 import { useEffect } from "react";
+import GoogleMaps from "../../pages/Restaurant/GoogleMapPin"
+import useMerchantContext from "../../hooks/useMerchantContext";
+import { GISTDA_API_KEY } from "../../constants/constant";
 
-const initialValue = {
-    merchantId: 1,
-    restaurantName: "",
-    subtitle: "",
-    provinceCode: "",
-    districtCode: "",
-    subdistrictCode: "",
-    categoryId: "",
-    mobile: "",
-    email: null,
-    priceLength: "0-100",
-    address: "cc16"
-};
+
 
 function BusinessInfo() {
-    const [input, setInput] = useState(initialValue);
-    const [isOpen, setIsOpen] = useState("everyDay");
-    const [geoCode, setGeocode] = useState({});
+
 
     const {
+        fetchProvince,
+        fetchCategory,
         provinces,
         district,
         fetchDistrict,
         subDistrict,
         fetchSubDistrict,
         category,
-        createRestaurant
-    } = useRestaurantContext();
+        createRestaurant,
+        fetchAreaGeoData,
+        getGeoDataFromGistda
+    } = useMerchantContext();
 
-    console.log(category);
-    console.log(provinces)
-    console.log(subDistrict);
+    const initialValue = {
+        merchantId: 1,
+        restaurantName: "",
+        subtitle: "",
+        provinceCode: "",
+        districtCode: "",
+        subdistrictCode: "",
+        categoryId: "",
+        mobile: "",
+        email: "",
+        priceLength: "0-100",
+        address: "",
+        lat: "",
+        lng: ""
+    };
+
+    const gistdaPostData = {
+        "key": GISTDA_API_KEY,
+        "lon": 0,
+        "lat": 0,
+        "locale": "t"
+    }
+
+    // console.log(provinces);
+    // console.log(provinces?.[0]?.provinceCode);
+    // console.log(gistdaPostData);
+
+    const [input, setInput] = useState(initialValue);
+    const [isOpen, setIsOpen] = useState("everyDay");
+    const [searchData, setSearchData] = useState(gistdaPostData)
+
+
+    // console.log("mapPosition", mapPosition);
+
 
     const hdlChangeInput = (e) => {
+        console.dir(e.target)
 
         if (e.target.name === "mobile") {
             setInput((prv => ({ ...prv, [e.target.name]: e.target.value })))
@@ -59,26 +84,45 @@ function BusinessInfo() {
 
     const hdlSubmit = async (e) => {
         e.preventDefault()
+        // hdlSetInputGeoData()
         console.log(input);
-        await createRestaurant(input)
+
+        // await createRestaurant(input)
     }
 
-    console.log(input);
+    const hdlSetLatLng = (lat, lng) => {
 
+        setSearchData(prv => ({ ...prv, lat: lat, lon: lng }))
+        setInput((prv => ({ ...prv, lat: lat, lng: lng })))
+        // getGeoDataFromGistda(searchData)
+        // setInput(prv => ({}))
+
+    }
+
+    const hdlSetInputGeoData = () => {
+        setInput(prv => ({
+            ...prv,
+            provinceCode: provinces?.[0]?.provinceCode,
+            districtCode: district?.[0]?.districtCode,
+            subdistrictCode: subDistrict?.[0]?.subdistrictCode,
+        })
+        )
+    }
 
 
     useEffect(() => {
+        fetchCategory()
+    }, [])
 
-        if (input.provinceCode) {
-            console.log(input.provinceCode);
-            fetchDistrict(+input.provinceCode)
-        }
-        if (input.districtCode) {
-            console.log(geoCode.district);
-            fetchSubDistrict(+input.districtCode)
-        }
-    }, [input.provinceCode, input.districtCode])
+    useEffect(() => {
+        if (searchData.lat === 0) return
+        getGeoDataFromGistda(searchData)
 
+    }, [searchData.lat, searchData.lng])
+
+    useEffect(() => { hdlSetInputGeoData() }, [subDistrict?.[0]?.subdistrictCode])
+
+    console.log(input);
     return (
         <form onSubmit={hdlSubmit}>
             <div className="w-full flex flex-col gap-6 ">
@@ -114,12 +158,15 @@ function BusinessInfo() {
                     <HrWithText name={'ที่อยู่'} />
 
                     <p>เลือกตำแหน่งจากแผนที่</p>
+
+                    <GoogleMaps hdlSetLatLng={hdlSetLatLng} />
+
                     <Input
                         placeholder='ชื่อซอยหรือถนน พร้อมบ้านเลขที่'
                         label={'ที่อยู่ :'}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
+                        name='address'
+                        value={input.address}
+                        onChange={hdlChangeInput}
                     />
 
                     <Input
@@ -131,13 +178,13 @@ function BusinessInfo() {
                     />
 
                     <Select label={'จังหวัด'} name={'provinceCode'} display={'province'} value={input.provinceCode} onChange={hdlChangeInput} items={provinces} />
-                    {input.provinceCode &&
-                        <Select label={'เขต/อำเภอ'} name={'districtCode'} display={'district'} value={input.districtCode} onChange={hdlChangeInput} items={district} />
-                    }
-                    {input.districtCode &&
-                        <Select label={'แขวง/ตำบล'} name={'subdistrictCode'} display={'subdistrict'} value={input.subdistrictCode} onChange={hdlChangeInput} items={subDistrict} />
+                    {/* {input.provinceCode && */}
+                    <Select label={'เขต/อำเภอ'} name={'districtCode'} display={'district'} value={input.districtCode} onChange={hdlChangeInput} items={district} />
+                    {/* } */}
+                    {/* {input.districtCode && */}
+                    <Select label={'แขวง/ตำบล'} name={'subdistrictCode'} display={'subdistrict'} value={input.subdistrictCode} onChange={hdlChangeInput} items={subDistrict} />
 
-                    }
+                    {/* } */}
 
                 </Card>
 

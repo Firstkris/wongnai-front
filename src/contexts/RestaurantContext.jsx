@@ -19,39 +19,36 @@ export const RestaurantContextProvider = ({ children }) => {
     setFilterPageData(response.data)
   }
 
-  const fetchProvince = async () => {
-    const res = await getProvince()
-    // console.log(res.data.province);
-    setProvince(res.data.province)
-  }
+  // const fetchProvince = async () => {
+  //   const res = await getProvince()
+  //   // console.log(res.data.province);
+  //   setProvince(res.data.province)
+  // }
 
-  const fetchDistrict = async (provinceCode) => {
-    console.log(provinceCode);
-    const res = await getDistrict(+provinceCode)
-    setDistrict(res.data.district)
-  }
+  // const fetchDistrict = async (provinceCode) => {
+  //   console.log(provinceCode);
+  //   const res = await getDistrict(+provinceCode)
+  //   setDistrict(res.data.district)
+  // }
 
-  const fetchSubDistrict = async (districtCode) => {
-    console.log(districtCode)
-    const res = await getSubDistrict(+districtCode)
-    console.log(res.data.subDistrict)
-    setSubDistrict(res.data.subDistrict)
-  }
+  // const fetchSubDistrict = async (districtCode) => {
+  //   console.log(districtCode)
+  //   const res = await getSubDistrict(+districtCode)
+  //   console.log(res.data.subDistrict)
+  //   setSubDistrict(res.data.subDistrict)
+  // }
 
-  const fetchCategory = async () => {
-    const res = await getCategory()
-    setCategory(res.data.categories)
-  }
+  // const fetchCategory = async () => {
+  //   const res = await getCategory()
+  //   setCategory(res.data.categories)
+  // }
 
-  const createRestaurant = async (data) => {
-    const res = await merchantCreateRestaurant(data)
-    console.log(res);
-  }
+  // const createRestaurant = async (data) => {
+  //   const res = await merchantCreateRestaurant(data)
+  //   console.log(res);
+  // }
 
-  useEffect(() => {
-    fetchProvince()
-    fetchCategory()
-  }, [])
+
 
   console.log(filterInput)
   return (
@@ -61,14 +58,14 @@ export const RestaurantContextProvider = ({ children }) => {
         setFilterInput,
         fetchFilterPage,
         filterInput,
-        fetchProvince,
-        provinces,
-        district,
-        fetchDistrict,
-        subDistrict,
-        fetchSubDistrict,
-        category,
-        createRestaurant
+        // fetchProvince,
+        // provinces,
+        // district,
+        // fetchDistrict,
+        // subDistrict,
+        // fetchSubDistrict,
+        // category,
+        // createRestaurant
       }}
     >
       {children}
