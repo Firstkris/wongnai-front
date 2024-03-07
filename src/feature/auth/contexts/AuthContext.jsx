@@ -14,7 +14,6 @@ export default function MerchantAuthContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-   
     if (Token.getToken()) {
       merchantApi
         .fetchMe()
@@ -35,20 +34,27 @@ export default function MerchantAuthContextProvider({ children }) {
     Token.clearToken();
   };
 
-  const merchantRegister = async merchant => {
+  const merchantRegister = async (merchant) => {
     const res = await merchantApi.register(merchant);
     setUser(res.data.newUser);
     Token.setToken(res.data.accessToken);
   };
 
-  const merchantLogin = async credential => {
+  const merchantLogin = async (credential) => {
     const res = await merchantApi.login(credential);
     setUser(res.data.merchant);
     Token.setToken(res.data.accessToken);
   };
   return (
     <MerchantAuthContext.Provider
-      value={{  setUser,merchantLogin, initialLoading, merchantRegister,setInitialLoading, logout }}
+      value={{
+        setUser,
+        merchantLogin,
+        initialLoading,
+        merchantRegister,
+        setInitialLoading,
+        logout,
+      }}
     >
       {children}
     </MerchantAuthContext.Provider>
