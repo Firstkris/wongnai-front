@@ -11,13 +11,15 @@ import { useEffect } from "react";
 import { Loading } from "../../components/Loading";
 import { useState } from "react";
 import { MerchantTitleCard } from "./MerchantTitleCard";
+import { useNavigate } from "react-router-dom";
 
 export default function MerchantHomePage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
     useRestaurant();
   const params = useParams();
   const [isSelect, setIsSelect] = useState(0);
-
+  const [onFetch, setOnFetch] = useState();
+  const navigate = useNavigate();
   console.log("params", params.restaurantId);
 
   const array = [
@@ -55,10 +57,12 @@ export default function MerchantHomePage() {
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)); //<<<<
-  }, []);
+  }, [onFetch]);
 
   const onClick = (index) => {
     setIsSelect(index);
+    navigate(`/merchant/${index + 1}`);
+    setOnFetch((c) => !c);
   };
 
   return isLoading ? (
