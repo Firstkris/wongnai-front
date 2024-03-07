@@ -67,7 +67,7 @@ export default function MerchantHomePage() {
     <>
       <div className="flex gap-6 justify-center mt-3 mx-10">
         <div className=" rounded-lg bg-white w-[250px] pt-5 px-4">
-          <div className="font-bold text-xl mb-3">ชื่อร้าน</div>
+          <div className="font-bold text-xl mb-6">ชื่อร้าน</div>
           <div
             className="flex flex-col gap-4
 "
@@ -77,7 +77,7 @@ export default function MerchantHomePage() {
                 <div
                   className={`${
                     !(isSelect == index)
-                      ? " flex items-center gap-2 cursor-pointer "
+                      ? " flex items-center gap-2 cursor-pointer pl-4"
                       : " flex items-center gap-2 font-bold text-blue_primary cursor-pointer pl-10"
                   }`}
                   onClick={() => onClick(index)}
