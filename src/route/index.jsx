@@ -64,11 +64,15 @@ const router = createBrowserRouter([
     element: (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <HomePage />
         <Outlet />
       </div>
     ),
     children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+
       {
         path: "/profile",
         element: (
@@ -113,27 +117,6 @@ const router = createBrowserRouter([
       { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
-      {
-        path: '/merchant',
-        element: (
-          <MerchantContextProvider>
-            <RestaurantRegisterPage />
-          </MerchantContextProvider>
-        )
-      },
-
-  
-      {
-        path: '/homepage',
-        element: <HomePage />,
-      },
-      {
-        path: '/merchant/login',
-        element: <MerchantLoginPage />,
-      },{
-        path: '/merchant/register',
-        element: <RegisterPageMerchant />,
-      },
     ],
   },
   {
@@ -141,11 +124,15 @@ const router = createBrowserRouter([
     element: (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <MerchantLoginPage />
         <Outlet />
       </div>
     ),
     children: [
+      {
+        path: "/merchant",
+        element: <MerchantLoginPage />,
+      },
+
       {
         path: "/merchant/createRestaurant/:merchantId",
         element: (
