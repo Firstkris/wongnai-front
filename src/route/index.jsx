@@ -18,6 +18,7 @@ import RedirectIfAuthenticated from "../feature/auth/components/RedirectIfAuthen
 import GoogleMaps from "../pages/GoogleMaps";
 import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
 import HomePage from "../pages/HomePage";
+import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -80,6 +81,9 @@ const router = createBrowserRouter([
       {
         path: '/merchant',
         element: <MerchantLoginPage />,
+      },{
+        path: '/merchant/register',
+        element: <RegisterPageMerchant />,
       },
     ],
   },

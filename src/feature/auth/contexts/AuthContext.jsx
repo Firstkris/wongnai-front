@@ -27,11 +27,30 @@ export default function AuthContextProvider({ children }) {
     } else {
       setInitialLoading(false);
     }
+    if (Token.getToken()) {
+      merchantApi
+        .fetchMe()
+        .then((res) => {
+          setUser(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
+    }
   }, []);
 
   const logout = () => {
     setUser(null);
     Token.clearToken();
+  };
+
+  const merchantRegister = async merchant => {
+    const res = await merchantApi.register(merchant);
+    setUser(res.data.newUser);
+    Token.setToken(res.data.accessToken);
   };
 
   const merchantLogin = async credential => {
@@ -41,7 +60,7 @@ export default function AuthContextProvider({ children }) {
   };
   return (
     <AuthContext.Provider
-      value={{ user, setUser,merchantLogin, initialLoading, setInitialLoading, logout }}
+      value={{ user, setUser,merchantLogin, initialLoading, merchantRegister,setInitialLoading, logout }}
     >
       {children}
     </AuthContext.Provider>
