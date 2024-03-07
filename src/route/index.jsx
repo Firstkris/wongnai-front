@@ -1,24 +1,44 @@
-import React from "react"
+import React from "react";
 
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
-import { FilterPage } from "../pages/FilterPage"
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { FilterPage } from "../pages/FilterPage";
 
-import Header from "../layouts/Header"
-import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage"
+import Header from "../layouts/Header";
+import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
 
-import UserReview from "../pages/User/UserReview"
-import LoginPage from "../pages/User/LoginPage"
-import RegisterPage from "../pages/User/RegisterPage"
-import BookmarkPage from "../pages/ProfilePage/BookmarkPage"
-import RestaurantPage from "../pages/MainPage/RestaurantPage"
-import ReviewPage from "../pages/ProfilePage/ReviewPage"
-import EditProfilePage from "../pages/ProfilePage/EditProfilePage"
-import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage"
-import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute"
-import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated"
-import GoogleMaps from "../pages/GoogleMaps"
+import UserReview from "../pages/User/UserReview";
+import LoginPage from "../pages/User/LoginPage";
+import RegisterPage from "../pages/User/RegisterPage";
+import BookmarkPage from "../pages/ProfilePage/BookmarkPage";
+import RestaurantPage from "../pages/MainPage/RestaurantPage";
+import ReviewPage from "../pages/ProfilePage/ReviewPage";
+import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
+import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfilePage";
+import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
+import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
+import GoogleMaps from "../pages/GoogleMaps";
+// import Chat from "../pages/Chat";
+// import Chat2 from "../pages/Chat2";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
+  // {
+  //   path: "/chat1",
+  //   element: (
+  //     <div>
+  //       <Chat />
+  //       {/* <Chat2 /> */}
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   path: "/chat2",
+  //   element: (
+  //     <div>
+  //       {/* <Chat /> */}
+  //       <Chat2 />
+  //     </div>
+  //   ),
+  // },
   {
     path: "/",
     element: (
@@ -78,8 +98,8 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
 export default function Router() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }

@@ -1,11 +1,11 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import { useUser } from "../../../feature/user/contexts/UserContext"
-import { useParams } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
+import { useUser } from "../../../feature/user/contexts/UserContext";
+import { useParams } from "react-router-dom";
 
 export default function ProfileHeader({ otherUser }) {
-  const { user } = useUser()
-  const { userId } = useParams()
+  const { user } = useUser();
+  const { userId } = useParams();
 
   return (
     <div className="bg-white h-[220px] px-16">
@@ -31,15 +31,17 @@ export default function ProfileHeader({ otherUser }) {
             ) : (
               <h1 className="text-2xl font-bold">{user?.name}</h1>
             )}
-            <Link
-              to={"/profile/EditProfile"}
-              className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md"
-            >
-              แก้ไขโปรไฟล์
-            </Link>
+            {userId != user?.id && userId ? null : (
+              <Link
+                to={"/profile/EditProfile"}
+                className="bg-red_primary text-white border text-center px-5 ml-2 rounded-md"
+              >
+                แก้ไขโปรไฟล์
+              </Link>
+            )}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

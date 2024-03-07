@@ -1,35 +1,55 @@
-import React from "react"
-import { useState } from "react"
-import Input from "../../../../components/Input"
-import axios from "axios"
-import { useUser } from "../../../../feature/user/contexts/UserContext"
+import React from "react";
+import { useState } from "react";
+import Input from "../../../../components/Input";
+import axios from "../../../../configs/axios";
+import { useUser } from "../../../../feature/user/contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default function EditInput({
-  setInput,
   handleChangeInput,
   title,
   info,
   input,
   name,
   type = "text",
+  inputDefault,
 }) {
-  const { setUser } = useUser()
+  const { setUser, userDefault, setOnFetch } = useUser();
 
-  const [onEditInfo, setOnEditInfo] = useState(false)
+  const [onEditInfo, setOnEditInfo] = useState(false);
+  //
   const handleOnEdit = async () => {
     try {
-      console.log(input)
-      const data = { ...input }
-      delete data.imgProfile
+      const data = { [name]: input[name] };
+      if (name == "mobile") {
+        if (input[name].length != 10) {
+          toast.error("Invalid mobile");
+          return;
+        }
+      }
+      if (name == "gender") {
+        if (!(input[name] == "FEMALE" || input[name] == "MALE")) {
+          toast.error("Invalid mobile");
+          return;
+        }
+      }
+      if (name == "birthdate") {
+        if (input[name] > new Date().toISOString() + "") {
+          toast.error("Birtdate is more than current date");
+          return;
+        }
+      }
+      await axios.patch("/user", data);
+      setUser({ ...input, [name]: input[name] });
+      setOnEditInfo((c) => !c);
 
-      setUser(input)
-      setOnEditInfo((c) => !c)
-
-      await axios.patch("/user", data)
+      toast.success("Edit profile successful");
+      setOnFetch((r) => !r);
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error(error.response.data.message);
     }
-  }
+  };
 
   return (
     <div className="flex justify-between">
@@ -50,7 +70,10 @@ export default function EditInput({
 
             <button
               className="gray_primary"
-              onClick={() => setOnEditInfo((c) => !c)}
+              onClick={() => {
+                setOnEditInfo((c) => !c);
+                // setUser(userDefault);
+              }}
             >
               ยกเลิก
             </button>
@@ -68,5 +91,5 @@ export default function EditInput({
         </div>
       )}
     </div>
-  )
+  );
 }

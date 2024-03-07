@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as userApi from "../../../../apis/user";
 import ReviewItem from "./ReviewItem";
+import { useUser } from "../../../../feature/user/contexts/UserContext";
 
 export default function ReviewList() {
+  const { onFetch } = useUser();
   const { userId } = useParams();
   const [reviews, setReviews] = useState([]);
   const [myReviews, setMyReviews] = useState([]);
@@ -29,8 +31,7 @@ export default function ReviewList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
+  }, [onFetch]);
   return (
     <div>
       {!userId ? (
