@@ -182,13 +182,13 @@ function LoginPage() {
               onSuccess={async (res) => {
                 // console.log(res);
                 const user = await axios.post("/user/loginWithGoogle", res);
-                // console.log(user);
+                console.log(user.data);
               }}
               onFailure={(res) => {
                 console.log(res);
               }}
               cookiePolicy={"single_host_origin"}
-              isSignedIn={true}
+              isSignedIn={false}
             />
             {/* <GoogleLogout
               clientId={clientId}

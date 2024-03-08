@@ -21,6 +21,8 @@ export default function MerchantHomePage() {
     fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)); //<<<<
   }, []);
 
+
+
   return isLoading ? (
     <Loading />
   ) : (
