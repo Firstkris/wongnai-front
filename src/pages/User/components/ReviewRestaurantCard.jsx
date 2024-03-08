@@ -15,7 +15,7 @@ export default function ReviewRestaurantCard() {
     const fetchRestaurant = async () => {
       try {
         console.log(restaurantId);
-        const { restaurantId: id } = restaurantId;
+        const { restaurantsId: id } = restaurantId;
         console.log(id);
         const response = await axios.get(`/restaurants/${id}`);
         setRestaurant(response.data);
@@ -31,20 +31,21 @@ export default function ReviewRestaurantCard() {
       <div className="flex justify-around ">
         <div className="flex gap-4 w-full">
           <img
-            src={restaurant.profileImg}
+            src={restaurant?.restaurant?.profileImg}
             className="bg-gray-300 w-32 h-32 rounded-md"
           />
           <div className="w-full">
             <div className="flex justify-between">
-              <h1>{restaurant.restaurantName} </h1>
+              <h1>{restaurant.restaurant?.restaurantName} </h1>
               <button className="bg-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-400">
                 บันทึก
               </button>
             </div>
             <p>
-              {restaurant.reviewPoint} เรตติ้ง ({restaurant.reviewCount} รีวิว)
+              {restaurant.restaurant?.reviewPoint} เรตติ้ง (
+              {restaurant.restaurant?.reviewCount} รีวิว)
             </p>
-            <p>{restaurant?.category?.categoryName}</p>
+            <p>{restaurant?.restaurant?.category?.categoryName}</p>
           </div>
         </div>
       </div>

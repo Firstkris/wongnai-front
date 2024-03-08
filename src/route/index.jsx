@@ -106,7 +106,7 @@ const router = createBrowserRouter([
         element: <BookmarkPage />,
       },
 
-      { path: "/review", element: <UserReview /> },
+      { path: "/review/:restaurantsId", element: <UserReview /> },
       {
         path: "/login",
         element: (

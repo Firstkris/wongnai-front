@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "../../../configs/axios";
+import { toast } from "react-toastify";
 
 function CreateReviewForm() {
   const [title, setTitle] = useState("");
@@ -12,17 +13,17 @@ function CreateReviewForm() {
   const [img, setImg] = useState([]);
   const fileInput = useRef(null);
 
-  const { restaurantId } = useParams();
+  const { restaurantsId } = useParams();
   const [hover, setHover] = useState(null);
   const [titleLength, setTitleLength] = useState(0);
   const [descLength, setDescLength] = useState(0);
 
   const navigate = useNavigate();
-
+  console.log(restaurantsId);
   const handleCancel = (event) => {
     const confirm = window.confirm("คุณต้องการยกเลิกการเขียนรีวิวใช่หรือไม่");
     if (confirm) {
-      navigate(`/restaurants/${restaurantId}`);
+      navigate(`/restaurants/${restaurantsId}`);
     } else {
       event.preventDefault();
     }
@@ -50,14 +51,15 @@ function CreateReviewForm() {
     formData.append("title", title);
     formData.append("description", desc);
     formData.append("star", rating);
-    formData.append("restaurantId", restaurantId);
+    formData.append("restaurantId", restaurantsId);
     // formData.append("img", fileInput.current.files);
     for (let i = 0; i < fileInput.current.files.length; i++) {
       formData.append("img", fileInput.current.files[i]);
     }
     console.log(fileInput.current.files[0]);
-    submitReview(formData);
-    navigate(`/restaurants/${restaurantId}`);
+    await submitReview(formData);
+    toast.success("เขียนรีวิวสำเร็จ");
+    navigate(`/restaurants/${restaurantsId}`);
   };
 
   //   const fetchRestaurant = async () => {
@@ -73,6 +75,7 @@ function CreateReviewForm() {
       <img src={URL.createObjectURL(img[i])} className="w-24 h-24 rounded-md" />
     );
   }
+  console.log(fileInput?.current?.files);
   return (
     <form
       onSubmit={handleSubmitform}
