@@ -17,8 +17,8 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-import Chat from "../pages/Chat";
-import Chat2 from "../pages/Chat2";
+// import Chat from "../pages/Chat";
+// import Chat2 from "../pages/Chat2";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   // {
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
         element: <BookmarkPage />,
       },
 
-      { path: "/review", element: <UserReview /> },
+      { path: "/review/:restaurantId", element: <UserReview /> },
       {
         path: "/login",
         element: (
@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/restaurants", element: <RestaurantPage /> },
+      { path: "/restaurants/:restaurantsId", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
       {

@@ -21,7 +21,7 @@ export const userBookmark = async (restaurantId) =>
   await axios.post("/user/bookmark", { restaurantId });
 
 export const createReview = async (formData) =>
-  await axios.post("/createReview", formData);
+  await axios.post("/user/review", formData);
 
 export const getUserById = async (userId) => await axios.get(`/user/${userId}`);
 

@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export function TitleRestaurantcard() {
+export function TitleRestaurantcard({ restaurant }) {
+  const navigate = useNavigate();
+  const handleClickCard = () => {
+    navigate(`/review/${restaurant.restaurantsId}`);
+  };
   return (
     <div className=" w-full bg-white   my-4 rounded-md">
       <div className="p-4 flex flex-col gap-1 border-b-2">
@@ -38,7 +43,10 @@ export function TitleRestaurantcard() {
         </div>
       </div>
       <div className="p-4 flex gap-2">
-        <button className="flex bg-blue-500 hover:bg-blue-700 text-white rounded-md px-2 py-1 ">
+        <button
+          onClick={handleClickCard}
+          className="flex bg-blue-500 hover:bg-blue-700 text-white rounded-md px-2 py-1 "
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -170,6 +178,7 @@ export function RestaurantDetailCard() {
             </svg>
             <p className="text-xs ">มีที่จอดรถ</p>
           </div>
+
           <div className="flex gap-3">
             <svg
               className="bg-red-500 w-4 h-4 text-white rounded-sm"
