@@ -2,7 +2,7 @@ import React from "react";
 import { useRef } from "react";
 import { ImageIcon } from "../../../../icons/icon";
 
-export default function Model({
+export default function Modal({
   setEditImage,
   profileImage,
   setProfileImage,

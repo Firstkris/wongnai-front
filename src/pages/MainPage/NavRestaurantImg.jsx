@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-
+import { imagePlaceHolder } from "../../constants/constant";
 export default function NavRestaurantImg({ restaurantImage }) {
   const array =
     restaurantImage?.length > 0
@@ -58,13 +58,14 @@ export default function NavRestaurantImg({ restaurantImage }) {
           </div>
         </div>
       ) : (
-        <>
+        <div className=" flex justify-center ">
           <img
             className="aspect-video object-cover h-[250px] border"
             src={array[0]?.img}
           />
-          {array.slice(1, 3).map((a) => (
+          {array.slice(1, 3).map((a, index) => (
             <img
+              key={index}
               className=" aspect-square object-cover border  h-[250px] "
               src={a?.img}
               alt="restaurant Image"
@@ -110,7 +111,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
               </div>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

@@ -8,13 +8,6 @@ import {
 import { useUser } from "../feature/user/contexts/UserContext";
 import { userBookmark, getUserBookmark } from "../apis/user";
 
-import {
-  getCategory,
-  getDistrict,
-  getProvince,
-  getSubDistrict,
-  merchantCreateRestaurant,
-} from "../apis/merchant";
 import { useEffect } from "react";
 
 export const RestaurantContext = createContext();
@@ -23,15 +16,11 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({});
   const [filterInput, setFilterInput] = useState({ rating: [] });
   const [isLoading, setLoading] = useState(false);
-  console.log(filterPageData.restaurants);
+
   const [restaurantData, setRestaurantPage] = useState({});
+  const [reviewsRating, setReviewsRating] = useState(null);
 
   const { user } = useUser();
-
-  const [provinces, setProvince] = useState([]);
-  const [district, setDistrict] = useState([]);
-  const [subDistrict, setSubDistrict] = useState([]);
-  const [category, setCategory] = useState([]);
 
   const [nameRestaurant, setNameRestaurant] = useState([]);
   const fetch = async () => {
@@ -41,7 +30,6 @@ export const RestaurantContextProvider = ({ children }) => {
   useEffect(() => {
     fetch();
   }, []);
-  // console.log(nameRestaurant);
 
   const fetchFilterPage = async () => {
     try {
@@ -51,34 +39,25 @@ export const RestaurantContextProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
-  // const fetchProvince = async () => {
-  //   const res = await getProvince()
-  //   // console.log(res.data.province);
-  //   setProvince(res.data.province)
-  // }
-
-  // const fetchDistrict = async (provinceCode) => {
-  //   console.log(provinceCode);
-  //   const res = await getDistrict(+provinceCode)
-  //   setDistrict(res.data.district)
-  // }
-
-  // const fetchSubDistrict = async (districtCode) => {
-  //   console.log(districtCode)
-  //   const res = await getSubDistrict(+districtCode)
-  //   console.log(res.data.subDistrict)
-  //   setSubDistrict(res.data.subDistrict)
-  // }
   const fetchFilterData = async (filterData) => {
     try {
       if (Object.keys(filterData).length === 0) {
-        return console.log("no filter");
+        console.log("no filter");
+        return;
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
-        return user ? fetchRestaurantWithUserLogin() : fetchFilterPage();
+        console.log(user, "-------------------");
+        if (user) {
+          console.log("have user");
+          fetchRestaurantWithUserLogin();
+        } else {
+          console.log("no user");
+          fetchFilterPage();
+        }
+        return;
       }
       const filterDataParams = {
         districtId: filterData?.districtNameTh,
@@ -140,7 +119,6 @@ export const RestaurantContextProvider = ({ children }) => {
         getRestaurantById(restaurantId),
         getUserBookmark(restaurantId),
       ]);
-      console.log(restaurantResponse.data, bookmarkResponse.data);
 
       setRestaurantPage({
         restaurant: restaurantResponse.data?.restaurant,
@@ -153,36 +131,15 @@ export const RestaurantContextProvider = ({ children }) => {
     }
   };
 
+  const filterByRating = (rating) => {
+    console.log(rating);
+    const reviews = restaurantData?.restaurant?.reviews?.filter(
+      (el) => el.star == rating
+    );
+    setReviewsRating(reviews);
+  };
   ////////
 
-  const fetchProvince = async () => {
-    const res = await getProvince();
-    // console.log(res.data.province);
-    setProvince(res.data.province);
-  };
-
-  const fetchDistrict = async (provinceCode) => {
-    const res = await getDistrict(+provinceCode);
-    setDistrict(res.data.district);
-  };
-
-  const fetchSubDistrict = async (districtCode) => {
-    const res = await getSubDistrict(+districtCode);
-    console.log(res.data.subDistrict);
-    setSubDistrict(res.data.subDistrict);
-  };
-
-  // const fetchCategory = async () => {
-  //   const res = await getCategory()
-  //   setCategory(res.data.categories)
-  // }
-
-  // const createRestaurant = async (data) => {
-  //   const res = await merchantCreateRestaurant(data)
-  //   console.log(res);
-  // }
-
-  console.log(filterInput);
   return (
     <RestaurantContext.Provider
       value={{
@@ -194,10 +151,13 @@ export const RestaurantContextProvider = ({ children }) => {
         clearFilters,
         fetchRestaurantWithUserLogin,
         isLoading,
-        category,
+        setLoading,
         fetchRestaurantAndBookmarkById,
         restaurantData,
+        filterByRating,
+        reviewsRating,
         nameRestaurant,
+        setRestaurantPage,
       }}
     >
       {children}

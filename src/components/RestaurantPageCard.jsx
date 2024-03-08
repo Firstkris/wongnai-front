@@ -10,10 +10,10 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MiniMapGoogle } from "../feature/MimiMapGoogle";
 import { BiFoodMenu } from "react-icons/bi";
-import { RatingButton } from "./restaurantPageComponents/RatingButton";
+import { RatingButton } from "../components/restaurantPageComponents/RatingButton";
 import { UserReviewCard } from "./restaurantPageComponents/UserReviewCard";
 import { useRestaurant } from "../hooks/hooks";
-import { ProgressBarStar } from "./restaurantPageComponents/ProgressBarStar";
+import { ProgressBarStar } from "../components/restaurantPageComponents/ProgressBarStar";
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   const bookmarkRef = useRef();
@@ -27,9 +27,9 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   const handleClickBookmark = () => {
     bookmarkRef.current.click();
   };
+
   const handleClickReview = () => {
-    // console.log(restaurantData);
-    navigate(`/review/${restaurantData?.id}`); ///${restaurantData?.id}
+    navigate(`/review`); ///${restaurantData?.id}
   };
 
   return (
