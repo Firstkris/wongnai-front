@@ -180,13 +180,10 @@ function LoginPage() {
               clientId={clientId}
               buttonText="sign in with google"
               onSuccess={async (res) => {
-                // console.log(res);
                 const user = await axios.post("/user/loginWithGoogle", res);
-                // console.log(user);
+
                 Token.setToken(user.data.token);
                 setUser(user.data.user);
-
-                // console.log(user);
               }}
               onFailure={(res) => {
                 console.log(res);
