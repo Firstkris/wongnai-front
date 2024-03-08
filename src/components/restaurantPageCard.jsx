@@ -10,10 +10,10 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MiniMapGoogle } from "../feature/MimiMapGoogle";
 import { BiFoodMenu } from "react-icons/bi";
-import { RatingButton } from "./restaurantPageComponents/RatingButton";
+import { RatingButton } from "../components/restaurantPageComponents/RatingButton";
 import { UserReviewCard } from "./restaurantPageComponents/UserReviewCard";
 import { useRestaurant } from "../hooks/hooks";
-import { ProgressBarStar } from "./restaurantPageComponents/ProgressBarStar";
+import { ProgressBarStar } from "../components/restaurantPageComponents/ProgressBarStar";
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   const bookmarkRef = useRef();
@@ -27,9 +27,9 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   const handleClickBookmark = () => {
     bookmarkRef.current.click();
   };
+
   const handleClickReview = () => {
-    // console.log(restaurantData);
-    navigate(`/review/${restaurantData?.id}`); ///${restaurantData?.id}
+    navigate(`/review`); ///${restaurantData?.id}
   };
 
   return (
@@ -159,8 +159,8 @@ export function RestaurantDetailCard({ restaurantData }) {
   const priceLengthText =
     restaurantData?.priceLength && priceLength
       ? priceLength
-        .find((el) => el.id === restaurantData?.priceLength)
-        ?.priceLength.slice(4)
+          .find((el) => el.id === restaurantData?.priceLength)
+          ?.priceLength.slice(4)
       : null;
 
   return (
@@ -184,11 +184,11 @@ export function RestaurantDetailCard({ restaurantData }) {
         <div className="flex flex-col gap-2">
           {restaurantData?.facilitiesWithRestaurantId
             ? restaurantData.facilitiesWithRestaurantId.map((el) => (
-              <div className="flex gap-2" key={el.id}>
-                <IconCheckGreen />{" "}
-                <div className="flex text-sm">{el.facility.facilityName}</div>
-              </div>
-            ))
+                <div className="flex gap-2" key={el.id}>
+                  <IconCheckGreen />{" "}
+                  <div className="flex text-sm">{el.facility.facilityName}</div>
+                </div>
+              ))
             : null}
         </div>
 
@@ -196,7 +196,7 @@ export function RestaurantDetailCard({ restaurantData }) {
           <p className="text-md font-bold">ช่วงราคา</p>
           <div className="flex-grow flex items-baseline gap-1">
             {restaurantData?.priceLength &&
-              restaurantData?.priceLength.length > 0 ? (
+            restaurantData?.priceLength.length > 0 ? (
               <div className="flex-grow flex items-baseline gap-1">
                 {restaurantData?.priceLength}
                 <p className="text-xs  text-gray-500">
@@ -257,11 +257,11 @@ export function RatingRestaurantCard({ restaurantData }) {
               <div className="text-4xl font-extrabold">
                 {restaurantData?.reviews && restaurantData?.reviews.length > 0
                   ? (
-                    restaurantData?.reviews.reduce(
-                      (acc, el) => el.star + acc,
-                      0
-                    ) / restaurantData?.reviews?.length
-                  ).toFixed(1)
+                      restaurantData?.reviews.reduce(
+                        (acc, el) => el.star + acc,
+                        0
+                      ) / restaurantData?.reviews?.length
+                    ).toFixed(1)
                   : 0}
               </div>
               <span className="text-xs">จาก 5</span>
