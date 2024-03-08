@@ -29,7 +29,7 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   };
 
   const handleClickReview = () => {
-    navigate(`/review/${restaurantData.id}`); ///${restaurantData?.id}
+    navigate(`/review`); ///${restaurantData?.id}
   };
 
   return (
