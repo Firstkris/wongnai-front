@@ -18,7 +18,7 @@ export default function MerchantHomePage() {
     useRestaurant();
   const params = useParams();
   const [isSelect, setIsSelect] = useState(0);
-  const [onFetch, setOnFetch] = useState();
+  const [, setOnFetch] = useState();
   const navigate = useNavigate();
   console.log("params", params.restaurantId);
 
