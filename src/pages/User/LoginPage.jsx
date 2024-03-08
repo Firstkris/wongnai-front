@@ -126,7 +126,7 @@ function LoginPage() {
           </div>
 
           <div className="w-full flex flex-col gap-2">
-            <FacebookLogin
+            {/* <FacebookLogin
               icon={
                 <div className="flex text-xs w-full m-0 rounded-md">
                   <svg
@@ -147,11 +147,11 @@ function LoginPage() {
               cssClass="flex  text-xs w-full  px-3 py-2 m-0 border-2 rounded-md border-black"
               textButton=" "
               appId="411084504827647"
-              autoLoad={true}
+              autoLoad={false}
               fields="email,name"
               onClick={click}
               callback={back}
-            />
+            /> */}
             {/* <FacebookLogin
               appId="411084504827647"
               autoLoad={true}
@@ -183,12 +183,16 @@ function LoginPage() {
                 // console.log(res);
                 const user = await axios.post("/user/loginWithGoogle", res);
                 // console.log(user);
+                Token.setToken(user.data.token);
+                setUser(user.data.user);
+
+                // console.log(user);
               }}
               onFailure={(res) => {
                 console.log(res);
               }}
               cookiePolicy={"single_host_origin"}
-              isSignedIn={true}
+              isSignedIn={false}
             />
             {/* <GoogleLogout
               clientId={clientId}

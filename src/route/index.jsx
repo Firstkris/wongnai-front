@@ -17,7 +17,7 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-// import Chat from "../pages/Chat";
+// import { Chat, ChatRoomeA } from "../pages/Chat";
 // import Chat2 from "../pages/Chat2";
 // import Chat3 from "../pages/Chat3";
 // import MerchantContextProvider, {
@@ -29,13 +29,15 @@ import MerchantContextProvider, {
 import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
+// import { ChatRoomeA } from "../pages/Chat";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   // {
   //   path: "/chat1",
   //   element: (
   //     <div>
-  //       <Chat />
+  //       <ChatRoomeA />
+  //       {/* <Chat /> */}
   //       {/* <Chat2 /> */}
   //     </div>
   //   ),
