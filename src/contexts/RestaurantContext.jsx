@@ -151,12 +151,13 @@ export const RestaurantContextProvider = ({ children }) => {
         clearFilters,
         fetchRestaurantWithUserLogin,
         isLoading,
-
+        setLoading,
         fetchRestaurantAndBookmarkById,
         restaurantData,
         filterByRating,
         reviewsRating,
         nameRestaurant,
+        setRestaurantPage,
       }}
     >
       {children}

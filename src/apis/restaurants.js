@@ -12,6 +12,8 @@ export const getAllUserBookmark = async () =>
 export const getRestaurantById = async (restaurantId) =>
   await axios.get(`/restaurants/${restaurantId}`);
 
-/// ไม่ได้ใช้
-export const getReviewById = async (restaurantId) =>
-  await axios.get(`/restaurants/${restaurantId}/review`);
+export const uploadRestaurantImg = async (restaurantId, restaurantImg) =>
+  await axios.post(`/restaurants/Img/${restaurantId}`, restaurantImg);
+
+export const deleteRestaurantImg = async (restaurantId) =>
+  await axios.delete(`/restaurants/Img/${restaurantId}`);
