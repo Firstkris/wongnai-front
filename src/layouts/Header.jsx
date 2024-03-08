@@ -30,7 +30,7 @@ export default function Header() {
         <MessageIcon className="w-10 h-10 fill-red_primary" />
       </Link>
 
-      {/* <div className="absolute top-14 ml-12 flex flex-col gap-2  bg-red-500">
+      <div className="absolute top-14 ml-12 flex flex-col gap-2  bg-red-500">
         {text
           ? nameRestaurant
               .filter(
@@ -55,7 +55,7 @@ export default function Header() {
                 </Link>
               ))
           : null}
-      </div> */}
+      </div>
       <HeaderToggle />
     </header>
   );

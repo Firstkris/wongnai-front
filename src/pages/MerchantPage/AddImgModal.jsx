@@ -1,21 +1,14 @@
 import React from "react";
 import { useRef } from "react";
-import { ImageIcon } from "../../../../icons/icon";
+import { ImageIcon } from "../../icons/icon";
 
-export default function Model({
-  setEditImage,
-  profileImage,
-  setProfileImage,
-  setUser,
-  handleSubmit,
-  setProfileImage1,
-}) {
+export default function AddImgModal({ setAddToggle }) {
   const fileInput = useRef(null);
 
   const handleOnEdit = () => {
-    setEditImage((c) => !c);
+    setAddToggle((c) => !c);
     handleSubmit();
-    setUser((r) => ({ ...r, imgProfile: profileImage }));
+    // setUser((r) => ({ ...r, imgProfile: profileImage }));
   };
 
   return (
@@ -25,7 +18,7 @@ export default function Model({
         <div className="flex flex-col gap-5 bg-white min-w-[500px] min-h-2/5 opacity-100 rounded-2xl pt-7 pb-5 px-10">
           <div className="flex gap-6 items-center">
             <img
-              src={profileImage}
+              // src={profileImage}
               ref={fileInput}
               alt="profileImage"
               className="w-[100px] h-[100px] object-cover rounded-full cursor-pointer"
@@ -56,7 +49,7 @@ export default function Model({
             <button
               className="gray_primary"
               onClick={() => {
-                setEditImage((c) => !c);
+                setAddToggle((c) => !c);
               }}
             >
               ยกเลิก

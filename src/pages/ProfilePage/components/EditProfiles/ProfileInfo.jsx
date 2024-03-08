@@ -5,11 +5,11 @@ import Card from "./Card";
 import Container from "./Container";
 import Header from "./Header";
 import { useState } from "react";
-import Model from "./Model";
 import axios from "../../../../configs/axios";
 import { useUser } from "../../../../feature/user/contexts/UserContext";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import Modal from "./Modal";
 
 // const initial = {
 //   name: user?.name,
@@ -67,11 +67,12 @@ export default function ProfileInfo({ setIsEditPassword }) {
   // console.log("*****************************************", user?.imgProfile);
   // console.log("user", user);
   console.log("input", input);
+  console.log("profileImage1", profileImage1);
 
   return (
     <>
       {editImage ? (
-        <Model
+        <Modal
           setEditImage={setEditImage}
           profileImage={profileImage || user?.imgProfile}
           setProfileImage={setProfileImage}
