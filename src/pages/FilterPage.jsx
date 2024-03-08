@@ -1,11 +1,12 @@
-import { CardRestaurant } from "../components/filterPageComponents/CardRestaurant"
-import React from "react"
-import { SlideBar } from "../components/filterPageComponents/SlideBar"
-import { useRestaurant } from "../hooks/hooks.jsx"
-import { useEffect } from "react"
-import { Breadcrumbs } from "../components/BreadCrumb.jsx"
-import { useUser } from "../feature/user/contexts/UserContext.jsx"
-import { Loading } from "../components/Loading"
+import { CardRestaurant } from "../components/filterPageComponents/CardRestaurant";
+import React from "react";
+import { SlideBar } from "../components/filterPageComponents/SlideBar";
+import { useRestaurant } from "../hooks/hooks.jsx";
+import { useEffect } from "react";
+import { Breadcrumbs } from "../components/BreadCrumb.jsx";
+import { useUser } from "../feature/user/contexts/UserContext.jsx";
+import { Loading } from "../components/Loading";
+import { Children } from "react";
 
 const breadcrumbs = [
   { label: "หน้าหลัก", link: "https://www.google.com" },
@@ -13,27 +14,36 @@ const breadcrumbs = [
     label: "ค้นหาร้านอาหาร",
     link: "https://www.wongnai.com/restaurants?regions=9681",
   },
-]
+];
 export const FilterPage = () => {
   const {
     filterPageData,
     fetchRestaurantWithUserLogin,
     isLoading,
     fetchFilterPage,
-  } = useRestaurant()
-  const { restaurants } = filterPageData
+  } = useRestaurant();
+  const { restaurants } = filterPageData;
 
-  const { user } = useUser()
+  const { user } = useUser();
+
+  const fetchDataFilter = async () => {
+    try {
+      if (!user) {
+        console.log("nullll");
+        await fetchFilterPage();
+      } else {
+        console.log("userrrrr");
+        await fetchRestaurantWithUserLogin();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
-    if (!user) {
-      console.log("nullll")
-      fetchFilterPage()
-    } else {
-      console.log("userrrrr")
-      fetchRestaurantWithUserLogin()
-    }
-  }, [user])
+    console.log("fir");
+    fetchDataFilter();
+  }, [user]);
 
   return (
     //layout
@@ -90,5 +100,5 @@ export const FilterPage = () => {
         </div>
       </div>
     )
-  )
-}
+  );
+};
