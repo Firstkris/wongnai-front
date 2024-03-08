@@ -1,37 +1,56 @@
-import React from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   RestaurantDetailCard,
-  RestaurantMapcard,
-  TitleRestaurantcard,
-} from "../../components/restaurantPageCard";
-import { useParams } from "react-router-dom";
-function RestaurantPage() {
-  const restaurantId = useParams();
-  return (
-    <div className="max-w-[1024]  flex flex-col items-center bg-gray_primary">
-      <div className=" h-[320px] flex gap-2">
-        <img
-          className=""
-          src="https://img.wongnai.com/p/1600x0/2023/03/01/17147367ec614addb6bb907136a6661a.jpg"
-        />
+  RestaurantMapCard,
+  TitleRestaurantCard,
+  RatingRestaurantCard,
+} from "../../components/RestaurantPageCard";
+import { useRestaurant } from "../../hooks/hooks";
+import { Loading } from "../../components/Loading";
+import NavRestaurantImg from "./NavRestaurantImg";
 
-        <img
-          className=""
-          src="https://img.wongnai.com/p/1600x0/2023/03/01/17147367ec614addb6bb907136a6661a.jpg"
-        />
-      </div>
-      <div className="mx-auto">
-        <div className="flex  w-full gap-10">
-          <div className="w-9/12">
-            <TitleRestaurantcard restaurant={restaurantId} />
-            <RestaurantMapcard />
-          </div>
-          <div className="w-3/12">
-            <RestaurantDetailCard />
+function RestaurantPage() {
+  const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
+    useRestaurant();
+  const params = useParams();
+
+  useEffect(() => {
+    fetchRestaurantAndBookmarkById(parseInt(params.id));
+  }, []);
+
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <>
+      <div className="max-w-[1024]  flex flex-col items-center bg-gray_primary">
+        {/* image zone  */}
+        <div>
+          <NavRestaurantImg
+            restaurantImage={restaurantData?.restaurant?.restaurantImages}
+          />
+        </div>
+        <div className="w-full">
+          <div className="mx-auto flex justify-center  w-full gap-4 mt-4">
+            <div className="min-w-[567px] flex flex-col gap-4">
+              <TitleRestaurantCard
+                restaurantData={restaurantData.restaurant}
+                bookmarks={restaurantData?.bookmarks}
+              />
+              <RestaurantMapCard restaurantData={restaurantData.restaurant} />
+              <RatingRestaurantCard
+                restaurantData={restaurantData.restaurant}
+              />
+            </div>
+            <div className="min-w-56">
+              <RestaurantDetailCard
+                restaurantData={restaurantData.restaurant}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

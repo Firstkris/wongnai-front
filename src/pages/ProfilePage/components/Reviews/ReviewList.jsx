@@ -32,7 +32,6 @@ export default function ReviewList() {
         console.log(err);
       });
   }, [onFetch]);
-
   return (
     <div>
       {!userId ? (

@@ -17,7 +17,10 @@ export const fetchMe = async () =>
 export const userLoginWithFace = async (fromData) =>
   await axios.post("/user/loginWithFace", fromData);
 
+///here
 export const userBookmark = async (restaurantId) =>
+  await axios.post("/user/bookmark", { restaurantId });
+export const deleteBookmarkById = async (restaurantId) =>
   await axios.post("/user/bookmark", { restaurantId });
 
 export const createReview = async (formData) =>
@@ -27,3 +30,6 @@ export const getUserById = async (userId) => await axios.get(`/user/${userId}`);
 
 export const deleteReviewById = async (id) =>
   await axios.delete(`/user/review/${id}`);
+
+export const getUserBookmark = async (restaurantId) =>
+  await axios.get(`/user/bookmark/${restaurantId}`);
