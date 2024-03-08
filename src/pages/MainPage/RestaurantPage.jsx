@@ -4,6 +4,7 @@ import {
   RestaurantDetailCard,
   RestaurantMapCard,
   TitleRestaurantCard,
+  RatingRestaurantCard,
 } from "../../components/RestaurantPageCard"
 import { useRestaurant } from "../../hooks/hooks"
 import { Loading } from "../../components/Loading"
@@ -15,7 +16,7 @@ function RestaurantPage() {
   const params = useParams()
 
   useEffect(() => {
-    fetchRestaurantAndBookmarkById(parseInt(params.id)) //<<<<
+    fetchRestaurantAndBookmarkById(parseInt(params.id))
   }, [])
 
   return isLoading ? (
@@ -30,13 +31,16 @@ function RestaurantPage() {
           />
         </div>
         <div className="w-full">
-          <div className="mx-auto flex justify-center  w-full gap-10">
-            <div className="min-w-[567px]">
+          <div className="mx-auto flex justify-center  w-full gap-4 mt-4">
+            <div className="min-w-[567px] flex flex-col gap-4">
               <TitleRestaurantCard
                 restaurantData={restaurantData.restaurant}
                 bookmarks={restaurantData?.bookmarks}
               />
               <RestaurantMapCard restaurantData={restaurantData.restaurant} />
+              <RatingRestaurantCard
+                restaurantData={restaurantData.restaurant}
+              />
             </div>
             <div className="min-w-56">
               <RestaurantDetailCard
