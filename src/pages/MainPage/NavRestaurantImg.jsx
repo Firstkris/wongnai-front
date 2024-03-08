@@ -69,7 +69,6 @@ export default function NavRestaurantImg({ restaurantImage }) {
               className=" aspect-square object-cover border  h-[250px] "
               src={a?.img}
               alt="restaurant Image"
-              key={index}
             />
           ))}
           {array.length >= 4 && array.length <= 7 ? (
