@@ -29,10 +29,10 @@ function RegisterPageMerchant() {
     const refInput = useRef();
 
     const handleChangeInput = (e) => {
-        
-            console.log('Name:', e.target.name);
-            console.log('Value:', e.target.value);
-        
+
+        console.log('Name:', e.target.name);
+        console.log('Value:', e.target.value);
+
         setInput({ ...input, [e.target.name]: e.target.value });
         console.log(input)
         setValidateError({ ...validateError1, [e.target.name]: "" });
@@ -79,7 +79,7 @@ function RegisterPageMerchant() {
                 });
         }
     };
-   
+
     return (
         <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
             <form
@@ -134,7 +134,7 @@ function RegisterPageMerchant() {
                         <Input
                             type="username"
                             placeholder="ชื่อบัญชี"
-                           
+
                             onChange={handleChangeInput}
                             name={"username"}
                         />
@@ -145,7 +145,7 @@ function RegisterPageMerchant() {
                     <div className="w-full">
                         <Input
                             placeholder="เบอร์โทร"
-                            
+
                             onChange={handleChangeInput}
                             name={"mobile"}
                         />
@@ -156,7 +156,7 @@ function RegisterPageMerchant() {
                     <div className="w-full">
                         <Input
                             placeholder="รหัสผ่าน"
-                            
+
                             onChange={handleChangeInput}
                             name={"password"}
                             type="password"
@@ -168,7 +168,7 @@ function RegisterPageMerchant() {
                     <div className="w-full">
                         <Input
                             placeholder="ยืนยันรหัสผ่าน"
-                            
+
                             onChange={handleChangeInput}
                             name={"confirmPassword"}
                             type="password"

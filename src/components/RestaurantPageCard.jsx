@@ -1,27 +1,27 @@
-import { IconCamera } from "./icon-svg/IconCamera"
-import { IconMessage } from "./icon-svg/IconMessage"
-import { BookmarkIcon } from "./BookmarkIcon"
-import { IconCheckmark } from "./icon-svg/IconCheckmark"
-import { ButtonRestaurantPage } from "./restaurantPageComponents/ButtonRestaurantPage"
-import { priceLength } from "../constants/constant"
-import { IconCheckGreen } from "./icon-svg/IconCheckGreen"
-import { IconTel } from "./icon-svg/IconTel"
-import { useRef } from "react"
+import { IconCamera } from "./icon-svg/IconCamera";
+import { IconMessage } from "./icon-svg/IconMessage";
+import { BookmarkIcon } from "./BookmarkIcon";
+import { IconCheckmark } from "./icon-svg/IconCheckmark";
+import { ButtonRestaurantPage } from "./restaurantPageComponents/ButtonRestaurantPage";
+import { priceLength } from "../constants/constant";
+import { IconCheckGreen } from "./icon-svg/IconCheckGreen";
+import { IconTel } from "./icon-svg/IconTel";
+import { useRef } from "react";
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
-  const bookmarkRef = useRef()
+  const bookmarkRef = useRef();
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
       <IconCheckmark /> OFFICIAL
     </div>
-  )
+  );
 
   const handleClickBookmark = () => {
-    bookmarkRef.current.click()
-  }
+    bookmarkRef.current.click();
+  };
 
   return (
-    <div className=" w-full bg-white   my-4 rounded-md">
+    <div className=" w-full bg-white  my-4 rounded-md">
       <div className="p-4 flex flex-col gap-1 border-b-2">
         <div className="flex items-baseline gap-3">
           <h1 className="text-4xl">{restaurantData?.restaurantName}</h1>
@@ -68,7 +68,7 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function RestaurantMapCard({ restaurantData }) {
@@ -100,16 +100,16 @@ export function RestaurantMapCard({ restaurantData }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function RestaurantDetailCard({ restaurantData }) {
   ///waiting time and facility
   const priceLengthText = restaurantData?.priceLength
     ? priceLength
-      .find((el) => el.id === restaurantData?.priceLength)
-      .priceLength.slice(4)
-    : null
+        .find((el) => el.id === restaurantData?.priceLength)
+        .priceLength.slice(4)
+    : null;
 
   return (
     <div className=" w-full bg-white  p-4 my-4 rounded-md ">
@@ -132,11 +132,11 @@ export function RestaurantDetailCard({ restaurantData }) {
         <div className="flex flex-col gap-2">
           {restaurantData?.facilitiesWithRestaurantId
             ? restaurantData.facilitiesWithRestaurantId.map((el) => (
-              <div className="flex gap-2" key={el.id}>
-                <IconCheckGreen />{" "}
-                <div className="flex text-sm">{el.facility.facilityName}</div>
-              </div>
-            ))
+                <div className="flex gap-2" key={el.id}>
+                  <IconCheckGreen />{" "}
+                  <div className="flex text-sm">{el.facility.facilityName}</div>
+                </div>
+              ))
             : null}
           {/* <div className="flex gap-3">
             <IconCrossRed />
@@ -153,5 +153,5 @@ export function RestaurantDetailCard({ restaurantData }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -30,6 +30,7 @@ import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 // import { ChatRoomeA } from "../pages/Chat";
+import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   // {
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
       </div>
     ),
     children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+
       {
         path: "/profile",
         element: (
@@ -113,27 +119,6 @@ const router = createBrowserRouter([
       { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
-      {
-        path: "/merchant",
-        element: (
-          <MerchantContextProvider>
-            <RestaurantRegisterPage />
-          </MerchantContextProvider>
-        ),
-      },
-
-      {
-        path: "/homepage",
-        element: <HomePage />,
-      },
-      {
-        path: "/merchant",
-        element: <MerchantLoginPage />,
-      },
-      {
-        path: "/merchant/register",
-        element: <RegisterPageMerchant />,
-      },
     ],
   },
   {
@@ -146,11 +131,26 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "",
-        element: <></>,
+        path: "/merchant",
+        element: <MerchantLoginPage />,
+      },
+
+      {
+        path: "/merchant/createRestaurant/:merchantId",
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        ),
+      },
+
+      {
+        path: "/merchant/:restaurantId",
+        element: <MerchantHomePage />,
       },
       {
-        path: "createRes",
+        path: "/merchant/register",
+        element: <RegisterPageMerchant />,
       },
     ],
   },
