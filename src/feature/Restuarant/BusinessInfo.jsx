@@ -14,6 +14,7 @@ import { GISTDA_API_KEY } from "../../constants/constant";
 import OpeningHours from "./OpenHours";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { priceLength } from "../../constants/constant"
 
 
 function BusinessInfo() {
@@ -95,7 +96,6 @@ function BusinessInfo() {
         } catch (error) {
             toast.error(error.response?.data.message)
         }
-
 
     }
 
@@ -223,52 +223,10 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={'ข้อมูลเพิ่มเติม'} />
 
-                    {/* Radio Openday */}
-                    {/* <RadioBtn
-                        onChange={hldChangeRadio}
-                        label={'วันที่เปิดให้บริการ'}
-                        choices={[
-                            { text: 'เปิดทุกวัน', value: "everyDay" },
-                            { text: 'เลือกวันเปิด', value: "selectDay" },
-                        ]}
-                        name={'openDay'}
-                    /> */}
-
-
-
                     <OpeningHours label={'วันที่เปิดให้บริการ'} />
+                    <Select name={"priceLength"} items={priceLength} />
 
 
-
-                    {/*                     
-                    {isOpen === "everyDay" ?
-                        <>
-                            <Input
-                                type="time"
-                                name='open'
-                                label="เวลาเปิด"
-                            // value={input.name}
-                            // onChange={hdlChangeInput}
-                            />
-
-                            <Input
-                                type="time"
-                                name='open'
-                                label="เวลาปิด"
-                            // value={input.name}
-                            // onChange={hdlChangeInput}
-                            />
-                        </>
-                        : <>
-                            <WeekDays label={'Monday'} />
-                            <WeekDays label={'Tuesday'} />
-                            <WeekDays label={'Wednesday'} />
-                            <WeekDays label={'Thursday'} />
-                            <WeekDays label={'Friday'} />
-                            <WeekDays label={'Saturday'} />
-                            <WeekDays label={'Sunday'} />
-                        </>
-                    } */}
 
                     <RadioBtn
                         label={'ที่จอดรถ'}
