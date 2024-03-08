@@ -12,5 +12,6 @@ export const getAllUserBookmark = async () =>
 export const getRestaurantById = async (restaurantId) =>
   await axios.get(`/restaurants/${restaurantId}`)
 
+/// ไม่ได้ใช้
 export const getReviewById = async (restaurantId) =>
   await axios.get(`/restaurants/${restaurantId}/review`)

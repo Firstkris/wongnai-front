@@ -5,12 +5,13 @@
 
 // const socket = io.connect("http://localhost:8888/");
 
-// function Chat2() {
+// function Chat2({ received = "RESTAURANT1", role = "USER" }) {
 //   const [message, setMessage] = useState("");
 //   const [chat, setChat] = useState([]);
 
+//   const sender = role + 2;
 //   useEffect(() => {
-//     socket.auth = { sender: 2, received: 1 };
+//     socket.auth = { sender };
 
 //     socket.connect();
 //     return () => socket.disconnect();
@@ -23,7 +24,11 @@
 //   const submit = async (e) => {
 //     e.preventDefault();
 
-//     await socket.emit("message", message);
+//     await socket.emit("message", {
+//       message,
+//       received,
+//       role,
+//     });
 //     setMessage("");
 //   };
 
@@ -33,7 +38,7 @@
 //       setChat([...chat, { ...msg }]);
 //     });
 //   }, [chat]);
-
+//   console.log(chat);
 //   return (
 //     <div>
 //       <form onSubmit={submit}>
@@ -41,16 +46,24 @@
 //         <button>send</button>
 //       </form>
 //       <div className="p-4">
-//         {chat.map((el) => (
-//           <div className="flex">
-//             <span className={el.sender == 2 ? "text-red-500" : ""}>
-//               {el.sender == 2 ? "sender : " : "received : "}
-//             </span>
-//             <h1 className={`mr-4 ${el.sender == 2 ? "text-red-500" : ""}`}>
-//               {el.msg}
-//             </h1>
-//           </div>
-//         ))}
+//         {chat
+//           .filter(
+//             (item) => item.received == received || item.received == sender
+//           )
+//           .map((el) => (
+//             <div className="flex">
+//               <span className={el.received == received ? "text-red-500" : ""}>
+//                 {el.received == received ? "sender : " : "received : "}
+//               </span>
+//               <h1
+//                 className={`mr-4 ${
+//                   el.received == received ? "text-red-500" : ""
+//                 }`}
+//               >
+//                 {el.message}
+//               </h1>
+//             </div>
+//           ))}
 //       </div>
 //     </div>
 //   );

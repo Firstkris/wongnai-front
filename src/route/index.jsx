@@ -17,15 +17,28 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-// import Chat from "../pages/Chat";
+// import { Chat, ChatRoomeA } from "../pages/Chat";
 // import Chat2 from "../pages/Chat2";
+// import Chat3 from "../pages/Chat3";
+// import MerchantContextProvider, {
+//   MerchantContext,
+// } from "../contexts/MerchantContext";
+import MerchantContextProvider, {
+  MerchantContext,
+} from "../contexts/MerchantContext";
+import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
+import HomePage from "../pages/HomePage";
+import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
+// import { ChatRoomeA } from "../pages/Chat";
+import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   // {
   //   path: "/chat1",
   //   element: (
   //     <div>
-  //       <Chat />
+  //       <ChatRoomeA />
+  //       {/* <Chat /> */}
   //       {/* <Chat2 /> */}
   //     </div>
   //   ),
@@ -39,6 +52,15 @@ const router = createBrowserRouter([
   //     </div>
   //   ),
   // },
+  // {
+  //   path: "/chat3",
+  //   element: (
+  //     <div>
+  //       {/* <Chat /> */}
+  //       <Chat3 />
+  //     </div>
+  //   ),
+  // },
   {
     path: "/",
     element: (
@@ -48,6 +70,11 @@ const router = createBrowserRouter([
       </div>
     ),
     children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+
       {
         path: "/profile",
         element: (
@@ -92,9 +119,38 @@ const router = createBrowserRouter([
       { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
+    ],
+  },
+  {
+    path: "/merchant",
+    element: (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Outlet />
+      </div>
+    ),
+    children: [
       {
         path: "/merchant",
-        element: <RestaurantRegisterPage />,
+        element: <MerchantLoginPage />,
+      },
+
+      {
+        path: "/merchant/createRestaurant/:merchantId",
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        ),
+      },
+
+      {
+        path: "/merchant/:restaurantId",
+        element: <MerchantHomePage />,
+      },
+      {
+        path: "/merchant/register",
+        element: <RegisterPageMerchant />,
       },
     ],
   },

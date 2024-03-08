@@ -156,7 +156,6 @@ export function RestaurantMapCard({ restaurantData }) {
 }
 
 export function RestaurantDetailCard({ restaurantData }) {
-  ///waiting time and facility
   const priceLengthText =
     restaurantData?.priceLength && priceLength
       ? priceLength
@@ -220,15 +219,15 @@ export function RatingRestaurantCard({ restaurantData }) {
 
   const handleClickFilterRating = (rating) => {
     filterByRating(rating)
-    setIsSelected((prev) => !prev)
+    // setIsSelected((prev) => !prev)
   }
   const calRating = (review, number) => {
     if (review && review.length > 0) {
       const percentRating =
         (review.filter((el) => el.star == number).length / review.length) * 100
-      return `w-[${parseFloat(percentRating).toFixed(0)}%]`
+      return parseFloat(percentRating).toFixed(0)
     } else {
-      return "w-[0%]"
+      return 0
     }
   }
   const rating1 = calRating(restaurantData?.reviews, 1)

@@ -4,18 +4,11 @@ import {
   getFilterRestaurant,
   getAllUserBookmark,
   getRestaurantById,
-  getReviewById,
 } from "../apis/restaurants"
 import { useUser } from "../feature/user/contexts/UserContext"
 import { userBookmark, getUserBookmark } from "../apis/user"
 
-import {
-  getCategory,
-  getDistrict,
-  getProvince,
-  getSubDistrict,
-  merchantCreateRestaurant,
-} from "../apis/merchant"
+import { useEffect } from "react"
 
 export const RestaurantContext = createContext()
 
@@ -29,10 +22,14 @@ export const RestaurantContextProvider = ({ children }) => {
 
   const { user } = useUser()
 
-  const [provinces, setProvince] = useState([])
-  const [district, setDistrict] = useState([])
-  const [subDistrict, setSubDistrict] = useState([])
-  const [category, setCategory] = useState([])
+  const [nameRestaurant, setNameRestaurant] = useState([])
+  const fetch = async () => {
+    const data = await filterPageGetRestaurant()
+    setNameRestaurant(data.data.restaurants)
+  }
+  useEffect(() => {
+    fetch()
+  }, [])
 
   const fetchFilterPage = async () => {
     try {
@@ -42,7 +39,7 @@ export const RestaurantContextProvider = ({ children }) => {
     } catch (err) {
       console.log(err)
     } finally {
-      setLoading(false)
+      // setLoading(false);
     }
   }
 
@@ -109,12 +106,11 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchRestaurantAndBookmarkById = async (restaurantId) => {
     try {
       setLoading(true)
-      const [restaurantResponse, bookmarkResponse, reviewResponse] =
-        await Promise.all([
-          getRestaurantById(restaurantId),
-          getUserBookmark(restaurantId),
-          // getReviewById(restaurantId),
-        ])
+      const [restaurantResponse, bookmarkResponse] = await Promise.all([
+        getRestaurantById(restaurantId),
+        getUserBookmark(restaurantId),
+      ])
+
       setRestaurantPage({
         restaurant: restaurantResponse.data?.restaurant,
         bookmarks: bookmarkResponse.data?.bookmarks,
@@ -135,33 +131,6 @@ export const RestaurantContextProvider = ({ children }) => {
   }
   ////////
 
-  const fetchProvince = async () => {
-    const res = await getProvince()
-    // console.log(res.data.province);
-    setProvince(res.data.province)
-  }
-
-  const fetchDistrict = async (provinceCode) => {
-    const res = await getDistrict(+provinceCode)
-    setDistrict(res.data.district)
-  }
-
-  const fetchSubDistrict = async (districtCode) => {
-    const res = await getSubDistrict(+districtCode)
-    console.log(res.data.subDistrict)
-    setSubDistrict(res.data.subDistrict)
-  }
-
-  const fetchCategory = async () => {
-    const res = await getCategory()
-    setCategory(res.data.categories)
-  }
-
-  const createRestaurant = async (data) => {
-    const res = await merchantCreateRestaurant(data)
-    console.log(res)
-  }
-
   return (
     <RestaurantContext.Provider
       value={{
@@ -173,18 +142,12 @@ export const RestaurantContextProvider = ({ children }) => {
         clearFilters,
         fetchRestaurantWithUserLogin,
         isLoading,
-        fetchProvince,
-        provinces,
-        district,
-        fetchDistrict,
-        subDistrict,
-        fetchSubDistrict,
-        category,
-        createRestaurant,
+
         fetchRestaurantAndBookmarkById,
         restaurantData,
         filterByRating,
         reviewsRating,
+        nameRestaurant,
       }}
     >
       {children}

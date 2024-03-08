@@ -1,39 +1,8 @@
 import React from "react"
 import { useState } from "react"
-
+import { imagePlaceHolder } from "../../constants/constant"
 export default function NavRestaurantImg({ restaurantImage }) {
-  const array =
-    restaurantImage?.length > 0
-      ? restaurantImage
-      : [
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-          {
-            img: "https://placehold.co/400",
-          },
-        ]
+  const array = restaurantImage?.length > 0 ? restaurantImage : imagePlaceHolder
 
   const [isToggle, setIsToggle] = useState(false)
 
