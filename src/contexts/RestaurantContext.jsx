@@ -4,6 +4,7 @@ import {
   getFilterRestaurant,
   getAllUserBookmark,
   getRestaurantById,
+  getReviewById,
 } from "../apis/restaurants"
 import { useUser } from "../feature/user/contexts/UserContext"
 import { userBookmark, getUserBookmark } from "../apis/user"
@@ -24,6 +25,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const [isLoading, setLoading] = useState(false)
 
   const [restaurantData, setRestaurantPage] = useState({})
+  const [reviewsRating, setReviewsRating] = useState(null)
 
   const { user } = useUser()
 
@@ -107,11 +109,12 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchRestaurantAndBookmarkById = async (restaurantId) => {
     try {
       setLoading(true)
-      const [restaurantResponse, bookmarkResponse] = await Promise.all([
-        getRestaurantById(restaurantId),
-        getUserBookmark(restaurantId),
-      ])
-
+      const [restaurantResponse, bookmarkResponse, reviewResponse] =
+        await Promise.all([
+          getRestaurantById(restaurantId),
+          getUserBookmark(restaurantId),
+          // getReviewById(restaurantId),
+        ])
       setRestaurantPage({
         restaurant: restaurantResponse.data?.restaurant,
         bookmarks: bookmarkResponse.data?.bookmarks,
@@ -123,6 +126,13 @@ export const RestaurantContextProvider = ({ children }) => {
     }
   }
 
+  const filterByRating = (rating) => {
+    console.log(rating)
+    const reviews = restaurantData?.restaurant?.reviews?.filter(
+      (el) => el.star == rating
+    )
+    setReviewsRating(reviews)
+  }
   ////////
 
   const fetchProvince = async () => {
@@ -173,6 +183,8 @@ export const RestaurantContextProvider = ({ children }) => {
         createRestaurant,
         fetchRestaurantAndBookmarkById,
         restaurantData,
+        filterByRating,
+        reviewsRating,
       }}
     >
       {children}
