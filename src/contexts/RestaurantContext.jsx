@@ -194,10 +194,12 @@ export const RestaurantContextProvider = ({ children }) => {
         clearFilters,
         fetchRestaurantWithUserLogin,
         isLoading,
+        setLoading,
         category,
         fetchRestaurantAndBookmarkById,
         restaurantData,
         nameRestaurant,
+        setRestaurantPage,
       }}
     >
       {children}

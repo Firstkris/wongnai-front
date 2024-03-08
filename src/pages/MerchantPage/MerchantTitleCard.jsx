@@ -6,9 +6,12 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import AddImgModal from "./AddImgModal";
 import DeleteImgModal from "./DeleteImgModal";
+import { Loading } from "../../components/Loading";
+import { useRestaurant } from "../../hooks/hooks";
 
-export function MerchantTitleCard({ restaurantData, bookmarks }) {
+export function MerchantTitleCard({ restaurantData, setOnFetch }) {
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useRestaurant();
   const { restaurantId } = useParams();
   const [addToggle, setAddToggle] = useState(false);
   const [deleteToggle, setDeleteToggle] = useState(false);
@@ -56,7 +59,13 @@ export function MerchantTitleCard({ restaurantData, bookmarks }) {
           แก้ไขข้อมูล
         </ButtonRestaurantPage>
 
-        {addToggle ? <AddImgModal setAddToggle={setAddToggle} /> : null}
+        {addToggle ? (
+          <AddImgModal
+            setOnFetch={setOnFetch}
+            setIsLoading={setIsLoading}
+            setAddToggle={setAddToggle}
+          />
+        ) : null}
 
         <ButtonRestaurantPage
           color="bg-gray-200 hover:bg-gray-300"

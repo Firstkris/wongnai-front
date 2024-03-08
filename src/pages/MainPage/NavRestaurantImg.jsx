@@ -36,6 +36,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
         ];
 
   const [isToggle, setIsToggle] = useState(false);
+  console.log(restaurantImage);
 
   return (
     <div className=" flex justify-center ">
@@ -63,8 +64,9 @@ export default function NavRestaurantImg({ restaurantImage }) {
             className="aspect-video object-cover h-[250px] border"
             src={array[0]?.img}
           />
-          {array.slice(1, 3).map((a) => (
+          {array.slice(1, 3).map((a, index) => (
             <img
+              key={index}
               className=" aspect-square object-cover border  h-[250px] "
               src={a?.img}
               alt="restaurant Image"
@@ -103,7 +105,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
                 </div>
               ))}
               <div
-                className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 text-white text-4xl cursor-pointer "
+                className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 h-1/2 border text-white text-4xl cursor-pointer "
                 onClick={() => setIsToggle((c) => !c)}
               >
                 <div>+{array.length - 6}</div>

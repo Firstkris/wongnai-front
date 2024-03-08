@@ -72,12 +72,9 @@ export default function MerchantHomePage() {
       <div className="flex gap-6 justify-center mt-3 mx-10">
         <div className=" rounded-lg bg-white w-[250px] pt-5 px-4">
           <div className="font-bold text-xl mb-6">ชื่อร้าน</div>
-          <div
-            className="flex flex-col gap-4
-"
-          >
+          <div>
             {array.map((a, index) => (
-              <>
+              <div key={index} className="flex flex-col gap-4">
                 <div
                   className={`${
                     !(isSelect == index)
@@ -93,8 +90,8 @@ export default function MerchantHomePage() {
                   {a.restaurantName}
                 </div>
 
-                <hr />
-              </>
+                <hr className="pt-4" />
+              </div>
             ))}
           </div>
         </div>
@@ -110,6 +107,7 @@ export default function MerchantHomePage() {
             <div className="mx-auto flex justify-center w-full gap-10">
               <div className="min-w-[567px]">
                 <MerchantTitleCard
+                  setOnFetch={setOnFetch}
                   restaurantData={restaurantData.restaurant}
                   bookmarks={restaurantData?.bookmarks}
                 />

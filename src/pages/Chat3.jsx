@@ -5,12 +5,14 @@
 
 // const socket = io.connect("http://localhost:8888/");
 
-// function Chat3({}) {
+// function Chat3({ received = "RESTAURANT1", role = "USER" }) {
 //   const [message, setMessage] = useState("");
 //   const [chat, setChat] = useState([]);
 
+//   // const {sender} = useAuth()
+//   const sender = role + 3;
 //   useEffect(() => {
-//     socket.auth = { sender: 3 };
+//     socket.auth = { sender };
 
 //     socket.connect();
 //     return () => socket.disconnect();
@@ -23,17 +25,21 @@
 //   const submit = async (e) => {
 //     e.preventDefault();
 
-//     await socket.emit("message", message);
+//     await socket.emit("message", {
+//       message,
+//       received,
+//       role,
+//     });
 //     setMessage("");
 //   };
 
 //   useEffect(() => {
 //     socket.on("received", (msg) => {
-//       //   console.log(msg);
+//       console.log(msg);
 //       setChat([...chat, { ...msg }]);
 //     });
 //   }, [chat]);
-
+//   console.log(chat);
 //   return (
 //     <div>
 //       <form onSubmit={submit}>
@@ -41,16 +47,24 @@
 //         <button>send</button>
 //       </form>
 //       <div className="p-4">
-//         {chat.map((el) => (
-//           <div className="flex">
-//             <span className={el.sender == 1 ? "text-red-500" : ""}>
-//               {el.sender == 1 ? "sender : " : "received : "}
-//             </span>
-//             <h1 className={`mr-4 ${el.sender == 1 ? "text-red-500" : ""}`}>
-//               {el.msg}
-//             </h1>
-//           </div>
-//         ))}
+//         {chat
+//           .filter(
+//             (item) => item.received == received || item.received == sender
+//           )
+//           .map((el) => (
+//             <div className="flex">
+//               <span className={el.received == received ? "text-red-500" : ""}>
+//                 {el.received == received ? "sender : " : "received : "}
+//               </span>
+//               <h1
+//                 className={`mr-4 ${
+//                   el.received == received ? "text-red-500" : ""
+//                 }`}
+//               >
+//                 {el.message}
+//               </h1>
+//             </div>
+//           ))}
 //       </div>
 //     </div>
 //   );
