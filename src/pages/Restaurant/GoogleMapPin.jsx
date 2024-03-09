@@ -11,7 +11,7 @@ const GoogleMaps = ({ hdlSetLatLng }) => {
     const [infoWindowContent, setInfoWindowContent] = useState("");
     const [map, setMap] = useState(null);
 
-    console.log(markers);
+    // console.log(markers);
 
 
     useEffect(() => {

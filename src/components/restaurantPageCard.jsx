@@ -159,8 +159,8 @@ export function RestaurantDetailCard({ restaurantData }) {
   const priceLengthText =
     restaurantData?.priceLength && priceLength
       ? priceLength
-          .find((el) => el.id === restaurantData?.priceLength)
-          ?.priceLength.slice(4)
+        .find((el) => el.id === restaurantData?.priceLength)
+        ?.priceLength.slice(4)
       : null;
 
   return (
@@ -184,11 +184,11 @@ export function RestaurantDetailCard({ restaurantData }) {
         <div className="flex flex-col gap-2">
           {restaurantData?.facilitiesWithRestaurantId
             ? restaurantData.facilitiesWithRestaurantId.map((el) => (
-                <div className="flex gap-2" key={el.id}>
-                  <IconCheckGreen />{" "}
-                  <div className="flex text-sm">{el.facility.facilityName}</div>
-                </div>
-              ))
+              <div className="flex gap-2" key={el.id}>
+                <IconCheckGreen />{" "}
+                <div className="flex text-sm">{el.facility.facilityName}</div>
+              </div>
+            ))
             : null}
         </div>
 
@@ -196,7 +196,7 @@ export function RestaurantDetailCard({ restaurantData }) {
           <p className="text-md font-bold">ช่วงราคา</p>
           <div className="flex-grow flex items-baseline gap-1">
             {restaurantData?.priceLength &&
-            restaurantData?.priceLength.length > 0 ? (
+              restaurantData?.priceLength.length > 0 ? (
               <div className="flex-grow flex items-baseline gap-1">
                 {restaurantData?.priceLength}
                 <p className="text-xs  text-gray-500">
@@ -257,11 +257,11 @@ export function RatingRestaurantCard({ restaurantData }) {
               <div className="text-4xl font-extrabold">
                 {restaurantData?.reviews && restaurantData?.reviews.length > 0
                   ? (
-                      restaurantData?.reviews.reduce(
-                        (acc, el) => el.star + acc,
-                        0
-                      ) / restaurantData?.reviews?.length
-                    ).toFixed(1)
+                    restaurantData?.reviews.reduce(
+                      (acc, el) => el.star + acc,
+                      0
+                    ) / restaurantData?.reviews?.length
+                  ).toFixed(1)
                   : 0}
               </div>
               <span className="text-xs">จาก 5</span>
