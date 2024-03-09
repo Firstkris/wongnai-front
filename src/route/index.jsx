@@ -80,6 +80,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: '',
+        element: <HomePage />
+      },
+      {
         path: "/profile",
         element: (
           <ProtectedProfileRoute>
