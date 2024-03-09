@@ -94,6 +94,7 @@ export default function Header() {
                           item.category.categoryName.includes(text) ||
                           item.restaurantName.includes(text)
                       )
+                      
                       .slice(0, 6)
                       .map((item) => (
                         <Link
