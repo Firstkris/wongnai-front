@@ -5,18 +5,34 @@ function RadioBtn({ label, choices, onChange, name }) {
         <div>
             <label>{label}</label>
             <div className="flex gap-4 items-center">
-                {choices?.map((el) => (
+                {choices?.map((el, index) => (
+
                     <>
-                        <input
-                            key={name + el.value}
-                            id={name + el.value}
-                            name={name}
-                            type="radio"
-                            value={el.value}
-                            onChange={onChange}
+                        {index === 0
+                            ? <input
+                                key={name + el.value}
+                                id={name + el.value}
+                                name={name}
+                                type="radio"
+                                value={el.value}
+                                onChange={onChange}
+                                defaultChecked
+
+                            />
+                            :
+                            <input
+                                key={name + el.value}
+                                id={name + el.value}
+                                name={name}
+                                type="radio"
+                                value={el.value}
+                                onChange={onChange}
 
 
-                        />
+                            />
+
+                        }
+
                         <label htmlFor={name + el.value}>{el.text}</label>
                     </>
                 ))}

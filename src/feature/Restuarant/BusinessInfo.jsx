@@ -24,13 +24,10 @@ function BusinessInfo() {
 
     console.log(merchantId);
     const {
-        fetchProvince,
         fetchCategory,
         provinces,
         district,
-        fetchDistrict,
         subDistrict,
-        fetchSubDistrict,
         category,
         createRestaurant,
         fetchAreaGeoData,
@@ -63,9 +60,10 @@ function BusinessInfo() {
 
 
     const [input, setInput] = useState(initialValue);
-    const [isOpen, setIsOpen] = useState(false);
+    const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
     const [searchData, setSearchData] = useState(gistdaPostData)
     const [error, setError] = useState({})
+    const [isEveryday, setIsEveryday] = useState(true)
     const [openingHours, setOpeningHours] = useState({
         monday: { open: '09:00', close: '17:00', closed: false },
         tuesday: { open: '09:00', close: '17:00', closed: false },
@@ -75,6 +73,7 @@ function BusinessInfo() {
         saturday: { open: '09:00', close: '17:00', closed: false },
         sunday: { open: '09:00', close: '17:00', closed: false }
     });
+
 
     console.log(priceLength);
 
@@ -88,9 +87,18 @@ function BusinessInfo() {
         }
     };
 
-    const hldChangeRadio = (e) => {
-        console.log(e.target.value);
-        setIsOpen(e.target.value)
+    // const hldChangeRadio = (e) => {
+    //     console.log(e.target.value);
+    //     setIsOpen(e.target.value)
+    // }
+
+    const hdlChangeEveryOpen = (e) => {
+        setEverydayTime(prv => ({ ...prv, [e.target.name]: e.target.value }))
+
+    }
+
+    const setEveryTime = () => {
+        Object.entries(openingHours).reduce((acc, day) => console.log(day), {})
     }
 
     const handleTimeChange = (day, field, value) => {
@@ -117,6 +125,7 @@ function BusinessInfo() {
         try {
             e.preventDefault()
             // hdlSetInputGeoData()
+            setEveryTime()
             console.log(input);
 
             const validateError = validateCreateRestaurant(input)
@@ -169,7 +178,9 @@ function BusinessInfo() {
 
     }, [searchData.lat, searchData.lng])
 
-    useEffect(() => { hdlSetInputGeoData() }, [subDistrict?.[0]?.subdistrictCode])
+    useEffect(() => {
+        hdlSetInputGeoData();
+    }, [subDistrict?.[0]?.subdistrictCode]);
 
     console.log(input);
 
@@ -196,7 +207,6 @@ function BusinessInfo() {
                         onChange={hdlChangeInput}
                         label={"รายละเอียดร้านค้า"}
                         errorMessage={error.subtitle}
-
                     />
 
                     {/* <Select label={'เลือกประเภทธุรกิจ'} /> */}
@@ -292,26 +302,36 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={"ข้อมูลเพิ่มเติม"} />
 
+                    <RadioBtn
+                        label={"วันที่เปิดให้บริการ"}
+                        name={"openHours"}
+                        onChange={(e) => setIsEveryday(Boolean(+e.target.value))}
+                        choices={[
+                            { text: "เปิดทุกวัน", value: 1 },
+                            { text: "เลือกวันเปิดปิด", value: 0 },
+                        ]}
+                    />
 
-
-                    {isOpen
-                        ?
+                    {!isEveryday ? (
                         <OpeningHours
                             label={"วันที่เปิดให้บริการ"}
                             openingHours={openingHours}
                             handleTimeChange={handleTimeChange}
                             handleClosedChange={handleClosedChange}
                         />
-                        :
-                        <></>
+                    ) : (
+                        <>
+                            <Input type="time" name={"open"} label={"เลือกเวลาเปิดของทุกวัน"} value={everydayTime.open} onChange={hdlChangeEveryOpen} />
+                            <Input type="time" name={"close"} label={"เลือกเวลาปิดของทุกวัน"} value={everydayTime.close} onChange={hdlChangeEveryOpen} />
+                        </>
+                    )}
 
-
-                    }
-
-
-
-                    <Select name={"priceLength"} items={priceLength} label={'ช่วงราคา'} onChange={hdlChangeInput} />
-
+                    <Select
+                        name={"priceLength"}
+                        items={priceLength}
+                        label={"ช่วงราคา"}
+                        onChange={hdlChangeInput}
+                    />
 
                     <RadioBtn
                         label={"ที่จอดรถ"}
@@ -346,7 +366,6 @@ function BusinessInfo() {
                             { text: "ไม่มี", value: false },
                         ]}
                     />
-
                 </Card>
 
                 <div className="w-full">

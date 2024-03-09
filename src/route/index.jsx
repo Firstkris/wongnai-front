@@ -133,7 +133,7 @@ const router = createBrowserRouter([
     path: "/merchant",
     element: (
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <HeaderMerchant />
         <Outlet />
       </div>
     ),
