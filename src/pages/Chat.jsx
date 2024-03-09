@@ -143,9 +143,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import io from "socket.io-client";
 import axios from "../configs/axios";
+import { useRef } from "react";
 const socket = io.connect("http://localhost:8888/");
 
 export function Chat({ role, userId, restaurantId }) {
+  const chatBox = useRef();
+
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
 
@@ -192,6 +195,15 @@ export function Chat({ role, userId, restaurantId }) {
       setChat([...chat, { ...msg }]);
     });
   }, [chat]);
+
+  const scrollBottom = () => {
+    chatBox.current?.scrollIntoView({ behavior: "auto", block: "start" });
+  };
+
+  useEffect(() => {
+    scrollBottom();
+  }, [chat]);
+
   console.log(chat);
   return (
     <>
@@ -210,7 +222,7 @@ export function Chat({ role, userId, restaurantId }) {
             <button>send</button>
           </div>
         </form>
-        <div className="flex flex-col mb-4 w-full overflow-scroll h-[500px] bg-red-200">
+        <div className="flex flex-col mb-4 w-full overflow-scroll overflow-x-hidden   h-[500px] bg-red-200">
           {chat
             .filter(
               (item) =>
@@ -249,6 +261,7 @@ export function Chat({ role, userId, restaurantId }) {
                 </div>
               </div>
             ))}
+          <div ref={chatBox} />
         </div>
       </div>
     </>
