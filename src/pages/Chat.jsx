@@ -194,45 +194,64 @@ export function Chat({ role, userId, restaurantId }) {
   }, [chat]);
   console.log(chat);
   return (
-    <div>
-      <form onSubmit={submit}>
-        <input onChange={change} value={message} type="text" name="" id="" />
-        <button>send</button>
-      </form>
-      <div className="p-4">
-        {chat
-          .filter(
-            (item) =>
-              item.received == received ||
-              item.received == sender ||
-              item.userId == userId
-          )
-          .map((el, index) => (
-            <div className="flex" key={index}>
-              <span
-                className={
-                  el.received == received || el.sender == "USER"
-                    ? "text-red-500"
-                    : ""
-                }
+    <>
+      <div>
+        <form onSubmit={submit}>
+          <div class="py-5">
+            <input
+              class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+              placeholder="type your message here..."
+              onChange={change}
+              value={message}
+              type="text"
+              name=""
+              id=""
+            />
+            <button>send</button>
+          </div>
+        </form>
+        <div className="flex flex-col mb-4 w-full overflow-scroll h-[500px] bg-red-200">
+          {chat
+            .filter(
+              (item) =>
+                item.received == received ||
+                item.received == sender ||
+                item.userId == userId
+            )
+            .map((el, index) => (
+              <div
+                className={`${
+                  // el.received == received || el.sender == "USER"
+                  el.sender !== role ? " items-start " : " items-end"
+                } bg-green-300 border  text-white  text-white flex flex-col`}
+                key={index}
               >
-                {el.received == received || el.sender == "USER"
-                  ? "sender : "
-                  : "received : "}
-              </span>
-              <h1
-                className={`mr-4 ${
-                  el.received == received || el.sender == "USER"
-                    ? "text-red-500"
-                    : ""
-                }`}
-              >
-                {el.message}
-              </h1>
-            </div>
-          ))}
+                <div className="flex flex-col flex-wrap max-w-[50%]">
+                  <span
+                    className={
+                      // el.received == received || el.sender == "USER"
+                      el.sender !== role ? "text-red-500" : "text-right "
+                    }
+                  >
+                    {/* {el.received == received || el.sender == "USER" */}
+                    {el.sender !== role ? "received  " : "sender  "}
+                  </span>
+
+                  <div
+                    className={`mr-4 flex flex-wrap   ${
+                      el.sender !== role
+                        ? "ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
+                        : "mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
+                    }`}
+                  >
+                    {el.message}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

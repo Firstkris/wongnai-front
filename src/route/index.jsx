@@ -32,13 +32,17 @@ import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 // import { ChatRoomeA } from "../pages/Chat";
 import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
+import UiChat from "../pages/User/UiChat";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
     path: "/chat1",
     element: (
       <div>
-        <ChatRoomeA />
+        <Header />
+
+        {/* <ChatRoomeA /> */}
+        <UiChat />
         {/* <Chat /> */}
         {/* <Chat2 /> */}
       </div>
@@ -48,6 +52,8 @@ const router = createBrowserRouter([
     path: "/chat2",
     element: (
       <div>
+        <Header />
+
         {/* <Chat /> */}
         <Chat2 />
       </div>
@@ -57,6 +63,8 @@ const router = createBrowserRouter([
     path: "/chat3",
     element: (
       <div>
+        <Header />
+
         {/* <Chat /> */}
         <Chat3 />
       </div>
