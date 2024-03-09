@@ -64,11 +64,14 @@ const router = createBrowserRouter([
     element: (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <HomePage />
         <Outlet />
       </div>
     ),
     children: [
+      {
+        path: "",
+        element:  <HomePage />
+      },
       {
         path: "/profile",
         element: (
@@ -123,10 +126,7 @@ const router = createBrowserRouter([
       },
 
   
-      {
-        path: '/homepage',
-        element: <HomePage />,
-      },
+      
       {
         path: '/merchant/login',
         element: <MerchantLoginPage />,
@@ -136,35 +136,35 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/merchant/:restaurantId",
-    element: (
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <MerchantHomePage />
-        <Outlet />
-      </div>
-    ),
-    children: [
-      {
-        path: "/merchant/createRestaurant/:merchantId",
-        element: (
-          <MerchantContextProvider>
-            <RestaurantRegisterPage />
-          </MerchantContextProvider>
-        ),
-      },
+  // {
+  //   path: "/merchant/:restaurantId",
+  //   element: (
+  //     <div className="flex flex-col min-h-screen">
+  //       <Header />
+  //       <MerchantHomePage />
+  //       <Outlet />
+  //     </div>
+  //   ),
+  //   children: [
+  //     // {
+  //     //   path: "/merchant/createRestaurant/:merchantId",
+  //     //   element: (
+  //     //     <MerchantContextProvider>
+  //     //       <RestaurantRegisterPage />
+  //     //     </MerchantContextProvider>
+  //     //   ),
+  //     // },
 
-      {
-        path: "/merchant/login",
-        element: <MerchantLoginPage />,
-      },
-      {
-        path: "/merchant/register",
-        element: <RegisterPageMerchant />,
-      },
-    ],
-  },
+  //     {
+  //       path: "/merchant/login",
+  //       element: <MerchantLoginPage />,
+  //     },
+  //     {
+  //       path: "/merchant/register",
+  //       element: <RegisterPageMerchant />,
+  //     },
+  //   ],
+  // },
 ]);
 
 export default function Router() {
