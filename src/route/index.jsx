@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { FilterPage } from "../pages/FilterPage";
 
 import Header from "../layouts/Header";
+import HeaderMerchant from "../pages/MerchantPage/HeaderMerchant";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
 
 import UserReview from "../pages/User/UserReview";
@@ -17,7 +18,7 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-// import Chat from "../pages/Chat";
+// import { Chat, ChatRoomeA } from "../pages/Chat";
 // import Chat2 from "../pages/Chat2";
 // import Chat3 from "../pages/Chat3";
 // import MerchantContextProvider, {
@@ -29,6 +30,7 @@ import MerchantContextProvider, {
 import MerchantLoginPage from "../pages/MerchantPage/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
+// import { ChatRoomeA } from "../pages/Chat";
 import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
@@ -36,7 +38,8 @@ const router = createBrowserRouter([
   //   path: "/chat1",
   //   element: (
   //     <div>
-  //       <Chat />
+  //       <ChatRoomeA />
+  //       {/* <Chat /> */}
   //       {/* <Chat2 /> */}
   //     </div>
   //   ),
@@ -69,10 +72,6 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "",
-        element:  <HomePage />
-      },
-      {
         path: "/profile",
         element: (
           <ProtectedProfileRoute>
@@ -103,7 +102,7 @@ const router = createBrowserRouter([
         element: <BookmarkPage />,
       },
 
-      { path: "/review", element: <UserReview /> },
+      { path: "/review/:restaurantsId", element: <UserReview /> },
       {
         path: "/login",
         element: (
@@ -126,7 +125,10 @@ const router = createBrowserRouter([
       },
 
   
-      
+      {
+        path: '/homepage',
+        element: <HomePage />,
+      },
       {
         path: '/merchant/login',
         element: <MerchantLoginPage />,
@@ -136,35 +138,35 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "/merchant/:restaurantId",
-  //   element: (
-  //     <div className="flex flex-col min-h-screen">
-  //       <Header />
-  //       <MerchantHomePage />
-  //       <Outlet />
-  //     </div>
-  //   ),
-  //   children: [
-  //     // {
-  //     //   path: "/merchant/createRestaurant/:merchantId",
-  //     //   element: (
-  //     //     <MerchantContextProvider>
-  //     //       <RestaurantRegisterPage />
-  //     //     </MerchantContextProvider>
-  //     //   ),
-  //     // },
+  {
+    path: "/merchant/:restaurantId",
+    element: (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <MerchantHomePage />
+        <Outlet />
+      </div>
+    ),
+    children: [
+      {
+        path: "/merchant/createRestaurant/:merchantId",
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        ),
+      },
 
-  //     {
-  //       path: "/merchant/login",
-  //       element: <MerchantLoginPage />,
-  //     },
-  //     {
-  //       path: "/merchant/register",
-  //       element: <RegisterPageMerchant />,
-  //     },
-  //   ],
-  // },
+      {
+        path: "/merchant/login",
+        element: <MerchantLoginPage />,
+      },
+      {
+        path: "/merchant/register",
+        element: <RegisterPageMerchant />,
+      },
+    ],
+  },
 ]);
 
 export default function Router() {

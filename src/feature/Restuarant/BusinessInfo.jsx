@@ -11,11 +11,15 @@ import { useEffect } from "react";
 import GoogleMaps from "../../pages/Restaurant/GoogleMapPin"
 import useMerchantContext from "../../hooks/useMerchantContext";
 import { GISTDA_API_KEY } from "../../constants/constant";
-
+import OpeningHours from "./OpenHours";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { priceLength } from "../../constants/constant"
 
 
 function BusinessInfo() {
 
+    const navigate = useNavigate()
 
     const {
         fetchProvince,
@@ -47,9 +51,6 @@ function BusinessInfo() {
         lng: ""
     };
 
-    const openHours = [
-        {}
-    ]
 
     const gistdaPostData = {
         "key": GISTDA_API_KEY,
@@ -82,11 +83,20 @@ function BusinessInfo() {
     }
 
     const hdlSubmit = async (e) => {
-        e.preventDefault()
-        // hdlSetInputGeoData()
-        console.log(input);
+        try {
+            e.preventDefault()
+            // hdlSetInputGeoData()
+            console.log(input);
 
-        // await createRestaurant(input)
+            // await createRestaurant(input)
+            toast.success("register successful");
+
+            navigate('/merchant')
+
+        } catch (error) {
+            toast.error(error.response?.data.message)
+        }
+
     }
 
     const hdlSetLatLng = (lat, lng) => {
@@ -124,10 +134,10 @@ function BusinessInfo() {
     console.log(input);
     return (
         <form onSubmit={hdlSubmit}>
-            <div className="w-full flex flex-col gap-6 ">
+            <div className={`w-full flex flex-col gap-6`}>
 
                 {/* รายละเอียดธุรกิจ */}
-                <Card>
+                <Card >
                     <HrWithText name={'รายละเอียดธุรกิจ'} />
 
                     <Input
@@ -213,45 +223,10 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={'ข้อมูลเพิ่มเติม'} />
 
-                    {/* Radio Openday */}
-                    <RadioBtn
-                        onChange={hldChangeRadio}
-                        label={'วันที่เปิดให้บริการ'}
-                        choices={[
-                            { text: 'เปิดทุกวัน', value: "everyDay" },
-                            { text: 'เลือกวันเปิด', value: "selectDay" },
-                        ]}
-                        name={'openDay'}
+                    <OpeningHours label={'วันที่เปิดให้บริการ'} />
+                    <Select name={"priceLength"} items={priceLength} />
 
-                    />
-                    {isOpen === "everyDay" ?
-                        <>
-                            <Input
-                                type="time"
-                                name='open'
-                                label="เวลาเปิด"
-                            // value={input.name}
-                            // onChange={hdlChangeInput}
-                            />
 
-                            <Input
-                                type="time"
-                                name='open'
-                                label="เวลาปิด"
-                            // value={input.name}
-                            // onChange={hdlChangeInput}
-                            />
-                        </>
-                        : <>
-                            <WeekDays label={'Monday'} />
-                            <WeekDays label={'Tuesday'} />
-                            <WeekDays label={'Wednesday'} />
-                            <WeekDays label={'Thursday'} />
-                            <WeekDays label={'Friday'} />
-                            <WeekDays label={'Saturday'} />
-                            <WeekDays label={'Sunday'} />
-                        </>
-                    }
 
                     <RadioBtn
                         label={'ที่จอดรถ'}
@@ -285,6 +260,8 @@ function BusinessInfo() {
 
 
                 </Card>
+
+
 
                 <div className="w-full">
                     <Button name={'บันทึก'} />
