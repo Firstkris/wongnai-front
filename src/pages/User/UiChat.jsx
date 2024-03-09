@@ -1,10 +1,16 @@
 import React from "react";
 import { Chat } from "../Chat";
+import { useUser } from "../../feature/user/contexts/UserContext";
 
 export default function UiChat() {
+  const { user } = useUser();
+  console.log("user", user);
+  //   console.log("id", id);
+  //   console.log("role", role);
+
   return (
     // <!-- This is an example component -->
-    <div class="container mx-auto shadow-lg rounded-lg">
+    <div class="container mx-auto shadow-lg rounded-lg mt-10">
       {/* <!-- headaer --> */}
       <div class="px-5 py-5 flex justify-between items-center bg-white border-b-2">
         <div class="font-semibold text-2xl">GoingChat</div>
@@ -43,7 +49,7 @@ export default function UiChat() {
         {/* <!-- end chat list -->
       <!-- message --> */}
 
-        <Chat restaurantId={1} userId={2} role={"USER"} />
+        <Chat restaurantId={1} userId={user?.id} role={user?.role} />
       </div>
     </div>
   );

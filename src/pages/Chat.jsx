@@ -144,10 +144,12 @@ import { useState } from "react";
 import io from "socket.io-client";
 import axios from "../configs/axios";
 import { useRef } from "react";
+import { useUser } from "../feature/user/contexts/UserContext";
 const socket = io.connect("http://localhost:8888/");
 
 export function Chat({ role, userId, restaurantId }) {
   const chatBox = useRef();
+  const { user } = useUser();
 
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
@@ -171,7 +173,7 @@ export function Chat({ role, userId, restaurantId }) {
     console.log("first");
     socket.connect();
     return () => socket.disconnect();
-  }, []);
+  }, [user]);
 
   const change = (e) => {
     setMessage(e.target.value);
@@ -204,25 +206,14 @@ export function Chat({ role, userId, restaurantId }) {
     scrollBottom();
   }, [chat]);
 
-  console.log(chat);
   return (
     <>
       <div>
-        <form onSubmit={submit}>
-          <div class="py-5">
-            <input
-              class="w-full bg-gray-300 py-5 px-3 rounded-xl"
-              placeholder="type your message here..."
-              onChange={change}
-              value={message}
-              type="text"
-              name=""
-              id=""
-            />
-            <button>send</button>
-          </div>
-        </form>
-        <div className="flex flex-col mb-4 w-full overflow-scroll overflow-x-hidden   h-[500px] bg-red-200">
+        <div
+          className="flex flex-col mb-4 w-full overflow-scroll 
+        overflow-x-hidden 
+           h-[500px]"
+        >
           {chat
             .filter(
               (item) =>
@@ -230,13 +221,13 @@ export function Chat({ role, userId, restaurantId }) {
                 item.received == sender ||
                 item.userId == userId
             )
-            .map((el, index) => (
+            .map((el) => (
               <div
                 className={`${
                   // el.received == received || el.sender == "USER"
                   el.sender !== role ? " items-start " : " items-end"
-                } bg-green-300 border  text-white  text-white flex flex-col`}
-                key={index}
+                } bg-green-300 border  text-black  flex flex-col`}
+                key={el.id}
               >
                 <div className="flex flex-col flex-wrap max-w-[50%]">
                   <span
@@ -262,6 +253,20 @@ export function Chat({ role, userId, restaurantId }) {
               </div>
             ))}
           <div ref={chatBox} />
+          <form onSubmit={submit}>
+            <div class="py-5">
+              <input
+                class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+                placeholder="type your message here..."
+                onChange={change}
+                value={message}
+                type="text"
+                name=""
+                id=""
+              />
+              <button>send</button>
+            </div>
+          </form>
         </div>
       </div>
     </>
