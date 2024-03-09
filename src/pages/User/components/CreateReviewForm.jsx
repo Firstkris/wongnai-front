@@ -1,23 +1,86 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import { useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "../../../configs/axios";
+import { toast } from "react-toastify";
 
 function CreateReviewForm() {
-  const fileInput = useRef(null);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
   const [rating, setRating] = useState(null);
+  const [img, setImg] = useState([]);
+  const fileInput = useRef(null);
+
+  const { restaurantsId } = useParams();
   const [hover, setHover] = useState(null);
   const [titleLength, setTitleLength] = useState(0);
   const [descLength, setDescLength] = useState(0);
 
+  const navigate = useNavigate();
+  console.log(restaurantsId);
+  const handleCancel = (event) => {
+    const confirm = window.confirm("คุณต้องการยกเลิกการเขียนรีวิวใช่หรือไม่");
+    if (confirm) {
+      navigate(`/restaurants/${restaurantsId}`);
+    } else {
+      event.preventDefault();
+    }
+  };
+
   const handleTitleChange = (event) => {
     setTitleLength(event.target.value.length);
+    setTitle(event.target.value);
   };
   const handleDescChange = (event) => {
     setDescLength(event.target.value.length);
+    setDesc(event.target.value);
+  };
+  const submitReview = async (formData) => {
+    try {
+      await axios.post("/user/review", formData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(img);
+  const handleSubmitform = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", desc);
+    formData.append("star", rating);
+    formData.append("restaurantId", restaurantsId);
+    // formData.append("img", fileInput.current.files);
+    for (let i = 0; i < fileInput.current.files.length; i++) {
+      formData.append("img", fileInput.current.files[i]);
+    }
+    console.log(fileInput.current.files[0]);
+    await submitReview(formData);
+    toast.success("เขียนรีวิวสำเร็จ");
+    navigate(`/restaurants/${restaurantsId}`);
   };
 
+  //   const fetchRestaurant = async () => {
+  //     const response = await axios.get(`/restaurants/${restaurantId}`);
+  //   };
+
+  //   useEffect(() => {
+  //     fetchRestaurant();
+  //   }, []);
+  const fileimg = [];
+  for (let i = 0; i < img.length; i++) {
+    fileimg.push(
+      <img src={URL.createObjectURL(img[i])} className="w-24 h-24 rounded-md" />
+    );
+  }
+  console.log(fileInput?.current?.files);
   return (
-    <form className=" w-7/12 bg-white h-full p-3 my-4 rounded-md flex flex-col gap-4 ">
+    <form
+      onSubmit={handleSubmitform}
+      className=" w-7/12 bg-white h-full p-3 my-4 rounded-md flex flex-col gap-4 "
+    >
       <div className=" font-bold pb-4 m-2 mb-4 border-b-2 ">เขียนรีวิว</div>
       <div className="flex justify-center">
         <h1>ให้คะแนนร้านอาหารนี้</h1>
@@ -51,6 +114,7 @@ function CreateReviewForm() {
           <p>{titleLength}/120</p>
         </div>
         <input
+          value={title}
           onChange={handleTitleChange}
           maxLength={120}
           className="w-full p-1 border-2 rounded-md "
@@ -64,6 +128,7 @@ function CreateReviewForm() {
         </div>
         <div className=" relative">
           <textarea
+            value={desc}
             onChange={handleDescChange}
             type="text"
             className=" w-full p-1 border-2 rounded-md pb-10 block  "
@@ -77,16 +142,38 @@ function CreateReviewForm() {
           <div className=" font-bold pb-4 m-2 mb-4 border-b-2 ">รูปภาพ</div>
           <div className="flex justify-around ">
             <div className="flex gap-4">
-              <div className="bg-gray-300 w-24 h-24 rounded-md"></div>
+              {/* {img.map((i) => (
+                <img
+                  src={URL.createObjectURL(i)}
+                  className="w-24 h-24 rounded-md"
+                />
+              ))} */}
+              {img.length > 0 ? (
+                fileimg
+              ) : (
+                <div className="bg-gray-300 w-24 h-24 rounded-md"></div>
+              )}
               <div>
-                <input type="file" className="hidden" ref={fileInput} />
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  ref={fileInput}
+                  onChange={(e) => {
+                    setImg(e.target.files);
+                  }}
+                />
                 <div
                   onClick={() => fileInput.current.click()}
                   className="bg-blue-200 text-blue-500 rounded-md px-3 py-1 cursor-pointer"
                 >
                   Choose File
                 </div>
-                <p>No file selected</p>
+                {img.length > 0 ? (
+                  <p className="text-green-500">File uploaded</p>
+                ) : (
+                  <p>No file selected</p>
+                )}
                 <p>ไฟล์ GIF,JPG หรือ PNG</p>
               </div>
             </div>
@@ -95,7 +182,10 @@ function CreateReviewForm() {
             <button className="w-32 py-1.5 px-3 rounded-md bg-blue-500 text-white hover:bg-blue-700">
               บันทึกรีวิว
             </button>
-            <button className="w-32 py-1.5 px-3 rounded-md bg-gray-300 text-white hover:bg-gray-400">
+            <button
+              onClick={handleCancel}
+              className="w-32 py-1.5 px-3 rounded-md bg-gray-300 text-white hover:bg-gray-400"
+            >
               ยกเลิก
             </button>
           </div>

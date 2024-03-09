@@ -1,23 +1,23 @@
-import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   RestaurantDetailCard,
   RestaurantMapCard,
   TitleRestaurantCard,
   RatingRestaurantCard,
-} from "../../components/RestaurantPageCard"
-import { useRestaurant } from "../../hooks/hooks"
-import { Loading } from "../../components/Loading"
-import NavRestaurantImg from "./NavRestaurantImg"
+} from "../../components/RestaurantPageCard";
+import { useRestaurant } from "../../hooks/hooks";
+import { Loading } from "../../components/Loading";
+import NavRestaurantImg from "./NavRestaurantImg";
 
 function RestaurantPage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
-    useRestaurant()
-  const params = useParams()
+    useRestaurant();
+  const params = useParams();
 
   useEffect(() => {
-    fetchRestaurantAndBookmarkById(parseInt(params.id))
-  }, [])
+    fetchRestaurantAndBookmarkById(parseInt(params.id));
+  }, []);
 
   return isLoading ? (
     <Loading />
@@ -51,7 +51,7 @@ function RestaurantPage() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default RestaurantPage
+export default RestaurantPage;
