@@ -17,7 +17,8 @@ export default function MerchantHomePage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
     useRestaurant();
   const params = useParams();
-  const [isSelect, setIsSelect] = useState(0);
+  const { merchantId } = useParams();
+  const [isSelect, setIsSelect] = useState(params.restaurantId);
   const [onFetch, setOnFetch] = useState();
   const navigate = useNavigate();
   console.log("params", params.restaurantId);
@@ -59,9 +60,9 @@ export default function MerchantHomePage() {
     fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)); //<<<<
   }, [onFetch]);
 
-  const onClick = (index) => {
-    setIsSelect(index);
-    navigate(`/merchant/${index + 1}`);
+  const onClick = (restaurantId) => {
+    setIsSelect(restaurantId);
+    navigate(`/merchant/${merchantId}/${restaurantId}`);
     setOnFetch((c) => !c);
   };
 
@@ -73,15 +74,15 @@ export default function MerchantHomePage() {
         <div className=" rounded-lg bg-white w-[250px] pt-5 px-4">
           <div className="font-bold text-xl mb-6">ชื่อร้าน</div>
           <div>
-            {array.map((a, index) => (
-              <div key={index} className="flex flex-col gap-4">
+            {array.map((a) => (
+              <div key={a.id} className="flex flex-col gap-4">
                 <div
                   className={`${
-                    !(isSelect == index)
+                    !(isSelect == a.id)
                       ? " flex items-center gap-2 cursor-pointer pl-4"
                       : " flex items-center gap-2 font-bold text-blue_primary cursor-pointer pl-10"
                   }`}
-                  onClick={() => onClick(index)}
+                  onClick={() => onClick(a.id)}
                 >
                   <img
                     className="w-[50px] h-[50px] object-cover rounded-full"

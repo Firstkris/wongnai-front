@@ -12,7 +12,7 @@ import { useRestaurant } from "../../hooks/hooks";
 export function MerchantTitleCard({ restaurantData, setOnFetch }) {
   const navigate = useNavigate();
   const { isLoading, setIsLoading } = useRestaurant();
-  const { restaurantId } = useParams();
+  const { restaurantId, merchantId } = useParams();
   const [addToggle, setAddToggle] = useState(false);
   const [deleteToggle, setDeleteToggle] = useState(false);
 
@@ -51,7 +51,9 @@ export function MerchantTitleCard({ restaurantData, setOnFetch }) {
       </div>
       <div className="px-4 pb-4 flex justify-end gap-2">
         <ButtonRestaurantPage
-          onClick={() => navigate(`/merchant/createRestaurant/${restaurantId}`)}
+          onClick={() =>
+            navigate(`/merchant/editRestaurant/${merchantId}/${restaurantId}`)
+          }
           color="bg-red_primary hover:bg-red_primary_hv"
           textColor="text-white"
         >

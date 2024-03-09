@@ -8,13 +8,13 @@ import {
   SettingIcon,
   LogoutIcon,
   ShopIcon,
-} from "../icons/icon";
+} from "../../icons/icon";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useUser } from "../feature/user/contexts/UserContext";
+import { useUser } from "../../feature/user/contexts/UserContext";
 
-export default function HeaderToggle() {
+export default function HeaderToggleMerchant() {
   const { user, logout } = useUser();
 
   const [isToggle, setIsToggle] = useState(false);
@@ -105,7 +105,7 @@ export default function HeaderToggle() {
                   เข้าสู่ระบบ หรือ สมัครสมาชิก
                 </Link>
 
-                <hr />
+                {/* <hr />
 
                 <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
                   <ShopIcon />
@@ -117,7 +117,7 @@ export default function HeaderToggle() {
                 >
                   <SettingIcon />
                   <div>ตั้งค่า</div>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function HeaderToggle() {
           <div className="absolute top-10 right-0">
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
-                <Link
+                {/* <Link
                   to={"/profile"}
                   className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
                 >
@@ -159,7 +159,7 @@ export default function HeaderToggle() {
                     <div>ตั้งค่า</div>
                   </Link>
                 </div>
-                <hr />
+                <hr /> */}
                 <div
                   className="flex gap-4 cursor-pointer pl-5"
                   onClick={logout}

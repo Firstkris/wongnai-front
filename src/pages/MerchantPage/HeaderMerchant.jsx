@@ -10,7 +10,7 @@ import { useRestaurant } from "../../hooks/hooks";
 import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
-import HeaderToggle from "../../components/HeaderToggle";
+import HeaderToggleMerchant from "./HeaderToggleMerchant";
 
 export default function HeaderMerchant() {
   const { nameRestaurant } = useRestaurant();
@@ -75,7 +75,7 @@ export default function HeaderMerchant() {
               ))
           : null}
       </div> */}
-      <HeaderToggle />
+      <HeaderToggleMerchant />
     </header>
   );
 }
