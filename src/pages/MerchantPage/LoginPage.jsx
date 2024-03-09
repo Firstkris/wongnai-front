@@ -12,7 +12,7 @@ function MerchantLoginPage() {
   const { setUser, user } = useAuth();
   const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
   const navigate = useNavigate();
-  const { login: merchantLogin } = useAuth();
+  const { merchantLogin } = useAuth();
   const handleChangeInput = (e) => {
     setValidateError("");
     setInput({ ...input, [e.target.name]: e.target.value });

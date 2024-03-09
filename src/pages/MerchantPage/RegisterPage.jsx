@@ -5,6 +5,7 @@ import axios from "../../configs/axios";
 import { useRef } from "react";
 import validateRegister from "../../validations/validate-merregis";
 import { useAuth } from "../../feature/auth/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 
 
@@ -42,23 +43,14 @@ function RegisterPageMerchant() {
         try {
             e.preventDefault();
             //
-            //
-            //
-
+            
             const data = { ...input };
             const validateError = validateRegister(data);
             console.log(data)
             if (validateError) return setValidateError(validateError);
-            const fromData = new FormData();
-            for (let i in input) {
-                fromData.append(i, input[i]);
-            }
-
-            //
-            //
-            //
-            // const response = await axios.post("/user/register", fromData);
-            const response = await merchantRegister(fromData);
+                        //
+            const response = await merchantRegister(data);
+            <Link to='/merchant/login' />
             // รอว่าจะใช้ context หรือ redux
             console.log(response.data);
             // localStorage.setItem("token", user.data.token);

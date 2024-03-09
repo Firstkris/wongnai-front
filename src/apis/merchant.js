@@ -2,10 +2,15 @@ import axios from "../configs/axios";
 import { getToken } from "../utils/local-storage";
 
 
-export const login = async (fromData) =>
+export const login = async (fromData) => {
+  console.log(fromData)
   await axios.post("/merchant/login", fromData);
+}
 
-export const register = async (fromData) => axios.post('/merchant/register', fromData);
+export const register = async (fromData) => {
+  console.log(fromData)
+  axios.post('/merchant/register', fromData);
+}
 
 export const fetchMe = () =>
   axios.get("/user/me", {
