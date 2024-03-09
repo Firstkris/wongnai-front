@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { priceLength } from "../../constants/constant"
 import { useParams } from "react-router-dom";
+import { validateCreateRestaurant } from "../../validations/merchant/validate-create-restuarant";
 
 
 function BusinessInfo() {
@@ -37,16 +38,16 @@ function BusinessInfo() {
     } = useMerchantContext();
 
     const initialValue = {
-        merchantId: 1,
+        merchantId: +merchantId,
         restaurantName: "",
         subtitle: "",
         provinceCode: "",
         districtCode: "",
         subdistrictCode: "",
-        categoryId: "",
+        categoryId: 1,
         mobile: "",
-        email: "",
-        priceLength: "",
+        email: null,
+        priceLength: "฿",
         address: "",
         lat: "",
         lng: ""
@@ -62,8 +63,9 @@ function BusinessInfo() {
 
 
     const [input, setInput] = useState(initialValue);
-    const [isOpen, setIsOpen] = useState("everyDay");
+    const [isOpen, setIsOpen] = useState(false);
     const [searchData, setSearchData] = useState(gistdaPostData)
+    const [error, setError] = useState({})
     const [openingHours, setOpeningHours] = useState({
         monday: { open: '09:00', close: '17:00', closed: false },
         tuesday: { open: '09:00', close: '17:00', closed: false },
@@ -117,6 +119,13 @@ function BusinessInfo() {
             // hdlSetInputGeoData()
             console.log(input);
 
+            const validateError = validateCreateRestaurant(input)
+            if (validateError) {
+                toast.error('กรุณากรอกข้อมูลในช่องสีแดงให้ครบ')
+                console.log(validateError);
+                setError(validateError)
+                return
+            }
             await createRestaurant(input, openingHours)
             toast.success("register successful");
 
@@ -127,6 +136,8 @@ function BusinessInfo() {
         }
 
     }
+
+
 
     const hdlSetLatLng = (lat, lng) => {
 
@@ -175,6 +186,7 @@ function BusinessInfo() {
                         value={input.restaurantName}
                         onChange={hdlChangeInput}
                         label={"ชื่อร้าน"}
+                        errorMessage={error.restaurantName}
                     />
 
                     <Input
@@ -183,6 +195,8 @@ function BusinessInfo() {
                         value={input.subtitle}
                         onChange={hdlChangeInput}
                         label={"รายละเอียดร้านค้า"}
+                        errorMessage={error.subtitle}
+
                     />
 
                     {/* <Select label={'เลือกประเภทธุรกิจ'} /> */}
@@ -209,15 +223,16 @@ function BusinessInfo() {
                         name="address"
                         value={input.address}
                         onChange={hdlChangeInput}
+                        errorMessage={error.address}
                     />
 
-                    <Input
+                    {/* <Input
                         placeholder="ชื่อซอยหรือถนน พร้อมบ้านเลขที่"
                         label={"เส้นทาง :"}
                     // name='resName'
                     // value={input.name}
                     // onChange={hdlChangeInput}
-                    />
+                    /> */}
 
                     <Select
                         label={"จังหวัด"}
@@ -260,6 +275,7 @@ function BusinessInfo() {
                         name="mobile"
                         value={input.mobile}
                         onChange={hdlChangeInput}
+                        errorMessage={error.mobile}
                     />
 
                     <Input
@@ -268,6 +284,7 @@ function BusinessInfo() {
                         name="email"
                         value={input.email}
                         onChange={hdlChangeInput}
+                        errorMessage={error.email}
                     />
                 </Card>
 
@@ -275,12 +292,23 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={"ข้อมูลเพิ่มเติม"} />
 
-                    <OpeningHours
-                        label={"วันที่เปิดให้บริการ"}
-                        openingHours={openingHours}
-                        handleTimeChange={handleTimeChange}
-                        handleClosedChange={handleClosedChange}
-                    />
+
+
+                    {isOpen
+                        ?
+                        <OpeningHours
+                            label={"วันที่เปิดให้บริการ"}
+                            openingHours={openingHours}
+                            handleTimeChange={handleTimeChange}
+                            handleClosedChange={handleClosedChange}
+                        />
+                        :
+                        <></>
+
+
+                    }
+
+
 
                     <Select name={"priceLength"} items={priceLength} label={'ช่วงราคา'} onChange={hdlChangeInput} />
 
@@ -289,9 +317,16 @@ function BusinessInfo() {
                         label={"ที่จอดรถ"}
                         name={"parking"}
                         choices={[
-                            { text: "จอดข้างถนน", value: "1" },
-                            { text: "ที่จอดรถของร้าน", value: "2" },
-                            { text: "ไม่มีที่จอดรถ", value: "3" },
+                            { text: "มี", value: true },
+                            { text: "ไม่มี", value: false },
+                        ]}
+                    />
+                    <RadioBtn
+                        label={"ไวไฟ"}
+                        name={"wifi"}
+                        choices={[
+                            { text: "ใช่", value: true },
+                            { text: "ไม่ใช่", value: false },
                         ]}
                     />
 
@@ -299,20 +334,19 @@ function BusinessInfo() {
                         label={"รับบัตรเครดิต"}
                         name={"creditCard"}
                         choices={[
-                            { text: "ไม่ระบุ", value: "0" },
-                            { text: "ใช่", value: "1" },
-                            { text: "ไม่ใช่", value: "2" },
+                            { text: "ใช่", value: true },
+                            { text: "ไม่ใช่", value: false },
                         ]}
                     />
                     <RadioBtn
-                        label={"รับจองล่วงหน้า"}
-                        name={"booking"}
+                        label={"แอลกอฮอล์"}
+                        name={"alcohol"}
                         choices={[
-                            { text: "ไม่ระบุ", value: "0" },
-                            { text: "ใช่", value: "1" },
-                            { text: "ไม่ใช่", value: "2" },
+                            { text: "มี", value: true },
+                            { text: "ไม่มี", value: false },
                         ]}
                     />
+
                 </Card>
 
                 <div className="w-full">
