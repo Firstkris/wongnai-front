@@ -72,11 +72,6 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "",
-        element: <HomePage />,
-      },
-
-      {
         path: "/profile",
         element: (
           <ProtectedProfileRoute>
@@ -120,22 +115,39 @@ const router = createBrowserRouter([
       { path: "/restaurants/:id", element: <RestaurantPage /> },
 
       { path: "/restaurants/filter", element: <FilterPage /> },
+      {
+        path: '/merchant',
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        )
+      },
+
+  
+      {
+        path: '/homepage',
+        element: <HomePage />,
+      },
+      {
+        path: '/merchant/login',
+        element: <MerchantLoginPage />,
+      },{
+        path: '/merchant/register',
+        element: <RegisterPageMerchant />,
+      },
     ],
   },
   {
-    path: "/merchant",
+    path: "/merchant/:restaurantId",
     element: (
       <div className="flex flex-col min-h-screen">
-        <HeaderMerchant />
+        <Header />
+        <MerchantHomePage />
         <Outlet />
       </div>
     ),
     children: [
-      {
-        path: "/merchant",
-        element: <MerchantLoginPage />,
-      },
-
       {
         path: "/merchant/createRestaurant/:merchantId",
         element: (
@@ -146,8 +158,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/merchant/:restaurantId",
-        element: <MerchantHomePage />,
+        path: "/merchant/login",
+        element: <MerchantLoginPage />,
       },
       {
         path: "/merchant/register",
