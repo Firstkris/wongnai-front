@@ -33,3 +33,6 @@ export const deleteReviewById = async (id) =>
 
 export const getUserBookmark = async (restaurantId) =>
   await axios.get(`/user/bookmark/${restaurantId}`);
+
+export const getChatDataByUserId = async (userId) =>
+  await axios.get(`/user/chat-box/${userId}`);
