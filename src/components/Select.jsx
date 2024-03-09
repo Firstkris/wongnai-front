@@ -70,10 +70,26 @@ function Select({
 
                                 ))}
                             </>
-                            : (
-                                <>
-                                    {options}
-                                    {/* {items && items.map((el) => (
+                            :
+
+                            name === "priceLength"
+                                ? <>
+
+                                    {items && items.map((el) => (
+                                        <option
+                                            key={el.id}
+                                            value={el.id}
+                                        >
+                                            {el.priceLength}
+                                        </option>
+
+                                    ))}
+                                </>
+                                :
+                                (
+                                    <>
+                                        {options}
+                                        {/* {items && items.map((el) => (
                                         <option
                                             key={el.id}
                                             id={el[`${name}`]}
@@ -88,8 +104,8 @@ function Select({
                                     ))} */}
 
 
-                                </>
-                            )}
+                                    </>
+                                )}
 
 
                     </select>

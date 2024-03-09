@@ -80,6 +80,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "",
+        element: <HomePage />,
+      },
+      {
         path: "/profile",
         element: (
           <ProtectedProfileRoute>
@@ -130,7 +134,6 @@ const router = createBrowserRouter([
     element: (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <MerchantLoginPage />
         <Outlet />
       </div>
     ),
@@ -156,10 +159,10 @@ const router = createBrowserRouter([
         path: "/merchant/:merchantId/:restaurantId",
         element: <MerchantHomePage />,
       },
-      // {
-      //   path: "/merchant/login",
-      //   element: <MerchantLoginPage />,
-      // },
+      {
+        path: "/merchant",
+        element: <MerchantLoginPage />,
+      },
       {
         path: "/merchant/register",
         element: <RegisterPageMerchant />,
