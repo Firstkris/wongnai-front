@@ -19,6 +19,8 @@ import { validateCreateRestaurant } from "../../validations/merchant/validate-cr
 
 import { defaultFacility, priceLength } from "../../constants/constant"
 import { GISTDA_API_KEY } from "../../constants/constant";
+import useRestaurantContext from "../../hooks/useRestaurantContext";
+import { Loading } from "../../components/Loading";
 
 
 function BusinessInfo() {
@@ -63,7 +65,6 @@ function BusinessInfo() {
 
 
     const [input, setInput] = useState(initialValue);
-    const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
     const [searchData, setSearchData] = useState(gistdaPostData)
     const [error, setError] = useState({})
     const [isEveryday, setIsEveryday] = useState(true)
@@ -76,8 +77,11 @@ function BusinessInfo() {
         saturday: { open: '09:00', close: '17:00', closed: false },
         sunday: { open: '09:00', close: '17:00', closed: false }
     });
+
+    const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
     const [facility, setFacility] = useState(defaultFacility)
 
+    const { isLoading, setLoading } = useRestaurantContext()
 
     const hdlChangeInput = (e) => {
 
@@ -86,6 +90,7 @@ function BusinessInfo() {
         } else {
 
             setInput(prv => ({ ...prv, [e.target.name]: +e.target.value ? +e.target.value : e.target.value }));
+            setError({})
         }
     };
 
@@ -95,18 +100,21 @@ function BusinessInfo() {
 
     }
 
-    const onSetTimeToEveryDay = (everydayTime) => {
+    const onSetTimeToEveryDay = (e) => {
+
         setOpeningHours(
             Object.entries(openingHours).reduce(
                 (acc, day) => ({
                     ...acc,
-                    [day[0]]: { open: everydayTime.open, close: everydayTime.close },
+                    [day[0]]: { open: everydayTime.open, close: everydayTime.close, closed: false },
                 }),
                 {}
             )
         );
 
     }
+
+    console.log(openingHours);
 
     const handleTimeChange = (day, field, value) => {
         setOpeningHours(prevState => ({
@@ -131,8 +139,7 @@ function BusinessInfo() {
     const hdlSubmit = async (e) => {
         try {
             e.preventDefault()
-
-            if (isEveryday) onSetTimeToEveryDay(everydayTime)
+            setLoading(true)
 
             const validateError = validateCreateRestaurant(input)
             if (validateError) {
@@ -144,10 +151,14 @@ function BusinessInfo() {
             const res = await createRestaurant(input, openingHours, facility)
             toast.success("register successful");
 
-            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
+            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
+            setLoading(false)
             toast.error(error.response?.data.message)
+
+        } finally {
+            setLoading(false)
         }
 
     }
@@ -183,6 +194,10 @@ function BusinessInfo() {
     }, [])
 
     useEffect(() => {
+        if (isEveryday) onSetTimeToEveryDay()
+    }, [everydayTime?.open, everydayTime?.close])
+
+    useEffect(() => {
         if (searchData.lat === 0) return
         getGeoDataFromGistda(searchData)
 
@@ -193,6 +208,8 @@ function BusinessInfo() {
     }, [subDistrict?.[0]?.subdistrictCode]);
 
     console.log(input);
+
+    if (isLoading) return <Loading />
 
     return (
         <form onSubmit={hdlSubmit}>
