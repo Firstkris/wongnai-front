@@ -141,16 +141,23 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
+
 import axios from "../configs/axios";
 import { useRef } from "react";
-const socket = io.connect("http://localhost:8888/");
+import { useUser } from "../feature/user/contexts/UserContext";
+import { useRestaurant } from "../hooks/hooks";
+// const socket = io.connect("http://localhost:8888/");
 
-export function Chat({ role, userId, restaurantId }) {
+export function Chat({ role, userId, restaurantId, socket }) {
   const chatBox = useRef();
+  const { user } = useUser();
+  // const { socket } = useRestaurant();
 
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
+
+  console.log("chat", chat);
 
   const run = async () => {
     const data = await axios.get(`/chat/${restaurantId}/${userId}`);
@@ -165,8 +172,14 @@ export function Chat({ role, userId, restaurantId }) {
     role == "RESTAURANT" ? "USER" + userId : "RESTAURANT" + restaurantId; // แล้วไปเอา หน้า received ออก
 
   //   const sender = role + 1;
+
+  console.log("chat", chat);
+
   useEffect(() => {
     run();
+  }, [restaurantId]);
+
+  useEffect(() => {
     socket.auth = { sender };
     console.log("first");
     socket.connect();
@@ -204,25 +217,14 @@ export function Chat({ role, userId, restaurantId }) {
     scrollBottom();
   }, [chat]);
 
-  console.log(chat);
   return (
     <>
-      <div>
-        <form onSubmit={submit}>
-          <div class="py-5">
-            <input
-              class="w-full bg-gray-300 py-5 px-3 rounded-xl"
-              placeholder="type your message here..."
-              onChange={change}
-              value={message}
-              type="text"
-              name=""
-              id=""
-            />
-            <button>send</button>
-          </div>
-        </form>
-        <div className="flex flex-col mb-4 w-full overflow-scroll overflow-x-hidden   h-[500px] bg-red-200">
+      <div className="w-full">
+        <div
+          className="flex flex-col mb-4 px-4 overflow-scroll 
+        overflow-x-hidden 
+           h-[500px]"
+        >
           {chat
             .filter(
               (item) =>
@@ -230,19 +232,21 @@ export function Chat({ role, userId, restaurantId }) {
                 item.received == sender ||
                 item.userId == userId
             )
-            .map((el, index) => (
+            .map((el) => (
               <div
                 className={`${
                   // el.received == received || el.sender == "USER"
                   el.sender !== role ? " items-start " : " items-end"
-                } bg-green-300 border  text-white  text-white flex flex-col`}
-                key={index}
+                }   text-black  flex flex-col`}
+                key={el.id}
               >
-                <div className="flex flex-col flex-wrap max-w-[50%]">
+                <div className="flex flex-col flex-wrap max-w-[50%] ">
                   <span
                     className={
                       // el.received == received || el.sender == "USER"
-                      el.sender !== role ? "text-red-500" : "text-right "
+                      el.sender !== role
+                        ? " font-bold text-lg"
+                        : "text-right font-bold  text-lg"
                     }
                   >
                     {/* {el.received == received || el.sender == "USER" */}
@@ -252,8 +256,8 @@ export function Chat({ role, userId, restaurantId }) {
                   <div
                     className={`mr-4 flex flex-wrap   ${
                       el.sender !== role
-                        ? "ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
-                        : "mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
+                        ? "ml-2 py-3 px-4 text-white text-lg bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
+                        : "mr-2 py-3 px-4 text-white text-lg bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
                     }`}
                   >
                     {el.message}
@@ -263,6 +267,20 @@ export function Chat({ role, userId, restaurantId }) {
             ))}
           <div ref={chatBox} />
         </div>
+        <form onSubmit={submit}>
+          <div class="py-5 px-4 flex gap-4">
+            <input
+              class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+              placeholder="type your message here..."
+              onChange={change}
+              value={message}
+              type="text"
+              name=""
+              id=""
+            />
+            <button className="gray_primary text-2xl">send</button>
+          </div>
+        </form>
       </div>
     </>
   );
