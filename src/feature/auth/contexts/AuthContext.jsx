@@ -45,7 +45,6 @@ export default function MerchantAuthContextProvider({ children }) {
     <MerchantAuthContext.Provider
       value={{
         user,
-       
         initialLoading,
         merchantRegister,
         setInitialLoading,
