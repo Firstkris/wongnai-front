@@ -12,6 +12,8 @@ export default function AddImgModal({ setAddToggle, setOnFetch }) {
   const { restaurantId } = useParams();
   const { setLoading } = useRestaurant();
 
+  console.log("restaurantId", restaurantId);
+
   const [restaurantImg, setRestaurantImg] = useState({});
   const [restaurantImg2, setRestaurantImg2] = useState([]);
 

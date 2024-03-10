@@ -1,3 +1,7 @@
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:8888/");
+
 import { useState, createContext } from "react";
 import {
   filterPageGetRestaurant,
@@ -21,12 +25,14 @@ export const RestaurantContextProvider = ({ children }) => {
   const [reviewsRating, setReviewsRating] = useState(null);
 
   const { user } = useUser();
+  const [restaurant, setRestaurant] = useState("");
 
   const [nameRestaurant, setNameRestaurant] = useState([]);
   const fetch = async () => {
     const data = await filterPageGetRestaurant();
     setNameRestaurant(data.data.restaurants);
   };
+
   useEffect(() => {
     fetch();
   }, []);
@@ -158,6 +164,9 @@ export const RestaurantContextProvider = ({ children }) => {
         reviewsRating,
         nameRestaurant,
         setRestaurantPage,
+        restaurant,
+        setRestaurant,
+        socket,
       }}
     >
       {children}

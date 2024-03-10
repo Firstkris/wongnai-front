@@ -5,7 +5,7 @@ import {
   RestaurantDetailCard,
   RestaurantMapCard,
   TitleRestaurantCard,
-} from "../../components/RestaurantPageCard";
+} from "../../components/RestaurantPageCar";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Loading } from "../../components/Loading";
@@ -65,8 +65,6 @@ export default function MerchantHomePage() {
     navigate(`/merchant/${merchantId}/${restaurantId}`);
     setOnFetch((c) => !c);
   };
-
-
 
   return isLoading ? (
     <Loading />

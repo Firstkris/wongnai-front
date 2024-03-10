@@ -80,8 +80,8 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '',
-        element: <HomePage />
+        path: "",
+        element: <HomePage />,
       },
       {
         path: "/profile",
