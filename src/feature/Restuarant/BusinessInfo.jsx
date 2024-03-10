@@ -1,20 +1,24 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import Card from "../../components/Card";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import HrWithText from "../../components/HrWithText";
 import Button from "../../components/Button";
+
 import RadioBtn from "../../components/RadioBtn";
-import { useEffect } from "react";
 import GoogleMaps from "../../pages/Restaurant/GoogleMapPin"
 import useMerchantContext from "../../hooks/useMerchantContext";
-import { GISTDA_API_KEY } from "../../constants/constant";
 import OpeningHours from "./OpenHours";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { priceLength } from "../../constants/constant"
-import { useParams } from "react-router-dom";
 import { validateCreateRestaurant } from "../../validations/merchant/validate-create-restuarant";
+
+
+import { defaultFacility, priceLength } from "../../constants/constant"
+import { GISTDA_API_KEY } from "../../constants/constant";
 
 
 function BusinessInfo() {
@@ -22,7 +26,6 @@ function BusinessInfo() {
     const navigate = useNavigate()
     const { merchantId } = useParams()
 
-    console.log(merchantId);
     const {
         fetchCategory,
         provinces,
@@ -73,9 +76,8 @@ function BusinessInfo() {
         saturday: { open: '09:00', close: '17:00', closed: false },
         sunday: { open: '09:00', close: '17:00', closed: false }
     });
+    const [facility, setFacility] = useState(defaultFacility)
 
-
-    console.log(priceLength);
 
     const hdlChangeInput = (e) => {
 
@@ -87,18 +89,23 @@ function BusinessInfo() {
         }
     };
 
-    // const hldChangeRadio = (e) => {
-    //     console.log(e.target.value);
-    //     setIsOpen(e.target.value)
-    // }
 
     const hdlChangeEveryOpen = (e) => {
         setEverydayTime(prv => ({ ...prv, [e.target.name]: e.target.value }))
 
     }
 
-    const setEveryTime = () => {
-        Object.entries(openingHours).reduce((acc, day) => console.log(day), {})
+    const onSetTimeToEveryDay = (everydayTime) => {
+        setOpeningHours(
+            Object.entries(openingHours).reduce(
+                (acc, day) => ({
+                    ...acc,
+                    [day[0]]: { open: everydayTime.open, close: everydayTime.close },
+                }),
+                {}
+            )
+        );
+
     }
 
     const handleTimeChange = (day, field, value) => {
@@ -124,9 +131,8 @@ function BusinessInfo() {
     const hdlSubmit = async (e) => {
         try {
             e.preventDefault()
-            // hdlSetInputGeoData()
-            setEveryTime()
-            console.log(input);
+
+            if (isEveryday) onSetTimeToEveryDay(everydayTime)
 
             const validateError = validateCreateRestaurant(input)
             if (validateError) {
@@ -135,18 +141,16 @@ function BusinessInfo() {
                 setError(validateError)
                 return
             }
-            await createRestaurant(input, openingHours)
+            const res = await createRestaurant(input, openingHours, facility)
             toast.success("register successful");
 
-            navigate('/merchant')
+            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
             toast.error(error.response?.data.message)
         }
 
     }
-
-
 
     const hdlSetLatLng = (lat, lng) => {
 
@@ -167,6 +171,12 @@ function BusinessInfo() {
         )
     }
 
+    //facility >> { parking: { id: 1, value: true }, ... 
+    const onChangeFacility = (e) => {
+        setFacility(prv => ({ ...prv, [e.target.name]: { value: Boolean(+e.target.value) } }))
+    }
+
+    console.log(facility);
 
     useEffect(() => {
         fetchCategory()
@@ -337,16 +347,17 @@ function BusinessInfo() {
                         label={"ที่จอดรถ"}
                         name={"parking"}
                         choices={[
-                            { text: "มี", value: true },
-                            { text: "ไม่มี", value: false },
+                            { text: "มี", value: 1 },
+                            { text: "ไม่มี", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
                     <RadioBtn
                         label={"ไวไฟ"}
                         name={"wifi"}
                         choices={[
-                            { text: "ใช่", value: true },
-                            { text: "ไม่ใช่", value: false },
+                            { text: "ใช่", value: 1 },
+                            { text: "ไม่ใช่", value: 0 },
                         ]}
                     />
 
@@ -354,16 +365,16 @@ function BusinessInfo() {
                         label={"รับบัตรเครดิต"}
                         name={"creditCard"}
                         choices={[
-                            { text: "ใช่", value: true },
-                            { text: "ไม่ใช่", value: false },
+                            { text: "ใช่", value: 1 },
+                            { text: "ไม่ใช่", value: 0 },
                         ]}
                     />
                     <RadioBtn
                         label={"แอลกอฮอล์"}
                         name={"alcohol"}
                         choices={[
-                            { text: "มี", value: true },
-                            { text: "ไม่มี", value: false },
+                            { text: "มี", value: 1 },
+                            { text: "ไม่มี", value: 0 },
                         ]}
                     />
                 </Card>
