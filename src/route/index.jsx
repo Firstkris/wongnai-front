@@ -160,7 +160,7 @@ const router = createBrowserRouter([
         element: <MerchantHomePage />,
       },
       {
-        path: "/merchant/login",
+        path: "/merchant",
         element:
           <RedirectIfAuthenticatedMerchant>
             <MerchantLoginPage />
