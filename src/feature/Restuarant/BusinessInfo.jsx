@@ -151,7 +151,7 @@ function BusinessInfo() {
             const res = await createRestaurant(input, openingHours, facility)
             toast.success("register successful");
 
-            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
+            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
             setLoading(false)
