@@ -1,20 +1,26 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import Card from "../../components/Card";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import HrWithText from "../../components/HrWithText";
 import Button from "../../components/Button";
+
 import RadioBtn from "../../components/RadioBtn";
-import { useEffect } from "react";
 import GoogleMaps from "../../pages/Restaurant/GoogleMapPin"
 import useMerchantContext from "../../hooks/useMerchantContext";
-import { GISTDA_API_KEY } from "../../constants/constant";
 import OpeningHours from "./OpenHours";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { priceLength } from "../../constants/constant"
-import { useParams } from "react-router-dom";
 import { validateCreateRestaurant } from "../../validations/merchant/validate-create-restuarant";
+
+
+import { defaultFacility, priceLength } from "../../constants/constant"
+import { GISTDA_API_KEY } from "../../constants/constant";
+import useRestaurantContext from "../../hooks/useRestaurantContext";
+import { Loading } from "../../components/Loading";
 
 
 function BusinessInfo() {
@@ -22,15 +28,11 @@ function BusinessInfo() {
     const navigate = useNavigate()
     const { merchantId } = useParams()
 
-    console.log(merchantId);
     const {
-        fetchProvince,
         fetchCategory,
         provinces,
         district,
-        fetchDistrict,
         subDistrict,
-        fetchSubDistrict,
         category,
         createRestaurant,
         fetchAreaGeoData,
@@ -63,9 +65,9 @@ function BusinessInfo() {
 
 
     const [input, setInput] = useState(initialValue);
-    const [isOpen, setIsOpen] = useState(false);
     const [searchData, setSearchData] = useState(gistdaPostData)
     const [error, setError] = useState({})
+    const [isEveryday, setIsEveryday] = useState(true)
     const [openingHours, setOpeningHours] = useState({
         monday: { open: '09:00', close: '17:00', closed: false },
         tuesday: { open: '09:00', close: '17:00', closed: false },
@@ -76,7 +78,10 @@ function BusinessInfo() {
         sunday: { open: '09:00', close: '17:00', closed: false }
     });
 
-    console.log(priceLength);
+    const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
+    const [facility, setFacility] = useState(defaultFacility)
+
+    const { isLoading, setLoading } = useRestaurantContext()
 
     const hdlChangeInput = (e) => {
 
@@ -85,13 +90,31 @@ function BusinessInfo() {
         } else {
 
             setInput(prv => ({ ...prv, [e.target.name]: +e.target.value ? +e.target.value : e.target.value }));
+            setError({})
         }
     };
 
-    const hldChangeRadio = (e) => {
-        console.log(e.target.value);
-        setIsOpen(e.target.value)
+
+    const hdlChangeEveryOpen = (e) => {
+        setEverydayTime(prv => ({ ...prv, [e.target.name]: e.target.value }))
+
     }
+
+    const onSetTimeToEveryDay = (e) => {
+
+        setOpeningHours(
+            Object.entries(openingHours).reduce(
+                (acc, day) => ({
+                    ...acc,
+                    [day[0]]: { open: everydayTime.open, close: everydayTime.close, closed: false },
+                }),
+                {}
+            )
+        );
+
+    }
+
+    console.log(openingHours);
 
     const handleTimeChange = (day, field, value) => {
         setOpeningHours(prevState => ({
@@ -116,8 +139,7 @@ function BusinessInfo() {
     const hdlSubmit = async (e) => {
         try {
             e.preventDefault()
-            // hdlSetInputGeoData()
-            console.log(input);
+            setLoading(true)
 
             const validateError = validateCreateRestaurant(input)
             if (validateError) {
@@ -126,18 +148,20 @@ function BusinessInfo() {
                 setError(validateError)
                 return
             }
-            await createRestaurant(input, openingHours)
+            const res = await createRestaurant(input, openingHours, facility)
             toast.success("register successful");
 
-            navigate('/merchant')
+            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
+            setLoading(false)
             toast.error(error.response?.data.message)
+
+        } finally {
+            setLoading(false)
         }
 
     }
-
-
 
     const hdlSetLatLng = (lat, lng) => {
 
@@ -158,10 +182,20 @@ function BusinessInfo() {
         )
     }
 
+    //facility >> { parking: { id: 1, value: true }, ... 
+    const onChangeFacility = (e) => {
+        setFacility(prv => ({ ...prv, [e.target.name]: { value: Boolean(+e.target.value) } }))
+    }
+
+    console.log(facility);
 
     useEffect(() => {
         fetchCategory()
     }, [])
+
+    useEffect(() => {
+        if (isEveryday) onSetTimeToEveryDay()
+    }, [everydayTime?.open, everydayTime?.close])
 
     useEffect(() => {
         if (searchData.lat === 0) return
@@ -169,9 +203,13 @@ function BusinessInfo() {
 
     }, [searchData.lat, searchData.lng])
 
-    useEffect(() => { hdlSetInputGeoData() }, [subDistrict?.[0]?.subdistrictCode])
+    useEffect(() => {
+        hdlSetInputGeoData();
+    }, [subDistrict?.[0]?.subdistrictCode]);
 
     console.log(input);
+
+    if (isLoading) return <Loading />
 
     return (
         <form onSubmit={hdlSubmit}>
@@ -196,7 +234,6 @@ function BusinessInfo() {
                         onChange={hdlChangeInput}
                         label={"รายละเอียดร้านค้า"}
                         errorMessage={error.subtitle}
-
                     />
 
                     {/* <Select label={'เลือกประเภทธุรกิจ'} /> */}
@@ -292,41 +329,52 @@ function BusinessInfo() {
                 <Card>
                     <HrWithText name={"ข้อมูลเพิ่มเติม"} />
 
+                    <RadioBtn
+                        label={"วันที่เปิดให้บริการ"}
+                        name={"openHours"}
+                        onChange={(e) => setIsEveryday(Boolean(+e.target.value))}
+                        choices={[
+                            { text: "เปิดทุกวัน", value: 1 },
+                            { text: "เลือกวันเปิดปิด", value: 0 },
+                        ]}
+                    />
 
-
-                    {isOpen
-                        ?
+                    {!isEveryday ? (
                         <OpeningHours
                             label={"วันที่เปิดให้บริการ"}
                             openingHours={openingHours}
                             handleTimeChange={handleTimeChange}
                             handleClosedChange={handleClosedChange}
                         />
-                        :
-                        <></>
+                    ) : (
+                        <>
+                            <Input type="time" name={"open"} label={"เลือกเวลาเปิดของทุกวัน"} value={everydayTime.open} onChange={hdlChangeEveryOpen} />
+                            <Input type="time" name={"close"} label={"เลือกเวลาปิดของทุกวัน"} value={everydayTime.close} onChange={hdlChangeEveryOpen} />
+                        </>
+                    )}
 
-
-                    }
-
-
-
-                    <Select name={"priceLength"} items={priceLength} label={'ช่วงราคา'} onChange={hdlChangeInput} />
-
+                    <Select
+                        name={"priceLength"}
+                        items={priceLength}
+                        label={"ช่วงราคา"}
+                        onChange={hdlChangeInput}
+                    />
 
                     <RadioBtn
                         label={"ที่จอดรถ"}
                         name={"parking"}
                         choices={[
-                            { text: "มี", value: true },
-                            { text: "ไม่มี", value: false },
+                            { text: "มี", value: 1 },
+                            { text: "ไม่มี", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
                     <RadioBtn
                         label={"ไวไฟ"}
                         name={"wifi"}
                         choices={[
-                            { text: "ใช่", value: true },
-                            { text: "ไม่ใช่", value: false },
+                            { text: "ใช่", value: 1 },
+                            { text: "ไม่ใช่", value: 0 },
                         ]}
                     />
 
@@ -334,19 +382,18 @@ function BusinessInfo() {
                         label={"รับบัตรเครดิต"}
                         name={"creditCard"}
                         choices={[
-                            { text: "ใช่", value: true },
-                            { text: "ไม่ใช่", value: false },
+                            { text: "ใช่", value: 1 },
+                            { text: "ไม่ใช่", value: 0 },
                         ]}
                     />
                     <RadioBtn
                         label={"แอลกอฮอล์"}
                         name={"alcohol"}
                         choices={[
-                            { text: "มี", value: true },
-                            { text: "ไม่มี", value: false },
+                            { text: "มี", value: 1 },
+                            { text: "ไม่มี", value: 0 },
                         ]}
                     />
-
                 </Card>
 
                 <div className="w-full">

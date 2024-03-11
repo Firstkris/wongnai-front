@@ -6,7 +6,7 @@ import { FilterPage } from "../pages/FilterPage";
 import Header from "../layouts/Header";
 import HeaderMerchant from "../pages/MerchantPage/HeaderMerchant";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
-
+import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant"
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
@@ -129,7 +129,7 @@ const router = createBrowserRouter([
     path: "/merchant",
     element: (
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <HeaderMerchant />
         <Outlet />
       </div>
     ),
@@ -157,7 +157,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/merchant",
-        element: <MerchantLoginPage />,
+        element:
+          <RedirectIfAuthenticatedMerchant>
+            <MerchantLoginPage />
+          </RedirectIfAuthenticatedMerchant>,
       },
       {
         path: "/merchant/register",
