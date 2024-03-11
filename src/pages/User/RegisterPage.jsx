@@ -5,6 +5,9 @@ import axios from "../../configs/axios";
 import { useRef } from "react";
 import { validateRegister } from "../../validations/validate-register";
 import { userRegister } from "../../apis/user";
+import { UploadIcon } from "../../icons/icon";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function RegisterPage() {
   const [input, setInput] = useState({
@@ -29,6 +32,7 @@ function RegisterPage() {
   });
 
   const refInput = useRef();
+  const navigate = useNavigate();
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -112,10 +116,17 @@ function RegisterPage() {
                 />
               </div>
             ) : (
-              <img
-                className="rounded-full"
-                src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-              />
+              <div className="relative">
+                <img
+                  className="rounded-full"
+                  src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                />
+
+                <div className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex border justify-center rounded-lg py-2 bg-white opacity-90">
+                  <UploadIcon />
+                  <div className="">Upload</div>
+                </div>
+              </div>
             )}
           </div>
           <div className="w-full">
@@ -255,6 +266,12 @@ function RegisterPage() {
           <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary">
             สมัคร
           </button>
+          <div>
+            <span className="">คุณเคยสมัครบัญชีแล้วใช่หรือไม่ ? </span>
+            <Link to={"/login"} className=" border-b border-black">
+              เข้าสู่ระบบ
+            </Link>
+          </div>
         </div>
       </form>
     </div>

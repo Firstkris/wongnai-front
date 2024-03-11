@@ -1,12 +1,11 @@
-import React from "react"
-import { useRestaurant } from "../../hooks/hooks"
-import NavRestaurantImg from "../MainPage/NavRestaurantImg"
+import React from "react";
+import { useRestaurant } from "../../hooks/hooks";
+import NavRestaurantImg from "../MainPage/NavRestaurantImg";
 import {
   RestaurantDetailCard,
   RestaurantMapCard,
   TitleRestaurantCard,
-<<<<<<< HEAD
-} from "../../components/RestaurantPageCar";
+} from "../../components/RestaurantPageCard";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Loading } from "../../components/Loading";
@@ -18,17 +17,8 @@ import { Link } from "react-router-dom";
 import { fetchMenuByRestaurantId } from "../../apis/merchant";
 import AddMenuModal from "./AddMenuModal";
 import axios from "../../configs/axios";
-=======
-} from "../../components/RestaurantPageCard"
-import { useParams } from "react-router-dom"
-import { useEffect } from "react"
-import { Loading } from "../../components/Loading"
-import { useState } from "react"
-import { MerchantTitleCard } from "./MerchantTitleCard"
-import { useNavigate } from "react-router-dom"
-import { AddIcon } from "../../icons/icon"
-import { Link } from "react-router-dom"
->>>>>>> a29c063eda18e849a1dfa20ad25356271fd5dfad
+import useMerchantContext from "../../hooks/useMerchantContext";
+import { useAuth } from "../../feature/auth/contexts/AuthContext";
 
 export default function MerchantHomePage() {
   const {
@@ -36,11 +26,11 @@ export default function MerchantHomePage() {
     restaurantData,
     isLoading,
     nameRestaurant,
-<<<<<<< HEAD
   } = useRestaurant();
   const navigate = useNavigate();
   const params = useParams();
   const { setRestaurantData } = useRestaurant();
+  const { merchant } = useAuth();
 
   const { merchantId, restaurantId } = useParams();
   const [isSelect, setIsSelect] = useState(params.restaurantId);
@@ -51,30 +41,30 @@ export default function MerchantHomePage() {
   const [onDelete, setOnDelete] = useState(false);
   const [selectDelete, setSelectDelete] = useState({});
 
-  // console.log("params", params.restaurantId);
-=======
-  } = useRestaurant()
-  const params = useParams()
+  const [sideBar, setSideBar] = useState([]);
+  console.log(merchant);
+  const run1 = async () => {
+    const data = await getSideBar();
+    setSideBar(data.data.data);
+  };
+  useEffect(() => {
+    run1();
+  }, []);
 
-  const { merchantId } = useParams()
-  const [isSelect, setIsSelect] = useState(params.restaurantId)
-  const [onFetch, setOnFetch] = useState()
-  const navigate = useNavigate()
-  console.log("params", params.restaurantId)
->>>>>>> a29c063eda18e849a1dfa20ad25356271fd5dfad
+  // console.log("params", params.restaurantId);
 
   // console.log("restaurantData", restaurantData.restaurant.restaurantName);
-  console.log("nameRestaurant", nameRestaurant)
+  console.log("nameRestaurant", nameRestaurant);
 
   useEffect(() => {
-    fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)) //<<<<
-  }, [onFetch])
+    fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)); //<<<<
+  }, [onFetch]);
 
   const onClick = (restaurantId) => {
-    setIsSelect(restaurantId)
-    navigate(`/merchant/${merchantId}/${restaurantId}`)
-    setOnFetch((c) => !c)
-  }
+    setIsSelect(restaurantId);
+    navigate(`/merchant/${merchantId}/${restaurantId}`);
+    setOnFetch((c) => !c);
+  };
 
   const run = async () => {
     const data = await fetchMenuByRestaurantId(restaurantId);
@@ -92,7 +82,7 @@ export default function MerchantHomePage() {
     setMenu((r) => r.filter((el) => el.id != selectDelete.id));
     setOnDelete((c) => !c);
   };
-  console.log(selectDelete);
+  const filter = nameRestaurant.filter((item) => item.merchantId == merchantId);
 
   return (
     // isLoading ? (
@@ -115,7 +105,7 @@ export default function MerchantHomePage() {
             </Link>
           </div>
           <div className="overflow-scroll h-[1030px] scroll_hidden ">
-            {nameRestaurant.map((a) => (
+            {filter.map((a) => (
               <div key={a.id} className="flex flex-col gap-4 ">
                 <div
                   className={`${
@@ -325,5 +315,5 @@ export default function MerchantHomePage() {
         </div>
       </div>
     </>
-  )
+  );
 }

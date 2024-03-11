@@ -48,6 +48,7 @@ export default function MerchantAuthContextProvider({ children }) {
       value={{
         initialLoading,
         merchant,
+        setMerchant,
         merchantRegister,
         setInitialLoading,
         logout,
