@@ -6,7 +6,7 @@ import { FilterPage } from "../pages/FilterPage";
 import Header from "../layouts/Header";
 import HeaderMerchant from "../pages/MerchantPage/HeaderMerchant";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
-import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant"
+import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant";
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
@@ -153,14 +153,19 @@ const router = createBrowserRouter([
 
       {
         path: "/merchant/:merchantId/:restaurantId",
-        element: <MerchantHomePage />,
+        element: (
+          <MerchantContextProvider>
+            <MerchantHomePage />
+          </MerchantContextProvider>
+        ),
       },
       {
         path: "/merchant",
-        element:
+        element: (
           <RedirectIfAuthenticatedMerchant>
             <MerchantLoginPage />
-          </RedirectIfAuthenticatedMerchant>,
+          </RedirectIfAuthenticatedMerchant>
+        ),
       },
       {
         path: "/merchant/register",

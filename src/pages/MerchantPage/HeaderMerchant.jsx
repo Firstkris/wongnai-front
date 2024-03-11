@@ -11,8 +11,11 @@ import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import HeaderToggleMerchant from "./HeaderToggleMerchant";
+import { useAuth } from "../../feature/auth/contexts/AuthContext";
 
 export default function HeaderMerchant() {
+  const { merchant } = useAuth();
+
   const { nameRestaurant } = useRestaurant();
   const [isToggle, setIsToggle] = useState(true);
 
@@ -43,10 +46,13 @@ export default function HeaderMerchant() {
      justify-around border-b-2
     "
     >
-      <Link to={"/"} className="flex">
-        <div className="text-xl pt-1">Wong</div>
+      <Link to={`/merchant/${merchant?.id}/1`} className="flex items-center ">
+        <div className="text-xl ">Wong</div>
 
         <MessageIcon className="w-10 h-10 fill-red_primary" />
+        <div className="  rounded-2xl px-2 py-1 ml-2 bg-gray_primary">
+          Merchant
+        </div>
       </Link>
 
       {/* <div className="absolute top-14 ml-12 flex flex-col gap-2  bg-red-500">

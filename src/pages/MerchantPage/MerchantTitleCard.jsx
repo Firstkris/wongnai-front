@@ -15,7 +15,7 @@ export function MerchantTitleCard({ restaurantData, setOnFetch }) {
   const { restaurantId, merchantId } = useParams();
   const [addToggle, setAddToggle] = useState(false);
   const [deleteToggle, setDeleteToggle] = useState(false);
-  const [closeOrOpen, setCloseOrOpen] = useState("");
+  const [closeOrOpen, setCloseOrOpen] = useState("0");
 
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
@@ -56,23 +56,14 @@ export function MerchantTitleCard({ restaurantData, setOnFetch }) {
             </select>
           ) : (
             <select
-              className={
-                closeOrOpen == "ปิดอยู่" ? "text-red-500" : "text-green-600"
-              }
+              className={closeOrOpen == "0" ? "text-red-500" : "text-green-600"}
               value={closeOrOpen}
+              onChange={(e) => setCloseOrOpen(e.target.value)}
             >
-              <option
-                className="text-red-500"
-                value="ปิดอยู่"
-                onChange={(e) => setCloseOrOpen(e.target.value)}
-              >
+              <option className="text-red-500" value={"0"}>
                 ปิดอยู่
               </option>
-              <option
-                className="text-green-600"
-                value="เปิดอยู่"
-                onChange={(e) => setCloseOrOpen(e.target.value)}
-              >
+              <option className="text-green-600" value={"1"}>
                 เปิดอยู่
               </option>
             </select>

@@ -13,16 +13,18 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { useUser } from "../../feature/user/contexts/UserContext";
+import { useAuth } from "../../feature/auth/contexts/AuthContext";
 
 export default function HeaderToggleMerchant() {
   const { user, logout } = useUser();
+  const { merchant } = useAuth();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
 
   const dropdown = useRef(null);
 
-  const firstName = user?.name?.split(" ")[0];
+  const firstName = merchant?.name?.split(" ")[0];
 
   useEffect(() => {
     if (isToggle) {
@@ -55,17 +57,21 @@ export default function HeaderToggleMerchant() {
             className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
           >
             <div className="flex gap-2">
-              <img
+              <ShopIcon />
+              {/* <img
                 alt="profileImage"
                 src={user?.imgProfile}
                 className="w-[25px] h-[25px] rounded-full object-cover"
-              />
+              /> */}
               <div className="font-bold">{firstName}</div>
             </div>
           </Link>
-          <div className="border rounded-full px-2 cursor-pointer">
+          <Link
+            to={"/chat1"}
+            className="border rounded-full px-2 cursor-pointer"
+          >
             <ChatIcon className="w-6 h-6 mt-2" />
-          </div>
+          </Link>
           <div
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => {

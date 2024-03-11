@@ -12,13 +12,14 @@ export default function DeleteImgModal({ setDeleteToggle }) {
     setRestaurantPage((r) => ({
       ...r,
       restaurant: {
+        ...r.restaurant,
         restaurantImages: r.restaurant.restaurantImages.filter(
           (rs) => rs.id != id
         ),
       },
     }));
-    console.log(restaurantData, "restaurantData");
   };
+  console.log(restaurantData, "restaurantData");
 
   // console.log(
   //   restaurantData.restaurant.restaurantImages,
