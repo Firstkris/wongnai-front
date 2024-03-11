@@ -32,7 +32,7 @@ export const getSubDistrict = async (districtCode) => axios.post('/merchant/sub-
 
 export const getCategory = async () => axios.get('/merchant/category')
 
-export const merchantCreateRestaurant = async (resData, openHours) => axios.post('/merchant/create-restaurant', { resData, openHours })
+export const merchantCreateRestaurant = async (resData, openHours, facility) => axios.post('/merchant/create-restaurant', { resData, openHours, facility })
 
 export const gistdaApi = async (data) => axios.post('https://api.sphere.gistda.or.th/services/geo/address', data)
 

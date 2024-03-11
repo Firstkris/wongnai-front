@@ -98,7 +98,10 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
             navigate("/chat1");
           }}
         >
-          <ButtonRestaurantPage>แชทกับเรา</ButtonRestaurantPage>
+          <ButtonRestaurantPage>
+            <ChatIcon />
+            แชทกับเรา
+          </ButtonRestaurantPage>
         </div>
       </div>
     </div>
@@ -223,6 +226,7 @@ export function RestaurantDetailCard({ restaurantData }) {
   );
 }
 import { useState } from "react";
+import { ChatIcon } from "../icons/icon";
 export function RatingRestaurantCard({ restaurantData }) {
   const { filterByRating, reviewsRating } = useRestaurant();
   const [isSelected, setIsSelected] = useState(false);
