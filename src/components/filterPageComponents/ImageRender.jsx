@@ -5,7 +5,7 @@ export const ImageRender = ({ restaurantImages }) => {
         restaurantImages.slice(0, 5).map((image, index) => (
           <div
             key={index}
-            className="max-w-[68px] max-h-[68px] rounded-md overflow-hidden border border-gray_primary hover:scale-110"
+            className="max-w-[68px] h-[68px] rounded-md overflow-hidden border border-gray_primary hover:scale-110"
           >
             <img
               src={image.img}

@@ -55,9 +55,6 @@ export const RestaurantContextProvider = ({ children }) => {
         console.log("no filter")
         return
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
-        console.log("no filter")
-        return
-      } else {
         if (user) {
           console.log("have user")
           fetchRestaurantWithUserLogin()
@@ -121,14 +118,23 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchRestaurantAndBookmarkById = async (restaurantId) => {
     try {
       setLoading(true)
-      const [restaurantResponse, bookmarkResponse] = await Promise.all([
-        getRestaurantById(restaurantId),
-        getUserBookmark(restaurantId),
-      ])
+      if (user) {
+        const [restaurantResponse, bookmarkResponse] = await Promise.all([
+          getRestaurantById(restaurantId),
+          getUserBookmark(restaurantId),
+        ])
 
+        setRestaurantPage({
+          restaurant: restaurantResponse.data?.restaurant,
+          bookmarks: bookmarkResponse.data?.bookmarks,
+        })
+        return
+      }
+
+      const response = await getRestaurantById(restaurantId)
       setRestaurantPage({
-        restaurant: restaurantResponse.data?.restaurant,
-        bookmarks: bookmarkResponse.data?.bookmarks,
+        restaurant: response.data?.restaurant,
+        bookmarks: [],
       })
     } catch (err) {
       console.log(err)
@@ -138,7 +144,6 @@ export const RestaurantContextProvider = ({ children }) => {
   }
 
   const filterByRating = (rating) => {
-    console.log(rating)
     const reviews = restaurantData?.restaurant?.reviews?.filter(
       (el) => el.star == rating
     )
