@@ -5,7 +5,7 @@ import { getToken } from "../utils/local-storage";
 
 export const merchantLogin = async (input) => {
   try {
-    const response = await axios.post("/merchant", input);
+    const response = await axios.post("/merchant/login", input);
     return response;
   } catch (error) {
     console.error("Error in merchantLogin:", error);

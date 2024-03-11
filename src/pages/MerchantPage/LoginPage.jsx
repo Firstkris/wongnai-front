@@ -32,7 +32,7 @@ function MerchantLoginPage() {
       Token.setToken(response.data.accessToken);
       
       setUser(response.data.merchant);
-      navigate("/merchant/:merchantId/:restaurantId");
+      navigate("/merchant");
 
    
     } catch (err) {
