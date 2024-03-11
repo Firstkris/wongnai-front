@@ -40,36 +40,32 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Header />
-
-        {/* <ChatRoomeA /> */}
         <UiChat />
-        {/* <Chat /> */}
-        {/* <Chat2 /> */}
       </div>
     ),
   },
-  {
-    path: "/chat2",
-    element: (
-      <div>
-        <Header />
+  // {
+  //   path: "/chat2",
+  //   element: (
+  //     <div>
+  //       <Header />
 
-        {/* <Chat /> */}
-        <Chat2 />
-      </div>
-    ),
-  },
-  {
-    path: "/chat3",
-    element: (
-      <div>
-        <Header />
+  //       {/* <Chat /> */}
+  //       <Chat2 />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   path: "/chat3",
+  //   element: (
+  //     <div>
+  //       <Header />
 
-        {/* <Chat /> */}
-        <Chat3 />
-      </div>
-    ),
-  },
+  //       {/* <Chat /> */}
+  //       <Chat3 />
+  //     </div>
+  //   ),
+  // },
   {
     path: "/",
     element: (

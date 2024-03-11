@@ -173,8 +173,6 @@ export function Chat({ role, userId, restaurantId, socket }) {
 
   //   const sender = role + 1;
 
-  console.log("chat", chat);
-
   useEffect(() => {
     run();
   }, [restaurantId]);
@@ -221,8 +219,7 @@ export function Chat({ role, userId, restaurantId, socket }) {
     <>
       <div className="w-full">
         <div
-          className="flex flex-col mb-4 px-4 overflow-scroll 
-        overflow-x-hidden 
+          className="flex flex-col mb-4 px-4 overflow-scroll  scroll_hidden
            h-[500px]"
         >
           {chat
@@ -240,24 +237,36 @@ export function Chat({ role, userId, restaurantId, socket }) {
                 }   text-black  flex flex-col`}
                 key={el.id}
               >
-                <div className="flex flex-col flex-wrap max-w-[50%] ">
-                  <span
-                    className={
-                      // el.received == received || el.sender == "USER"
-                      el.sender !== role
-                        ? " font-bold text-lg"
-                        : "text-right font-bold  text-lg"
-                    }
-                  >
-                    {/* {el.received == received || el.sender == "USER" */}
-                    {el.sender !== role ? "received  " : "sender  "}
-                  </span>
-
+                <div className="flex flex-col flex-wrap max-w-[50%] gap-2">
+                  <div className="flex gap-3">
+                    {el.sender == "RESTAURANT" ? (
+                      <img
+                        src={el.restaurantid.profileImg}
+                        className="w-[35px] h-[35px] rounded-full"
+                      />
+                    ) : (
+                      <img
+                        src={el.userid.imgProfile}
+                        className="w-[35px] h-[35px] rounded-full"
+                      />
+                    )}
+                    <span
+                      className={
+                        el.sender !== role
+                          ? " font-bold text-lg"
+                          : "text-right font-bold  text-lg"
+                      }
+                    >
+                      {el.sender == "USER"
+                        ? el.userid.name
+                        : el.restaurantid.restaurantName}
+                    </span>
+                  </div>
                   <div
                     className={`mr-4 flex flex-wrap   ${
                       el.sender !== role
-                        ? "ml-2 py-3 px-4 text-white text-lg bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
-                        : "mr-2 py-3 px-4 text-white text-lg bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
+                        ? "ml-2 py-3 px-4 text-white  bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
+                        : "mr-2 py-3 px-4 text-white  bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
                     }`}
                   >
                     {el.message}

@@ -27,14 +27,14 @@ export default function UiChat() {
 
   return (
     // <!-- This is an example component -->
-    <div className="container mx-auto mt-20 shadow-lg   ">
+    <div className="container mx-auto mt-12 shadow-lg   ">
       {/* <!-- headaer --> */}
       <div className="px-5 py-5 flex justify-between items-center bg-white border-b-2">
-        <div className="font-semibold text-2xl">ชื่อร้าน</div>
+        <div className="font-semibold text-2xl">Chatbox</div>
       </div>
       {/* <!-- end header -->
     <!-- Chatting --> */}
-      <div className="flex flex-row justify-between  bg-white">
+      <div className="flex flex-row justify-between  bg-white min-h-[630px]">
         {/* <!-- chat list --> */}
         <div className="flex flex-col w-2/5 border-r-2 overflow-y-auto">
           {/* <!-- search compt --> */}
@@ -51,7 +51,7 @@ export default function UiChat() {
             <div
               onClick={() => setRestaurant(el.restaurantId)}
               className={`flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer ${
-                el.restaurantId == restaurant ? "text-red-200" : ""
+                el.restaurantId == restaurant ? "bg-[#ebf5ff]" : ""
               } `}
               key={el.restaurantId}
             >

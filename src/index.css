@@ -59,3 +59,18 @@ button.gray_primary {
 .breadcrumbs {
   @apply flex gap-2;
 }
+
+.scroll_hidden::-webkit-scrollbar {
+  width: 12px;
+  /* กำหนดความกว้างของ scrollbar */
+}
+
+.scroll_hidden::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  /* สีของ thumb */
+}
+
+.scroll_hidden::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* สีของ track */
+}

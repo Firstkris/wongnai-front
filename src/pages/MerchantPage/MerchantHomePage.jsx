@@ -12,49 +12,26 @@ import { Loading } from "../../components/Loading";
 import { useState } from "react";
 import { MerchantTitleCard } from "./MerchantTitleCard";
 import { useNavigate } from "react-router-dom";
+import { AddIcon } from "../../icons/icon";
+import { Link } from "react-router-dom";
 
 export default function MerchantHomePage() {
-  const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
-    useRestaurant();
+  const {
+    fetchRestaurantAndBookmarkById,
+    restaurantData,
+    isLoading,
+    nameRestaurant,
+  } = useRestaurant();
   const params = useParams();
+
   const { merchantId } = useParams();
   const [isSelect, setIsSelect] = useState(params.restaurantId);
   const [onFetch, setOnFetch] = useState();
   const navigate = useNavigate();
   console.log("params", params.restaurantId);
 
-  const array = [
-    {
-      id: 1,
-      restaurantName: "aaaaaaa",
-      restaurantImg:
-        "https://waymagazine.org/wp-content/uploads/2018/09/3d-shinchan_01-1200x641.png",
-    },
-    {
-      id: 2,
-      restaurantName: "bbbbbb",
-      restaurantImg:
-        "https://cdni-hw.bugaboo.tv/dm/sz-md/i/images/2023/11/27/_79_1701086437_1410.jpg",
-    },
-    {
-      id: 3,
-      restaurantName: "cccccccccc",
-      restaurantImg:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ47UFRMo0EyGiFYpifBozcJXuHzsCxMuXgA&usqp=CAU",
-    },
-    {
-      id: 4,
-      restaurantName: "ddddddddd",
-      restaurantImg:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ47UFRMo0EyGiFYpifBozcJXuHzsCxMuXgA&usqp=CAU",
-    },
-    {
-      id: 5,
-      restaurantName: "eeeee",
-      restaurantImg:
-        "https://f.ptcdn.info/420/013/000/1387248104-WB12619012-o.jpg",
-    },
-  ];
+  // console.log("restaurantData", restaurantData.restaurant.restaurantName);
+  console.log("nameRestaurant", nameRestaurant);
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)); //<<<<
@@ -70,12 +47,24 @@ export default function MerchantHomePage() {
     <Loading />
   ) : (
     <>
-      <div className="flex gap-6 justify-center mt-3 mx-10">
+      <div className="flex gap-6 justify-center mt-4 mx-10 ">
         <div className=" rounded-lg bg-white w-[250px] pt-5 px-4">
-          <div className="font-bold text-xl mb-6">ชื่อร้าน</div>
-          <div>
-            {array.map((a) => (
-              <div key={a.id} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 font-bold text-xl mb-4">
+            รายชื่อร้าน
+            <Link
+              to={`/merchant/createRestaurant/${merchantId}`}
+              className="flex items-center gap-1 pl-6 py-1 text-[15px] font-medium bg-gray_primary hover:bg-gray_primary_hv rounded-lg cursor-pointer "
+            >
+              <AddIcon
+                className={"w-9 h-9 fill-red_primary"}
+                stroke={"white"}
+              />
+              เพิ่มร้านค้าของคุณ
+            </Link>
+          </div>
+          <div className="overflow-scroll scroll_hidden h-[700px]">
+            {nameRestaurant.map((a) => (
+              <div key={a.id} className="flex flex-col gap-4 ">
                 <div
                   className={`${
                     !(isSelect == a.id)
@@ -86,7 +75,7 @@ export default function MerchantHomePage() {
                 >
                   <img
                     className="w-[50px] h-[50px] object-cover rounded-full"
-                    src={a.restaurantImg}
+                    src={a.profileImg}
                   />
                   {a.restaurantName}
                 </div>
