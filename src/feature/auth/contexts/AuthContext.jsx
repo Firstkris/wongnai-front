@@ -6,9 +6,11 @@ import * as merchantApi from "../../../apis/merchant";
 import * as userApi from "../../../apis/user";
 import * as Token from "../../../../src/utils/local-storage";
 import { createContext } from "react";
+import { Link } from "react-router-dom";
 
 const MerchantAuthContext = createContext();
 export default function MerchantAuthContextProvider({ children }) {
+ 
   const [user, setUser] = useState(null);
   // const [review, setReview] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -32,10 +34,12 @@ export default function MerchantAuthContextProvider({ children }) {
   const logout = () => {
     setUser(null);
     Token.clearToken();
+    <Link to="/merchant/login" /> 
   };
 
   const merchantRegister = async (merchant) => {
     const res = await merchantApi.register(merchant);
+    
     setUser(res.data.newUser);
     Token.setToken(res.data.accessToken);
   };
@@ -45,6 +49,7 @@ export default function MerchantAuthContextProvider({ children }) {
     <MerchantAuthContext.Provider
       value={{
         user,
+        setUser,
         initialLoading,
         merchantRegister,
         setInitialLoading,

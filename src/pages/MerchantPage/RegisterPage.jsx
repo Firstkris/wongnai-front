@@ -5,12 +5,14 @@ import axios from "../../configs/axios";
 import { useRef } from "react";
 import validateRegister from "../../validations/validate-merregis";
 import { useAuth } from "../../feature/auth/contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { useNavigate,Navigate } from "react-router-dom";
+
 
 
 
 
 function RegisterPageMerchant() {
+    const navigate = useNavigate() ;
     const { merchantRegister } = useAuth();
     const [input, setInput] = useState({
         name: "",
@@ -35,10 +37,11 @@ function RegisterPageMerchant() {
         console.log('Value:', e.target.value);
 
         setInput({ ...input, [e.target.name]: e.target.value });
-        console.log(input)
+      
         setValidateError({ ...validateError1, [e.target.name]: "" });
         console.log(new Date().toISOString());
     };
+    console.log(input)
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -46,25 +49,22 @@ function RegisterPageMerchant() {
             
             const data = { ...input };
             const validateError = validateRegister(data);
-            console.log(data)
             if (validateError) return setValidateError(validateError);
-                        //
             const response = await merchantRegister(data);
-            <Link to='/merchant/login' />
-            // รอว่าจะใช้ context หรือ redux
-            console.log(response.data);
+                        // รอว่าจะใช้ context หรือ redux
             // localStorage.setItem("token", user.data.token);
             //
             //
             //
+            navigate('/merchant')
         } catch (err) {
             console.log(err);
-            if (err.response.data.message == "Mobile is already to use")
+            if (err.response?.data.message == "Mobile is already to use")
                 setValidateError({
                     ...validateError1,
                     mobile: err.response.data.message,
                 });
-            if (err.response.data.message == "Username is already to use")
+            if (err.response?.data.message == "Username is already to use")
                 setValidateError({
                     ...validateError1,
                     username: err.response.data.message,
@@ -174,6 +174,7 @@ function RegisterPageMerchant() {
                     <button className="text-white w-full rounded-lg px-3 py-2 m-0 bg-blue_primary">
                         สมัคร
                     </button>
+
                 </div>
             </form>
         </div>

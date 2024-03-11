@@ -2,15 +2,21 @@ import axios from "../configs/axios";
 import { getToken } from "../utils/local-storage";
 
 
-export const merchantLogin = async (fromData) => {
-  console.log(fromData)
-  await axios.post("/merchant/login", fromData);
-}
 
-export const register = async (fromData) => {
-  console.log(fromData)
-  axios.post('/merchant/register', fromData);
-}
+export const merchantLogin = async (input) => {
+  try {
+    const response = await axios.post("/merchant/login", input);
+    return response;
+  } catch (error) {
+    console.error("Error in merchantLogin:", error);
+    throw error; 
+  }
+};
+
+export const register = async (fromData) => 
+    axios.post('/merchant/register', fromData);
+ 
+
 
 export const fetchMe = () =>
   axios.get("/user/me", {
@@ -31,3 +37,5 @@ export const merchantCreateRestaurant = async (resData, openHours, facility) => 
 export const gistdaApi = async (data) => axios.post('https://api.sphere.gistda.or.th/services/geo/address', data)
 
 export const fetchGeoDataByName = async (data) => axios.post('/merchant/get-by-name', data)
+
+export const fetchBusinessInfo = async (restaurantId) => axios.post('/merchant/get-businessinfo', { restaurantId }) 

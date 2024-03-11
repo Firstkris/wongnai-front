@@ -19,7 +19,6 @@ function CreateReviewForm() {
   const [descLength, setDescLength] = useState(0);
 
   const navigate = useNavigate();
-  console.log(restaurantsId);
   const handleCancel = (event) => {
     const confirm = window.confirm("คุณต้องการยกเลิกการเขียนรีวิวใช่หรือไม่");
     if (confirm) {
@@ -44,7 +43,6 @@ function CreateReviewForm() {
       console.log(err);
     }
   };
-  console.log(img);
   const handleSubmitform = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -75,7 +73,6 @@ function CreateReviewForm() {
       <img src={URL.createObjectURL(img[i])} className="w-24 h-24 rounded-md" />
     );
   }
-  console.log(fileInput?.current?.files);
   return (
     <form
       onSubmit={handleSubmitform}
@@ -142,17 +139,13 @@ function CreateReviewForm() {
           <div className=" font-bold pb-4 m-2 mb-4 border-b-2 ">รูปภาพ</div>
           <div className="flex justify-around ">
             <div className="flex gap-4">
-              {/* {img.map((i) => (
-                <img
-                  src={URL.createObjectURL(i)}
-                  className="w-24 h-24 rounded-md"
-                />
-              ))} */}
-              {img.length > 0 ? (
-                fileimg
-              ) : (
-                <div className="bg-gray-300 w-24 h-24 rounded-md"></div>
-              )}
+              <div className="flex gap-2 overflow-y-auto">
+                {img.length > 0 ? (
+                  fileimg
+                ) : (
+                  <div className="bg-gray-300 w-24 h-24 rounded-md"></div>
+                )}
+              </div>
               <div>
                 <input
                   type="file"
