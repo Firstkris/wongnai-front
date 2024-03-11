@@ -33,6 +33,8 @@ import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 // import { ChatRoomeA } from "../pages/Chat";
 import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 import UiChat from "../pages/User/UiChat";
+import EditBusinessInfo from "../feature/Restuarant/EditBusinessInfo";
+import EditBusinessInfoPage from "../pages/MerchantPage/EditBusinessInfoPage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -146,7 +148,7 @@ const router = createBrowserRouter([
         path: "/merchant/editRestaurant/:merchantId/:restaurantId",
         element: (
           <MerchantContextProvider>
-            <RestaurantRegisterPage />
+            <EditBusinessInfoPage />
           </MerchantContextProvider>
         ),
       },

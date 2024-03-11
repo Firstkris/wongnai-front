@@ -31,3 +31,5 @@ export const merchantCreateRestaurant = async (resData, openHours, facility) => 
 export const gistdaApi = async (data) => axios.post('https://api.sphere.gistda.or.th/services/geo/address', data)
 
 export const fetchGeoDataByName = async (data) => axios.post('/merchant/get-by-name', data)
+
+export const fetchBusinessInfo = async (restaurantId) => axios.post('/merchant/get-businessinfo', { restaurantId }) 

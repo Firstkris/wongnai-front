@@ -1,6 +1,6 @@
 import { useState, createContext } from "react"
 import axios from "axios"
-import { fetchGeoDataByName, getCategory, getDistrict, getProvince, getSubDistrict, gistdaApi, merchantCreateRestaurant } from "../apis/merchant"
+import { fetchBusinessInfo, fetchGeoDataByName, getCategory, getDistrict, getProvince, getSubDistrict, gistdaApi, merchantCreateRestaurant } from "../apis/merchant"
 
 export const MerchantContext = createContext()
 
@@ -44,6 +44,11 @@ function MerchantContextProvider({ children }) {
         // console.log(res);
     }
 
+    // const getBusinessInfoById = async (restaurantId) => {
+    //     const res = await fetchBusinessInfo(restaurantId)
+    //     console.log(res);
+    // }
+
     // const fetchAreaGeoData = async (postalCode) => {
     //     console.log(postalCode);
     //     const res = await fetchGeoDataByPostalCode(postalCode)
@@ -57,7 +62,7 @@ function MerchantContextProvider({ children }) {
         setProvince([])
         setDistrict([])
         setSubDistrict([])
-        console.log(data, 'data');
+        // console.log(data, 'data');
         const res = await gistdaApi(data)
         const geoData = await fetchGeoDataByName(res.data)
 
@@ -80,7 +85,8 @@ function MerchantContextProvider({ children }) {
                 category,
                 createRestaurant,
                 // fetchAreaGeoData,
-                getGeoDataFromGistda
+                getGeoDataFromGistda,
+                // getBusinessInfoById
             }}
         >
             {children}
