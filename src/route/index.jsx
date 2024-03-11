@@ -154,11 +154,11 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/merchant/:merchantId/:restaurantId",
+        path: "/merchant",
         element: <MerchantHomePage />,
       },
       {
-        path: "/merchant",
+        path: "/merchant/login",
         element:
           <RedirectIfAuthenticatedMerchant>
             <MerchantLoginPage />
