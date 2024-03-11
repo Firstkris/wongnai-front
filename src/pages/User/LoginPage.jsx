@@ -36,7 +36,8 @@ function LoginPage() {
     const user = await userLoginWithFacebook(res);
     // รอว่าจะใช้ context หรือ redux
     Token.setToken(user.data.token);
-    setUser(user.data.user);
+
+    user.data.user;
 
     // localStorage.setItem("token", user.data.token);
     //
@@ -87,7 +88,7 @@ function LoginPage() {
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
       <form
         onSubmit={handleSubmit}
-        className=" w-8/12 bg-white h-full  my-12 flex flex-col items-center"
+        className=" w-8/12 bg-white h-full  my-12 flex flex-col items-center py-6 rounded-2xl"
       >
         <div className=" mt-2 mb-6  flex flex-col items-center  w-2/4 gap-6 ">
           <h1 className="text-xl font-bold ite">เข้าสู่ระบบ</h1>

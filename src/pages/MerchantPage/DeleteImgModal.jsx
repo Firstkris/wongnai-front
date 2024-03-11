@@ -12,13 +12,14 @@ export default function DeleteImgModal({ setDeleteToggle }) {
     setRestaurantPage((r) => ({
       ...r,
       restaurant: {
+        ...r.restaurant,
         restaurantImages: r.restaurant.restaurantImages.filter(
           (rs) => rs.id != id
         ),
       },
     }));
-    console.log(restaurantData, "restaurantData");
   };
+  console.log(restaurantData, "restaurantData");
 
   // console.log(
   //   restaurantData.restaurant.restaurantImages,
@@ -26,8 +27,8 @@ export default function DeleteImgModal({ setDeleteToggle }) {
   // );
   return (
     <>
-      <div className="fixed flex flex-col justify-center items-center inset-0 bg-gray-400 opacity-50 "></div>
-      <div className="inset-0 fixed flex flex-col justify-center items-center ">
+      <div className="fixed flex flex-col justify-center items-center inset-0 bg-gray-400 opacity-50 z-10 "></div>
+      <div className="inset-0 fixed flex flex-col justify-center items-center z-20">
         <div className="flex flex-col gap-5 bg-white min-w-[500px] min-h-2/5 opacity-100 rounded-2xl pt-7 pb-5 px-10">
           <div className="flex gap-3">
             {restaurantData.restaurant.restaurantImages.map((a) => (
