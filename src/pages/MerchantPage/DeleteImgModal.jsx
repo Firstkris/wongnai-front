@@ -61,7 +61,14 @@ export default function DeleteImgModal({ setDeleteToggle }) {
             >
               ยกเลิก
             </button>
-            <button className="blue_primary">บันทึก</button>
+            <button
+              className="blue_primary"
+              onClick={() => {
+                setDeleteToggle((c) => !c);
+              }}
+            >
+              บันทึก
+            </button>
           </div>
         </div>
       </div>

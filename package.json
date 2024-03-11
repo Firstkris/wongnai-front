@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@material-tailwind/react": "^2.1.9",
     "@react-google-maps/api": "^2.19.3",
     "@rollup/rollup-darwin-x64": "^4.12.0",
     "axios": "^1.6.7",
@@ -25,8 +26,8 @@
     "react-google-login": "^5.2.2",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.1",
-    "socket.io-client": "^4.7.4",
-    "react-toastify": "^10.0.4"
+    "react-toastify": "^10.0.4",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

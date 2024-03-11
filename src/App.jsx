@@ -6,6 +6,7 @@ import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MerchantAuthContextProvider from "./feature/auth/contexts/AuthContext";
 
+
 function App() {
   return (
     <>
@@ -15,11 +16,15 @@ function App() {
         theme="colored"
         transition={Slide}
       />
+      
       <MerchantAuthContextProvider>
-        <ProfileContextProvider>
-          <Router />
-        </ProfileContextProvider>
+        <UserContextProvider>
+          <ProfileContextProvider>
+            <Router />
+          </ProfileContextProvider>
+        </UserContextProvider>
       </MerchantAuthContextProvider>
+      
     </>
   );
 }

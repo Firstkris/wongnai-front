@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { imagePlaceHolder } from "../../constants/constant";
 export default function NavRestaurantImg({ restaurantImage }) {
   const array =
     restaurantImage?.length > 0
@@ -104,7 +103,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
                 </div>
               ))}
               <div
-                className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 text-white text-4xl cursor-pointer "
+                className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 h-1/2 border text-white text-4xl cursor-pointer "
                 onClick={() => setIsToggle((c) => !c)}
               >
                 <div>+{array.length - 6}</div>

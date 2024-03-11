@@ -37,8 +37,8 @@ function MerchantContextProvider({ children }) {
         setCategory(res.data.categories)
     }
 
-    const createRestaurant = async (data) => {
-        const res = await merchantCreateRestaurant(data)
+    const createRestaurant = async (resData, openHours) => {
+        const res = await merchantCreateRestaurant(resData, openHours)
         // console.log(res);
     }
 
