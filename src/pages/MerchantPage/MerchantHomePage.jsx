@@ -1,10 +1,11 @@
-import React from "react";
-import { useRestaurant } from "../../hooks/hooks";
-import NavRestaurantImg from "../MainPage/NavRestaurantImg";
+import React from "react"
+import { useRestaurant } from "../../hooks/hooks"
+import NavRestaurantImg from "../MainPage/NavRestaurantImg"
 import {
   RestaurantDetailCard,
   RestaurantMapCard,
   TitleRestaurantCard,
+<<<<<<< HEAD
 } from "../../components/RestaurantPageCar";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -17,6 +18,17 @@ import { Link } from "react-router-dom";
 import { fetchMenuByRestaurantId } from "../../apis/merchant";
 import AddMenuModal from "./AddMenuModal";
 import axios from "../../configs/axios";
+=======
+} from "../../components/RestaurantPageCard"
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { Loading } from "../../components/Loading"
+import { useState } from "react"
+import { MerchantTitleCard } from "./MerchantTitleCard"
+import { useNavigate } from "react-router-dom"
+import { AddIcon } from "../../icons/icon"
+import { Link } from "react-router-dom"
+>>>>>>> a29c063eda18e849a1dfa20ad25356271fd5dfad
 
 export default function MerchantHomePage() {
   const {
@@ -24,6 +36,7 @@ export default function MerchantHomePage() {
     restaurantData,
     isLoading,
     nameRestaurant,
+<<<<<<< HEAD
   } = useRestaurant();
   const navigate = useNavigate();
   const params = useParams();
@@ -39,19 +52,29 @@ export default function MerchantHomePage() {
   const [selectDelete, setSelectDelete] = useState({});
 
   // console.log("params", params.restaurantId);
+=======
+  } = useRestaurant()
+  const params = useParams()
+
+  const { merchantId } = useParams()
+  const [isSelect, setIsSelect] = useState(params.restaurantId)
+  const [onFetch, setOnFetch] = useState()
+  const navigate = useNavigate()
+  console.log("params", params.restaurantId)
+>>>>>>> a29c063eda18e849a1dfa20ad25356271fd5dfad
 
   // console.log("restaurantData", restaurantData.restaurant.restaurantName);
-  console.log("nameRestaurant", nameRestaurant);
+  console.log("nameRestaurant", nameRestaurant)
 
   useEffect(() => {
-    fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)); //<<<<
-  }, [onFetch]);
+    fetchRestaurantAndBookmarkById(parseInt(params.restaurantId)) //<<<<
+  }, [onFetch])
 
   const onClick = (restaurantId) => {
-    setIsSelect(restaurantId);
-    navigate(`/merchant/${merchantId}/${restaurantId}`);
-    setOnFetch((c) => !c);
-  };
+    setIsSelect(restaurantId)
+    navigate(`/merchant/${merchantId}/${restaurantId}`)
+    setOnFetch((c) => !c)
+  }
 
   const run = async () => {
     const data = await fetchMenuByRestaurantId(restaurantId);
@@ -302,5 +325,5 @@ export default function MerchantHomePage() {
         </div>
       </div>
     </>
-  );
+  )
 }

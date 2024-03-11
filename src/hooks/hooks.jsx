@@ -1,15 +1,12 @@
-import { useContext } from "react";
-import { RestaurantContext } from "../contexts/RestaurantContext";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext } from "react"
+import { RestaurantContext } from "../contexts/RestaurantContext"
 export const useRestaurant = () => {
-  return useContext(RestaurantContext);
-};
+  return useContext(RestaurantContext)
+}
 
 export const useRenderCheckbox = () => {
   const renderCheckbox = (input, limit, key, title = "title") => {
-    const { setFilterInput, filterInput } = useRestaurant();
+    const { setFilterInput, filterInput } = useRestaurant()
 
     const handleChangeCheckbox = (e) => {
       setFilterInput((prev) => ({
@@ -18,8 +15,8 @@ export const useRenderCheckbox = () => {
           prev[key] && prev[key].includes(e.target.value)
             ? prev[key].filter((item) => item !== e.target.value)
             : [...(prev[key] || []), e.target.value],
-      }));
-    };
+      }))
+    }
 
     return (
       <>
@@ -29,7 +26,7 @@ export const useRenderCheckbox = () => {
             const check =
               filterInput[key] && filterInput[key].includes(item.id.toString())
                 ? true
-                : false;
+                : false
 
             return (
               index < limit && (
@@ -48,7 +45,7 @@ export const useRenderCheckbox = () => {
                   {/* </Link> */}
                 </div>
               )
-            );
+            )
           })}
         {input && input.length > limit && (
           <div className="text-blue-600 text-sm cursor-pointer">
@@ -56,7 +53,7 @@ export const useRenderCheckbox = () => {
           </div>
         )}
       </>
-    );
-  };
-  return { renderCheckbox };
-};
+    )
+  }
+  return { renderCheckbox }
+}

@@ -21,7 +21,6 @@ function MerchantContextProvider({ children }) {
 
   const fetchProvince = async () => {
     const res = await getProvince();
-    // console.log(res.data.province);
     setProvince(res.data.province);
   };
 
@@ -43,12 +42,30 @@ function MerchantContextProvider({ children }) {
     setCategory(res.data.categories);
   };
 
+  // const fetchAreaGeoData = async (postalCode) => {
+  //     console.log(postalCode);
+  //     const res = await fetchGeoDataByPostalCode(postalCode)
+  //     console.log(res.data.district);
+  //     setProvince(prv => [...prv, res.data.province])
+  //     setDistrict(prv => [...prv, res.data.district])
+  //     console.log('fetchGeoDataByPostalCode', res);
+  // }
+
   const createRestaurant = async (resData, openHours, facility) => {
     // console.log(openHours);
     console.log(facility);
     return await merchantCreateRestaurant(resData, openHours, facility);
     // console.log(res);
   };
+
+  // const fetchAreaGeoData = async (postalCode) => {
+  //     console.log(postalCode);
+  //     const res = await fetchGeoDataByPostalCode(postalCode)
+  //     console.log(res.data.district);
+  //     setProvince(prv => [...prv, res.data.province])
+  //     setDistrict(prv => [...prv, res.data.district])
+  //     console.log('fetchGeoDataByPostalCode', res);
+  // }
 
   // const getBusinessInfoById = async (restaurantId) => {
   //     const res = await fetchBusinessInfo(restaurantId)

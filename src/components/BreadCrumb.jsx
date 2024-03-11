@@ -23,7 +23,9 @@ export const Breadcrumbs = ({ breadcrumbs }) => {
                 {breadcrumb.label}
               </Link>
             ) : (
-              <span>{breadcrumb.label} test</span>
+              <span className="font-medium cursor-default">
+                {breadcrumb.label}
+              </span>
             )}
           </div>
         </span>
