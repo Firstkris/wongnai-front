@@ -12,10 +12,11 @@ import {
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useUser } from "../../feature/user/contexts/UserContext";
+import { useAuth } from "../../feature/auth/contexts/AuthContext";
+
 
 export default function HeaderToggleMerchant() {
-  const { user, logout } = useUser();
+  const { user, logout } = useAuth();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
@@ -98,12 +99,11 @@ export default function HeaderToggleMerchant() {
           <div className="absolute top-10 right-0">
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
-                <Link
-                  to={"/login"}
+                <div
                   className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
                 >
                   เข้าสู่ระบบ หรือ สมัครสมาชิก
-                </Link>
+                </div>
 
                 {/* <hr />
 
@@ -165,7 +165,7 @@ export default function HeaderToggleMerchant() {
                   onClick={logout}
                 >
                   <LogoutIcon />
-                  <Link to='/merchant'>ออกจากระบบ</Link>
+                  <Link to="/merchant/login">ออกจากระบบ</Link>
                 </div>
               </div>
             </div>
