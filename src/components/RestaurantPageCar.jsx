@@ -17,12 +17,14 @@ import { ProgressBarStar } from "../components/restaurantPageComponents/Progress
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   const bookmarkRef = useRef();
+  const { setRestaurant } = useRestaurant();
   const navigate = useNavigate();
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
       <IconCheckmark /> OFFICIAL
     </div>
   );
+  // console.log("restaurantData.id", restaurantData?.id);
 
   const handleClickBookmark = () => {
     bookmarkRef.current.click();
@@ -88,6 +90,17 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
           <ButtonRestaurantPage>
             <BookmarkIcon ref={bookmarkRef} restaurant={{ bookmarks }} />
             บันทึก
+          </ButtonRestaurantPage>
+        </div>
+        <div
+          onClick={() => {
+            setRestaurant(restaurantData?.id);
+            navigate("/chat1");
+          }}
+        >
+          <ButtonRestaurantPage>
+            <ChatIcon />
+            แชทกับเรา
           </ButtonRestaurantPage>
         </div>
       </div>
@@ -213,6 +226,7 @@ export function RestaurantDetailCard({ restaurantData }) {
   );
 }
 import { useState } from "react";
+import { ChatIcon } from "../icons/icon";
 export function RatingRestaurantCard({ restaurantData }) {
   const { filterByRating, reviewsRating } = useRestaurant();
   const [isSelected, setIsSelected] = useState(false);

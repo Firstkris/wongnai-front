@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 import Input from '../../components/Input';
 
-const OpeningHours = ({ label }) => {
+const OpeningHours = ({ label, openingHours, handleTimeChange, handleClosedChange }) => {
     // Initialize state for open, close times, and closed status for each day of the week
-    const [openingHours, setOpeningHours] = useState({
-        Monday: { open: '09:00', close: '17:00', closed: false },
-        Tuesday: { open: '09:00', close: '17:00', closed: false },
-        Wednesday: { open: '09:00', close: '17:00', closed: false },
-        Thursday: { open: '09:00', close: '17:00', closed: false },
-        Friday: { open: '09:00', close: '17:00', closed: false },
-        Saturday: { open: '09:00', close: '17:00', closed: false },
-        Sunday: { open: '09:00', close: '17:00', closed: false }
-    });
+    // const [openingHours, setOpeningHours] = useState({
+    //     Monday: { open: '09:00', close: '17:00', closed: false },
+    //     Tuesday: { open: '09:00', close: '17:00', closed: false },
+    //     Wednesday: { open: '09:00', close: '17:00', closed: false },
+    //     Thursday: { open: '09:00', close: '17:00', closed: false },
+    //     Friday: { open: '09:00', close: '17:00', closed: false },
+    //     Saturday: { open: '09:00', close: '17:00', closed: false },
+    //     Sunday: { open: '09:00', close: '17:00', closed: false }
+    // });
 
     // Function to handle changes to opening and closing times
-    const handleTimeChange = (day, field, value) => {
-        setOpeningHours(prevState => ({
-            ...prevState,
-            [day]: {
-                ...prevState[day],
-                [field]: value
-            }
-        }));
-    };
+    // const handleTimeChange = (day, field, value) => {
+    //     setOpeningHours(prevState => ({
+    //         ...prevState,
+    //         [day]: {
+    //             ...prevState[day],
+    //             [field]: value
+    //         }
+    //     }));
+    // };
 
     // Function to handle changes to closed status
-    const handleClosedChange = (day) => {
-        setOpeningHours(prevState => ({
-            ...prevState,
-            [day]: {
-                ...prevState[day],
-                closed: !prevState[day].closed
-            }
-        }));
-    };
+    // const handleClosedChange = (day) => {
+    //     setOpeningHours(prevState => ({
+    //         ...prevState,
+    //         [day]: {
+    //             ...prevState[day],
+    //             closed: !prevState[day].closed
+    //         }
+    //     }));
+    // };
 
     return (
         <>
@@ -41,7 +41,7 @@ const OpeningHours = ({ label }) => {
             <label>{label}</label>
             {Object.entries(openingHours).map(([day, times]) => (
                 <div key={day} className='grid grid-cols-8 items-center'>
-                    <h3 className='col-span-1'>{day}</h3>
+                    <h3 className='col-span-2'>{day}</h3>
                     <div className='flex items-center gap-6'>
 
                         <label className='flex items-center gap-2'>

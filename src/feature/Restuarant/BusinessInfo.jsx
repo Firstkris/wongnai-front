@@ -1,34 +1,38 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import Card from "../../components/Card";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import HrWithText from "../../components/HrWithText";
 import Button from "../../components/Button";
+
 import RadioBtn from "../../components/RadioBtn";
-import WeekDays from "./WeekDays";
-import useRestaurantContext from "../../hooks/useRestaurantContext";
-import { useEffect } from "react";
 import GoogleMaps from "../../pages/Restaurant/GoogleMapPin"
 import useMerchantContext from "../../hooks/useMerchantContext";
-import { GISTDA_API_KEY } from "../../constants/constant";
 import OpeningHours from "./OpenHours";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { priceLength } from "../../constants/constant"
+import { validateCreateRestaurant } from "../../validations/merchant/validate-create-restuarant";
+
+
+import { defaultFacility, priceLength } from "../../constants/constant"
+import { GISTDA_API_KEY } from "../../constants/constant";
+import useRestaurantContext from "../../hooks/useRestaurantContext";
+import { Loading } from "../../components/Loading";
 
 
 function BusinessInfo() {
 
     const navigate = useNavigate()
+    const { merchantId } = useParams()
 
     const {
-        fetchProvince,
         fetchCategory,
         provinces,
         district,
-        fetchDistrict,
         subDistrict,
-        fetchSubDistrict,
         category,
         createRestaurant,
         fetchAreaGeoData,
@@ -36,16 +40,16 @@ function BusinessInfo() {
     } = useMerchantContext();
 
     const initialValue = {
-        merchantId: 1,
+        merchantId: +merchantId,
         restaurantName: "",
         subtitle: "",
         provinceCode: "",
         districtCode: "",
         subdistrictCode: "",
-        categoryId: "",
+        categoryId: 1,
         mobile: "",
-        email: "",
-        priceLength: "0-100",
+        email: null,
+        priceLength: "฿",
         address: "",
         lat: "",
         lng: ""
@@ -61,40 +65,104 @@ function BusinessInfo() {
 
 
     const [input, setInput] = useState(initialValue);
-    const [isOpen, setIsOpen] = useState("everyDay");
     const [searchData, setSearchData] = useState(gistdaPostData)
+    const [error, setError] = useState({})
+    const [isEveryday, setIsEveryday] = useState(true)
+    const [openingHours, setOpeningHours] = useState({
+        monday: { open: '09:00', close: '17:00', closed: false },
+        tuesday: { open: '09:00', close: '17:00', closed: false },
+        wednesday: { open: '09:00', close: '17:00', closed: false },
+        thursday: { open: '09:00', close: '17:00', closed: false },
+        friday: { open: '09:00', close: '17:00', closed: false },
+        saturday: { open: '09:00', close: '17:00', closed: false },
+        sunday: { open: '09:00', close: '17:00', closed: false }
+    });
 
+    const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
+    const [facility, setFacility] = useState(defaultFacility)
 
+    const { isLoading, setLoading } = useRestaurantContext()
 
     const hdlChangeInput = (e) => {
-        console.dir(e.target)
 
         if (e.target.name === "mobile") {
             setInput((prv => ({ ...prv, [e.target.name]: e.target.value })))
         } else {
 
             setInput(prv => ({ ...prv, [e.target.name]: +e.target.value ? +e.target.value : e.target.value }));
+            setError({})
         }
     };
 
-    const hldChangeRadio = (e) => {
-        console.log(e.target.value);
-        setIsOpen(e.target.value)
+
+    const hdlChangeEveryOpen = (e) => {
+        setEverydayTime(prv => ({ ...prv, [e.target.name]: e.target.value }))
+
     }
+
+    const onSetTimeToEveryDay = (e) => {
+
+        setOpeningHours(
+            Object.entries(openingHours).reduce(
+                (acc, day) => ({
+                    ...acc,
+                    [day[0]]: { open: everydayTime.open, close: everydayTime.close, closed: false },
+                }),
+                {}
+            )
+        );
+
+    }
+
+    console.log(facility);
+
+    const handleTimeChange = (day, field, value) => {
+        setOpeningHours(prevState => ({
+            ...prevState,
+            [day]: {
+                ...prevState[day],
+                [field]: value
+            }
+        }));
+    };
+
+    const handleClosedChange = (day) => {
+        setOpeningHours(prevState => ({
+            ...prevState,
+            [day]: {
+                ...prevState[day],
+                closed: !prevState[day].closed
+            }
+        }));
+    };
 
     const hdlSubmit = async (e) => {
         try {
             e.preventDefault()
-            // hdlSetInputGeoData()
-            console.log(input);
 
-            // await createRestaurant(input)
+
+            const validateError = validateCreateRestaurant(input)
+            if (validateError) {
+                toast.error('กรุณากรอกข้อมูลในช่องสีแดงให้ครบ')
+                console.log(validateError);
+                setError(validateError)
+                return
+            }
+            const res = await createRestaurant(input, openingHours, facility)
             toast.success("register successful");
+            setLoading(true)
 
-            navigate('/merchant')
+            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
+            setLoading(false)
             toast.error(error.response?.data.message)
+
+        } finally {
+            setTimeout(() => {
+                setLoading(false)
+            }, 1e3);
+
         }
 
     }
@@ -118,10 +186,18 @@ function BusinessInfo() {
         )
     }
 
+    //facility >> { parking: { id: 1, value: true }, ... 
+    const onChangeFacility = (e) => {
+        setFacility(prv => ({ ...prv, [e.target.name]: { value: Boolean(+e.target.value) } }))
+    }
 
     useEffect(() => {
         fetchCategory()
     }, [])
+
+    useEffect(() => {
+        if (isEveryday) onSetTimeToEveryDay()
+    }, [everydayTime?.open, everydayTime?.close])
 
     useEffect(() => {
         if (searchData.lat === 0) return
@@ -129,147 +205,207 @@ function BusinessInfo() {
 
     }, [searchData.lat, searchData.lng])
 
-    useEffect(() => { hdlSetInputGeoData() }, [subDistrict?.[0]?.subdistrictCode])
+    useEffect(() => {
+        hdlSetInputGeoData();
+    }, [subDistrict?.[0]?.subdistrictCode]);
 
     console.log(input);
+
+    if (isLoading) return <Loading />
+
     return (
         <form onSubmit={hdlSubmit}>
             <div className={`w-full flex flex-col gap-6`}>
-
                 {/* รายละเอียดธุรกิจ */}
-                <Card >
-                    <HrWithText name={'รายละเอียดธุรกิจ'} />
+                <Card>
+                    <HrWithText name={"รายละเอียดธุรกิจ"} />
 
                     <Input
-                        placeholder='ชื่อร้านค้า'
-                        name='restaurantName'
+                        placeholder="ชื่อร้านค้า"
+                        name="restaurantName"
                         value={input.restaurantName}
                         onChange={hdlChangeInput}
-                        label={'ชื่อร้าน'}
+                        label={"ชื่อร้าน"}
+                        errorMessage={error.restaurantName}
                     />
 
                     <Input
-                        placeholder='รายละเอียดร้านค้า'
-                        name='subtitle'
+                        placeholder="รายละเอียดร้านค้า"
+                        name="subtitle"
                         value={input.subtitle}
                         onChange={hdlChangeInput}
-                        label={'รายละเอียดร้านค้า'}
+                        label={"รายละเอียดร้านค้า"}
+                        errorMessage={error.subtitle}
                     />
 
                     {/* <Select label={'เลือกประเภทธุรกิจ'} /> */}
-                    <Select label={'เลือกหมวดหมู่'} name={"categoryId"} value={input.categoryId} items={category} onChange={hdlChangeInput} />
-
-
+                    <Select
+                        label={"เลือกหมวดหมู่"}
+                        name={"categoryId"}
+                        value={input.categoryId}
+                        items={category}
+                        onChange={hdlChangeInput}
+                    />
                 </Card>
 
                 {/* ที่อยู่ */}
                 <Card>
-                    <HrWithText name={'ที่อยู่'} />
+                    <HrWithText name={"ที่อยู่"} />
 
                     <p>เลือกตำแหน่งจากแผนที่</p>
 
                     <GoogleMaps hdlSetLatLng={hdlSetLatLng} />
 
                     <Input
-                        placeholder='ชื่อซอยหรือถนน พร้อมบ้านเลขที่'
-                        label={'ที่อยู่ :'}
-                        name='address'
+                        placeholder="ชื่อซอยหรือถนน พร้อมบ้านเลขที่"
+                        label={"ที่อยู่ :"}
+                        name="address"
                         value={input.address}
                         onChange={hdlChangeInput}
+                        errorMessage={error.address}
                     />
 
-                    <Input
-                        placeholder='ชื่อซอยหรือถนน พร้อมบ้านเลขที่'
+                    {/* <Input
+                        placeholder="ชื่อซอยหรือถนน พร้อมบ้านเลขที่"
                         label={"เส้นทาง :"}
                     // name='resName'
                     // value={input.name}
                     // onChange={hdlChangeInput}
-                    />
+                    /> */}
 
-                    <Select label={'จังหวัด'} name={'provinceCode'} display={'province'} value={input.provinceCode} onChange={hdlChangeInput} items={provinces} />
+                    <Select
+                        label={"จังหวัด"}
+                        name={"provinceCode"}
+                        display={"province"}
+                        value={input.provinceCode}
+                        onChange={hdlChangeInput}
+                        items={provinces}
+                    />
                     {/* {input.provinceCode && */}
-                    <Select label={'เขต/อำเภอ'} name={'districtCode'} display={'district'} value={input.districtCode} onChange={hdlChangeInput} items={district} />
+                    <Select
+                        label={"เขต/อำเภอ"}
+                        name={"districtCode"}
+                        display={"district"}
+                        value={input.districtCode}
+                        onChange={hdlChangeInput}
+                        items={district}
+                    />
                     {/* } */}
                     {/* {input.districtCode && */}
-                    <Select label={'แขวง/ตำบล'} name={'subdistrictCode'} display={'subdistrict'} value={input.subdistrictCode} onChange={hdlChangeInput} items={subDistrict} />
+                    <Select
+                        label={"แขวง/ตำบล"}
+                        name={"subdistrictCode"}
+                        display={"subdistrict"}
+                        value={input.subdistrictCode}
+                        onChange={hdlChangeInput}
+                        items={subDistrict}
+                    />
 
                     {/* } */}
-
                 </Card>
 
                 {/* ข้อมูลติดต่อ */}
                 <Card>
-                    <HrWithText name={'ข้อมูลติดต่อ'} />
+                    <HrWithText name={"ข้อมูลติดต่อ"} />
 
                     <Input
-                        placeholder='เบอร์ติดต่อ'
+                        placeholder="เบอร์ติดต่อ"
                         label={"เบอร์ติดต่อ :"}
-                        name='mobile'
+                        name="mobile"
                         value={input.mobile}
                         onChange={hdlChangeInput}
+                        errorMessage={error.mobile}
                     />
 
                     <Input
-                        placeholder='example@mail.com'
-                        label={'อีเมล :'}
-                        name='email'
+                        placeholder="example@mail.com"
+                        label={"อีเมล :"}
+                        name="email"
                         value={input.email}
                         onChange={hdlChangeInput}
+                        errorMessage={error.email}
                     />
-
                 </Card>
 
                 {/* ข้อมูลเพิ่มเติม */}
                 <Card>
-                    <HrWithText name={'ข้อมูลเพิ่มเติม'} />
-
-                    <OpeningHours label={'วันที่เปิดให้บริการ'} />
-                    <Select name={"priceLength"} items={priceLength} />
-
-
+                    <HrWithText name={"ข้อมูลเพิ่มเติม"} />
 
                     <RadioBtn
-                        label={'ที่จอดรถ'}
-                        name={'parking'}
+                        label={"วันที่เปิดให้บริการ"}
+                        name={"openHours"}
+                        onChange={(e) => setIsEveryday(Boolean(+e.target.value))}
                         choices={[
-                            { text: 'จอดข้างถนน', value: "1" },
-                            { text: 'ที่จอดรถของร้าน', value: "2" },
-                            { text: 'ไม่มีที่จอดรถ', value: "3" },
+                            { text: "เปิดทุกวัน", value: 1 },
+                            { text: "เลือกวันเปิดปิด", value: 0 },
                         ]}
                     />
 
+                    {!isEveryday ? (
+                        <OpeningHours
+                            label={"วันที่เปิดให้บริการ"}
+                            openingHours={openingHours}
+                            handleTimeChange={handleTimeChange}
+                            handleClosedChange={handleClosedChange}
+                        />
+                    ) : (
+                        <>
+                            <Input type="time" name={"open"} label={"เลือกเวลาเปิดของทุกวัน"} value={everydayTime.open} onChange={hdlChangeEveryOpen} />
+                            <Input type="time" name={"close"} label={"เลือกเวลาปิดของทุกวัน"} value={everydayTime.close} onChange={hdlChangeEveryOpen} />
+                        </>
+                    )}
+
+                    <Select
+                        name={"priceLength"}
+                        items={priceLength}
+                        label={"ช่วงราคา"}
+                        onChange={hdlChangeInput}
+                    />
+
                     <RadioBtn
-                        label={'รับบัตรเครดิต'}
-                        name={'creditCard'}
+                        label={"ที่จอดรถ"}
+                        name={"parking"}
                         choices={[
-                            { text: 'ไม่ระบุ', value: "0" },
-                            { text: 'ใช่', value: "1" },
-                            { text: 'ไม่ใช่', value: "2" },
+                            { text: "มี", value: 1 },
+                            { text: "ไม่มี", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
                     <RadioBtn
-                        label={'รับจองล่วงหน้า'}
-                        name={'booking'}
+                        label={"ไวไฟ"}
+                        name={"wifi"}
                         choices={[
-                            { text: 'ไม่ระบุ', value: "0" },
-                            { text: 'ใช่', value: "1" },
-                            { text: 'ไม่ใช่', value: "2" },
+                            { text: "ใช่", value: 1 },
+                            { text: "ไม่ใช่", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
 
-
-
+                    <RadioBtn
+                        label={"รับบัตรเครดิต"}
+                        name={"creditCard"}
+                        choices={[
+                            { text: "ใช่", value: 1 },
+                            { text: "ไม่ใช่", value: 0 },
+                        ]}
+                        onChange={onChangeFacility}
+                    />
+                    <RadioBtn
+                        label={"แอลกอฮอล์"}
+                        name={"alcohol"}
+                        choices={[
+                            { text: "มี", value: 1 },
+                            { text: "ไม่มี", value: 0 },
+                        ]}
+                        onChange={onChangeFacility}
+                    />
                 </Card>
 
-
-
                 <div className="w-full">
-                    <Button name={'บันทึก'} />
+                    <Button name={"บันทึก"} />
                 </div>
-
             </div>
         </form>
-
     );
 }
 

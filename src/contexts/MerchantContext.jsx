@@ -37,8 +37,10 @@ function MerchantContextProvider({ children }) {
         setCategory(res.data.categories)
     }
 
-    const createRestaurant = async (data) => {
-        const res = await merchantCreateRestaurant(data)
+    const createRestaurant = async (resData, openHours, facility) => {
+        // console.log(openHours);
+        console.log(facility);
+        return await merchantCreateRestaurant(resData, openHours, facility)
         // console.log(res);
     }
 
@@ -58,7 +60,7 @@ function MerchantContextProvider({ children }) {
         console.log(data, 'data');
         const res = await gistdaApi(data)
         const geoData = await fetchGeoDataByName(res.data)
-        console.log(geoData);
+
         setProvince(prv => ([...prv, geoData.data.provinceData]))
         setDistrict(prv => ([...prv, geoData.data.districtData]))
         setSubDistrict(prv => ([...prv, geoData.data.subDistrictData]))
