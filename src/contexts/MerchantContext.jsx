@@ -41,8 +41,19 @@ function MerchantContextProvider({ children }) {
     setCategory(res.data.categories)
   }
 
-  const createRestaurant = async (data) => {
-    const res = await merchantCreateRestaurant(data)
+  // const fetchAreaGeoData = async (postalCode) => {
+  //     console.log(postalCode);
+  //     const res = await fetchGeoDataByPostalCode(postalCode)
+  //     console.log(res.data.district);
+  //     setProvince(prv => [...prv, res.data.province])
+  //     setDistrict(prv => [...prv, res.data.district])
+  //     console.log('fetchGeoDataByPostalCode', res);
+  // }
+
+  const createRestaurant = async (resData, openHours, facility) => {
+    // console.log(openHours);
+    console.log(facility)
+    return await merchantCreateRestaurant(resData, openHours, facility)
     // console.log(res);
   }
 
@@ -62,7 +73,7 @@ function MerchantContextProvider({ children }) {
     console.log(data, "data")
     const res = await gistdaApi(data)
     const geoData = await fetchGeoDataByName(res.data)
-    console.log(geoData)
+
     setProvince((prv) => [...prv, geoData.data.provinceData])
     setDistrict((prv) => [...prv, geoData.data.districtData])
     setSubDistrict((prv) => [...prv, geoData.data.subDistrictData])

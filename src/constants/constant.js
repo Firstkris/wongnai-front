@@ -45,3 +45,12 @@ export const imagePlaceHolder = [
     img: "https://placehold.co/400",
   },
 ]
+
+
+export const defaultFacility = {
+  parking: { id: 1, value: true },
+  wifi: { id: 2, value: true },
+  creditCard: { id: 3, value: true },
+  alcohol: { id: 4, value: true }
+
+}

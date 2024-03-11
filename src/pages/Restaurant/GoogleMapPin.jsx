@@ -11,7 +11,7 @@ const GoogleMaps = ({ hdlSetLatLng }) => {
     const [infoWindowContent, setInfoWindowContent] = useState("");
     const [map, setMap] = useState(null);
 
-    console.log(markers);
+    // console.log(markers);
 
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const GoogleMaps = ({ hdlSetLatLng }) => {
             }
         );
     };
-    console.log(infoWindowContent);
+    // console.log(infoWindowContent);
 
     return (
         <LoadScript googleMapsApiKey="AIzaSyAFWg9sVBiyu27dgrr75LOwOHOrFgufSSs">

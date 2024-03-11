@@ -1,34 +1,38 @@
-import axios from "../configs/axios"
-import { getToken } from "../utils/local-storage"
+import axios from "../configs/axios";
+import { getToken } from "../utils/local-storage";
 
 export const userRegister = async (fromData) =>
-  await axios.post("/user/register", fromData)
+  await axios.post("/user/register", fromData);
 export const userLogin = async (fromData) =>
-  await axios.post("/user/login", fromData)
+  await axios.post("/user/login", fromData);
 export const userLoginWithFacebook = async (fromData) =>
-  await axios.post("/user/loginWithFace", fromData)
+  await axios.post("/user/loginWithFace", fromData);
 
 export const fetchMe = async () =>
   await axios.get("/user/me", {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
-  })
+  });
 export const userLoginWithFace = async (fromData) =>
-  await axios.post("/user/loginWithFace", fromData)
+  await axios.post("/user/loginWithFace", fromData);
 
 ///here
 export const userBookmark = async (restaurantId) =>
-  await axios.post("/user/bookmark", { restaurantId })
+  await axios.post("/user/bookmark", { restaurantId });
 export const deleteBookmarkById = async (restaurantId) =>
-  await axios.post("/user/bookmark", { restaurantId })
+  await axios.post("/user/bookmark", { restaurantId });
 
 export const createReview = async (formData) =>
-  await axios.post("/createReview", formData)
-export const deleteReviewById = async (id) =>
-  await axios.delete(`/user/review/${id}`)
+  await axios.post("/user/review", formData);
 
-export const getUserById = async (userId) => await axios.get(`/user/${userId}`)
+export const getUserById = async (userId) => await axios.get(`/user/${userId}`);
+
+export const deleteReviewById = async (id) =>
+  await axios.delete(`/user/review/${id}`);
 
 export const getUserBookmark = async (restaurantId) =>
-  await axios.get(`/user/bookmark/${restaurantId}`)
+  await axios.get(`/user/bookmark/${restaurantId}`);
+
+export const getChatDataByUserId = async (userId) =>
+  await axios.get(`/user/chat-box/${userId}`);

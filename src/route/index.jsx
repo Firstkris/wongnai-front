@@ -4,8 +4,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { FilterPage } from "../pages/FilterPage";
 
 import Header from "../layouts/Header";
+import HeaderMerchant from "../pages/MerchantPage/HeaderMerchant";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
-
+import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant"
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
@@ -17,9 +18,9 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-// import { Chat, ChatRoomeA } from "../pages/Chat";
-// import Chat2 from "../pages/Chat2";
-// import Chat3 from "../pages/Chat3";
+import { Chat, ChatRoomeA } from "../pages/Chat";
+import Chat2 from "../pages/Chat2";
+import Chat3 from "../pages/Chat3";
 // import MerchantContextProvider, {
 //   MerchantContext,
 // } from "../contexts/MerchantContext";
@@ -31,22 +32,24 @@ import HomePage from "../pages/HomePage";
 import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 // import { ChatRoomeA } from "../pages/Chat";
 import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
+import UiChat from "../pages/User/UiChat";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
-  // {
-  //   path: "/chat1",
-  //   element: (
-  //     <div>
-  //       <ChatRoomeA />
-  //       {/* <Chat /> */}
-  //       {/* <Chat2 /> */}
-  //     </div>
-  //   ),
-  // },
+  {
+    path: "/chat1",
+    element: (
+      <div>
+        <Header />
+        <UiChat />
+      </div>
+    ),
+  },
   // {
   //   path: "/chat2",
   //   element: (
   //     <div>
+  //       <Header />
+
   //       {/* <Chat /> */}
   //       <Chat2 />
   //     </div>
@@ -56,6 +59,8 @@ const router = createBrowserRouter([
   //   path: "/chat3",
   //   element: (
   //     <div>
+  //       <Header />
+
   //       {/* <Chat /> */}
   //       <Chat3 />
   //     </div>
@@ -74,7 +79,6 @@ const router = createBrowserRouter([
         path: "",
         element: <HomePage />,
       },
-
       {
         path: "/profile",
         element: (
@@ -106,7 +110,7 @@ const router = createBrowserRouter([
         element: <BookmarkPage />,
       },
 
-      { path: "/review", element: <UserReview /> },
+      { path: "/review/:restaurantsId", element: <UserReview /> },
       {
         path: "/login",
         element: (
@@ -125,16 +129,11 @@ const router = createBrowserRouter([
     path: "/merchant",
     element: (
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <HeaderMerchant />
         <Outlet />
       </div>
     ),
     children: [
-      {
-        path: "/merchant",
-        element: <MerchantLoginPage />,
-      },
-
       {
         path: "/merchant/createRestaurant/:merchantId",
         element: (
@@ -143,10 +142,25 @@ const router = createBrowserRouter([
           </MerchantContextProvider>
         ),
       },
+      {
+        path: "/merchant/editRestaurant/:merchantId/:restaurantId",
+        element: (
+          <MerchantContextProvider>
+            <RestaurantRegisterPage />
+          </MerchantContextProvider>
+        ),
+      },
 
       {
-        path: "/merchant/:restaurantId",
+        path: "/merchant/:merchantId/:restaurantId",
         element: <MerchantHomePage />,
+      },
+      {
+        path: "/merchant",
+        element:
+          <RedirectIfAuthenticatedMerchant>
+            <MerchantLoginPage />
+          </RedirectIfAuthenticatedMerchant>,
       },
       {
         path: "/merchant/register",

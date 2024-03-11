@@ -1,3 +1,7 @@
+import io from "socket.io-client"
+
+const socket = io.connect("http://localhost:8888/")
+
 import { useState, createContext } from "react"
 import {
   filterPageGetRestaurant,
@@ -21,12 +25,14 @@ export const RestaurantContextProvider = ({ children }) => {
   const [reviewsRating, setReviewsRating] = useState(null)
 
   const { user } = useUser()
+  const [restaurant, setRestaurant] = useState("")
 
   const [nameRestaurant, setNameRestaurant] = useState([])
   const fetch = async () => {
     const data = await filterPageGetRestaurant()
     setNameRestaurant(data.data.restaurants)
   }
+
   useEffect(() => {
     fetch()
   }, [])
@@ -46,9 +52,19 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetchFilterData = async (filterData) => {
     try {
       if (Object.keys(filterData).length === 0) {
-        return console.log("no filter")
+        console.log("no filter")
+        return
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
-        return user ? fetchRestaurantWithUserLogin() : fetchFilterPage()
+        console.log("no filter")
+        return
+      } else {
+        if (user) {
+          console.log("have user")
+          fetchRestaurantWithUserLogin()
+        } else {
+          console.log("no user")
+          fetchFilterPage()
+        }
       }
       const filterDataParams = {
         districtId: filterData?.districtNameTh,
@@ -141,12 +157,16 @@ export const RestaurantContextProvider = ({ children }) => {
         clearFilters,
         fetchRestaurantWithUserLogin,
         isLoading,
-
+        setLoading,
         fetchRestaurantAndBookmarkById,
         restaurantData,
         filterByRating,
         reviewsRating,
         nameRestaurant,
+        setRestaurantPage,
+        restaurant,
+        setRestaurant,
+        socket,
       }}
     >
       {children}

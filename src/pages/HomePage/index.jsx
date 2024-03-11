@@ -1,45 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import RestaurantPreview from '../../components/RestaurantPreview';
 
+import { Link } from 'react-router-dom';
+import { useRestaurant } from '../../hooks/hooks';
+
+
 function HomePage() {
-  const [restaurants, setRestaurants] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('/posts');
-      const data = await response.json();
-      setRestaurants(data);
-    };
-
-    fetchData();
-  }, []);
+  const { nameRestaurant:restaurants } = useRestaurant();
 
   return (
     <div className='bg-'>
       <div className='flex justify-around'>
-        <a href='/homepage'>
+        <Link to='/homepage'>
           <img src='../../icons/fork-and-knife.png' alt='' />
           <h2>ร้านอาหาร</h2>
-        </a>
-        <a href='/homepage'>
+        </Link>
+        <Link to='/homepage'>
           <img src='../../icons/cup-of-drink.png' alt='' />
           <h2>กาแฟ/ของหวาน</h2>
-        </a>
-        <a href='/homepage'>
+        </Link>
+        <Link to='/homepage'>
           <img src='../../icons/cocktail.png' alt='' />
           <h2>บาร์/cocktail</h2>
-        </a>
+        </Link>
       </div>
       <div className='bg-white m-auto flex flex-col justify-center align-middle w-70 border-2 rounded-lg'>
         <h1>แนะนำสำหรับคุณ</h1>
         <div className='flex gap-2'>
-          <a href='/homepage'>ร้านยอดนิยม</a>
-          <a href='/homepage'>ร้านใกล้ฉัน</a>
+          <a href='/'>ร้านยอดนิยม</a>
+          <a href='/'>ร้านใกล้ฉัน</a>
         </div>
         <div>
-          <div>
-            {restaurants.map((restaurant) => (
-              <RestaurantPreview key={restaurants.id} post={restaurant} />
+          <div className='flex  w-52 h-52'>
+                   
+            {restaurants.slice(0,6).map((restaurant) => (
+              <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
         </div>

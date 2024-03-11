@@ -1,21 +1,27 @@
 import React from "react";
-import { useRef } from "react";
 import { ButtonRestaurantPage } from "../../components/restaurantPageComponents/ButtonRestaurantPage";
-import { IconMessage } from "../../components/icon-svg/IconMessage";
-import { IconCamera } from "../../components/icon-svg/IconCamera";
-import { BookmarkIcon, EditInfoIcon } from "../../icons/icon";
+import { DeleteIcon, EditInfoIcon, UploadIcon } from "../../icons/icon";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import AddImgModal from "./AddImgModal";
+import DeleteImgModal from "./DeleteImgModal";
+import { Loading } from "../../components/Loading";
+import { useRestaurant } from "../../hooks/hooks";
 
-export function MerchantTitleCard({ restaurantData, bookmarks }) {
-  const bookmarkRef = useRef();
+export function MerchantTitleCard({ restaurantData, setOnFetch }) {
+  const navigate = useNavigate();
+  const { setIsLoading } = useRestaurant();
+  const { restaurantId, merchantId } = useParams();
+  const [addToggle, setAddToggle] = useState(false);
+  const [deleteToggle, setDeleteToggle] = useState(false);
+  const [closeOrOpen, setCloseOrOpen] = useState("");
+
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
       <IconCheckmark /> OFFICIAL
     </div>
   );
-
-  const handleClickBookmark = () => {
-    bookmarkRef.current.click();
-  };
 
   return (
     <div className=" w-full bg-white  my-4 rounded-md">
@@ -37,27 +43,81 @@ export function MerchantTitleCard({ restaurantData, bookmarks }) {
           </p>
         </div>
         <div>
-          {restaurantData?.isOpen ? (
+          {/* {restaurantData?.isOpen ? (
             <p className="text-green-500 text-xs">เปิดอยู่</p>
           ) : (
             <p className="text-red-500 text-xs">ปิดอยู่</p>
+          )} */}
+
+          {restaurantData?.isOpen ? (
+            <select>
+              <option className="text-green-600">เปิดอยู่</option>
+              <option className="text-red-500">ปิดอยู่</option>
+            </select>
+          ) : (
+            <select
+              className={
+                closeOrOpen == "ปิดอยู่" ? "text-red-500" : "text-green-600"
+              }
+              value={closeOrOpen}
+            >
+              <option
+                className="text-red-500"
+                value="ปิดอยู่"
+                onChange={(e) => setCloseOrOpen(e.target.value)}
+              >
+                ปิดอยู่
+              </option>
+              <option
+                className="text-green-600"
+                value="เปิดอยู่"
+                onChange={(e) => setCloseOrOpen(e.target.value)}
+              >
+                เปิดอยู่
+              </option>
+            </select>
           )}
-          {/* <ButtonRestaurantPage
-            color="bg-red_primary hover:bg-red_primary_hv"
-            textColor="text-white"
-          >
-            <EditInfoIcon />
-            แก้ไขข้อมูล
-          </ButtonRestaurantPage> */}
         </div>
       </div>
       <div className="px-4 pb-4 flex justify-end gap-2">
         <ButtonRestaurantPage
+          onClick={() =>
+            navigate(`/merchant/editRestaurant/${merchantId}/${restaurantId}`)
+          }
           color="bg-red_primary hover:bg-red_primary_hv"
           textColor="text-white"
         >
           <EditInfoIcon />
           แก้ไขข้อมูล
+        </ButtonRestaurantPage>
+
+        {addToggle ? (
+          <AddImgModal
+            setOnFetch={setOnFetch}
+            setIsLoading={setIsLoading}
+            setAddToggle={setAddToggle}
+          />
+        ) : null}
+
+        <ButtonRestaurantPage
+          color="bg-gray-200 hover:bg-gray-300"
+          textColor=""
+          onClick={() => setAddToggle((c) => !c)}
+        >
+          <UploadIcon />
+          เพิ่มรูปภาพ
+        </ButtonRestaurantPage>
+
+        {deleteToggle ? (
+          <DeleteImgModal setDeleteToggle={setDeleteToggle} />
+        ) : null}
+
+        <ButtonRestaurantPage
+          color="bg-gray-200 hover:bg-gray-300"
+          textColor=""
+          onClick={() => setDeleteToggle((c) => !c)}
+        >
+          <DeleteIcon /> ลบรูปภาพ
         </ButtonRestaurantPage>
       </div>
     </div>
