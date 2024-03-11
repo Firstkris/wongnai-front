@@ -21,12 +21,17 @@ import { defaultFacility, priceLength } from "../../constants/constant"
 import { GISTDA_API_KEY } from "../../constants/constant";
 import useRestaurantContext from "../../hooks/useRestaurantContext";
 import { Loading } from "../../components/Loading";
+import { fetchBusinessInfo } from "../../apis/merchant";
 
 
-function BusinessInfo() {
+function EditBusinessInfo() {
 
     const navigate = useNavigate()
-    const { merchantId } = useParams()
+    const { merchantId, restaurantId } = useParams()
+    const [defaultBusinessInfo, setDefaultBusinessInfo] = useState()
+
+    // const { getBusinessInfoById } = useMerchantContext()
+
 
     const {
         fetchCategory,
@@ -78,6 +83,7 @@ function BusinessInfo() {
         sunday: { open: '09:00', close: '17:00', closed: false }
     });
 
+
     const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
     const [facility, setFacility] = useState(defaultFacility)
 
@@ -114,7 +120,7 @@ function BusinessInfo() {
 
     }
 
-    console.log(facility);
+    // console.log(facility);?
 
     const handleTimeChange = (day, field, value) => {
         setOpeningHours(prevState => ({
@@ -191,6 +197,25 @@ function BusinessInfo() {
         setFacility(prv => ({ ...prv, [e.target.name]: { value: Boolean(+e.target.value) } }))
     }
 
+    const getBusinessInfoById = async (restaurantId) => {
+        const res = await fetchBusinessInfo(restaurantId)
+        // setDefaultBusinessInfo(res.data.restaurant)
+        // setInput(res.data.restaurant)
+        const {
+            openHours,
+            facilitiesWithRestaurantId,
+            ...restaurantData } = res.data.restaurant;
+
+        console.log(openHours, facilitiesWithRestaurantId, restaurantData);
+
+        setInput(restaurantData)
+        setFacility(facilitiesWithRestaurantId)
+        setOpeningHours(openHours.reduce((acc, day) => { }, []))
+
+    }
+
+    // console.log(defaultBusinessInfo);
+
     useEffect(() => {
         fetchCategory()
     }, [])
@@ -209,7 +234,11 @@ function BusinessInfo() {
         hdlSetInputGeoData();
     }, [subDistrict?.[0]?.subdistrictCode]);
 
-    console.log(input);
+    useEffect(() => {
+        getBusinessInfoById(+restaurantId)
+    }, [restaurantId])
+
+
 
     if (isLoading) return <Loading />
 
@@ -218,7 +247,7 @@ function BusinessInfo() {
             <div className={`w-full flex flex-col gap-6`}>
                 {/* รายละเอียดธุรกิจ */}
                 <Card>
-                    <HrWithText name={"รายละเอียดธุรกิจ"} />
+                    <HrWithText name={"แก้ไขรายละเอียดธุรกิจ"} />
 
                     <Input
                         placeholder="ชื่อร้านค้า"
@@ -409,4 +438,4 @@ function BusinessInfo() {
     );
 }
 
-export default BusinessInfo;
+export default EditBusinessInfo;

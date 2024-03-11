@@ -5,17 +5,20 @@ import { useState } from "react";
 import validateLogin from '../../validations/validate-merLogin'; 
 import { useAuth } from "../../feature/auth/contexts/AuthContext";
 import * as Token from "../../../src/utils/local-storage";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { merchantLogin } from "../../apis/merchant";
 
 function MerchantLoginPage() {
   const [validateError, setValidateError] = useState(null);
   const { setUser, user } = useAuth();
   const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
   const navigate = useNavigate();
-  const { login: merchantLogin } = useAuth();
+ 
   const handleChangeInput = (e) => {
     setValidateError("");
     setInput({ ...input, [e.target.name]: e.target.value });
+
   };
   const handleSubmit = async (e) => {
     try {
@@ -25,10 +28,11 @@ function MerchantLoginPage() {
       if (validate) return setValidateError("username or password invalid");
       
       const response = await merchantLogin(input);
-      console.log(response)
-      Token.setToken(response.data.token);
+      
+      Token.setToken(response.data.accessToken);
+      
       setUser(response.data.merchant);
-      navigate("/");
+      navigate("/merchant");
 
    
     } catch (err) {
@@ -93,8 +97,7 @@ function MerchantLoginPage() {
     </div>
   );
 }
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
 
 
 export default MerchantLoginPage;

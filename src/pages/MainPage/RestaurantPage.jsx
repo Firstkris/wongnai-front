@@ -5,7 +5,7 @@ import {
   RestaurantMapCard,
   TitleRestaurantCard,
   RatingRestaurantCard,
-} from "../../components/RestaurantPageCard";
+} from "../../components/RestaurantPageCar";
 import { useRestaurant } from "../../hooks/hooks";
 import { Loading } from "../../components/Loading";
 import NavRestaurantImg from "./NavRestaurantImg";

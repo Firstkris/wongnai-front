@@ -11,10 +11,11 @@ import { useRestaurant } from "../../hooks/hooks";
 
 export function MerchantTitleCard({ restaurantData, setOnFetch }) {
   const navigate = useNavigate();
-  const { isLoading, setIsLoading } = useRestaurant();
+  const { setIsLoading } = useRestaurant();
   const { restaurantId, merchantId } = useParams();
   const [addToggle, setAddToggle] = useState(false);
   const [deleteToggle, setDeleteToggle] = useState(false);
+  const [closeOrOpen, setCloseOrOpen] = useState("");
 
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
@@ -42,10 +43,39 @@ export function MerchantTitleCard({ restaurantData, setOnFetch }) {
           </p>
         </div>
         <div>
-          {restaurantData?.isOpen ? (
+          {/* {restaurantData?.isOpen ? (
             <p className="text-green-500 text-xs">เปิดอยู่</p>
           ) : (
             <p className="text-red-500 text-xs">ปิดอยู่</p>
+          )} */}
+
+          {restaurantData?.isOpen ? (
+            <select>
+              <option className="text-green-600">เปิดอยู่</option>
+              <option className="text-red-500">ปิดอยู่</option>
+            </select>
+          ) : (
+            <select
+              className={
+                closeOrOpen == "ปิดอยู่" ? "text-red-500" : "text-green-600"
+              }
+              value={closeOrOpen}
+            >
+              <option
+                className="text-red-500"
+                value="ปิดอยู่"
+                onChange={(e) => setCloseOrOpen(e.target.value)}
+              >
+                ปิดอยู่
+              </option>
+              <option
+                className="text-green-600"
+                value="เปิดอยู่"
+                onChange={(e) => setCloseOrOpen(e.target.value)}
+              >
+                เปิดอยู่
+              </option>
+            </select>
           )}
         </div>
       </div>
