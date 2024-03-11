@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React from "react"
+import { useState } from "react"
 import {
   ChatIcon,
   DownTriangleIcon,
@@ -8,45 +8,45 @@ import {
   SettingIcon,
   LogoutIcon,
   ShopIcon,
-} from "../../icons/icon";
-import { Link } from "react-router-dom";
-import { useRef } from "react";
-import { useEffect } from "react";
-import { useUser } from "../../feature/user/contexts/UserContext";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
+} from "../../icons/icon"
+import { Link } from "react-router-dom"
+import { useRef } from "react"
+import { useEffect } from "react"
+import { useUser } from "../../feature/user/contexts/UserContext"
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext"
 
 export default function HeaderToggleMerchant() {
-  const { user, logout } = useUser();
-  const { merchant } = useAuth();
+  const { user, logout } = useUser()
+  const { merchant } = useMerchant()
 
-  const [isToggle, setIsToggle] = useState(false);
-  const [isUserToggle, setIsUserToggle] = useState(false);
+  const [isToggle, setIsToggle] = useState(false)
+  const [isUserToggle, setIsUserToggle] = useState(false)
 
-  const dropdown = useRef(null);
+  const dropdown = useRef(null)
 
-  const firstName = merchant?.name?.split(" ")[0];
+  const firstName = merchant?.name?.split(" ")[0]
 
   useEffect(() => {
     if (isToggle) {
       const handleClickOutSide = (e) => {
         if (dropdown.current && !dropdown.current.contains(e.target))
-          setIsToggle(false);
-      };
-      document.addEventListener("mouseup", handleClickOutSide);
-      return () => document.removeEventListener("mouseup", handleClickOutSide);
+          setIsToggle(false)
+      }
+      document.addEventListener("mouseup", handleClickOutSide)
+      return () => document.removeEventListener("mouseup", handleClickOutSide)
     }
-  }, [isToggle]);
+  }, [isToggle])
 
   useEffect(() => {
     if (isUserToggle) {
       const handleClickOutSide = (e) => {
         if (dropdown.current && !dropdown.current.contains(e.target))
-          setIsUserToggle(false);
-      };
-      document.addEventListener("mouseup", handleClickOutSide);
-      return () => document.removeEventListener("mouseup", handleClickOutSide);
+          setIsUserToggle(false)
+      }
+      document.addEventListener("mouseup", handleClickOutSide)
+      return () => document.removeEventListener("mouseup", handleClickOutSide)
     }
-  }, [isUserToggle]);
+  }, [isUserToggle])
 
   return (
     <div className="flex gap-2 relative z-40" ref={dropdown}>
@@ -75,7 +75,7 @@ export default function HeaderToggleMerchant() {
           <div
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => {
-              setIsUserToggle((c) => !c);
+              setIsUserToggle((c) => !c)
             }}
           >
             <DownTriangleIcon className="w-6 h-6 mt-2" />
@@ -178,5 +178,5 @@ export default function HeaderToggleMerchant() {
         ""
       )}
     </div>
-  );
+  )
 }

@@ -5,20 +5,6 @@ import {
   RestaurantDetailCard,
   RestaurantMapCard,
   TitleRestaurantCard,
-<<<<<<< HEAD
-} from "../../components/RestaurantPageCar";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { Loading } from "../../components/Loading";
-import { useState } from "react";
-import { MerchantTitleCard } from "./MerchantTitleCard";
-import { useNavigate } from "react-router-dom";
-import { AddIcon, CrossIcon } from "../../icons/icon";
-import { Link } from "react-router-dom";
-import { fetchMenuByRestaurantId } from "../../apis/merchant";
-import AddMenuModal from "./AddMenuModal";
-import axios from "../../configs/axios";
-=======
 } from "../../components/RestaurantPageCard"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
@@ -26,9 +12,11 @@ import { Loading } from "../../components/Loading"
 import { useState } from "react"
 import { MerchantTitleCard } from "./MerchantTitleCard"
 import { useNavigate } from "react-router-dom"
-import { AddIcon } from "../../icons/icon"
+import { AddIcon, CrossIcon } from "../../icons/icon"
 import { Link } from "react-router-dom"
->>>>>>> a29c063eda18e849a1dfa20ad25356271fd5dfad
+import { fetchMenuByRestaurantId } from "../../apis/merchant"
+import AddMenuModal from "./AddMenuModal"
+import axios from "../../configs/axios"
 
 export default function MerchantHomePage() {
   const {
@@ -36,32 +24,21 @@ export default function MerchantHomePage() {
     restaurantData,
     isLoading,
     nameRestaurant,
-<<<<<<< HEAD
-  } = useRestaurant();
-  const navigate = useNavigate();
-  const params = useParams();
-  const { setRestaurantData } = useRestaurant();
-
-  const { merchantId, restaurantId } = useParams();
-  const [isSelect, setIsSelect] = useState(params.restaurantId);
-  const [onFetch, setOnFetch] = useState();
-  const [menu, setMenu] = useState([]);
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const [addMenu, setAddMenu] = useState(false);
-  const [onDelete, setOnDelete] = useState(false);
-  const [selectDelete, setSelectDelete] = useState({});
-
-  // console.log("params", params.restaurantId);
-=======
   } = useRestaurant()
+  const navigate = useNavigate()
   const params = useParams()
+  const { setRestaurantData } = useRestaurant()
 
-  const { merchantId } = useParams()
+  const { merchantId, restaurantId } = useParams()
   const [isSelect, setIsSelect] = useState(params.restaurantId)
   const [onFetch, setOnFetch] = useState()
-  const navigate = useNavigate()
-  console.log("params", params.restaurantId)
->>>>>>> a29c063eda18e849a1dfa20ad25356271fd5dfad
+  const [menu, setMenu] = useState([])
+  const [toggleMenu, setToggleMenu] = useState(false)
+  const [addMenu, setAddMenu] = useState(false)
+  const [onDelete, setOnDelete] = useState(false)
+  const [selectDelete, setSelectDelete] = useState({})
+
+  // console.log("params", params.restaurantId);
 
   // console.log("restaurantData", restaurantData.restaurant.restaurantName);
   console.log("nameRestaurant", nameRestaurant)
@@ -77,22 +54,22 @@ export default function MerchantHomePage() {
   }
 
   const run = async () => {
-    const data = await fetchMenuByRestaurantId(restaurantId);
-    setMenu(data.data.data);
+    const data = await fetchMenuByRestaurantId(restaurantId)
+    setMenu(data.data.data)
     // console.log("menu", data);
-  };
+  }
 
   useEffect(() => {
-    run();
-  }, []);
+    run()
+  }, [])
 
   const handleDelete = async () => {
-    console.log(selectDelete, "select **********************************");
-    const data = await axios.delete(`/merchant/menu/${selectDelete.id}`);
-    setMenu((r) => r.filter((el) => el.id != selectDelete.id));
-    setOnDelete((c) => !c);
-  };
-  console.log(selectDelete);
+    console.log(selectDelete, "select **********************************")
+    const data = await axios.delete(`/merchant/menu/${selectDelete.id}`)
+    setMenu((r) => r.filter((el) => el.id != selectDelete.id))
+    setOnDelete((c) => !c)
+  }
+  console.log(selectDelete)
 
   return (
     // isLoading ? (
@@ -195,10 +172,10 @@ export default function MerchantHomePage() {
                           <div
                             className="absolute right-2 top-2 cursor-pointer"
                             onClick={() => {
-                              console.log(el);
+                              console.log(el)
 
-                              setSelectDelete(el);
-                              setOnDelete((c) => !c);
+                              setSelectDelete(el)
+                              setOnDelete((c) => !c)
                             }}
                           >
                             <CrossIcon
@@ -256,8 +233,8 @@ export default function MerchantHomePage() {
                             <div
                               className="absolute right-2 top-2 cursor-pointer"
                               onClick={() => {
-                                setSelectDelete(el);
-                                setOnDelete((c) => !c);
+                                setSelectDelete(el)
+                                setOnDelete((c) => !c)
                               }}
                             >
                               <CrossIcon

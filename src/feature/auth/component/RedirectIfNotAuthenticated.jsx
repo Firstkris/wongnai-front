@@ -1,9 +1,7 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { Navigate } from "react-router-dom"
+import { useMerchant } from "../contexts/MerchantContext"
 
 export default function ProtectedMerchant({ children }) {
-  const { user } = useAuth();
-  // console.log({user})
-  return user ? children : <Navigate to="/merchant/login"  />;
+  const { merchant } = useMerchant()
+  return merchant ? children : <Navigate to={`/merchant/login`} />
 }
- 

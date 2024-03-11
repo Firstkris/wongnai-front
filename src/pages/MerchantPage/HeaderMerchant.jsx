@@ -1,43 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 import {
   LocationIcon,
   MessageIcon,
   SearchIcon,
   DownTriangleSolidIcon,
-} from "../../icons/icon";
-import { useRestaurant } from "../../hooks/hooks";
-import { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
-import HeaderToggleMerchant from "./HeaderToggleMerchant";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
+} from "../../icons/icon"
+import { useRestaurant } from "../../hooks/hooks"
+import { useState } from "react"
+import { useRef } from "react"
+import { useEffect } from "react"
+import HeaderToggleMerchant from "./HeaderToggleMerchant"
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext"
 
 export default function HeaderMerchant() {
-  const { merchant } = useAuth();
+  const { merchant } = useMerchant()
 
-  const { nameRestaurant } = useRestaurant();
-  const [isToggle, setIsToggle] = useState(true);
+  const { nameRestaurant } = useRestaurant()
+  const [isToggle, setIsToggle] = useState(true)
 
-  console.log(nameRestaurant);
-  const [text, setText] = useState("");
-  const searchBar = useRef(null);
+  console.log(nameRestaurant)
+  const [text, setText] = useState("")
+  const searchBar = useRef(null)
 
   const handleSearch = (e) => {
-    setText(e.target.value);
-  };
+    setText(e.target.value)
+  }
   // 'adsf'.includes
 
   useEffect(() => {
     if (isToggle) {
       const handleClickOutSide = (e) => {
         if (searchBar.current && !searchBar.current.contains(e.target))
-          setIsToggle(false);
-      };
-      document.addEventListener("mouseup", handleClickOutSide);
-      return () => document.removeEventListener("mouseup", handleClickOutSide);
+          setIsToggle(false)
+      }
+      document.addEventListener("mouseup", handleClickOutSide)
+      return () => document.removeEventListener("mouseup", handleClickOutSide)
     }
-  }, [isToggle]);
+  }, [isToggle])
 
   return (
     <header
@@ -83,5 +83,5 @@ export default function HeaderMerchant() {
       </div> */}
       <HeaderToggleMerchant />
     </header>
-  );
+  )
 }

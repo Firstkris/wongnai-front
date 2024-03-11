@@ -1,45 +1,57 @@
-import React from "react";
-import Input from "../../components/Input";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import validateLogin from '../../validations/validate-merLogin'; 
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
-import * as Token from "../../../src/utils/local-storage";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { merchantLogin } from "../../apis/merchant";
+import React from "react"
+import Input from "../../components/Input"
+import { Link } from "react-router-dom"
+import { useState } from "react"
+import validateLogin from "../../validations/validate-merLogin"
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext"
+import * as Token from "../../../src/utils/local-storage"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { merchantLogin } from "../../apis/merchant"
+import * as merchantApi from "../../apis/merchant"
 
 function MerchantLoginPage() {
-  const [validateError, setValidateError] = useState(null);
-  const { setUser, user } = useAuth();
-  const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
-  const navigate = useNavigate();
- 
-  const handleChangeInput = (e) => {
-    setValidateError("");
-    setInput({ ...input, [e.target.name]: e.target.value });
+  const [validateError, setValidateError] = useState(null)
+  const { setMerchant, merchant, setInitialLoading } = useMerchant()
+  const [input, setInput] = useState({ usernameOrMobile: "", password: "" })
+  const navigate = useNavigate()
 
-  };
+  useEffect(() => {
+    if (Token.getToken()) {
+      merchantApi
+        .fetchMe()
+        .then((res) => {
+          setMerchant(res.data.merchant)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => setInitialLoading(false))
+    } else {
+      setInitialLoading(false)
+    }
+  }, [])
+
+  const handleChangeInput = (e) => {
+    setValidateError("")
+    setInput({ ...input, [e.target.name]: e.target.value })
+  }
   const handleSubmit = async (e) => {
     try {
-      e.preventDefault();
+      e.preventDefault()
 
-      const validate = validateLogin(input);
-      if (validate) return setValidateError("username or password invalid");
-      
-      const response = await merchantLogin(input);
-      
-      Token.setToken(response.data.accessToken);
-      
-      setUser(response.data.merchant);
-      navigate("/merchant");
+      const validate = validateLogin(input)
+      if (validate) return setValidateError("username or password invalid")
 
-   
+      const response = await merchantLogin(input)
+      console.log(response)
+      Token.setToken(response.data.accessToken)
+      setMerchant(response.data.merchant)
     } catch (err) {
-      setValidateError("username or password invalid");
-      console.log(err);
+      setValidateError("username or password invalid")
+      console.log(err)
     }
-  };
+  }
 
   return (
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
@@ -85,19 +97,11 @@ function MerchantLoginPage() {
             </Link>
           </div>
 
-          <div className="w-full flex flex-col gap-2">
-            
-       
-
-
-            
-          </div>
+          <div className="w-full flex flex-col gap-2"></div>
         </div>
       </form>
     </div>
-  );
+  )
 }
 
-
-
-export default MerchantLoginPage;
+export default MerchantLoginPage
