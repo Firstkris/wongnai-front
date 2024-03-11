@@ -17,7 +17,7 @@ import OpeningHours from "./OpenHours";
 import { validateCreateRestaurant } from "../../validations/merchant/validate-create-restuarant";
 
 
-import { defaultFacility, priceLength } from "../../constants/constant"
+import { priceLength } from "../../constants/constant"
 import { GISTDA_API_KEY } from "../../constants/constant";
 import useRestaurantContext from "../../hooks/useRestaurantContext";
 import { Loading } from "../../components/Loading";
@@ -31,6 +31,102 @@ function EditBusinessInfo() {
     const [defaultBusinessInfo, setDefaultBusinessInfo] = useState()
 
     // const { getBusinessInfoById } = useMerchantContext()
+    let defaultFacility = {
+        parking: { id: 1, value: true },
+        wifi: { id: 2, value: true },
+        creditCard: { id: 3, value: true },
+        alcohol: { id: 4, value: true }
+
+    }
+
+    const [facility, setFacility] = useState(defaultFacility)
+    const getBusinessInfoById = async (restaurantId) => {
+        const res = await fetchBusinessInfo(restaurantId)
+        // setDefaultBusinessInfo(res.data.restaurant)
+        // setInput(res.data.restaurant)
+        const {
+            openHours,
+            facilitiesWithRestaurantId,
+            ...restaurantData } = res.data.restaurantInfo;
+
+        console.log(openHours, facilitiesWithRestaurantId, restaurantData);
+
+
+        if (openHours.length !== 7) {
+            setIsEveryday(false)
+
+            // handle each day open edit
+            Object.entries(openingHours).reduce(
+                (acc, day) => {
+                    // console.log(new Date(openHours[0].openTime).toLocaleTimeString("en-GB"))
+                    for (let i = 0; i < openHours.length; i++) {
+                        if (openHours[i].date == day[0]) {
+                            // console.log(openHours[i].date, "------------------");
+                            return setOpeningHours((prv) => ({
+                                ...prv,
+                                [day[0]]: {
+                                    open: new Date(
+                                        openHours[0].openTime
+                                    ).toLocaleTimeString("en-GB"),
+                                    close: new Date(
+                                        openHours[0].closeTime
+                                    ).toLocaleTimeString("en-GB"),
+                                    closed: false,
+                                },
+                            }));
+                            // console.log(openHours, "in loop")
+                        } else {
+                            setOpeningHours((prv) => ({
+                                ...prv,
+                                [day[0]]: {
+                                    open: new Date(
+                                        openHours[0].openTime
+                                    ).toLocaleTimeString("en-GB"),
+                                    close: new Date(
+                                        openHours[0].closeTime
+                                    ).toLocaleTimeString("en-GB"),
+                                    closed: true,
+                                },
+                            }));
+
+                        }
+                    }
+
+                },
+                {}
+            )
+
+
+        } else {
+            setEverydayTime({
+                open: new Date(
+                    openHours[0].openTime
+                ).toLocaleTimeString("en-GB"), close: new Date(
+                    openHours[0].closeTime
+                ).toLocaleTimeString("en-GB")
+            })
+        }
+
+        setDefaultBusinessInfo(res.data.restaurantInfo)
+        setInput(restaurantData)
+        console.log(facilitiesWithRestaurantId[0].facilityId);
+
+        Object.entries(defaultFacility).reduce((acc, el) => {
+            // console.log(el[0])
+            for (let i = 0; i < facilitiesWithRestaurantId.length; i++) {
+                console.log(facilitiesWithRestaurantId[i].facilityId)
+                if (el[1].id === facilitiesWithRestaurantId[i].facilityId) {
+                    return setFacility(prv => ({ ...prv, [el[0]]: { ...el[1], value: true } }))
+                } else {
+                    setFacility(prv => ({ ...prv, [el[0]]: { ...el[1], value: false } }))
+                }
+            }
+        }, [])
+
+
+    }
+
+
 
 
     const {
@@ -41,7 +137,8 @@ function EditBusinessInfo() {
         category,
         createRestaurant,
         fetchAreaGeoData,
-        getGeoDataFromGistda
+        getGeoDataFromGistda,
+        updateRestaurantInfo
     } = useMerchantContext();
 
     const initialValue = {
@@ -85,8 +182,12 @@ function EditBusinessInfo() {
 
 
     const [everydayTime, setEverydayTime] = useState({ open: '09:00', close: '17:00' });
-    const [facility, setFacility] = useState(defaultFacility)
 
+
+
+
+
+    console.log(facility);
     const { isLoading, setLoading } = useRestaurantContext()
 
     const hdlChangeInput = (e) => {
@@ -95,6 +196,7 @@ function EditBusinessInfo() {
             setInput((prv => ({ ...prv, [e.target.name]: e.target.value })))
         } else {
 
+            console.log(e.target.name, e.target.value);
             setInput(prv => ({ ...prv, [e.target.name]: +e.target.value ? +e.target.value : e.target.value }));
             setError({})
         }
@@ -154,11 +256,11 @@ function EditBusinessInfo() {
                 setError(validateError)
                 return
             }
-            const res = await createRestaurant(input, openingHours, facility)
-            toast.success("register successful");
+            const res = await updateRestaurantInfo(restaurantId, input, openingHours, facility)
+            toast.success("update successful");
             setLoading(true)
 
-            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
+            navigate(`/merchant/${merchantId}/${restaurantId}`)
 
         } catch (error) {
             setLoading(false)
@@ -197,24 +299,8 @@ function EditBusinessInfo() {
         setFacility(prv => ({ ...prv, [e.target.name]: { value: Boolean(+e.target.value) } }))
     }
 
-    const getBusinessInfoById = async (restaurantId) => {
-        const res = await fetchBusinessInfo(restaurantId)
-        // setDefaultBusinessInfo(res.data.restaurant)
-        // setInput(res.data.restaurant)
-        const {
-            openHours,
-            facilitiesWithRestaurantId,
-            ...restaurantData } = res.data.restaurant;
 
-        console.log(openHours, facilitiesWithRestaurantId, restaurantData);
 
-        setInput(restaurantData)
-        setFacility(facilitiesWithRestaurantId)
-        openHours.reduce((acc, day) => { console.log(day); }, [])
-
-    }
-
-    // console.log(defaultBusinessInfo);
 
     useEffect(() => {
         fetchCategory()
@@ -225,7 +311,8 @@ function EditBusinessInfo() {
     }, [everydayTime?.open, everydayTime?.close])
 
     useEffect(() => {
-        if (searchData.lat === 0) return
+
+        if (isNaN(+searchData.lat)) return
         getGeoDataFromGistda(searchData)
 
     }, [searchData.lat, searchData.lng])
@@ -238,7 +325,7 @@ function EditBusinessInfo() {
         getBusinessInfoById(+restaurantId)
     }, [restaurantId])
 
-
+    console.log(input);
 
     if (isLoading) return <Loading />
 
@@ -283,7 +370,7 @@ function EditBusinessInfo() {
 
                     <p>เลือกตำแหน่งจากแผนที่</p>
 
-                    <GoogleMaps hdlSetLatLng={hdlSetLatLng} isEdit={true} />
+                    <GoogleMaps hdlSetLatLng={hdlSetLatLng} isEdit={true} lat={defaultBusinessInfo?.lat} lng={defaultBusinessInfo?.lng} />
 
                     <Input
                         placeholder="ชื่อซอยหรือถนน พร้อมบ้านเลขที่"
@@ -294,8 +381,6 @@ function EditBusinessInfo() {
                         errorMessage={error.address}
                     />
 
-
-
                     <Select
                         label={"จังหวัด"}
                         name={"provinceCode"}
@@ -304,7 +389,7 @@ function EditBusinessInfo() {
                         onChange={hdlChangeInput}
                         items={provinces}
                     />
-                    {/* {input.provinceCode && */}
+
                     <Select
                         label={"เขต/อำเภอ"}
                         name={"districtCode"}
@@ -313,8 +398,7 @@ function EditBusinessInfo() {
                         onChange={hdlChangeInput}
                         items={district}
                     />
-                    {/* } */}
-                    {/* {input.districtCode && */}
+
                     <Select
                         label={"แขวง/ตำบล"}
                         name={"subdistrictCode"}
@@ -324,7 +408,6 @@ function EditBusinessInfo() {
                         items={subDistrict}
                     />
 
-                    {/* } */}
                 </Card>
 
                 {/* ข้อมูลติดต่อ */}
@@ -362,6 +445,7 @@ function EditBusinessInfo() {
                             { text: "เปิดทุกวัน", value: 1 },
                             { text: "เลือกวันเปิดปิด", value: 0 },
                         ]}
+                        isChecked={isEveryday}
                     />
 
                     {!isEveryday ? (
@@ -383,6 +467,10 @@ function EditBusinessInfo() {
                         items={priceLength}
                         label={"ช่วงราคา"}
                         onChange={hdlChangeInput}
+                        value={input.priceLength}
+
+
+
                     />
 
                     <RadioBtn
@@ -393,6 +481,7 @@ function EditBusinessInfo() {
                             { text: "ไม่มี", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.parking.value}
                     />
                     <RadioBtn
                         label={"ไวไฟ"}
@@ -402,6 +491,8 @@ function EditBusinessInfo() {
                             { text: "ไม่ใช่", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.wifi.value}
+
                     />
 
                     <RadioBtn
@@ -412,6 +503,7 @@ function EditBusinessInfo() {
                             { text: "ไม่ใช่", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.creditCard.value}
                     />
                     <RadioBtn
                         label={"แอลกอฮอล์"}
@@ -421,6 +513,7 @@ function EditBusinessInfo() {
                             { text: "ไม่มี", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.alcohol.value}
                     />
                 </Card>
 

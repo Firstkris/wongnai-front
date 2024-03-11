@@ -1,6 +1,6 @@
 import { useState, createContext } from "react"
 import axios from "axios"
-import { fetchBusinessInfo, fetchGeoDataByName, getCategory, getDistrict, getProvince, getSubDistrict, gistdaApi, merchantCreateRestaurant } from "../apis/merchant"
+import { editRestaurantInfo, fetchBusinessInfo, fetchGeoDataByName, getCategory, getDistrict, getProvince, getSubDistrict, gistdaApi, merchantCreateRestaurant } from "../apis/merchant"
 
 export const MerchantContext = createContext()
 
@@ -37,10 +37,10 @@ function MerchantContextProvider({ children }) {
         setCategory(res.data.categories)
     }
 
-    const createRestaurant = async (resData, openHours, facility) => {
+    const createRestaurant = async (restaurantId, resData, openHours, facility) => {
         // console.log(openHours);
         console.log(facility);
-        return await merchantCreateRestaurant(resData, openHours, facility)
+        return await merchantCreateRestaurant(restaurantId, resData, openHours, facility)
         // console.log(res);
     }
 
@@ -62,7 +62,7 @@ function MerchantContextProvider({ children }) {
         setProvince([])
         setDistrict([])
         setSubDistrict([])
-        // console.log(data, 'data');
+        console.log(data, 'data');
         const res = await gistdaApi(data)
         const geoData = await fetchGeoDataByName(res.data)
 
@@ -70,6 +70,10 @@ function MerchantContextProvider({ children }) {
         setDistrict(prv => ([...prv, geoData.data.districtData]))
         setSubDistrict(prv => ([...prv, geoData.data.subDistrictData]))
 
+    }
+
+    const updateRestaurantInfo = async (input, openingHours, facility) => {
+        const res = await editRestaurantInfo(input, openingHours, facility)
     }
 
     return (
@@ -86,6 +90,7 @@ function MerchantContextProvider({ children }) {
                 createRestaurant,
                 // fetchAreaGeoData,
                 getGeoDataFromGistda,
+                updateRestaurantInfo
                 // getBusinessInfoById
             }}
         >

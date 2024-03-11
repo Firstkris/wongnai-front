@@ -9,13 +9,13 @@ export const merchantLogin = async (input) => {
     return response;
   } catch (error) {
     console.error("Error in merchantLogin:", error);
-    throw error; 
+    throw error;
   }
 };
 
-export const register = async (fromData) => 
-    axios.post('/merchant/register', fromData);
- 
+export const register = async (fromData) =>
+  axios.post('/merchant/register', fromData);
+
 
 
 export const fetchMe = () =>
@@ -38,4 +38,6 @@ export const gistdaApi = async (data) => axios.post('https://api.sphere.gistda.o
 
 export const fetchGeoDataByName = async (data) => axios.post('/merchant/get-by-name', data)
 
-export const fetchBusinessInfo = async (restaurantId) => axios.post('/merchant/get-businessinfo', { restaurantId }) 
+export const fetchBusinessInfo = async (restaurantId) => axios.post('/merchant/get-businessinfo', { restaurantId })
+
+export const editRestaurantInfo = async (restaurantId, newData, openingHours, facility) => axios.patch('/merchant/update-restaurant', { restaurantId, newData, openingHours, facility })

@@ -152,7 +152,7 @@ function BusinessInfo() {
             toast.success("register successful");
             setLoading(true)
 
-            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
+            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
             setLoading(false)
