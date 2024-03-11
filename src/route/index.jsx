@@ -18,9 +18,9 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-import { Chat, ChatRoomeA } from "../pages/Chat";
-import Chat2 from "../pages/Chat2";
-import Chat3 from "../pages/Chat3";
+// import { Chat, ChatRoomeA } from "../pages/Chat";
+// import Chat2 from "../pages/Chat2";
+// import Chat3 from "../pages/Chat3";
 // import MerchantContextProvider, {
 //   MerchantContext,
 // } from "../contexts/MerchantContext";

@@ -112,7 +112,7 @@ function EditBusinessInfo() {
             Object.entries(openingHours).reduce(
                 (acc, day) => ({
                     ...acc,
-                    [day[0]]: { open: everydayTime.open, close: everydayTime.close, closed: false },
+                    [day[0]]: { open: everydayTime?.open, close: everydayTime?.close, closed: false },
                 }),
                 {}
             )
@@ -210,7 +210,7 @@ function EditBusinessInfo() {
 
         setInput(restaurantData)
         setFacility(facilitiesWithRestaurantId)
-        setOpeningHours(openHours.reduce((acc, day) => { }, []))
+        openHours.reduce((acc, day) => { console.log(day); }, [])
 
     }
 
@@ -283,7 +283,7 @@ function EditBusinessInfo() {
 
                     <p>เลือกตำแหน่งจากแผนที่</p>
 
-                    <GoogleMaps hdlSetLatLng={hdlSetLatLng} />
+                    <GoogleMaps hdlSetLatLng={hdlSetLatLng} isEdit={true} />
 
                     <Input
                         placeholder="ชื่อซอยหรือถนน พร้อมบ้านเลขที่"
@@ -294,13 +294,7 @@ function EditBusinessInfo() {
                         errorMessage={error.address}
                     />
 
-                    {/* <Input
-                        placeholder="ชื่อซอยหรือถนน พร้อมบ้านเลขที่"
-                        label={"เส้นทาง :"}
-                    // name='resName'
-                    // value={input.name}
-                    // onChange={hdlChangeInput}
-                    /> */}
+
 
                     <Select
                         label={"จังหวัด"}
