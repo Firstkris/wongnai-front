@@ -165,7 +165,7 @@ export default function HeaderToggleMerchant() {
                   onClick={logout}
                 >
                   <LogoutIcon />
-                  <div>ออกจากระบบ</div>
+                  <Link to='/merchant'>ออกจากระบบ</Link>
                 </div>
               </div>
             </div>
