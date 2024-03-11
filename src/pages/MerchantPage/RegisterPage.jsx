@@ -73,7 +73,7 @@ function RegisterPageMerchant() {
     <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
       <form
         onSubmit={handleSubmit}
-        className="w-8/12 bg-white h-full  my-12 flex flex-col items-center p-6 rounded-lg"
+        className="w-8/12 bg-white h-full  my-12 flex flex-col items-center"
       >
         <div className="mt-2 mb-6  flex flex-col items-center  w-2/4 gap-5 ">
           <h1 className="text-xl font-bold ite">สมัครบัญชีผู้ค้า</h1>

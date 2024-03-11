@@ -3,17 +3,34 @@ import Input from "../../components/Input";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import validateLogin from "../../validations/validate-merLogin";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 import * as Token from "../../../src/utils/local-storage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { merchantLogin } from "../../apis/merchant";
+import * as merchantApi from "../../apis/merchant";
 
 function MerchantLoginPage() {
   const [validateError, setValidateError] = useState(null);
-  const { merchant, setMerchant } = useAuth();
+  const { setMerchant, merchant, setInitialLoading } = useMerchant();
   const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Token.getToken()) {
+      merchantApi
+        .fetchMe()
+        .then((res) => {
+          setMerchant(res.data.merchant);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
+    }
+  }, []);
 
   const handleChangeInput = (e) => {
     setValidateError("");
@@ -29,9 +46,7 @@ function MerchantLoginPage() {
       const response = await merchantLogin(input);
       console.log(response);
       Token.setToken(response.data.accessToken);
-      // console.log(ACCESS_TOKEN);
       setMerchant(response.data.merchant);
-      // navigate("/merchant/");
     } catch (err) {
       setValidateError("username or password invalid");
       console.log(err);

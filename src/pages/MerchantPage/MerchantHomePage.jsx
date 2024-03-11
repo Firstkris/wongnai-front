@@ -17,8 +17,7 @@ import { Link } from "react-router-dom";
 import { fetchMenuByRestaurantId } from "../../apis/merchant";
 import AddMenuModal from "./AddMenuModal";
 import axios from "../../configs/axios";
-import useMerchantContext from "../../hooks/useMerchantContext";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 
 export default function MerchantHomePage() {
   const {
@@ -30,7 +29,7 @@ export default function MerchantHomePage() {
   const navigate = useNavigate();
   const params = useParams();
   const { setRestaurantData } = useRestaurant();
-  const { merchant } = useAuth();
+  const { merchant } = useMerchant();
 
   const { merchantId, restaurantId } = useParams();
   const [isSelect, setIsSelect] = useState(params.restaurantId);
@@ -44,7 +43,7 @@ export default function MerchantHomePage() {
   const [sideBar, setSideBar] = useState([]);
   console.log(merchant);
   const run1 = async () => {
-    const data = await getSideBar();
+    const data = await getSideBar(merchant.id);
     setSideBar(data.data.data);
   };
   useEffect(() => {
