@@ -114,7 +114,7 @@ function BusinessInfo() {
 
     }
 
-    console.log(openingHours);
+    console.log(facility);
 
     const handleTimeChange = (day, field, value) => {
         setOpeningHours(prevState => ({
@@ -139,7 +139,7 @@ function BusinessInfo() {
     const hdlSubmit = async (e) => {
         try {
             e.preventDefault()
-            setLoading(true)
+
 
             const validateError = validateCreateRestaurant(input)
             if (validateError) {
@@ -150,15 +150,19 @@ function BusinessInfo() {
             }
             const res = await createRestaurant(input, openingHours, facility)
             toast.success("register successful");
+            setLoading(true)
 
-            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
+            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
             setLoading(false)
             toast.error(error.response?.data.message)
 
         } finally {
-            setLoading(false)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1e3);
+
         }
 
     }
@@ -186,8 +190,6 @@ function BusinessInfo() {
     const onChangeFacility = (e) => {
         setFacility(prv => ({ ...prv, [e.target.name]: { value: Boolean(+e.target.value) } }))
     }
-
-    console.log(facility);
 
     useEffect(() => {
         fetchCategory()
@@ -376,6 +378,7 @@ function BusinessInfo() {
                             { text: "ใช่", value: 1 },
                             { text: "ไม่ใช่", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
 
                     <RadioBtn
@@ -385,6 +388,7 @@ function BusinessInfo() {
                             { text: "ใช่", value: 1 },
                             { text: "ไม่ใช่", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
                     <RadioBtn
                         label={"แอลกอฮอล์"}
@@ -393,6 +397,7 @@ function BusinessInfo() {
                             { text: "มี", value: 1 },
                             { text: "ไม่มี", value: 0 },
                         ]}
+                        onChange={onChangeFacility}
                     />
                 </Card>
 

@@ -38,7 +38,8 @@ function MerchantContextProvider({ children }) {
     }
 
     const createRestaurant = async (resData, openHours, facility) => {
-        console.log(openHours);
+        // console.log(openHours);
+        console.log(facility);
         return await merchantCreateRestaurant(resData, openHours, facility)
         // console.log(res);
     }
