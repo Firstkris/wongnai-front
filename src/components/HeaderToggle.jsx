@@ -13,12 +13,14 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { useUser } from "../feature/user/contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function HeaderToggle() {
   const { user, logout } = useUser();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
+  const navigate = useNavigate();
 
   const dropdown = useRef(null);
 
@@ -63,9 +65,12 @@ export default function HeaderToggle() {
               <div className="font-bold">{firstName}</div>
             </div>
           </Link>
-          <div className="border rounded-full px-2 cursor-pointer">
+          <Link
+            to={"/chat1"}
+            className="border rounded-full px-2 cursor-pointer"
+          >
             <ChatIcon className="w-6 h-6 mt-2" />
-          </div>
+          </Link>
           <div
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => {
