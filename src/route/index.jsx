@@ -6,7 +6,7 @@ import { FilterPage } from "../pages/FilterPage";
 import Header from "../layouts/Header";
 import HeaderMerchant from "../pages/MerchantPage/HeaderMerchant";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
-import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant"
+import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant";
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
@@ -33,6 +33,7 @@ import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 // import { ChatRoomeA } from "../pages/Chat";
 import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 import UiChat from "../pages/User/UiChat";
+import Footer from "../layouts/Footer";
 import EditBusinessInfo from "../feature/Restuarant/EditBusinessInfo";
 import EditBusinessInfoPage from "../pages/MerchantPage/EditBusinessInfoPage";
 const router = createBrowserRouter([
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
       <div className="flex flex-col min-h-screen">
         <Header />
         <Outlet />
+        <Footer />
       </div>
     ),
     children: [
@@ -159,10 +161,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/merchant/login",
-        element:
+        element: (
           <RedirectIfAuthenticatedMerchant>
             <MerchantLoginPage />
-          </RedirectIfAuthenticatedMerchant>,
+          </RedirectIfAuthenticatedMerchant>
+        ),
       },
       {
         path: "/merchant/register",
