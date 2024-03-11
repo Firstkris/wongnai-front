@@ -17,3 +17,6 @@ export const uploadRestaurantImg = async (restaurantId, restaurantImg) =>
 
 export const deleteRestaurantImg = async (restaurantId) =>
   await axios.delete(`/restaurants/Img/${restaurantId}`);
+
+export const getCategoryById = async (categoryId) =>
+  await axios.get(`/restaurants/category/${categoryId}`);

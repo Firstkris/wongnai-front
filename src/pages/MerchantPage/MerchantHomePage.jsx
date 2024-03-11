@@ -27,6 +27,7 @@ export default function MerchantHomePage() {
   } = useRestaurant();
   const navigate = useNavigate();
   const params = useParams();
+  const { setRestaurantData } = useRestaurant();
 
   const { merchantId, restaurantId } = useParams();
   const [isSelect, setIsSelect] = useState(params.restaurantId);
@@ -125,6 +126,7 @@ export default function MerchantHomePage() {
             <div className="flex justify-center w-full gap-10">
               <div className="min-w-[567px]">
                 <MerchantTitleCard
+                  setRestaurantData={setRestaurantData}
                   setOnFetch={setOnFetch}
                   restaurantData={restaurantData.restaurant}
                   bookmarks={restaurantData?.bookmarks}

@@ -8,20 +8,38 @@ import AddImgModal from "./AddImgModal";
 import DeleteImgModal from "./DeleteImgModal";
 import { Loading } from "../../components/Loading";
 import { useRestaurant } from "../../hooks/hooks";
+import axios from "../../configs/axios";
 
-export function MerchantTitleCard({ restaurantData, setOnFetch }) {
+export function MerchantTitleCard({ setOnFetch }) {
   const navigate = useNavigate();
   const { setIsLoading } = useRestaurant();
   const { restaurantId, merchantId } = useParams();
   const [addToggle, setAddToggle] = useState(false);
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [closeOrOpen, setCloseOrOpen] = useState("0");
+  const { setRestaurantPage, restaurantData } = useRestaurant();
 
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
       <IconCheckmark /> OFFICIAL
     </div>
   );
+
+  const handleChangeOpen = async () => {
+    const data = await axios.patch(
+      `/merchant/toggleOpen/${restaurantData.restaurant.id}`
+    );
+    console.log(data.data.data.isOpen);
+    console.log(typeof data.data.data.isOpen);
+    setRestaurantPage({
+      ...restaurantData,
+      restaurant: {
+        ...restaurantData.restaurant,
+        isOpen: data.data.data.isOpen,
+      },
+    });
+  };
+  console.log(restaurantData, "open");
 
   return (
     <div className=" w-full bg-white  my-4 rounded-md">
@@ -48,11 +66,30 @@ export function MerchantTitleCard({ restaurantData, setOnFetch }) {
           ) : (
             <p className="text-red-500 text-xs">ปิดอยู่</p>
           )} */}
+          <select
+            value={restaurantData.restaurant?.isOpen}
+            onChange={handleChangeOpen}
+          >
+            <option className="text-red-500" value={true}>
+              เปิดอยู่
+            </option>
+            <option className="text-green-600" value={false}>
+              ปิดอยู่
+            </option>
+          </select>
 
-          {restaurantData?.isOpen ? (
-            <select>
-              <option className="text-green-600">เปิดอยู่</option>
-              <option className="text-red-500">ปิดอยู่</option>
+          {/* {restaurantData?.isOpen ? (
+            <select
+              className={closeOrOpen == "0" ? "text-red-500" : "text-green-600"}
+              value={closeOrOpen}
+              onChange={(e) => setCloseOrOpen(e.target.value)}
+            >
+              <option className="text-red-500" value={"0"}>
+                เปิดอยู่
+              </option>
+              <option className="text-green-600" value={"1"}>
+                ปิดอยู่
+              </option>
             </select>
           ) : (
             <select
@@ -67,7 +104,7 @@ export function MerchantTitleCard({ restaurantData, setOnFetch }) {
                 เปิดอยู่
               </option>
             </select>
-          )}
+          )} */}
         </div>
       </div>
       <div className="px-4 pb-4 flex justify-end gap-2">

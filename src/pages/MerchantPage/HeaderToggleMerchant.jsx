@@ -104,12 +104,9 @@ export default function HeaderToggleMerchant() {
           <div className="absolute top-10 right-0">
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
-                <Link
-                  to={"/login"}
-                  className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
-                >
+                <div className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer">
                   เข้าสู่ระบบ หรือ สมัครสมาชิก
-                </Link>
+                </div>
 
                 {/* <hr />
 
@@ -171,7 +168,7 @@ export default function HeaderToggleMerchant() {
                   onClick={logout}
                 >
                   <LogoutIcon />
-                  <div>ออกจากระบบ</div>
+                  <Link to="/merchant/login">ออกจากระบบ</Link>
                 </div>
               </div>
             </div>
