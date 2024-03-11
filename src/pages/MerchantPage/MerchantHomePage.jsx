@@ -43,12 +43,14 @@ export default function MerchantHomePage() {
   const [sideBar, setSideBar] = useState([]);
   console.log(merchant);
   const run1 = async () => {
-    const data = await getSideBar(merchant.id);
+    if (!merchant.id) return;
+    const data = await axios.get(`/merchant/sideBar/${merchant.id}`);
     setSideBar(data.data.data);
+    // console.log(data.data.data);
   };
   useEffect(() => {
     run1();
-  }, []);
+  }, [merchant.id]);
 
   // console.log("params", params.restaurantId);
 
@@ -73,7 +75,7 @@ export default function MerchantHomePage() {
 
   useEffect(() => {
     run();
-  }, []);
+  }, [restaurantId]);
 
   const handleDelete = async () => {
     console.log(selectDelete, "select **********************************");
@@ -81,12 +83,10 @@ export default function MerchantHomePage() {
     setMenu((r) => r.filter((el) => el.id != selectDelete.id));
     setOnDelete((c) => !c);
   };
+  console.log(nameRestaurant);
+  console.log(sideBar);
   const filter = nameRestaurant.filter((item) => item.merchantId == merchantId);
-
   return (
-    // isLoading ? (
-    //   <Loading />
-    // ) : (
     <>
       <div className="flex gap-6 justify-center mt-4 mx-10 mb-10">
         <div className=" rounded-lg bg-white h-[1170px] w-[250px] pt-5 px-4">

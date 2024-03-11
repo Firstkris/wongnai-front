@@ -4,14 +4,14 @@ import { useState } from "react";
 import axios from "../../configs/axios";
 import { useRef } from "react";
 import validateRegister from "../../validations/validate-merregis";
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
 import { useNavigate, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UploadIcon } from "../../icons/icon";
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 
 function RegisterPageMerchant() {
   const navigate = useNavigate();
-  const { merchantRegister } = useAuth();
+  const { merchantRegister } = useMerchant();
   const [input, setInput] = useState({
     name: "",
     mobile: "",

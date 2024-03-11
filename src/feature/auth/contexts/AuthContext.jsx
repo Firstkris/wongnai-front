@@ -59,6 +59,6 @@ export default function MerchantAuthContextProvider({ children }) {
   );
 }
 
-export const useAuth = () => {
+export const useMerchant = () => {
   return useContext(MerchantAuthContext);
 };
