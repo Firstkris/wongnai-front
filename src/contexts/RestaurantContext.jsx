@@ -72,7 +72,7 @@ export const RestaurantContextProvider = ({ children }) => {
         }))
       }
     } catch (err) {
-      console.log("error")
+      console.log(err)
     }
   }
 
@@ -93,7 +93,6 @@ export const RestaurantContextProvider = ({ children }) => {
     //if user is login
     try {
       const response = await getAllUserBookmark()
-      console.log(response.data.restaurants)
       setFilterPageData((prev) => ({
         ...prev,
         restaurants: response.data?.restaurants,

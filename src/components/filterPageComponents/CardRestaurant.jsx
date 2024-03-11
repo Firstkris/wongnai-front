@@ -1,6 +1,7 @@
 import { BookmarkIcon } from "../BookmarkIcon"
 import { useNavigate } from "react-router-dom"
 import { ReviewScore } from "../ReviewScore"
+import { ImageRender } from "./ImageRender"
 export const CardRestaurant = ({ restaurant }) => {
   const navigate = useNavigate()
   const handleClickCard = () => {
@@ -10,22 +11,9 @@ export const CardRestaurant = ({ restaurant }) => {
     <div onClick={handleClickCard} className="w-full cursor-pointer">
       <div className="flex flex-col gap-2 p-4 bg-white rounded-lg   w-[480px]">
         <div className="flex gap-2">
-          {restaurant.restaurantImages
-            ? restaurant.restaurantImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="max-w-[68px] max-h-[68px] rounded-md overflow-hidden border border-gray_primary hover:scale-110"
-                >
-                  {index <= 6 && (
-                    <img
-                      src={`${image.img}`}
-                      className="object-cover w-full h-full"
-                      alt={`Image ${index}`}
-                    />
-                  )}
-                </div>
-              ))
-            : null}
+          {restaurant?.restaurantImages && (
+            <ImageRender restaurantImages={restaurant?.restaurantImages} />
+          )}
         </div>
         <div className="flex justify-between">
           <div className="flex flex-col gap-1">
@@ -46,7 +34,7 @@ export const CardRestaurant = ({ restaurant }) => {
                   />
                 </span>
               )}
-              <span>{restaurant.reviewCount} รีวิว</span>
+              <span>{restaurant && restaurant?.reviews?.length} รีวิว</span>
               <span>{restaurant.priceLength}</span>
               {restaurant.isOpen ? (
                 <span className="text-green-600">เปิดอยู่</span>

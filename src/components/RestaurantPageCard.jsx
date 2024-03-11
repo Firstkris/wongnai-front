@@ -99,7 +99,7 @@ export function RestaurantMapCard({ restaurantData }) {
   const handleClickDirection = () => {
     window.location.href = `https://www.google.com/maps/search/?api=1&query=${restaurantData?.lat},${restaurantData?.lng}`
   }
-  console.log(restaurantData)
+
   return (
     <div className=" w-full bg-white  p-3 rounded-md">
       <div className="flex gap-3">
@@ -168,7 +168,8 @@ export function RestaurantDetailCard({ restaurantData }) {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <p className="text-md font-bold">เวลาเปิดร้าน</p>
-          {restaurantData?.openHours && restaurantData?.openHours.length > 0 ? (
+          {restaurantData?.openHours &&
+          restaurantData?.openHours?.length > 0 ? (
             restaurantData.openHours.map((el) => (
               <div className=" flex" key={el.id}>
                 <p className="text-xs w-2/4 text-gray-500">{el.date}</p>
@@ -222,7 +223,7 @@ export function RatingRestaurantCard({ restaurantData }) {
     // setIsSelected((prev) => !prev)
   }
   const calRating = (review, number) => {
-    if (review && review.length > 0) {
+    if (review && review?.length > 0) {
       const percentRating =
         (review.filter((el) => el.star == number).length / review.length) * 100
       return parseFloat(percentRating).toFixed(0)

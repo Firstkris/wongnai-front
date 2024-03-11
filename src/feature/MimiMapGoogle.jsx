@@ -12,7 +12,6 @@ const containerStyle = {
 export const MiniMapGoogle = ({ lat, lng }) => {
   // ตำแหน่งที่ต้องการปักหมุด
   const center = { lat: parseFloat(lat), lng: parseFloat(lng) }
-  console.log(center)
 
   return lat && lng ? (
     <LoadScript

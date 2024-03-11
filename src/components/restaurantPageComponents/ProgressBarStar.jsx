@@ -1,5 +1,4 @@
 export const ProgressBarStar = ({ star = "★", progress = "w-[0%]" }) => {
-  console.log(progress)
   return (
     <div className="flex justify-center w-full h-fit gap-2 ">
       <span className="text-xs">{star}</span>
