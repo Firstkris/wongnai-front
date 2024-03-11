@@ -19,9 +19,9 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-import { Chat, ChatRoomeA } from "../pages/Chat";
-import Chat2 from "../pages/Chat2";
-import Chat3 from "../pages/Chat3";
+// import { Chat, ChatRoomeA } from "../pages/Chat";
+// import Chat2 from "../pages/Chat2";
+// import Chat3 from "../pages/Chat3";
 // import MerchantContextProvider, {
 //   MerchantContext,
 // } from "../contexts/MerchantContext";
@@ -34,6 +34,9 @@ import RegisterPageMerchant from "../pages/MerchantPage/RegisterPage";
 // import { ChatRoomeA } from "../pages/Chat";
 import MerchantHomePage from "../pages/MerchantPage/MerchantHomePage";
 import UiChat from "../pages/User/UiChat";
+import Footer from "../layouts/Footer";
+import EditBusinessInfo from "../feature/Restuarant/EditBusinessInfo";
+import EditBusinessInfoPage from "../pages/MerchantPage/EditBusinessInfoPage";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -73,6 +76,7 @@ const router = createBrowserRouter([
       <div className="flex flex-col min-h-screen">
         <Header />
         <Outlet />
+        <Footer />
       </div>
     ),
     children: [
@@ -147,7 +151,7 @@ const router = createBrowserRouter([
         path: "/merchant/editRestaurant/:merchantId/:restaurantId",
         element: (
           <MerchantContextProvider>
-            <RestaurantRegisterPage />
+            <EditBusinessInfoPage />
           </MerchantContextProvider>
         ),
       },
@@ -160,10 +164,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/merchant/login",
-        element:
+        element: (
           <RedirectIfAuthenticatedMerchant>
             <MerchantLoginPage />
-          </RedirectIfAuthenticatedMerchant>,
+          </RedirectIfAuthenticatedMerchant>
+        ),
       },
       {
         path: "/merchant/register",
