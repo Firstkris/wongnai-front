@@ -36,6 +36,7 @@ export default function MerchantAuthContextProvider({ children }) {
 
   const merchantRegister = async (merchant) => {
     const res = await merchantApi.register(merchant);
+    
     setUser(res.data.newUser);
     Token.setToken(res.data.accessToken);
   };
@@ -45,6 +46,7 @@ export default function MerchantAuthContextProvider({ children }) {
     <MerchantAuthContext.Provider
       value={{
         user,
+        setUser,
         initialLoading,
         merchantRegister,
         setInitialLoading,
