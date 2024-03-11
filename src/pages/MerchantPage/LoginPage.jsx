@@ -18,6 +18,7 @@ function MerchantLoginPage() {
   const handleChangeInput = (e) => {
     setValidateError("");
     setInput({ ...input, [e.target.name]: e.target.value });
+
   };
   const handleSubmit = async (e) => {
     try {
@@ -27,11 +28,11 @@ function MerchantLoginPage() {
       if (validate) return setValidateError("username or password invalid");
       
       const response = await merchantLogin(input);
-      console.log(response)
-      Token.setToken(response.data.token);
-      console.log(ACCESS_TOKEN)
+      
+      Token.setToken(response.data.accessToken);
+      
       setUser(response.data.merchant);
-      navigate("/");
+      navigate("/merchant/:merchantId/:restaurantId");
 
    
     } catch (err) {
