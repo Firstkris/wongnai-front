@@ -7,6 +7,7 @@ import Header from "../layouts/Header";
 import HeaderMerchant from "../pages/MerchantPage/HeaderMerchant";
 import RestaurantRegisterPage from "../pages/Restaurant/RestaurantRegisterPage";
 import RedirectIfAuthenticatedMerchant from "../feature/auth/component/RedirectIfAuthenticatedMerchant"
+import RedirectIfNotAuthenticated from "../feature/auth/component/RedirectIfNotAuthenticated"
 import UserReview from "../pages/User/UserReview";
 import LoginPage from "../pages/User/LoginPage";
 import RegisterPage from "../pages/User/RegisterPage";
@@ -153,7 +154,9 @@ const router = createBrowserRouter([
 
       {
         path: "/merchant",
-        element: <MerchantHomePage />,
+        element: <RedirectIfNotAuthenticated>
+          <MerchantHomePage />
+          </RedirectIfNotAuthenticated>,
       },
       {
         path: "/merchant/login",
