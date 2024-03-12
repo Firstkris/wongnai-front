@@ -1,5 +1,5 @@
-import React from "react"
-import { useState } from "react"
+import React from "react";
+import { useState } from "react";
 import {
   ChatIcon,
   DownTriangleIcon,
@@ -8,49 +8,55 @@ import {
   SettingIcon,
   LogoutIcon,
   ShopIcon,
-} from "../../icons/icon"
-import { Link } from "react-router-dom"
-import { useRef } from "react"
-import { useEffect } from "react"
-import { useUser } from "../../feature/user/contexts/UserContext"
-import { useMerchant } from "../../feature/auth/contexts/MerchantContext"
+} from "../../icons/icon";
+import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { useEffect } from "react";
+import { useUser } from "../../feature/user/contexts/UserContext";
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 
 export default function HeaderToggleMerchant() {
-  const { user, logout } = useUser()
-  const { merchant } = useMerchant()
+  const { merchant, setMerchant } = useMerchant();
 
-  const [isToggle, setIsToggle] = useState(false)
-  const [isUserToggle, setIsUserToggle] = useState(false)
+  const [isToggle, setIsToggle] = useState(false);
+  const [isUserToggle, setIsUserToggle] = useState(false);
 
-  const dropdown = useRef(null)
+  const dropdown = useRef(null);
 
-  const firstName = merchant?.name?.split(" ")[0]
+  const firstName = merchant?.name?.split(" ")[0];
+
+  const logout = () => {
+    setMerchant(null);
+    Token.clearToken();
+    toast.success("Logout successful");
+    navigator("/merchant/login");
+  };
 
   useEffect(() => {
     if (isToggle) {
       const handleClickOutSide = (e) => {
         if (dropdown.current && !dropdown.current.contains(e.target))
-          setIsToggle(false)
-      }
-      document.addEventListener("mouseup", handleClickOutSide)
-      return () => document.removeEventListener("mouseup", handleClickOutSide)
+          setIsToggle(false);
+      };
+      document.addEventListener("mouseup", handleClickOutSide);
+      return () => document.removeEventListener("mouseup", handleClickOutSide);
     }
-  }, [isToggle])
+  }, [isToggle]);
 
   useEffect(() => {
     if (isUserToggle) {
       const handleClickOutSide = (e) => {
         if (dropdown.current && !dropdown.current.contains(e.target))
-          setIsUserToggle(false)
-      }
-      document.addEventListener("mouseup", handleClickOutSide)
-      return () => document.removeEventListener("mouseup", handleClickOutSide)
+          setIsUserToggle(false);
+      };
+      document.addEventListener("mouseup", handleClickOutSide);
+      return () => document.removeEventListener("mouseup", handleClickOutSide);
     }
-  }, [isUserToggle])
+  }, [isUserToggle]);
 
   return (
     <div className="flex gap-2 relative z-40" ref={dropdown}>
-      {user ? (
+      {merchant ? (
         <>
           <Link
             to={"/login"}
@@ -58,11 +64,7 @@ export default function HeaderToggleMerchant() {
           >
             <div className="flex gap-2">
               <ShopIcon />
-              {/* <img
-                alt="profileImage"
-                src={user?.imgProfile}
-                className="w-[25px] h-[25px] rounded-full object-cover"
-              /> */}
+
               <div className="font-bold">{firstName}</div>
             </div>
           </Link>
@@ -75,7 +77,7 @@ export default function HeaderToggleMerchant() {
           <div
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => {
-              setIsUserToggle((c) => !c)
+              setIsUserToggle((c) => !c);
             }}
           >
             <DownTriangleIcon className="w-6 h-6 mt-2" />
@@ -105,7 +107,7 @@ export default function HeaderToggleMerchant() {
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
                 <Link
-                  to={"/merchant"}
+                  to={"/merchant/login"}
                   className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
                 >
                   เข้าสู่ระบบ หรือ สมัครสมาชิก
@@ -132,46 +134,17 @@ export default function HeaderToggleMerchant() {
         ""
       )}
 
-      {isUserToggle && user ? (
+      {isUserToggle && merchant ? (
         <>
           <div className="absolute top-10 right-0">
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
-                {/* <Link
-                  to={"/profile"}
-                  className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
-                >
-                  ดูโปรไฟล์ของฉัน {">>"}
-                </Link>
-
-                <hr />
-                <div className="flex flex-col gap-5 pl-5">
-                  <Link
-                    to={"/profile/Bookmark"}
-                    className="flex gap-4 cursor-pointer"
-                  >
-                    <BookmarkIcon />
-                    <div>ที่บันทึกไว้</div>
-                  </Link>
-                  <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
-                    <ShopIcon />
-                    <div>ร้านค้าของคุณ</div>
-                  </Link>
-                  <Link
-                    to={"/profile/EditProfile"}
-                    className="flex gap-4 cursor-pointer"
-                  >
-                    <SettingIcon />
-                    <div>ตั้งค่า</div>
-                  </Link>
-                </div>
-                <hr /> */}
                 <div
                   className="flex gap-4 cursor-pointer pl-5"
                   onClick={logout}
                 >
                   <LogoutIcon />
-                  <Link to="/merchant">ออกจากระบบ</Link>
+                  <div>ออกจากระบบ</div>
                 </div>
               </div>
             </div>
@@ -181,5 +154,5 @@ export default function HeaderToggleMerchant() {
         ""
       )}
     </div>
-  )
+  );
 }

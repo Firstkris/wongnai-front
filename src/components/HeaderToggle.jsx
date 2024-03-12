@@ -112,7 +112,10 @@ export default function HeaderToggle() {
 
                 <hr />
 
-                <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
+                <Link
+                  to={"/merchant/login"}
+                  className="flex gap-4 cursor-pointer"
+                >
                   <ShopIcon />
                   <div>ร้านค้าของคุณ</div>
                 </Link>
