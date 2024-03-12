@@ -44,7 +44,7 @@ function RestaurantPage() {
           </div>
         </div>
         {/* image zone  */}
-        <div>
+        <div className="w-full">
           <NavRestaurantImg
             restaurantImage={restaurantData?.restaurant?.restaurantImages}
           />

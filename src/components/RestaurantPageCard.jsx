@@ -134,7 +134,7 @@ export function RestaurantMapCard({ restaurantData }) {
           </div>
         </div>
         <div className="w-full">
-          <div className="flex justify-between pb-4 border-b-2 min-h-28 ">
+          <div className="flex justify-between pb-4 border-b-2 min-h-28  ">
             <p className="text-xsh-30">
               {restaurantData?.address}
               {/* 117 1 ถ. ทองหล่อ แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพมหานคร 10110 */}
@@ -199,7 +199,7 @@ export function RestaurantDetailCard({ restaurantData }) {
           {restaurantData?.facilitiesWithRestaurantId
             ? restaurantData.facilitiesWithRestaurantId.map((el) => (
                 <div className="flex gap-2" key={el.id}>
-                  <IconCheckGreen />{" "}
+                  <IconCheckGreen />
                   <div className="flex text-sm">{el.facility.facilityName}</div>
                 </div>
               ))
