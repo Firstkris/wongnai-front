@@ -113,8 +113,10 @@ const router = createBrowserRouter([
     element: (
       <>
         <RedirectIfNotAuthenticated>
-          <HeaderMerchant />
-          <Outlet />
+          <MerchantContextProvider>
+            <HeaderMerchant />
+            <Outlet />
+          </MerchantContextProvider>
         </RedirectIfNotAuthenticated>
       </>
     ),
