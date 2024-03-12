@@ -47,6 +47,7 @@ function MerchantLoginPage() {
       console.log(response);
       Token.setToken(response.data.accessToken);
       setMerchant(response.data.merchant);
+      location.reload()
     } catch (err) {
       setValidateError("username or password invalid");
       console.log(err);
