@@ -125,7 +125,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/merchant/editRestaurant/:merchantId/:restaurantId",
-        element: <EditBusinessInfoPage />,
+        element: 
+        <MerchantContextProvider>
+
+        <EditBusinessInfoPage />,
+        </MerchantContextProvider>
       },
       {
         path: "/merchant/:merchantId/:restaurantId",
