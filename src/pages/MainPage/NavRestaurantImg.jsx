@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { imagePlaceHolder } from "../../constants/constant";
+import { ModalNavMerchantImg } from "../MerchantPage/ModalNavMerchantImg";
 export default function NavRestaurantImg({ restaurantImage }) {
   console.log(restaurantImage);
   const array =
@@ -13,25 +14,32 @@ export default function NavRestaurantImg({ restaurantImage }) {
   return (
     <div className=" flex justify-center ">
       {isToggle ? (
-        <div className="grid grid-cols-4 ">
-          {array.map((a) => (
-            <img
-              className=" aspect-video object-cover border  h-[250px] "
-              src={a?.img}
-              alt="restaurant Image"
-            />
-          ))}
-          <div
+        <div>
+          <ModalNavMerchantImg setIsToggle={setIsToggle}>
+            {array.map((a) => (
+              <div className="flex justify-center items-center h-full">
+                <img
+                  className=" aspect-video object-cover border  h-[500px] "
+                  src={a?.img}
+                  alt="restaurant Image"
+                />
+              </div>
+            ))}
+          </ModalNavMerchantImg>
+          {/* <div
             className="cursor-pointer text-4xl flex justify-center items-center"
             onClick={() => setIsToggle((c) => !c)}
           >
             <div className="bg-white px-20 py-12 rounded-[40px] hover:bg-gray-200 hover:font-bold">
               Hide
             </div>
-          </div>
+          </div> */}
         </div>
       ) : (
-        <div className=" flex justify-center ">
+        <div
+          className=" flex justify-center cursor-pointer "
+          onClick={() => setIsToggle((c) => !c)}
+        >
           <img
             className="aspect-video object-cover h-[250px] border "
             src={array[0]?.img}
@@ -76,10 +84,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
                   />
                 </div>
               ))}
-              <div
-                className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 h-1/2 border text-white text-4xl cursor-pointer "
-                onClick={() => setIsToggle((c) => !c)}
-              >
+              <div className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 h-1/2 border text-white text-4xl cursor-pointer ">
                 <div>+{array.length - 6}</div>
               </div>
             </div>
