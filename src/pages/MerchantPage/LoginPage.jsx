@@ -2,23 +2,39 @@ import React from "react";
 import Input from "../../components/Input";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import validateLogin from '../../validations/validate-merLogin'; 
-import { useAuth } from "../../feature/auth/contexts/AuthContext";
+import validateLogin from "../../validations/validate-merLogin";
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 import * as Token from "../../../src/utils/local-storage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { merchantLogin } from "../../apis/merchant";
+import * as merchantApi from "../../apis/merchant";
 
 function MerchantLoginPage() {
   const [validateError, setValidateError] = useState(null);
-  const { setUser, user } = useAuth();
+  const { setMerchant, merchant, setInitialLoading } = useMerchant();
   const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
   const navigate = useNavigate();
- 
+
+  useEffect(() => {
+    if (Token.getToken()) {
+      merchantApi
+        .fetchMe()
+        .then((res) => {
+          setMerchant(res.data.merchant);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
+    }
+  }, []);
+
   const handleChangeInput = (e) => {
     setValidateError("");
     setInput({ ...input, [e.target.name]: e.target.value });
-
   };
   const handleSubmit = async (e) => {
     try {
@@ -26,15 +42,11 @@ function MerchantLoginPage() {
 
       const validate = validateLogin(input);
       if (validate) return setValidateError("username or password invalid");
-      
-      const response = await merchantLogin(input);
-      
-      Token.setToken(response.data.accessToken);
-      
-      setUser(response.data.merchant);
-      navigate("/merchant");
 
-   
+      const response = await merchantLogin(input);
+      console.log(response);
+      Token.setToken(response.data.accessToken);
+      setMerchant(response.data.merchant);
     } catch (err) {
       setValidateError("username or password invalid");
       console.log(err);
@@ -42,10 +54,10 @@ function MerchantLoginPage() {
   };
 
   return (
-    <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary">
+    <div className="max-w-[1024] w-8/12 mx-auto flex flex-col items-center bg-gray_primary ">
       <form
         onSubmit={handleSubmit}
-        className=" w-8/12 bg-white h-full  my-12 flex flex-col items-center"
+        className=" w-8/12 bg-white h-full  my-12 flex flex-col items-center p-6"
       >
         <div className=" mt-2 mb-6  flex flex-col items-center  w-2/4 gap-6 ">
           <h1 className="text-xl font-bold ite">เข้าสู่ระบบ</h1>
@@ -85,19 +97,11 @@ function MerchantLoginPage() {
             </Link>
           </div>
 
-          <div className="w-full flex flex-col gap-2">
-            
-       
-
-
-            
-          </div>
+          <div className="w-full flex flex-col gap-2"></div>
         </div>
       </form>
     </div>
   );
 }
-
-
 
 export default MerchantLoginPage;

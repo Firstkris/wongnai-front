@@ -13,8 +13,12 @@ function Select({
     errorMsg,
     isRequired = "required",
     icon,
+    def,
+    test = true
+
+
 }) {
-    // console.log(items);
+    console.log(def);
 
     const options = items && items.map((el) => (
         <option
@@ -49,10 +53,8 @@ function Select({
                     <select
                         onBlur={onChange}
                         name={name}
-                        defaultValue={items[0]}
                         className="select outline-none border-none rounded-lg w-full py-1.5 px-3  mt-2"
-                    // defaultValue={ }
-                    // required={isRequired}
+
                     >
 
                         <option disabled value="" > {label} </option>
@@ -109,10 +111,11 @@ function Select({
 
 
                     </select>
-                </>)}
+                </>)
+            }
 
 
-        </label>
+        </label >
     );
 }
 

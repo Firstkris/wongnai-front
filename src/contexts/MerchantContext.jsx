@@ -1,48 +1,72 @@
 import { useState, createContext } from "react"
 import axios from "axios"
-import { fetchBusinessInfo, fetchGeoDataByName, getCategory, getDistrict, getProvince, getSubDistrict, gistdaApi, merchantCreateRestaurant } from "../apis/merchant"
+import {
+    editRestaurantInfo,
+    fetchBusinessInfo,
+    fetchGeoDataByName,
+    getCategory,
+    getDistrict,
+    getProvince,
+    getSubDistrict,
+    gistdaApi,
+    merchantCreateRestaurant
+} from "../apis/merchant"
 
 export const MerchantContext = createContext()
 
-
 function MerchantContextProvider({ children }) {
-
     const [provinces, setProvince] = useState([]);
     const [district, setDistrict] = useState([]);
     const [subDistrict, setSubDistrict] = useState([]);
     const [category, setCategory] = useState([]);
 
-
     const fetchProvince = async () => {
-        const res = await getProvince()
-        // console.log(res.data.province);
-        setProvince(res.data.province)
-    }
+        const res = await getProvince();
+        setProvince(res.data.province);
+    };
 
     const fetchDistrict = async (provinceCode) => {
         console.log(provinceCode);
-        const res = await getDistrict(+provinceCode)
-        setDistrict(res.data.district)
-    }
+        const res = await getDistrict(+provinceCode);
+        setDistrict(res.data.district);
+    };
 
     const fetchSubDistrict = async (districtCode) => {
-        console.log(districtCode)
-        const res = await getSubDistrict(+districtCode)
-        console.log(res.data.subDistrict)
-        setSubDistrict(res.data.subDistrict)
-    }
+        console.log(districtCode);
+        const res = await getSubDistrict(+districtCode);
+        console.log(res.data.subDistrict);
+        setSubDistrict(res.data.subDistrict);
+    };
 
     const fetchCategory = async () => {
-        const res = await getCategory()
-        setCategory(res.data.categories)
-    }
+        const res = await getCategory();
+        setCategory(res.data.categories);
+    };
+
+    // const fetchAreaGeoData = async (postalCode) => {
+    //     console.log(postalCode);
+    //     const res = await fetchGeoDataByPostalCode(postalCode)
+    //     console.log(res.data.district);
+    //     setProvince(prv => [...prv, res.data.province])
+    //     setDistrict(prv => [...prv, res.data.district])
+    //     console.log('fetchGeoDataByPostalCode', res);
+    // }
 
     const createRestaurant = async (resData, openHours, facility) => {
         // console.log(openHours);
         console.log(facility);
-        return await merchantCreateRestaurant(resData, openHours, facility)
+        return await merchantCreateRestaurant(resData, openHours, facility);
         // console.log(res);
-    }
+    };
+
+    // const fetchAreaGeoData = async (postalCode) => {
+    //     console.log(postalCode);
+    //     const res = await fetchGeoDataByPostalCode(postalCode)
+    //     console.log(res.data.district);
+    //     setProvince(prv => [...prv, res.data.province])
+    //     setDistrict(prv => [...prv, res.data.district])
+    //     console.log('fetchGeoDataByPostalCode', res);
+    // }
 
     // const getBusinessInfoById = async (restaurantId) => {
     //     const res = await fetchBusinessInfo(restaurantId)
@@ -59,17 +83,22 @@ function MerchantContextProvider({ children }) {
     // }
 
     const getGeoDataFromGistda = async (data) => {
-        setProvince([])
-        setDistrict([])
-        setSubDistrict([])
+        setProvince([]);
+        setDistrict([]);
+        setSubDistrict([]);
         // console.log(data, 'data');
-        const res = await gistdaApi(data)
-        const geoData = await fetchGeoDataByName(res.data)
+        const res = await gistdaApi(data);
+        const geoData = await fetchGeoDataByName(res.data);
 
-        setProvince(prv => ([...prv, geoData.data.provinceData]))
-        setDistrict(prv => ([...prv, geoData.data.districtData]))
-        setSubDistrict(prv => ([...prv, geoData.data.subDistrictData]))
+        setProvince((prv) => [...prv, geoData.data.provinceData]);
+        setDistrict((prv) => [...prv, geoData.data.districtData]);
+        setSubDistrict((prv) => [...prv, geoData.data.subDistrictData]);
+    };
 
+
+
+    const updateRestaurantInfo = async (restaurantId, input, openingHours, facility) => {
+        const res = await editRestaurantInfo(restaurantId, input, openingHours, facility)
     }
 
     return (
@@ -86,6 +115,7 @@ function MerchantContextProvider({ children }) {
                 createRestaurant,
                 // fetchAreaGeoData,
                 getGeoDataFromGistda,
+                updateRestaurantInfo
                 // getBusinessInfoById
             }}
         >
@@ -94,4 +124,4 @@ function MerchantContextProvider({ children }) {
     )
 }
 
-export default MerchantContextProvider
+export default MerchantContextProvider;

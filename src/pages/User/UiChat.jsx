@@ -50,9 +50,8 @@ export default function UiChat() {
           {chatBox.map((el) => (
             <div
               onClick={() => setRestaurant(el.restaurantId)}
-              className={`flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer ${
-                el.restaurantId == restaurant ? "bg-[#ebf5ff]" : ""
-              } `}
+              className={`flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer ${el.restaurantId == restaurant ? "bg-[#ebf5ff]" : ""
+                } `}
               key={el.restaurantId}
             >
               <div className="w-1/4">
@@ -82,7 +81,7 @@ export default function UiChat() {
             userId={user?.id}
             // userId={2}
             role={user?.role}
-            // role={"RESTAURANT"}
+          // role={"RESTAURANT"}
           />
         ) : null}
       </div>

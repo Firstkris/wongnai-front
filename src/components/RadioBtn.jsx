@@ -1,6 +1,8 @@
 import React from 'react'
 
-function RadioBtn({ label, choices, onChange, name }) {
+function RadioBtn({ label, choices, onChange, name, isChecked }) {
+
+
     return (
         <div>
             <label>{label}</label>
@@ -16,7 +18,7 @@ function RadioBtn({ label, choices, onChange, name }) {
                                 type="radio"
                                 value={el.value}
                                 onChange={onChange}
-                                defaultChecked
+                                checked={isChecked}
 
                             />
                             :
@@ -27,7 +29,7 @@ function RadioBtn({ label, choices, onChange, name }) {
                                 type="radio"
                                 value={el.value}
                                 onChange={onChange}
-
+                                checked={!isChecked}
 
                             />
 

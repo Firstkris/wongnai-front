@@ -18,9 +18,10 @@ import OtherUserProfilePage from "../pages/ProfilePage/components/OtherUserProfi
 import ProtectedProfileRoute from "../feature/user/components/ProtectedProfileRoute";
 import RedirectIfAuthenticated from "../feature/user/components/RedirectIfAuthenticated";
 import GoogleMaps from "../pages/GoogleMaps";
-import { Chat, ChatRoomeA } from "../pages/Chat";
-import Chat2 from "../pages/Chat2";
-import Chat3 from "../pages/Chat3";
+import RedirectIfNotAuthenticated from "../feature/auth/component/RedirectIfNotAuthenticated";
+// import { Chat, ChatRoomeA } from "../pages/Chat";
+// import Chat2 from "../pages/Chat2";
+// import Chat3 from "../pages/Chat3";
 // import MerchantContextProvider, {
 //   MerchantContext,
 // } from "../contexts/MerchantContext";
@@ -47,28 +48,6 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-  // {
-  //   path: "/chat2",
-  //   element: (
-  //     <div>
-  //       <Header />
-
-  //       {/* <Chat /> */}
-  //       <Chat2 />
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   path: "/chat3",
-  //   element: (
-  //     <div>
-  //       <Header />
-
-  //       {/* <Chat /> */}
-  //       <Chat3 />
-  //     </div>
-  //   ),
-  // },
   {
     path: "/",
     element: (
@@ -132,46 +111,41 @@ const router = createBrowserRouter([
   {
     path: "/merchant",
     element: (
-      <div className="flex flex-col min-h-screen">
-        <HeaderMerchant />
-        <Outlet />
-      </div>
+      <>
+        <RedirectIfNotAuthenticated>
+          <MerchantContextProvider>
+            <HeaderMerchant />
+            <Outlet />
+          </MerchantContextProvider>
+        </RedirectIfNotAuthenticated>
+      </>
     ),
     children: [
       {
         path: "/merchant/createRestaurant/:merchantId",
-        element: (
-          <MerchantContextProvider>
-            <RestaurantRegisterPage />
-          </MerchantContextProvider>
-        ),
+        element: <RestaurantRegisterPage />,
       },
       {
         path: "/merchant/editRestaurant/:merchantId/:restaurantId",
-        element: (
-          <MerchantContextProvider>
-            <EditBusinessInfoPage />
-          </MerchantContextProvider>
-        ),
+        element: <EditBusinessInfoPage />,
       },
-
       {
-        path: "/merchant",
+        path: "/merchant/:merchantId/:restaurantId",
         element: <MerchantHomePage />,
       },
-      {
-        path: "/merchant/login",
-        element: (
-          <RedirectIfAuthenticatedMerchant>
-            <MerchantLoginPage />
-          </RedirectIfAuthenticatedMerchant>
-        ),
-      },
-      {
-        path: "/merchant/register",
-        element: <RegisterPageMerchant />,
-      },
     ],
+  },
+  {
+    path: "/merchant/login",
+    element: (
+      <RedirectIfAuthenticatedMerchant>
+        <MerchantLoginPage />
+      </RedirectIfAuthenticatedMerchant>
+    ),
+  },
+  {
+    path: "/merchant/register",
+    element: <RegisterPageMerchant />,
   },
 ]);
 
