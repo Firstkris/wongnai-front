@@ -14,9 +14,12 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { useUser } from "../feature/user/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { useMerchant } from "../feature/auth/contexts/MerchantContext";
+import * as Token from "../../src/utils/local-storage";
 
 export default function HeaderToggle() {
   const { user, logout } = useUser();
+  const { merchant, setMerchant } = useMerchant();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
@@ -25,6 +28,13 @@ export default function HeaderToggle() {
   const dropdown = useRef(null);
 
   const firstName = user?.name?.split(" ")[0];
+
+  const logoutMerchant = () => {
+    setMerchant(null);
+    Token.clearTokenMerchant();
+    console.log("**********************");
+    toast.success("Logout successful");
+  };
 
   useEffect(() => {
     if (isToggle) {
@@ -82,13 +92,15 @@ export default function HeaderToggle() {
         </>
       ) : (
         <>
-          <Link
-            to={"/login"}
-            className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
-          >
-            <ProfileWithCircleIcon />
-            <div>เข้าสู่ระบบ</div>
-          </Link>
+          {!merchant ? (
+            <Link
+              to={"/login"}
+              className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
+            >
+              <ProfileWithCircleIcon />
+              <div>เข้าสู่ระบบ</div>
+            </Link>
+          ) : null}
           <div
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => setIsToggle((c) => !c)}
@@ -103,14 +115,17 @@ export default function HeaderToggle() {
           <div className="absolute top-10 right-0">
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
-                <Link
-                  to={"/login"}
-                  className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
-                >
-                  เข้าสู่ระบบ หรือ สมัครสมาชิก
-                </Link>
-
-                <hr />
+                {!merchant ? (
+                  <>
+                    <Link
+                      to={"/login"}
+                      className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
+                    >
+                      เข้าสู่ระบบ หรือ สมัครสมาชิก
+                    </Link>
+                    <hr />
+                  </>
+                ) : null}
 
                 <Link
                   to={"/merchant/login"}
@@ -126,6 +141,18 @@ export default function HeaderToggle() {
                   <SettingIcon />
                   <div>ตั้งค่า</div>
                 </Link>
+                {merchant && (
+                  <>
+                    <hr />
+                    <div
+                      className="flex gap-4 cursor-pointer pl-5"
+                      onClick={logoutMerchant}
+                    >
+                      <LogoutIcon />
+                      <div>ออกจากระบบ</div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

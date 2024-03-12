@@ -31,13 +31,31 @@ export const getCategory = async () => axios.get("/merchant/category");
 
 export const gistdaApi = async (data) =>
   axios.post("https://api.sphere.gistda.or.th/services/geo/address", data);
+
 export const merchantCreateRestaurant = async (resData, openHours, facility) =>
   axios.post("/merchant/create-restaurant", { resData, openHours, facility });
 
 export const fetchMenuByRestaurantId = async (restaurantId) =>
   axios.get(`/merchant/menu/${restaurantId}`);
+
 export const fetchGeoDataByName = async (data) =>
   axios.post("/merchant/get-by-name", data);
 
 export const fetchBusinessInfo = async (restaurantId) =>
   axios.post("/merchant/get-businessinfo", { restaurantId });
+
+export const editRestaurantInfo = async (
+  restaurantId,
+  newData,
+  openingHours,
+  facility
+) =>
+  axios.patch("/merchant/update-restaurant", {
+    restaurantId,
+    newData,
+    openingHours,
+    facility,
+  });
+
+export const getChatDataByRestaurantId = (id) =>
+  axios.get(`/merchant/getChatBoxByRestaurantId/${id}`);

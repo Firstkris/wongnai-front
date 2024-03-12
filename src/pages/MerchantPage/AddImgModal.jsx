@@ -6,7 +6,7 @@ import * as ApiRestaurant from "../../apis/restaurants";
 import { useParams } from "react-router-dom";
 import { useRestaurant } from "../../hooks/hooks";
 
-export default function AddImgModal({ setAddToggle, setOnFetch }) {
+export default function AddImgModal({ setAddToggle, setOnFetch, setSideBar }) {
   const fileInput = useRef(null);
   const { restaurantId } = useParams();
   const { setLoading } = useRestaurant();
@@ -31,6 +31,14 @@ export default function AddImgModal({ setAddToggle, setOnFetch }) {
         restaurantId,
         formData
       );
+      setSideBar((r) =>
+        r.map((item) =>
+          item.id == restaurantId
+            ? { ...item, restaurantImages: data.data.data }
+            : item
+        )
+      );
+      console.log(data, "**********************");
       setOnFetch((c) => !c);
     } catch (error) {
       console.log(error);

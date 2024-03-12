@@ -37,6 +37,7 @@ import UiChat from "../pages/User/UiChat";
 import Footer from "../layouts/Footer";
 import EditBusinessInfo from "../feature/Restuarant/EditBusinessInfo";
 import EditBusinessInfoPage from "../pages/MerchantPage/EditBusinessInfoPage";
+import UiChatMerchant from "../pages/MerchantPage/UiChatMerchant";
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -113,8 +114,10 @@ const router = createBrowserRouter([
     element: (
       <>
         <RedirectIfNotAuthenticated>
-          <HeaderMerchant />
-          <Outlet />
+          <MerchantContextProvider>
+            <HeaderMerchant />
+            <Outlet />
+          </MerchantContextProvider>
         </RedirectIfNotAuthenticated>
       </>
     ),
@@ -131,6 +134,14 @@ const router = createBrowserRouter([
         path: "/merchant/:merchantId/:restaurantId",
         element: <MerchantHomePage />,
       },
+      {
+        path: "/merchant/chat/:restaurantId",
+        element: (
+          <div>
+            <UiChatMerchant />
+          </div>
+        ),
+      },
     ],
   },
   {
@@ -138,7 +149,6 @@ const router = createBrowserRouter([
     element: (
       <RedirectIfAuthenticatedMerchant>
         <HeaderMerchant />
-
         <MerchantLoginPage />
       </RedirectIfAuthenticatedMerchant>
     ),

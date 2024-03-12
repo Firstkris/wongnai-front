@@ -4,16 +4,16 @@ import {
   ChatIcon,
   DownTriangleIcon,
   ProfileWithCircleIcon,
-  BookmarkIcon,
-  SettingIcon,
   LogoutIcon,
   ShopIcon,
 } from "../../icons/icon";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useUser } from "../../feature/user/contexts/UserContext";
 import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
+import { toast } from "react-toastify";
+import * as Token from "../../../src/utils/local-storage";
+import { useParams } from "react-router-dom";
 
 export default function HeaderToggleMerchant() {
   const { merchant, setMerchant } = useMerchant();
@@ -24,11 +24,13 @@ export default function HeaderToggleMerchant() {
   const dropdown = useRef(null);
 
   const firstName = merchant?.name?.split(" ")[0];
+  const { restaurantId } = useParams();
 
   const logout = () => {
     setMerchant(null);
-    Token.clearToken();
+    Token.clearTokenMerchant();
     toast.success("Logout successful");
+    console.log("*/************************************");
     navigator("/merchant/login");
   };
 
@@ -58,8 +60,8 @@ export default function HeaderToggleMerchant() {
     <div className="flex gap-2 relative z-40" ref={dropdown}>
       {merchant ? (
         <>
-          <Link
-            to={"/login"}
+          <div
+            // to={"/login"}
             className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
           >
             <div className="flex gap-2">
@@ -67,9 +69,9 @@ export default function HeaderToggleMerchant() {
 
               <div className="font-bold">{firstName}</div>
             </div>
-          </Link>
+          </div>
           <Link
-            to={"/chat1"}
+            to={`/merchant/chat/${restaurantId}`}
             className="border rounded-full px-2 cursor-pointer"
           >
             <ChatIcon className="w-6 h-6 mt-2" />
@@ -112,20 +114,6 @@ export default function HeaderToggleMerchant() {
                 >
                   เข้าสู่ระบบ หรือ สมัครสมาชิก
                 </Link>
-
-                {/* <hr />
-
-                <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
-                  <ShopIcon />
-                  <div>ร้านค้าของคุณ</div>
-                </Link>
-                <Link
-                  to={"/profile/EditProfile"}
-                  className="flex gap-4 cursor-pointer pt-2"
-                >
-                  <SettingIcon />
-                  <div>ตั้งค่า</div>
-                </Link> */}
               </div>
             </div>
           </div>

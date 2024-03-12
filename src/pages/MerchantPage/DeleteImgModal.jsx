@@ -3,21 +3,32 @@ import { useRestaurant } from "../../hooks/hooks";
 import { CrossIcon } from "../../icons/icon";
 import * as ApiRestaurant from "../../apis/restaurants";
 
-export default function DeleteImgModal({ setDeleteToggle }) {
+export default function DeleteImgModal({
+  setDeleteToggle,
+  setSideBar,
+  filter,
+}) {
   const { restaurantData, setRestaurantPage } = useRestaurant();
   const handleOnDelete = async (id) => {
     console.log(id);
     await ApiRestaurant.deleteRestaurantImg(id);
 
-    setRestaurantPage((r) => ({
-      ...r,
-      restaurant: {
-        ...r.restaurant,
-        restaurantImages: r.restaurant.restaurantImages.filter(
-          (rs) => rs.id != id
-        ),
-      },
-    }));
+    setSideBar((r) =>
+      r.map((rs) => ({
+        ...rs,
+        restaurantImages: rs.restaurantImages.filter((item1) => item1.id != id),
+      }))
+    );
+
+    // setRestaurantPage((r) => ({
+    //   ...r,
+    //   restaurant: {
+    //     ...r.restaurant,
+    //     restaurantImages: r.restaurant.restaurantImages.filter(
+    //       (rs) => rs.id != id
+    //     ),
+    //   },
+    // }));
   };
   console.log(restaurantData, "restaurantData");
 
@@ -31,7 +42,7 @@ export default function DeleteImgModal({ setDeleteToggle }) {
       <div className="inset-0 fixed flex flex-col justify-center items-center z-20">
         <div className="flex flex-col gap-5 bg-white min-w-[500px] min-h-2/5 opacity-100 rounded-2xl pt-7 pb-5 px-10">
           <div className="flex gap-3">
-            {restaurantData.restaurant.restaurantImages.map((a) => (
+            {filter.restaurantImages.map((a) => (
               <div key={a.id} className="relative">
                 <img
                   src={a.img}

@@ -10,7 +10,7 @@ import { Loading } from "../../components/Loading";
 import { useRestaurant } from "../../hooks/hooks";
 import axios from "../../configs/axios";
 
-export function MerchantTitleCard({ setOnFetch }) {
+export function MerchantTitleCard({ setOnFetch, setSideBar, filter }) {
   const navigate = useNavigate();
   const { setIsLoading } = useRestaurant();
   const { restaurantId, merchantId } = useParams();
@@ -121,6 +121,7 @@ export function MerchantTitleCard({ setOnFetch }) {
 
         {addToggle ? (
           <AddImgModal
+            setSideBar={setSideBar}
             setOnFetch={setOnFetch}
             setIsLoading={setIsLoading}
             setAddToggle={setAddToggle}
@@ -137,7 +138,11 @@ export function MerchantTitleCard({ setOnFetch }) {
         </ButtonRestaurantPage>
 
         {deleteToggle ? (
-          <DeleteImgModal setDeleteToggle={setDeleteToggle} />
+          <DeleteImgModal
+            filter={filter}
+            setSideBar={setSideBar}
+            setDeleteToggle={setDeleteToggle}
+          />
         ) : null}
 
         <ButtonRestaurantPage
