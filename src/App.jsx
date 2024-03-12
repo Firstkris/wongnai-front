@@ -1,11 +1,10 @@
-import React from "react";
-import Router from "./route/index";
-import ProfileContextProvider from "./feature/Profiles/context/ProfileContext";
-import UserContextProvider from "./feature/user/contexts/UserContext";
-import { ToastContainer, Slide } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import MerchantAuthContextProvider from "./feature/auth/contexts/AuthContext";
-
+import React from "react"
+import Router from "./route/index"
+import ProfileContextProvider from "./feature/Profiles/context/ProfileContext"
+import UserContextProvider from "./feature/user/contexts/UserContext"
+import { ToastContainer, Slide } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import MerchantAuthContextProvider from "./feature/auth/contexts/MerchantContext"
 
 function App() {
   return (
@@ -16,7 +15,7 @@ function App() {
         theme="colored"
         transition={Slide}
       />
-      
+
       <MerchantAuthContextProvider>
         <UserContextProvider>
           <ProfileContextProvider>
@@ -24,9 +23,8 @@ function App() {
           </ProfileContextProvider>
         </UserContextProvider>
       </MerchantAuthContextProvider>
-      
     </>
-  );
+  )
 }
 
-export default App;
+export default App

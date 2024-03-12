@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import { useEffect } from "react";
 
-const GoogleMaps = ({ hdlSetLatLng }) => {
+const GoogleMaps = ({ hdlSetLatLng, isEdit = false, lat, lng }) => {
     // const [markers, setMarkers] = useState([{ lat: 13.758269912260138, lng: 100.53499975440037 }]);
     const [markers, setMarkers] = useState([{
         lat: 0,
@@ -11,20 +11,23 @@ const GoogleMaps = ({ hdlSetLatLng }) => {
     const [infoWindowContent, setInfoWindowContent] = useState("");
     const [map, setMap] = useState(null);
 
-    // console.log(markers);
-
-
+    console.log(lat, lng);
     useEffect(() => {
         // ดึงตำแหน่งปัจจุบันของผู้ใช้
-        if (navigator.geolocation) {
+        if (navigator.geolocation && !isEdit) {
             navigator.geolocation.getCurrentPosition((position) => {
                 setMarkers([{
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 }]);
             });
+        } else {
+            setMarkers([{
+                lat: +lat,
+                lng: +lng,
+            }])
         }
-    }, []);
+    }, [+lat, +lng]);
 
     useEffect(() => {
         hdlSetLatLng(markers?.[0].lat, markers?.[0].lng)

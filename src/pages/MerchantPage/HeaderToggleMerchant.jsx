@@ -4,25 +4,35 @@ import {
   ChatIcon,
   DownTriangleIcon,
   ProfileWithCircleIcon,
-  BookmarkIcon,
-  SettingIcon,
   LogoutIcon,
   ShopIcon,
 } from "../../icons/icon";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useUser } from "../../feature/user/contexts/UserContext";
+import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
+import { toast } from "react-toastify";
+import * as Token from "../../../src/utils/local-storage";
+import { useParams } from "react-router-dom";
 
 export default function HeaderToggleMerchant() {
-  const { user, logout } = useUser();
+  const { merchant, setMerchant } = useMerchant();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
 
   const dropdown = useRef(null);
 
-  const firstName = user?.name?.split(" ")[0];
+  const firstName = merchant?.name?.split(" ")[0];
+  const { restaurantId } = useParams();
+
+  const logout = () => {
+    setMerchant(null);
+    Token.clearTokenMerchant();
+    toast.success("Logout successful");
+    console.log("*/************************************");
+    navigator("/merchant/login");
+  };
 
   useEffect(() => {
     if (isToggle) {
@@ -48,24 +58,24 @@ export default function HeaderToggleMerchant() {
 
   return (
     <div className="flex gap-2 relative z-40" ref={dropdown}>
-      {user ? (
+      {merchant ? (
         <>
-          <Link
-            to={"/login"}
+          <div
+            // to={"/login"}
             className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
           >
             <div className="flex gap-2">
-              <img
-                alt="profileImage"
-                src={user?.imgProfile}
-                className="w-[25px] h-[25px] rounded-full object-cover"
-              />
+              <ShopIcon />
+
               <div className="font-bold">{firstName}</div>
             </div>
-          </Link>
-          <div className="border rounded-full px-2 cursor-pointer">
-            <ChatIcon className="w-6 h-6 mt-2" />
           </div>
+          <Link
+            to={`/merchant/chat/${restaurantId}`}
+            className="border rounded-full px-2 cursor-pointer"
+          >
+            <ChatIcon className="w-6 h-6 mt-2" />
+          </Link>
           <div
             className="border rounded-full px-2 cursor-pointer"
             onClick={() => {
@@ -99,25 +109,11 @@ export default function HeaderToggleMerchant() {
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
                 <Link
-                  to={"/login"}
+                  to={"/merchant/login"}
                   className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
                 >
                   เข้าสู่ระบบ หรือ สมัครสมาชิก
                 </Link>
-
-                {/* <hr />
-
-                <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
-                  <ShopIcon />
-                  <div>ร้านค้าของคุณ</div>
-                </Link>
-                <Link
-                  to={"/profile/EditProfile"}
-                  className="flex gap-4 cursor-pointer pt-2"
-                >
-                  <SettingIcon />
-                  <div>ตั้งค่า</div>
-                </Link> */}
               </div>
             </div>
           </div>
@@ -126,46 +122,17 @@ export default function HeaderToggleMerchant() {
         ""
       )}
 
-      {isUserToggle && user ? (
+      {isUserToggle && merchant ? (
         <>
           <div className="absolute top-10 right-0">
             <div className="w-72 bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col gap-4 mt-2">
-                {/* <Link
-                  to={"/profile"}
-                  className="bg-red_primary px-6 py-2 text-center text-white rounded-lg cursor-pointer"
-                >
-                  ดูโปรไฟล์ของฉัน {">>"}
-                </Link>
-
-                <hr />
-                <div className="flex flex-col gap-5 pl-5">
-                  <Link
-                    to={"/profile/Bookmark"}
-                    className="flex gap-4 cursor-pointer"
-                  >
-                    <BookmarkIcon />
-                    <div>ที่บันทึกไว้</div>
-                  </Link>
-                  <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
-                    <ShopIcon />
-                    <div>ร้านค้าของคุณ</div>
-                  </Link>
-                  <Link
-                    to={"/profile/EditProfile"}
-                    className="flex gap-4 cursor-pointer"
-                  >
-                    <SettingIcon />
-                    <div>ตั้งค่า</div>
-                  </Link>
-                </div>
-                <hr /> */}
                 <div
                   className="flex gap-4 cursor-pointer pl-5"
                   onClick={logout}
                 >
                   <LogoutIcon />
-                  <Link to='/merchant'>ออกจากระบบ</Link>
+                  <div>ออกจากระบบ</div>
                 </div>
               </div>
             </div>

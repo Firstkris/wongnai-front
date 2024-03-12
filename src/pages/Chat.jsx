@@ -172,14 +172,17 @@ export function Chat({ role, userId, restaurantId, socket }) {
     role == "RESTAURANT" ? "USER" + userId : "RESTAURANT" + restaurantId; // แล้วไปเอา หน้า received ออก
 
   //   const sender = role + 1;
+  console.log(role);
 
   useEffect(() => {
     run();
-  }, [restaurantId]);
+  }, [restaurantId, userId]);
+
+  console.log(userId);
 
   useEffect(() => {
     socket.auth = { sender };
-    console.log("first");
+    // console.log("first");
     socket.connect();
     return () => socket.disconnect();
   }, []);

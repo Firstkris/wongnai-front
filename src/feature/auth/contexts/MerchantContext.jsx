@@ -3,32 +3,31 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import * as merchantApi from "../../../apis/merchant";
-import * as Token from "../../../../src/utils/local-storage";
+import * as Token from "../../../utils/local-storage";
 import { createContext } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 const MerchantAuthContext = createContext();
 export default function MerchantAuthContextProvider({ children }) {
   const [merchant, setMerchant] = useState(null);
   // const [review, setReview] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
-  console.log("merchant", merchant);
+  const getMerchant = async () => {
+    console.log(Token.getTokenMerchant());
+    if (Token.getTokenMerchant()) {
+      const data = await axios.get(
+        "http://localhost:8000/merchant/getMerchant",
+        // { headers: `Bearer ${Token.getTokenMerchant()}` }
+        { headers: { Authorization: `Bearer ${Token.getTokenMerchant()}` } }
+      );
+      console.log("data.data.merchant", data.data.merchant);
+      setMerchant(data.data.merchant);
+    }
+  };
 
   useEffect(() => {
-    if (Token.getToken()) {
-      merchantApi
-        .fetchMe()
-        .then((res) => {
-          setMerchant(res.data.merchant);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => setInitialLoading(false));
-    } else {
-      setInitialLoading(false);
-    }
+    getMerchant();
   }, []);
 
   const logout = () => {
@@ -39,8 +38,9 @@ export default function MerchantAuthContextProvider({ children }) {
 
   const merchantRegister = async (merchant) => {
     const res = await merchantApi.register(merchant);
-    setUser(res.data.newUser);
-    Token.setToken(res.data.accessToken);
+    setMerchant(res.data.newUser);
+    console.log(res.data.token);
+    Token.setToken(res.data.token);
   };
 
   return (

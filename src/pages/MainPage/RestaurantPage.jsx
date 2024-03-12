@@ -5,25 +5,45 @@ import {
   RestaurantMapCard,
   TitleRestaurantCard,
   RatingRestaurantCard,
-} from "../../components/RestaurantPageCar";
+} from "../../components/RestaurantPageCard";
 import { useRestaurant } from "../../hooks/hooks";
 import { Loading } from "../../components/Loading";
 import NavRestaurantImg from "./NavRestaurantImg";
+import { Breadcrumbs } from "../../components/BreadCrumb";
 
 function RestaurantPage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
     useRestaurant();
   const params = useParams();
+  console.log(params);
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.id));
-  }, []);
+  }, [params.id]);
+
+  const breadcrumbs = [
+    { label: "หน้าหลัก", link: "https://www.google.com" },
+    {
+      label: "ค้นหาร้านอาหาร",
+      link: "http://localhost:5173/restaurants/filter",
+    },
+    {
+      label: `${restaurantData?.restaurant?.restaurantName}`,
+    },
+  ];
 
   return isLoading ? (
     <Loading />
   ) : (
     <>
       <div className="max-w-[1024]  flex flex-col items-center bg-gray_primary">
+        <div className="w-full">
+          <div className="mx-auto flex justify-center my-1">
+            <div className="w-[807px] flex flex-col justify-start ">
+              <Breadcrumbs breadcrumbs={breadcrumbs} />
+            </div>
+          </div>
+        </div>
         {/* image zone  */}
         <div>
           <NavRestaurantImg

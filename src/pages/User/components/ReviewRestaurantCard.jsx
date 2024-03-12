@@ -7,19 +7,12 @@ export default function ReviewRestaurantCard() {
   const restaurantId = useParams();
   const [restaurant, setRestaurant] = useState({});
 
-  const test = () => {
-    console.log(restaurantId);
-  };
-
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
-        console.log(restaurantId);
         const { restaurantsId: id } = restaurantId;
-        console.log(id);
         const response = await axios.get(`/restaurants/${id}`);
         setRestaurant(response.data);
-        console.log(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -37,9 +30,6 @@ export default function ReviewRestaurantCard() {
           <div className="w-full">
             <div className="flex justify-between">
               <h1>{restaurant.restaurant?.restaurantName} </h1>
-              <button className="bg-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-400">
-                บันทึก
-              </button>
             </div>
             <p>
               {restaurant.restaurant?.reviewPoint} เรตติ้ง (
