@@ -1,19 +1,19 @@
-import React from "react"
-import { useState } from "react"
-import { imagePlaceHolder } from "../../constants/constant"
+import React from "react";
+import { useState } from "react";
+import { imagePlaceHolder } from "../../constants/constant";
 export default function NavRestaurantImg({ restaurantImage }) {
-  console.log(restaurantImage)
+  console.log(restaurantImage);
   const array =
     restaurantImage && restaurantImage?.length > 0
       ? restaurantImage
-      : imagePlaceHolder
+      : imagePlaceHolder;
 
-  const [isToggle, setIsToggle] = useState(false)
+  const [isToggle, setIsToggle] = useState(false);
 
   return (
     <div className=" flex justify-center ">
       {isToggle ? (
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 ">
           {array.map((a) => (
             <img
               className=" aspect-video object-cover border  h-[250px] "
@@ -33,7 +33,7 @@ export default function NavRestaurantImg({ restaurantImage }) {
       ) : (
         <div className=" flex justify-center ">
           <img
-            className="aspect-video object-cover h-[250px] border"
+            className="aspect-video object-cover h-[250px] border "
             src={array[0]?.img}
           />
           {array.slice(1, 3).map((a, index) => (
@@ -87,5 +87,5 @@ export default function NavRestaurantImg({ restaurantImage }) {
         </div>
       )}
     </div>
-  )
+  );
 }

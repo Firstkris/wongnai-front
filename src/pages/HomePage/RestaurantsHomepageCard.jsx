@@ -34,7 +34,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[0]?.restaurants.slice(0, 5).map((restaurant) => (
+            {categoryId[0]?.restaurants.slice(9, 15).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
@@ -43,7 +43,7 @@ function RestaurantsHomepageCard() {
       <div className=" w-7/12 bg-white h-full p-3 my-4 rounded-md shadow-md ">
         <div className="w-full">
           <div className="border-b-2 flex justify-between items-center ">
-            <h1 className="text-xl m-2">{categoryId[1]?.categoryName} </h1>
+            <h1 className="text-xl m-2">{categoryId[8]?.categoryName} </h1>
             <a
               className="ี underline text-blue_primary"
               href="/restaurants/filter"
@@ -52,7 +52,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[1]?.restaurants.slice(0, 5).map((restaurant) => (
+            {categoryId[8]?.restaurants.slice(0, 5).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
