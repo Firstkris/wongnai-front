@@ -14,9 +14,11 @@ import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 import { toast } from "react-toastify";
 import * as Token from "../../../src/utils/local-storage";
 import { useParams } from "react-router-dom";
+import { useRestaurant } from "../../hooks/hooks";
 
 export default function HeaderToggleMerchant() {
   const { merchant, setMerchant } = useMerchant();
+  const { serR } = useRestaurant();
 
   const [isToggle, setIsToggle] = useState(false);
   const [isUserToggle, setIsUserToggle] = useState(false);
@@ -25,7 +27,7 @@ export default function HeaderToggleMerchant() {
 
   const firstName = merchant?.name?.split(" ")[0];
   const { restaurantId } = useParams();
-
+  serR(restaurantId);
   const logout = () => {
     setMerchant(null);
     Token.clearTokenMerchant();

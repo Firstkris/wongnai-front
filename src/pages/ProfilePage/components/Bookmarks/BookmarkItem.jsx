@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { CrossIcon } from "../../../../icons/icon";
 import { useUser } from "../../../../feature/user/contexts/UserContext";
 
-export default function BookmarkItem({ bookmark, myBookmark }) {
+export default function BookmarkItem({ bookmark, myBookmark, setMyBookmarks }) {
   const { userId } = useParams();
   const { deleteBookmarkById } = useUser();
 
@@ -38,6 +38,9 @@ export default function BookmarkItem({ bookmark, myBookmark }) {
                 onClick={() => {
                   console.log("**********", myBookmark?.id);
                   console.log("myBookmark", myBookmark);
+                  setMyBookmarks((r) =>
+                    r.filter((item) => item.id != myBookmark?.id)
+                  );
                   deleteBookmarkById(myBookmark?.restaurant.id);
                 }}
               >

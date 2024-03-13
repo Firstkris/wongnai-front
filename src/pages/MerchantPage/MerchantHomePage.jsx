@@ -69,7 +69,7 @@ export default function MerchantHomePage() {
   const onClick = (restaurantId) => {
     setIsSelect(restaurantId);
     navigate(`/merchant/${merchantId}/${restaurantId || isSelect}`);
-    setOnFetch((c) => !c);
+    // setOnFetch((c) => !c); // ฮั่นเอาออก
   };
   // useEffect(() => {
   //   navigate(`/merchant/${merchantId}/${isSelect}`);

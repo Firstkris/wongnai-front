@@ -5,16 +5,16 @@ import { useState } from "react";
 import { useEffect } from "react";
 import * as ApiMerchant from "../../apis/merchant";
 import { useRestaurant } from "../../hooks/hooks";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import { useParams } from "react-router-dom";
-const socket = io.connect("http://localhost:8888/");
+// const socket = io.connect("http://localhost:8888/");
 
 export default function UiChatMerchant() {
   //   const { user } = useUser();
   const [user, setUser] = useState("");
 
   const [chatBox, setChatBox] = useState([]);
-  const { restaurant, setRestaurant } = useRestaurant();
+  const { restaurant, socket, setRestaurant } = useRestaurant();
 
   const { restaurantId } = useParams();
 

@@ -180,12 +180,12 @@ export function Chat({ role, userId, restaurantId, socket }) {
 
   console.log(userId);
 
-  useEffect(() => {
-    socket.auth = { sender };
-    // console.log("first");
-    socket.connect();
-    return () => socket.disconnect();
-  }, []);
+  // useEffect(() => {
+  //   socket.auth = { sender };
+  //   // console.log("first");
+  //   socket.connect();
+  //   return () => socket.disconnect();
+  // }, [userId, restaurantId]);
 
   const change = (e) => {
     setMessage(e.target.value);
