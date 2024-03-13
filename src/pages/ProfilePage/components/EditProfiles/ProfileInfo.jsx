@@ -247,7 +247,7 @@ export default function ProfileInfo({ setIsEditPassword }) {
             </button>
           </div>
         </Card>
-
+        {/* 
         <Card>
           <Header>บัญชีที่เชื่อมต่อ</Header>
           <div className="flex justify-between">
@@ -271,9 +271,9 @@ export default function ProfileInfo({ setIsEditPassword }) {
                 เชื่อมต่อกับ Google
               </div>
             </div>
-            {/* <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button> */}
+            <button className="  text-blue_primary">ยกเลิกการเชื่อมต่อ</button> 
           </div>
-        </Card>
+        </Card>  */}
       </Container>
     </>
   );
