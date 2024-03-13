@@ -14,9 +14,12 @@ export default function RestaurantPreview({ restaurant }) {
         <>
           <div
             onClick={handleclickCard}
-            className=" w-60  rounded-lg shadow-md hover:cursor-pointer"
+            className=" w-60  rounded-lg shadow-md hover:cursor-pointer overflow-hidden"
           >
-            <img className="w-full h-48" src={restaurant?.profileImg}></img>
+            <img
+              className="w-full h-48 overflow-hidden"
+              src={restaurant?.profileImg}
+            ></img>
             <h3 className="text-xl m-1 font-bold">
               {restaurant?.restaurantName}
             </h3>

@@ -34,7 +34,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[0]?.restaurants.slice(9, 15).map((restaurant) => (
+            {categoryId[0]?.restaurants.slice(5, 10).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
