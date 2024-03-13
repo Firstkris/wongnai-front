@@ -39,7 +39,7 @@ export default function AddImgModal({ setAddToggle, setOnFetch, setSideBar }) {
         )
       );
       console.log(data, "**********************");
-      setOnFetch((c) => !c);
+      // setOnFetch((c) => !c); ฮั่นเอาออก
     } catch (error) {
       console.log(error);
     } finally {

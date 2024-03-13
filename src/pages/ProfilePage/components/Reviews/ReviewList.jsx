@@ -32,12 +32,17 @@ export default function ReviewList() {
         console.log(err);
       });
   }, [onFetch]);
+  console.log(!userId, "asdfasdfasdf");
   return (
     <div>
       {!userId ? (
         <>
           {myReviews.map((myReview) => (
-            <ReviewItem key={myReview.id} myReview={myReview} />
+            <ReviewItem
+              key={myReview.id}
+              myReview={myReview}
+              setMyReviews={setMyReviews} // ฮั่นเพิ่มเข้ามา
+            />
           ))}
         </>
       ) : (

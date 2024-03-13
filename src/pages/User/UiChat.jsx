@@ -5,11 +5,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import * as ApiUser from "../../apis/user";
 import { useRestaurant } from "../../hooks/hooks";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:8888/");
+// import io from "socket.io-client";
+// const socket = io.connect("http://localhost:8888/");
 
 export default function UiChat() {
-  const { user } = useUser();
+  const { user, socket } = useUser();
   const [chatBox, setChatBox] = useState([]);
   const { restaurant, setRestaurant } = useRestaurant();
 

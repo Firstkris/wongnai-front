@@ -39,12 +39,15 @@ export default function EditInput({
           return;
         }
       }
-      await axios.patch("/user", data);
-      setUser({ ...input, [name]: input[name] });
+      const data1 = await axios.patch("/user", data);
+      console.log(data1, "00000000000000000000000000000000");
+      // console.log(input, "00000000000000000000000000000s");
+      // setUser({ ...input, [name]: input[name] });
+      setUser(data1.data.user);
       setOnEditInfo((c) => !c);
 
       toast.success("Edit profile successful");
-      setOnFetch((r) => !r);
+      // setOnFetch((r) => !r); // ฮั่นเอาออก
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
