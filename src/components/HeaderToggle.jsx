@@ -182,10 +182,10 @@ export default function HeaderToggle() {
                     <BookmarkIcon />
                     <div>ที่บันทึกไว้</div>
                   </Link>
-                  <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
+                  {/* <Link to={"/merchant"} className="flex gap-4 cursor-pointer">
                     <ShopIcon />
                     <div>ร้านค้าของคุณ</div>
-                  </Link>
+                  </Link> */}
                   <Link
                     to={"/profile/EditProfile"}
                     className="flex gap-4 cursor-pointer"

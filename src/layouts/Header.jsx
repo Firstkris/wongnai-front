@@ -50,15 +50,6 @@ export default function Header() {
         <MessageIcon className="w-10 h-10 fill-red_primary" />
       </Link>
       <div className="flex gap-5">
-        {/* <div className="flex relative">
-          <LocationIcon className="absolute w-8 h-8 pt-1.5 pl-2 fill-gray_secondary" />
-
-          <input
-            className="rounded-lg bg-gray_primary pl-9 w-[200px] focus:outline-none"
-            placeholder="กรุงเทพและ..."
-          />
-          <DownTriangleSolidIcon className="absolute w-5 h-5 left-44 top-2.5 fill-gray_secondary" />
-        </div> */}
         <div>
           <form className="flex">
             <input
