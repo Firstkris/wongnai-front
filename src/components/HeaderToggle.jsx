@@ -32,7 +32,6 @@ export default function HeaderToggle() {
   const logoutMerchant = () => {
     setMerchant(null);
     Token.clearTokenMerchant();
-    console.log("**********************");
     toast.success("Logout successful");
   };
 
@@ -134,13 +133,13 @@ export default function HeaderToggle() {
                   <ShopIcon />
                   <div>ร้านค้าของคุณ</div>
                 </Link>
-                <Link
+                {/* <Link
                   to={"/profile/EditProfile"}
                   className="flex gap-4 cursor-pointer pt-2"
                 >
                   <SettingIcon />
                   <div>ตั้งค่า</div>
-                </Link>
+                </Link> */}
                 {merchant && (
                   <>
                     <hr />
@@ -195,13 +194,14 @@ export default function HeaderToggle() {
                   </Link>
                 </div>
                 <hr />
-                <div
+                <Link
+                  to={"/"}
                   className="flex gap-4 cursor-pointer pl-5"
                   onClick={logout}
                 >
                   <LogoutIcon />
                   <div>ออกจากระบบ</div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>
