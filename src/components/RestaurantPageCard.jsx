@@ -133,9 +133,9 @@ export function RestaurantMapCard({ restaurantData }) {
             )}
           </div>
         </div>
-        <div className="w-full">
-          <div className="flex justify-between pb-4 border-b-2 min-h-28  ">
-            <p className="text-xsh-30">
+        <div className="w-[500px]">
+          <div className="flex justify-between pb-4 border-b-2 min-h-28 ">
+            <p className="text-xsh-30 ">
               {restaurantData?.address}
               {/* 117 1 ถ. ทองหล่อ แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพมหานคร 10110 */}
             </p>

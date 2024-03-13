@@ -23,6 +23,7 @@ export default function HeaderMerchant() {
   const [text, setText] = useState("")
   const searchBar = useRef(null)
 
+  console.log("merchant", merchant);
   const handleSearch = (e) => {
     setText(e.target.value)
   }
@@ -46,7 +47,7 @@ export default function HeaderMerchant() {
      justify-around border-b-2
     "
     >
-      <Link to={`/merchant/${merchant?.id}/1`} className="flex items-center ">
+      <Link to={`/merchant/${merchant?.id}/0`} className="flex items-center ">
         <div className="text-xl ">Wong</div>
 
         <MessageIcon className="w-10 h-10 fill-red_primary" />

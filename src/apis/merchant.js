@@ -12,7 +12,8 @@ export const merchantLogin = async (input) => {
 };
 
 export const register = async (fromData) =>
-  axios.post("/merchant/register", fromData);
+  axios.post('/merchant/register', fromData);
+
 
 export const fetchMe = () =>
   axios.get("/merchant/me", {
@@ -31,13 +32,16 @@ export const getCategory = async () => axios.get("/merchant/category");
 
 export const gistdaApi = async (data) =>
   axios.post("https://api.sphere.gistda.or.th/services/geo/address", data);
+
 export const merchantCreateRestaurant = async (resData, openHours, facility) =>
   axios.post("/merchant/create-restaurant", { resData, openHours, facility });
 
 export const fetchMenuByRestaurantId = async (restaurantId) =>
   axios.get(`/merchant/menu/${restaurantId}`);
+
 export const fetchGeoDataByName = async (data) =>
   axios.post("/merchant/get-by-name", data);
 
-export const fetchBusinessInfo = async (restaurantId) =>
-  axios.post("/merchant/get-businessinfo", { restaurantId });
+export const fetchBusinessInfo = async (restaurantId) => axios.post('/merchant/get-businessinfo', { restaurantId })
+
+export const editRestaurantInfo = async (restaurantId, newData, openingHours, facility) => axios.patch('/merchant/update-restaurant', { restaurantId, newData, openingHours, facility })

@@ -31,11 +31,7 @@ export const FilterPage = () => {
 
   const fetchDataFilter = async () => {
     try {
-      if (!user) {
-        await fetchFilterPage()
-      } else {
-        await fetchRestaurantWithUserLogin()
-      }
+      await fetchRestaurantWithUserLogin()
     } catch (error) {
       console.log(error)
     }
@@ -79,10 +75,7 @@ export const FilterPage = () => {
                   {/* restaurants */}
                   {restaurants?.length > 0 ? (
                     restaurants?.map((restaurant, index) => (
-                      <CardRestaurant
-                        key={restaurant.id}
-                        restaurant={restaurant}
-                      />
+                      <CardRestaurant key={index} restaurant={restaurant} />
                     ))
                   ) : (
                     <div className="flex justify-center gap-2 p-4 bg-white rounded-lg font-semibold  w-[480px] text-gray-400">

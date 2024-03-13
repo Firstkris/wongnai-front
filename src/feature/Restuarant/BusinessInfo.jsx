@@ -152,7 +152,7 @@ function BusinessInfo() {
             toast.success("register successful");
             setLoading(true)
 
-            // navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
+            navigate(`/merchant/${merchantId}/${res.data.newRestaurant.id}`)
 
         } catch (error) {
             setLoading(false)
@@ -339,6 +339,7 @@ function BusinessInfo() {
                             { text: "เปิดทุกวัน", value: 1 },
                             { text: "เลือกวันเปิดปิด", value: 0 },
                         ]}
+                        isChecked={isEveryday}
                     />
 
                     {!isEveryday ? (
@@ -360,6 +361,7 @@ function BusinessInfo() {
                         items={priceLength}
                         label={"ช่วงราคา"}
                         onChange={hdlChangeInput}
+
                     />
 
                     <RadioBtn
@@ -370,6 +372,7 @@ function BusinessInfo() {
                             { text: "ไม่มี", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.parking.value}
                     />
                     <RadioBtn
                         label={"ไวไฟ"}
@@ -379,6 +382,7 @@ function BusinessInfo() {
                             { text: "ไม่ใช่", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.wifi.value}
                     />
 
                     <RadioBtn
@@ -389,6 +393,7 @@ function BusinessInfo() {
                             { text: "ไม่ใช่", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.creditCard.value}
                     />
                     <RadioBtn
                         label={"แอลกอฮอล์"}
@@ -398,6 +403,7 @@ function BusinessInfo() {
                             { text: "ไม่มี", value: 0 },
                         ]}
                         onChange={onChangeFacility}
+                        isChecked={facility.alcohol.value}
                     />
                 </Card>
 

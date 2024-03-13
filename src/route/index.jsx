@@ -113,8 +113,10 @@ const router = createBrowserRouter([
     element: (
       <>
         <RedirectIfNotAuthenticated>
-          <HeaderMerchant />
-          <Outlet />
+          <MerchantContextProvider>
+            <HeaderMerchant />
+            <Outlet />
+          </MerchantContextProvider>
         </RedirectIfNotAuthenticated>
       </>
     ),
@@ -125,7 +127,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/merchant/editRestaurant/:merchantId/:restaurantId",
-        element: <EditBusinessInfoPage />,
+        element: (
+          <MerchantContextProvider>
+            <EditBusinessInfoPage />,
+          </MerchantContextProvider>
+        ),
       },
       {
         path: "/merchant/:merchantId/:restaurantId",
@@ -137,13 +143,19 @@ const router = createBrowserRouter([
     path: "/merchant/login",
     element: (
       <RedirectIfAuthenticatedMerchant>
+        <HeaderMerchant />
         <MerchantLoginPage />
       </RedirectIfAuthenticatedMerchant>
     ),
   },
   {
     path: "/merchant/register",
-    element: <RegisterPageMerchant />,
+    element: (
+      <>
+        <HeaderMerchant />
+        <RegisterPageMerchant />
+      </>
+    ),
   },
 ])
 

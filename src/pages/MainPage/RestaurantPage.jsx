@@ -15,10 +15,11 @@ function RestaurantPage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
     useRestaurant()
   const params = useParams()
+  console.log(params)
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.id))
-  }, [])
+  }, [params.id])
 
   const breadcrumbs = [
     { label: "หน้าหลัก", link: "https://www.google.com" },
@@ -36,13 +37,13 @@ function RestaurantPage() {
   ) : (
     <>
       <div className="max-w-[1024]  flex flex-col items-center bg-gray_primary">
-        <div className="w-full">
-          <div className="mx-auto flex justify-center my-1">
-            <div className="w-[807px] flex flex-col justify-start ">
-              <Breadcrumbs breadcrumbs={breadcrumbs} />
+        {/* <div className="w-full">
+            <div className="mx-auto flex justify-center my-1">
+              <div className="w-[807px] flex flex-col justify-start ">
+                <Breadcrumbs breadcrumbs={breadcrumbs} />
+              </div>
             </div>
-          </div>
-        </div>
+          </div> */}
         {/* image zone  */}
         <div className="w-full">
           <NavRestaurantImg

@@ -7,6 +7,7 @@ export const CardRestaurant = ({ restaurant }) => {
   const handleClickCard = () => {
     navigate(`/restaurants/${restaurant.id}`)
   }
+
   return (
     <div onClick={handleClickCard} className="w-full cursor-pointer">
       <div className="flex flex-col gap-2 p-4 bg-white rounded-lg   w-[480px] shadow-md">
