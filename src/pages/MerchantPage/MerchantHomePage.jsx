@@ -87,7 +87,6 @@ export default function MerchantHomePage() {
   }, [restaurantId]);
 
   const handleDelete = async () => {
-    console.log(selectDelete, "select **********************************");
     const data = await axios.delete(`/merchant/menu/${selectDelete.id}`);
     setMenu((r) => r.filter((el) => el.id != selectDelete.id));
     setOnDelete((c) => !c);
@@ -119,10 +118,11 @@ export default function MerchantHomePage() {
             {sideBar.map((a) => (
               <div key={a.id} className="flex flex-col gap-4 ">
                 <div
-                  className={`${!(isSelect == a.id)
-                    ? " flex items-center gap-2 cursor-pointer pl-4"
-                    : " flex items-center gap-2 font-bold text-blue_primary cursor-pointer pl-10"
-                    }`}
+                  className={`${
+                    !(isSelect == a.id)
+                      ? " flex items-center gap-2 cursor-pointer pl-4"
+                      : " flex items-center gap-2 font-bold text-blue_primary cursor-pointer pl-10"
+                  }`}
                   onClick={() => onClick(a.id)}
                 >
                   <img
@@ -138,184 +138,167 @@ export default function MerchantHomePage() {
           </div>
         </div>
 
-        <div className="max-w-[1024]  flex flex-col items-start">
-          {/* image zone  */}
+        <div className="max-w-[1024] flex flex-col">
           <div>
             <NavRestaurantImg restaurantImage={filter?.restaurantImages} />
           </div>
-          <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col items-center">
             <div className="flex justify-center w-full gap-10">
-              <div className="min-w-[567px]">
+              <div className="flex flex-col items-center min-w-[567px]">
                 <MerchantTitleCard
-                  // setRestaurantData={setRestaurantData}
                   setSideBar={setSideBar}
                   setOnFetch={setOnFetch}
                   restaurantData={filter}
                   filter={filter}
+                  sideBar={sideBar}
                 />
                 <RestaurantMapCard restaurantData={filter} />
-              </div>
-              <div className="min-w-56 mt-4">
-                <RestaurantDetailCard restaurantData={filter} />
-              </div>
-            </div>
-            <div className=" bg-white max-w-[700px] min-h-[300px] ml-48 mt-4 px-6 py-4 rounded-lg">
-              <div className="flex flex-col gap-6 justify-center ">
-                <div className="flex justify-between">
-                  <div className="font-bold text-xl">เมนูแนะนำ</div>
-                  {toggleMenu ? (
-                    <div
-                      className="text-blue_primary cursor-pointer"
-                      onClick={() => setToggleMenu((c) => !c)}
-                    >
-                      ซ่อน
+                <div className=" bg-white w-[722px]  mt-8 px-6 py-4 rounded-lg">
+                  <div className="flex flex-col gap-6 justify-center ">
+                    <div className="flex justify-between">
+                      <div className="font-bold text-xl">เมนูแนะนำ</div>
+                      {toggleMenu ? (
+                        <div
+                          className="text-blue_primary cursor-pointer"
+                          onClick={() => setToggleMenu((c) => !c)}
+                        >
+                          ซ่อน
+                        </div>
+                      ) : (
+                        <div
+                          className="text-blue_primary cursor-pointer"
+                          onClick={() => setToggleMenu((c) => !c)}
+                        >
+                          ดูทั้งหมด
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div
-                      className="text-blue_primary cursor-pointer"
-                      onClick={() => setToggleMenu((c) => !c)}
-                    >
-                      ดูทั้งหมด
-                    </div>
-                  )}
-                </div>
-                <hr />
-                {toggleMenu ? (
-                  <div className=" grid grid-cols-3 gap-8 ">
-                    {menu.map((el) => (
-                      <div className=" border rounded-xl shadow-md">
-                        <div className="relative">
-                          <img
-                            className="  aspect-square rounded-t-xl object-cover"
-                            src={el.img}
-                          />
-                          <div
-                            className="absolute right-2 top-2 cursor-pointer"
-                            onClick={() => {
-                              console.log(el);
+                    <hr />
+                    {toggleMenu ? (
+                      <div className=" grid grid-cols-3 gap-8 ">
+                        {menu.map((el) => (
+                          <div className=" border rounded-xl shadow-md">
+                            <div className="relative">
+                              <img
+                                className="  aspect-square rounded-t-xl object-cover"
+                                src={el.img}
+                              />
+                              <div
+                                className="absolute right-2 top-2 cursor-pointer"
+                                onClick={() => {
+                                  console.log(el);
 
-                              setSelectDelete(el);
-                              setOnDelete((c) => !c);
-                            }}
-                          >
-                            <CrossIcon
-                              stroke={"white"}
-                              className={
-                                "bg-red_primary rounded-full p-1 w-7 h-7"
-                              }
-                            />
+                                  setSelectDelete(el);
+                                  setOnDelete((c) => !c);
+                                }}
+                              >
+                                <CrossIcon
+                                  stroke={"white"}
+                                  className={
+                                    "bg-red_primary rounded-full p-1 w-7 h-7"
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="flex flex-col gap-1 py-2">
+                              <div className="font-bold  pl-4">
+                                {" "}
+                                {el.menuName}
+                              </div>
+                              <div className="pl-4 text-gray_secondary">
+                                {" "}
+                                ราคา : {el.price} บาท{" "}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex flex-col gap-1 py-2">
-                          <div className="font-bold  pl-4"> {el.menuName}</div>
-                          <div className="pl-4 text-gray_secondary">
-                            {" "}
-                            ราคา : {el.price} บาท{" "}
-                          </div>
-                        </div>
-                        {/* {onDelete ? (
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-8 ">
+                        {menu.slice(0, 3).map((el) => (
                           <>
-                            <div className="fixed flex flex-col justify-center items-center inset-0 bg-gray-400 opacity-50 "></div>
-                            <div className="inset-0 fixed flex flex-col justify-center items-center ">
-                              <div className="flex flex-col items-center gap-5 bg-white min-w-[400px] min-h-2/5 opacity-100 rounded-2xl pb-10 pt-10  px-10">
-                                คุณต้องการลบเมนูนี้ใช่หรือไม่ ?
-                                <div className="flex gap-4">
-                                  <button
-                                    onClick={handleDelete}
-                                    className="blue_primary"
-                                  >
-                                    ใช่
-                                  </button>
-                                  <button
-                                    className="gray_primary"
-                                    onClick={() => setOnDelete((c) => !c)}
-                                  >
-                                    ไม่ใช่
-                                  </button>
+                            <div className="  border rounded-xl shadow-md">
+                              <div className="relative">
+                                <img
+                                  className="  aspect-square rounded-t-xl object-cover"
+                                  src={el.img}
+                                />
+                                <div
+                                  className="absolute right-2 top-2 cursor-pointer"
+                                  onClick={() => {
+                                    setSelectDelete(el);
+                                    setOnDelete((c) => !c);
+                                  }}
+                                >
+                                  <CrossIcon
+                                    stroke={"white"}
+                                    className={
+                                      "bg-red_primary rounded-full p-1 w-7 h-7"
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex flex-col gap-1 py-2">
+                                <div className="font-bold  pl-4">
+                                  {" "}
+                                  {el.menuName}
+                                </div>
+                                <div className="pl-4 text-gray_secondary">
+                                  {" "}
+                                  ราคา : {el.price} บาท{" "}
                                 </div>
                               </div>
                             </div>
                           </>
-                        ) : null} */}
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-3 gap-8 ">
-                    {menu.slice(0, 3).map((el) => (
+                    )}
+                    {menu.length == 0 ? (
+                      <div className="text-gray-500 pl-6 ">
+                        ร้านนี้ยังไม่มีเมนูแนะนำ เพิ่มเมนูแนะนำของคุณสิ
+                      </div>
+                    ) : null}
+                    <hr />
+                    {onDelete ? (
                       <>
-                        <div className="  border rounded-xl shadow-md">
-                          <div className="relative">
-                            <img
-                              className="  aspect-square rounded-t-xl object-cover"
-                              src={el.img}
-                            />
-                            <div
-                              className="absolute right-2 top-2 cursor-pointer"
-                              onClick={() => {
-                                setSelectDelete(el);
-                                setOnDelete((c) => !c);
-                              }}
-                            >
-                              <CrossIcon
-                                stroke={"white"}
-                                className={
-                                  "bg-red_primary rounded-full p-1 w-7 h-7"
-                                }
-                              />
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-1 py-2">
-                            <div className="font-bold  pl-4">
-                              {" "}
-                              {el.menuName}
-                            </div>
-                            <div className="pl-4 text-gray_secondary">
-                              {" "}
-                              ราคา : {el.price} บาท{" "}
+                        <div className="fixed flex flex-col justify-center items-center inset-0 bg-gray-400 opacity-50 "></div>
+                        <div className="inset-0 fixed flex flex-col justify-center items-center ">
+                          <div className="flex flex-col items-center gap-5 bg-white min-w-[400px] min-h-2/5 opacity-100 rounded-2xl pb-10 pt-10  px-10">
+                            คุณต้องการลบเมนูนี้ใช่หรือไม่ ?
+                            <div className="flex gap-4">
+                              <button
+                                onClick={handleDelete}
+                                className="blue_primary"
+                              >
+                                ใช่
+                              </button>
+                              <button
+                                className="gray_primary"
+                                onClick={() => setOnDelete((c) => !c)}
+                              >
+                                ไม่ใช่
+                              </button>
                             </div>
                           </div>
                         </div>
                       </>
-                    ))}
-                  </div>
-                )}
-                <hr />
-                {onDelete ? (
-                  <>
-                    <div className="fixed flex flex-col justify-center items-center inset-0 bg-gray-400 opacity-50 "></div>
-                    <div className="inset-0 fixed flex flex-col justify-center items-center ">
-                      <div className="flex flex-col items-center gap-5 bg-white min-w-[400px] min-h-2/5 opacity-100 rounded-2xl pb-10 pt-10  px-10">
-                        คุณต้องการลบเมนูนี้ใช่หรือไม่ ?
-                        <div className="flex gap-4">
-                          <button
-                            onClick={handleDelete}
-                            className="blue_primary"
-                          >
-                            ใช่
-                          </button>
-                          <button
-                            className="gray_primary"
-                            onClick={() => setOnDelete((c) => !c)}
-                          >
-                            ไม่ใช่
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : null}
+                    ) : null}
 
-                {addMenu ? (
-                  <AddMenuModal setMenu={setMenu} setAddMenu={setAddMenu} />
-                ) : null}
-                <div
-                  className="flex justify-center mx-auto gap-2 px-2 rounded-lg w-1/4 bg-blue_secondary hover:bg-blue_secondary_hv text-blue_primary py-2 cursor-pointer"
-                  onClick={() => setAddMenu((c) => !c)}
-                >
-                  <AddIcon />
-                  เพิ่มเมนูแนะนำ
+                    {addMenu ? (
+                      <AddMenuModal setMenu={setMenu} setAddMenu={setAddMenu} />
+                    ) : null}
+                    <div
+                      className="flex justify-center mx-auto gap-2 px-2 rounded-lg w-1/4 bg-blue_secondary hover:bg-blue_secondary_hv text-blue_primary py-2 cursor-pointer"
+                      onClick={() => setAddMenu((c) => !c)}
+                    >
+                      <AddIcon />
+                      เพิ่มเมนูแนะนำ
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div className="min-w-56 mt-4">
+                <RestaurantDetailCard restaurantData={filter} />
               </div>
             </div>
           </div>
