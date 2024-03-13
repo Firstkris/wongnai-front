@@ -1,7 +1,8 @@
-import { rating as ratingConstant } from "../../constants/constant"
-import { Link } from "react-router-dom"
+import { rating as ratingConstant } from "../../constants/constant";
+import { Link } from "react-router-dom";
 export const UserReviewCard = ({ review }) => {
-  const dateCreate = review?.createdAt ? review?.createdAt.split("T")[0] : null
+  const dateCreate = review?.createdAt ? review?.createdAt.split("T")[0] : null;
+  console.log(review, "review");
   return (
     <div className="flex flex-col p-2 border rounded-lg gap-2 bg-slate-50">
       <div className="flex gap-4">
@@ -24,7 +25,7 @@ export const UserReviewCard = ({ review }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col p-1 h-20 gap-2">
+      <div className="flex flex-col p-1  gap-2">
         <div className="flex gap-2 text-xs">
           <div className="flex">
             {review?.star &&
@@ -32,8 +33,17 @@ export const UserReviewCard = ({ review }) => {
           </div>
           <div className="flex items-end">{dateCreate}</div>
         </div>
-        <div>{review.description}</div>
+        <div className="flex flex-col gap-2">
+          <div>{review.description}</div>
+          <div className="flex gap-2 h-24">
+            {review?.reviewImgs.map((item) => (
+              <div className="w-24 h-full overflow-hidden flex justify-center bg-slate-50 border rounded-lg">
+                <img src={item.img} className="w-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
