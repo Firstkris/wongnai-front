@@ -209,7 +209,7 @@ function BusinessInfo() {
         hdlSetInputGeoData();
     }, [subDistrict?.[0]?.subdistrictCode]);
 
-    console.log(input);
+    console.log(input, '*************************');
 
     if (isLoading) return <Loading />
 

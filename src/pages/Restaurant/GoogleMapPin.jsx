@@ -18,7 +18,6 @@ const GoogleMaps = ({ hdlSetLatLng, isEdit = false, lat, lng }) => {
   const [infoWindowContent, setInfoWindowContent] = useState("");
   const [map, setMap] = useState(null);
 
-  console.log(lat, lng);
   useEffect(() => {
     // ดึงตำแหน่งปัจจุบันของผู้ใช้
     if (navigator.geolocation && !isEdit) {
