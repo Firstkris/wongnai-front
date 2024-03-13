@@ -4,10 +4,10 @@ import { CrossIcon } from "../../icons/icon";
 export function ModalNavMerchantImg({ children, setIsToggle }) {
   return (
     <>
-      <div className="fixed justify-center items-center inset-0 bg-gray-400 opacity-50 z-20"></div>
-      <div className="inset-0 fixed flex justify-center items-center z-20">
-        <div className="relative rounded-2xl  ">
-          <Carousel className=" bg-black rounded-xl  h-[700px]">
+      <div className="fixed justify-center items-center inset-0 bg-gray-400 opacity-40 z-50"></div>
+      <div className="inset-0 fixed flex justify-center items-center z-50 ">
+        <div className="relative rounded-2xl w-3/5 h-[95%] ">
+          <Carousel className=" bg-black rounded-xl mx-auto  ">
             {children}
           </Carousel>
           <div

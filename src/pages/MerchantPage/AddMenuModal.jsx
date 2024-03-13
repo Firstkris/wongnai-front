@@ -27,10 +27,11 @@ export default function AddMenuModal({ setAddMenu, setMenu }) {
         formData.append(i, restaurantImg[i]);
       }
       formData.append("restaurantId", restaurantId);
-
+      setLoading(true);
       const data = await axios.post("/merchant/menu", formData);
       console.log(data);
       setMenu((r) => [...r, data.data.data]);
+      setAddMenu((c) => !c);
       //   setOnFetch((c) => !c);
     } catch (error) {
       console.log(error);
