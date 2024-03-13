@@ -37,6 +37,7 @@ import UiChat from "../pages/User/UiChat"
 import Footer from "../layouts/Footer"
 import EditBusinessInfo from "../feature/Restuarant/EditBusinessInfo"
 import EditBusinessInfoPage from "../pages/MerchantPage/EditBusinessInfoPage"
+import UiChatMerchant from "../pages/MerchantPage/UiChatMerchant"
 const router = createBrowserRouter([
   { path: "/huntest", element: <GoogleMaps /> },
   {
@@ -136,6 +137,14 @@ const router = createBrowserRouter([
       {
         path: "/merchant/:merchantId/:restaurantId",
         element: <MerchantHomePage />,
+      },
+      {
+        path: "/merchant/chat/:restaurantId",
+        element: (
+          <div>
+            <UiChatMerchant />
+          </div>
+        ),
       },
     ],
   },

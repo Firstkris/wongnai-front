@@ -15,7 +15,6 @@ function RestaurantPage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
     useRestaurant()
   const params = useParams()
-  console.log(params)
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.id))

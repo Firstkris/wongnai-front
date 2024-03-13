@@ -6,6 +6,8 @@ import * as Token from "../../../utils/local-storage";
 import { createContext } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:8888/");
 
 const UserContext = createContext();
 export default function UserContextProvider({ children }) {
@@ -14,6 +16,13 @@ export default function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [userDefault, setUserDefault] = useState(null);
   const [onFetch, setOnFetch] = useState(false);
+
+  useEffect(() => {
+    socket.auth = { sender: "USER" + user?.id };
+    // console.log("first");
+    socket.connect();
+    return () => socket.disconnect();
+  }, [user?.id]);
 
   useEffect(() => {
     if (Token.getToken()) {
@@ -38,14 +47,14 @@ export default function UserContextProvider({ children }) {
 
   const deleteReviewById = async (id) => {
     await userApi.deleteReviewById(id);
-    setOnFetch((c) => !c);
+    // setOnFetch((c) => !c); ฮั่นเอาออก
     toast.success("Delete review successful");
   };
 
   const deleteBookmarkById = async (id) => {
     console.log("id", id);
     await userApi.deleteBookmarkById(id);
-    setOnFetch((c) => !c);
+    // setOnFetch((c) => !c); // ฮั่นเอาออก
     toast.success("Delete bookmark successful");
   };
   console.log(user);
@@ -62,6 +71,7 @@ export default function UserContextProvider({ children }) {
         userDefault,
         setOnFetch,
         deleteBookmarkById,
+        socket,
       }}
     >
       {children}

@@ -9,28 +9,29 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { merchantLogin } from "../../apis/merchant";
 import * as merchantApi from "../../apis/merchant";
+import { toast } from "react-toastify";
 
 function MerchantLoginPage() {
   const [validateError, setValidateError] = useState(null);
-  const { setMerchant, merchant, setInitialLoading } = useMerchant();
+  const { setMerchant, setInitialLoading } = useMerchant();
   const [input, setInput] = useState({ usernameOrMobile: "", password: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (Token.getToken()) {
-      merchantApi
-        .fetchMe()
-        .then((res) => {
-          setMerchant(res.data.merchant);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => setInitialLoading(false));
-    } else {
-      setInitialLoading(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (Token.getTokenMerchant()) {
+  //     merchantApi
+  //       .fetchMe()
+  //       .then((res) => {
+  //         setMerchant(res.data.merchant);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       })
+  //       .finally(() => setInitialLoading(false));
+  //   } else {
+  //     setInitialLoading(false);
+  //   }
+  // }, []);
 
   const handleChangeInput = (e) => {
     setValidateError("");
@@ -45,9 +46,10 @@ function MerchantLoginPage() {
 
       const response = await merchantLogin(input);
       console.log(response);
-      Token.setToken(response.data.accessToken);
+      Token.setTokenMerchant(response.data.accessToken);
       setMerchant(response.data.merchant);
-      location.reload()
+      toast.success("Login successful");
+      location.reload();
     } catch (err) {
       setValidateError("username or password invalid");
       console.log(err);

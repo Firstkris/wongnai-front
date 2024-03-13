@@ -12,8 +12,7 @@ export const merchantLogin = async (input) => {
 };
 
 export const register = async (fromData) =>
-  axios.post('/merchant/register', fromData);
-
+  axios.post("/merchant/register", fromData);
 
 export const fetchMe = () =>
   axios.get("/merchant/me", {
@@ -42,6 +41,21 @@ export const fetchMenuByRestaurantId = async (restaurantId) =>
 export const fetchGeoDataByName = async (data) =>
   axios.post("/merchant/get-by-name", data);
 
-export const fetchBusinessInfo = async (restaurantId) => axios.post('/merchant/get-businessinfo', { restaurantId })
+export const fetchBusinessInfo = async (restaurantId) =>
+  axios.post("/merchant/get-businessinfo", { restaurantId });
 
-export const editRestaurantInfo = async (restaurantId, newData, openingHours, facility) => axios.patch('/merchant/update-restaurant', { restaurantId, newData, openingHours, facility })
+export const editRestaurantInfo = async (
+  restaurantId,
+  newData,
+  openingHours,
+  facility
+) =>
+  axios.patch("/merchant/update-restaurant", {
+    restaurantId,
+    newData,
+    openingHours,
+    facility,
+  });
+
+export const getChatDataByRestaurantId = (id) =>
+  axios.get(`/merchant/getChatBoxByRestaurantId/${id}`);

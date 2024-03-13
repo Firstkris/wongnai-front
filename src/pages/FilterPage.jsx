@@ -19,26 +19,15 @@ const breadcrumbs = [
   },
 ]
 export const FilterPage = () => {
-  const {
-    filterPageData,
-    fetchRestaurantWithUserLogin,
-    isLoading,
-    fetchFilterPage,
-  } = useRestaurant()
-  const { restaurants } = filterPageData
+  const { filterPageData, fetchRestaurantWithUserLogin, isLoading } =
+    useRestaurant()
 
+  const { restaurants } = filterPageData
   const { user } = useUser()
 
-  const fetchDataFilter = async () => {
-    try {
-      await fetchRestaurantWithUserLogin()
-    } catch (error) {
-      console.log(error)
-    }
-  }
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
-    fetchDataFilter()
+    fetchRestaurantWithUserLogin()
   }, [user])
 
   return (

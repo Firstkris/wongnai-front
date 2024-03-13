@@ -2,11 +2,27 @@ import { BookmarkIcon } from "../BookmarkIcon"
 import { useNavigate } from "react-router-dom"
 import { ReviewScore } from "../ReviewScore"
 import { ImageRender } from "./ImageRender"
+import { useEffect } from "react"
+import { useState } from "react"
 export const CardRestaurant = ({ restaurant }) => {
   const navigate = useNavigate()
   const handleClickCard = () => {
     navigate(`/restaurants/${restaurant.id}`)
   }
+
+  const lat = restaurant.lat
+  const lng = restaurant.lng
+
+  const [currentPosition, setCurrentPosition] = useState(null)
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords
+        setCurrentPosition({ latitude, longitude })
+      })
+    }
+  }, [])
 
   return (
     <div onClick={handleClickCard} className="w-full cursor-pointer">
@@ -51,7 +67,25 @@ export const CardRestaurant = ({ restaurant }) => {
             <div className="justify-end flex">
               <BookmarkIcon restaurant={restaurant} />
             </div>
-            <div>0 กม.</div>
+            <div>
+              {currentPosition
+                ? (Math.abs(lat - currentPosition?.latitude) ** 2 +
+                    Math.abs(lng - currentPosition?.longitude)) **
+                    0.5 >
+                  1
+                  ? (
+                      (Math.abs(lat - currentPosition?.latitude) ** 2 +
+                        Math.abs(lng - currentPosition?.longitude)) **
+                      0.5
+                    ).toFixed(1) + " กม."
+                  : (
+                      (Math.abs(lat - currentPosition?.latitude) ** 2 +
+                        Math.abs(lng - currentPosition?.longitude)) **
+                        0.5 *
+                      1000
+                    ).toFixed(1) + " ม."
+                : null}
+            </div>
           </div>
         </div>
       </div>

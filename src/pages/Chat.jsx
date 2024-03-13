@@ -176,18 +176,16 @@ export function Chat({ role, userId, restaurantId, socket }) {
 
   useEffect(() => {
     run();
-  }, [restaurantId]);
+  }, [restaurantId, userId]);
 
   console.log(userId);
 
-
-  useEffect(() => {
-
-    socket.auth = { sender };
-    // console.log("first");
-    socket.connect();
-    return () => socket.disconnect();
-  }, []);
+  // useEffect(() => {
+  //   socket.auth = { sender };
+  //   // console.log("first");
+  //   socket.connect();
+  //   return () => socket.disconnect();
+  // }, [userId, restaurantId]);
 
   const change = (e) => {
     setMessage(e.target.value);
@@ -239,7 +237,7 @@ export function Chat({ role, userId, restaurantId, socket }) {
                 className={`${
                   // el.received == received || el.sender == "USER"
                   el.sender !== role ? " items-start " : " items-end"
-                  }   text-black  flex flex-col`}
+                }   text-black  flex flex-col`}
                 key={el.id}
               >
                 <div className="flex flex-col flex-wrap max-w-[50%] gap-2">
@@ -268,10 +266,11 @@ export function Chat({ role, userId, restaurantId, socket }) {
                     </span>
                   </div>
                   <div
-                    className={`mr-4 flex flex-wrap   ${el.sender !== role
-                      ? "ml-2 py-3 px-4 text-white  bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
-                      : "mr-2 py-3 px-4 text-white  bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
-                      }`}
+                    className={`mr-4 flex flex-wrap   ${
+                      el.sender !== role
+                        ? "ml-2 py-3 px-4 text-white  bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl break-all "
+                        : "mr-2 py-3 px-4 text-white  bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl break-all "
+                    }`}
                   >
                     {el.message}
                   </div>

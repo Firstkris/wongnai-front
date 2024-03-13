@@ -16,7 +16,7 @@ import { AddIcon, CrossIcon } from "../../icons/icon";
 import { Link } from "react-router-dom";
 import { fetchMenuByRestaurantId } from "../../apis/merchant";
 import AddMenuModal from "./AddMenuModal";
-import axios from "../../configs/axios";
+import axios from "../../configs/axiosMerchant";
 import { useMerchant } from "../../feature/auth/contexts/MerchantContext";
 
 export default function MerchantHomePage() {
@@ -41,12 +41,17 @@ export default function MerchantHomePage() {
   const [selectDelete, setSelectDelete] = useState({});
 
   const [sideBar, setSideBar] = useState([]);
-  console.log(merchant);
+
+  console.log(sideBar);
+  console.log(restaurantData);
   const run1 = async () => {
     if (!merchant.id) return;
-    const data = await axios.get(`/merchant/sideBar/${merchant.id}`);
-    setSideBar(data.data.data);
-    // console.log(data.data.data);
+    const data = await axios.get("/merchant/me");
+    setSideBar(data.data.restaurant);
+    console.log(data.data.restaurant[0].id);
+    setIsSelect(data.data.restaurant[0].id);
+    navigate(`/merchant/${merchantId}/${data.data.restaurant[0].id}`);
+    // console.log(data.data.restaurant);
   };
   useEffect(() => {
     run1();
@@ -63,12 +68,16 @@ export default function MerchantHomePage() {
 
   const onClick = (restaurantId) => {
     setIsSelect(restaurantId);
-    navigate(`/merchant/${merchantId}/${restaurantId}`);
-    setOnFetch((c) => !c);
+    navigate(`/merchant/${merchantId}/${restaurantId || isSelect}`);
+    // setOnFetch((c) => !c); // ฮั่นเอาออก
   };
+  // useEffect(() => {
+  //   navigate(`/merchant/${merchantId}/${isSelect}`);
+  // }, [merchantId.id]);
 
   const run = async () => {
     const data = await fetchMenuByRestaurantId(restaurantId);
+
     setMenu(data.data.data);
     // console.log("menu", data);
   };
@@ -85,8 +94,11 @@ export default function MerchantHomePage() {
   };
   console.log(nameRestaurant);
   console.log(sideBar);
-  const filter = nameRestaurant.filter((item) => item.merchantId == merchantId);
-  return (
+  const filter = sideBar.filter((item) => item.id == isSelect)[0];
+  console.log(filter, "filter");
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <div className="flex gap-6 justify-center mt-4 mx-10 mb-10">
         <div className=" rounded-lg bg-white h-[1170px] w-[250px] pt-5 px-4">
@@ -104,7 +116,7 @@ export default function MerchantHomePage() {
             </Link>
           </div>
           <div className="overflow-scroll h-[1030px] scroll_hidden ">
-            {filter.map((a) => (
+            {sideBar.map((a) => (
               <div key={a.id} className="flex flex-col gap-4 ">
                 <div
                   className={`${
@@ -130,25 +142,22 @@ export default function MerchantHomePage() {
         <div className="max-w-[1024]  flex flex-col items-start">
           {/* image zone  */}
           <div>
-            <NavRestaurantImg
-              restaurantImage={restaurantData?.restaurant?.restaurantImages}
-            />
+            <NavRestaurantImg restaurantImage={filter?.restaurantImages} />
           </div>
           <div className="w-full flex flex-col">
             <div className="flex justify-center w-full gap-10">
               <div className="min-w-[567px]">
                 <MerchantTitleCard
-                  setRestaurantData={setRestaurantData}
+                  // setRestaurantData={setRestaurantData}
+                  setSideBar={setSideBar}
                   setOnFetch={setOnFetch}
-                  restaurantData={restaurantData.restaurant}
-                  bookmarks={restaurantData?.bookmarks}
+                  restaurantData={filter}
+                  filter={filter}
                 />
-                <RestaurantMapCard restaurantData={restaurantData.restaurant} />
+                <RestaurantMapCard restaurantData={filter} />
               </div>
               <div className="min-w-56 mt-4">
-                <RestaurantDetailCard
-                  restaurantData={restaurantData.restaurant}
-                />
+                <RestaurantDetailCard restaurantData={filter} />
               </div>
             </div>
             <div className=" bg-white max-w-[700px] min-h-[300px] ml-48 mt-4 px-6 py-4 rounded-lg">

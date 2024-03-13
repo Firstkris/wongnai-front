@@ -3,27 +3,35 @@ import { Chat } from "../Chat";
 import { useUser } from "../../feature/user/contexts/UserContext";
 import { useState } from "react";
 import { useEffect } from "react";
-import * as ApiUser from "../../apis/user";
+import * as ApiMerchant from "../../apis/merchant";
 import { useRestaurant } from "../../hooks/hooks";
 // import io from "socket.io-client";
+import { useParams } from "react-router-dom";
 // const socket = io.connect("http://localhost:8888/");
 
-export default function UiChat() {
-  const { user, socket } = useUser();
+export default function UiChatMerchant() {
+  //   const { user } = useUser();
+  const [user, setUser] = useState("");
+
   const [chatBox, setChatBox] = useState([]);
-  const { restaurant, setRestaurant } = useRestaurant();
+  const { restaurant, socket, setRestaurant } = useRestaurant();
+
+  const { restaurantId } = useParams();
 
   console.log("restaurant", restaurant);
-  const getChat = async (user) => {
-    const chatData = await ApiUser.getChatDataByUserId(user?.id);
-    setChatBox(chatData.data.chatBox);
+  const getChat = async (id) => {
+    console.log(id);
+    // const chatData = await ApiUser.getChatDataByUserId(user?.id);\
+    const chatData = await ApiMerchant.getChatDataByRestaurantId(id);
+    console.log("chatData", chatData);
+    setChatBox(chatData.data.data);
   };
 
   console.log("chatBox", chatBox);
 
   useEffect(() => {
-    getChat(user);
-  }, [user]);
+    getChat(restaurantId);
+  }, []);
 
   return (
     // <!-- This is an example component -->
@@ -49,7 +57,7 @@ export default function UiChat() {
         <!-- user list --> */}
           {chatBox.map((el) => (
             <div
-              onClick={() => setRestaurant(el.restaurantId)}
+              onClick={() => setUser(+el.userId)}
               className={`flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer ${
                 el.restaurantId == restaurant ? "bg-[#ebf5ff]" : ""
               } `}
@@ -57,15 +65,13 @@ export default function UiChat() {
             >
               <div className="w-1/4">
                 <img
-                  src={el.profile_img}
+                  src={el.img_profile}
                   className="object-cover h-12 w-12 rounded-full"
                   alt=""
                 />
               </div>
               <div className="w-full">
-                <div className="text-lg font-semibold">
-                  {el.restaurant_name}
-                </div>
+                <div className="text-lg font-semibold">{el.name}</div>
               </div>
             </div>
           ))}
@@ -75,14 +81,14 @@ export default function UiChat() {
         {/* <!-- end chat list -->
       <!-- message --> */}
 
-        {restaurant ? (
+        {user ? (
           <Chat
             socket={socket}
-            restaurantId={restaurant}
-            userId={user?.id}
+            restaurantId={+restaurantId}
+            userId={user}
             // userId={2}
-            role={"USER"}
-            // role={"RESTAURANT"}
+            // role={user?.role}
+            role={"RESTAURANT"}
           />
         ) : null}
       </div>

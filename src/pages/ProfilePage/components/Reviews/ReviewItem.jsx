@@ -4,12 +4,16 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "../../../../feature/user/contexts/UserContext";
 
-export default function ReviewItem({ otherUser, review, myReview }) {
+export default function ReviewItem({
+  otherUser,
+  review,
+  myReview,
+  setMyReviews,
+}) {
   const { user, deleteReviewById } = useUser();
   const { userId } = useParams();
 
   const [isToggle, setIsToggle] = useState(false);
-
   // console.log("myReview.id", myReview.id);
 
   const agoTime = () => {
@@ -44,7 +48,7 @@ export default function ReviewItem({ otherUser, review, myReview }) {
       <StarIcon key={i} className="w-4 h-4 fill-red_primary" />
     );
   }
-
+  console.log(review, "review");
   return (
     <div className="w-1/2 mx-auto bg-white rounded-lg min-h-[300px] p-4 mb-10">
       {userId ? (
@@ -58,7 +62,10 @@ export default function ReviewItem({ otherUser, review, myReview }) {
           </h1>
           <div
             className="cursor-pointer"
-            onClick={() => deleteReviewById(myReview.id)}
+            onClick={() => {
+              setMyReviews((r) => r.filter((item) => item.id != myReview.id));
+              deleteReviewById(myReview.id);
+            }}
           >
             <CrossIcon />
           </div>

@@ -37,7 +37,7 @@ export default function BookmarkPage() {
         console.log(err);
       });
   }, [onFetch]);
-
+  console.log(myBookmarks, "myBookmarks");
   return isLoading ? (
     <div className=" flex justify-center items-center h-screen bg-opacity-50">
       <Loading />
@@ -46,7 +46,11 @@ export default function BookmarkPage() {
     <div>
       <ProfileHeader otherUser={otherUser} />
       <ProfileNavBookMark />
-      <BookmarkList bookmarks={bookmarks} myBookmarks={myBookmarks} />
+      <BookmarkList
+        setMyBookmarks={setMyBookmarks}
+        bookmarks={bookmarks}
+        myBookmarks={myBookmarks}
+      />
     </div>
   );
 }

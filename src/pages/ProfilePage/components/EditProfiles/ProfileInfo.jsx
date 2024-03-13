@@ -45,7 +45,9 @@ export default function ProfileInfo({ setIsEditPassword }) {
       setUser(input);
       setOnEditInfo((c) => !c);
 
-      await axios.patch("/user", { gender: input.gender });
+      const data = await axios.patch("/user", { gender: input.gender });
+      setUser(data.data.user);
+      // console.log(data, "datatatatatatatatatat");
       toast.success("Edit profile successful");
     } catch (error) {
       console.log(error);

@@ -14,6 +14,7 @@ import { RatingButton } from "./restaurantPageComponents/RatingButton"
 import { UserReviewCard } from "./restaurantPageComponents/UserReviewCard"
 import { useRestaurant } from "../hooks/hooks"
 import { ProgressBarStar } from "./restaurantPageComponents/ProgressBarStar"
+import { dayOfWeek } from "../constants/constant"
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
   const bookmarkRef = useRef()
@@ -185,7 +186,9 @@ export function RestaurantDetailCard({ restaurantData }) {
           restaurantData?.openHours?.length > 0 ? (
             restaurantData.openHours.map((el) => (
               <div className=" flex" key={el.id}>
-                <p className="text-xs w-2/4 text-gray-500">{el.date}</p>
+                <p className="text-xs w-2/4 text-gray-500">
+                  {dayOfWeek.find((day) => day.dateEn === el.date)?.dateTh}
+                </p>
                 <p className="text-xs  text-gray-500">
                   {el.openTime.slice(11, 16)}-{el.closeTime.slice(11, 16)}
                 </p>

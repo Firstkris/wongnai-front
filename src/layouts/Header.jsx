@@ -125,32 +125,7 @@ export default function Header() {
           </form>
         </div>
       </div>
-      {/* <div className="absolute top-14 ml-12 flex flex-col gap-2  bg-red-500">
-        {text
-          ? nameRestaurant
-              .filter(
-                (item) =>
-                  item.category.categoryName.includes(text) ||
-                  item.restaurantName.includes(text)
-              )
-              .slice(0, 6)
-              .map((item) => (
-                <Link to={`/restaurants/${item.id}`} key={item.id}>
-                  <div className="flex gap-6">
-                    <img
-                      src={item.profileImg}
-                      alt=""
-                      className="w-[50px] h-[50px]"
-                    />
-                    <div>
-                      <div>{item.restaurantName}</div>
-                      <div>{item.subtitle}</div>
-                    </div>
-                  </div>
-                </Link>
-              ))
-          : null}
-      </div> */}
+
       <HeaderToggle />
     </header>
   );

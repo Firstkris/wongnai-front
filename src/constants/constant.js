@@ -91,3 +91,13 @@ export const mockDataForSlideBar = [
     img: "https://example.com/image19.jpg",
   },
 ]
+
+export const dayOfWeek = [
+  { dateTh: "จันทร์", dateEn: "monday" },
+  { dateTh: "อังคาร", dateEn: "tuesday" },
+  { dateTh: "พุธ", dateEn: "wednesday" },
+  { dateTh: "พฤหัสบดี", dateEn: "thursday" },
+  { dateTh: "ศุกร์", dateEn: "friday" },
+  { dateTh: "เสาร์", dateEn: "saturday" },
+  { dateTh: "อาทิตย์", dateEn: "sunday" },
+]

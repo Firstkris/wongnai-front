@@ -13,10 +13,12 @@ import { useUser } from "../feature/user/contexts/UserContext"
 import { userBookmark, getUserBookmark } from "../apis/user"
 
 import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 export const RestaurantContext = createContext()
 
 export const RestaurantContextProvider = ({ children }) => {
+  const [r, serR] = useState("")
   const [filterPageData, setFilterPageData] = useState({})
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
@@ -36,6 +38,13 @@ export const RestaurantContextProvider = ({ children }) => {
   useEffect(() => {
     fetch()
   }, [])
+
+  useEffect(() => {
+    socket.auth = { sender: "RESTAURANT" + r }
+    // console.log("first");
+    socket.connect()
+    return () => socket.disconnect()
+  }, [r])
 
   const fetchFilterPage = async () => {
     try {
@@ -106,10 +115,7 @@ export const RestaurantContextProvider = ({ children }) => {
     //if user is login
     try {
       const response = await getAllUserBookmark()
-      setFilterPageData((prev) => ({
-        ...prev,
-        restaurants: response.data?.restaurants,
-      }))
+      setFilterPageData(response.data)
     } catch (err) {
       console.log(err)
     }
@@ -172,6 +178,7 @@ export const RestaurantContextProvider = ({ children }) => {
         restaurant,
         setRestaurant,
         socket,
+        serR,
       }}
     >
       {children}
