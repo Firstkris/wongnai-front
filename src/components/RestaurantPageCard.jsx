@@ -1,38 +1,39 @@
-import { IconCamera } from "./icon-svg/IconCamera";
-import { IconMessage } from "./icon-svg/IconMessage";
-import { BookmarkIcon } from "./BookmarkIcon";
-import { IconCheckmark } from "./icon-svg/IconCheckmark";
-import { ButtonRestaurantPage } from "./restaurantPageComponents/ButtonRestaurantPage";
-import { priceLength, rating } from "../constants/constant";
-import { IconCheckGreen } from "./icon-svg/IconCheckGreen";
-import { IconTel } from "./icon-svg/IconTel";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { MiniMapGoogle } from "../feature/MimiMapGoogle";
-import { BiFoodMenu } from "react-icons/bi";
-import { RatingButton } from "../components/restaurantPageComponents/RatingButton";
-import { UserReviewCard } from "./restaurantPageComponents/UserReviewCard";
-import { useRestaurant } from "../hooks/hooks";
-import { ProgressBarStar } from "../components/restaurantPageComponents/ProgressBarStar";
+import { IconCamera } from "./icon-svg/IconCamera"
+import { IconMessage } from "./icon-svg/IconMessage"
+import { BookmarkIcon } from "./BookmarkIcon"
+import { IconCheckmark } from "./icon-svg/IconCheckmark"
+import { ButtonRestaurantPage } from "./restaurantPageComponents/ButtonRestaurantPage"
+import { priceLength, rating } from "../constants/constant"
+import { IconCheckGreen } from "./icon-svg/IconCheckGreen"
+import { IconTel } from "./icon-svg/IconTel"
+import { useRef } from "react"
+import { useNavigate } from "react-router-dom"
+import { MiniMapGoogle } from "../feature/MimiMapGoogle"
+import { BiFoodMenu } from "react-icons/bi"
+import { RatingButton } from "./restaurantPageComponents/RatingButton"
+import { UserReviewCard } from "./restaurantPageComponents/UserReviewCard"
+import { useRestaurant } from "../hooks/hooks"
+import { ProgressBarStar } from "./restaurantPageComponents/ProgressBarStar"
+import { dayOfWeek } from "../constants/constant"
 
 export function TitleRestaurantCard({ restaurantData, bookmarks }) {
-  const bookmarkRef = useRef();
-  const { setRestaurant } = useRestaurant();
-  const navigate = useNavigate();
+  const bookmarkRef = useRef()
+  const { setRestaurant } = useRestaurant()
+  const navigate = useNavigate()
   const showVerified = restaurantData?.verify && (
     <div className="bg-blue-500 text-white rounded-md px-1.5 gap-1 flex text-xs py-0.5">
       <IconCheckmark /> OFFICIAL
     </div>
-  );
+  )
   // console.log("restaurantData.id", restaurantData?.id);
 
   const handleClickBookmark = () => {
-    bookmarkRef.current.click();
-  };
+    bookmarkRef.current.click()
+  }
 
   const handleClickReview = () => {
-    navigate(`/review/${restaurantData?.id}`); ///${restaurantData?.id}
-  };
+    navigate(`/review/${restaurantData?.id}`) ///${restaurantData?.id}
+  }
 
   return (
     <div className=" w-full bg-white  rounded-md">
@@ -94,8 +95,8 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
         </div>
         <div
           onClick={() => {
-            setRestaurant(restaurantData?.id);
-            navigate("/chat1");
+            setRestaurant(restaurantData?.id)
+            navigate("/chat1")
           }}
         >
           <ButtonRestaurantPage>
@@ -105,13 +106,13 @@ export function TitleRestaurantCard({ restaurantData, bookmarks }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function RestaurantMapCard({ restaurantData }) {
   const handleClickDirection = () => {
-    window.location.href = `https://www.google.com/maps/search/?api=1&query=${restaurantData?.lat},${restaurantData?.lng}`;
-  };
+    window.location.href = `https://www.google.com/maps/search/?api=1&query=${restaurantData?.lat},${restaurantData?.lng}`
+  }
 
   return (
     <div className=" w-full bg-white  p-3 rounded-md">
@@ -165,7 +166,7 @@ export function RestaurantMapCard({ restaurantData }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function RestaurantDetailCard({ restaurantData }) {
@@ -174,7 +175,7 @@ export function RestaurantDetailCard({ restaurantData }) {
       ? priceLength
           .find((el) => el.id === restaurantData?.priceLength)
           ?.priceLength.slice(4)
-      : null;
+      : null
 
   return (
     <div className=" w-full bg-white  p-4 rounded-md ">
@@ -185,7 +186,9 @@ export function RestaurantDetailCard({ restaurantData }) {
           restaurantData?.openHours?.length > 0 ? (
             restaurantData.openHours.map((el) => (
               <div className=" flex" key={el.id}>
-                <p className="text-xs w-2/4 text-gray-500">{el.date}</p>
+                <p className="text-xs w-2/4 text-gray-500">
+                  {dayOfWeek.find((day) => day.dateEn === el.date)?.dateTh}
+                </p>
                 <p className="text-xs  text-gray-500">
                   {el.openTime.slice(11, 16)}-{el.closeTime.slice(11, 16)}
                 </p>
@@ -199,7 +202,7 @@ export function RestaurantDetailCard({ restaurantData }) {
           {restaurantData?.facilitiesWithRestaurantId
             ? restaurantData.facilitiesWithRestaurantId.map((el) => (
                 <div className="flex gap-2" key={el.id}>
-                  <IconCheckGreen />{" "}
+                  <IconCheckGreen />
                   <div className="flex text-sm">{el.facility.facilityName}</div>
                 </div>
               ))
@@ -224,32 +227,32 @@ export function RestaurantDetailCard({ restaurantData }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
-import { useState } from "react";
-import { ChatIcon } from "../icons/icon";
+import { useState } from "react"
+import { ChatIcon } from "../icons/icon"
 export function RatingRestaurantCard({ restaurantData }) {
-  const { filterByRating, reviewsRating } = useRestaurant();
-  const [isSelected, setIsSelected] = useState(false);
+  const { filterByRating, reviewsRating } = useRestaurant()
+  const [isSelected, setIsSelected] = useState(false)
 
   const handleClickFilterRating = (rating) => {
-    filterByRating(rating);
+    filterByRating(rating)
     // setIsSelected((prev) => !prev)
-  };
+  }
   const calRating = (review, number) => {
     if (review && review?.length > 0) {
       const percentRating =
-        (review.filter((el) => el.star == number).length / review.length) * 100;
-      return parseFloat(percentRating).toFixed(0);
+        (review.filter((el) => el.star == number).length / review.length) * 100
+      return parseFloat(percentRating).toFixed(0)
     } else {
-      return 0;
+      return 0
     }
-  };
-  const rating1 = calRating(restaurantData?.reviews, 1);
-  const rating2 = calRating(restaurantData?.reviews, 2);
-  const rating3 = calRating(restaurantData?.reviews, 3);
-  const rating4 = calRating(restaurantData?.reviews, 4);
-  const rating5 = calRating(restaurantData?.reviews, 5);
+  }
+  const rating1 = calRating(restaurantData?.reviews, 1)
+  const rating2 = calRating(restaurantData?.reviews, 2)
+  const rating3 = calRating(restaurantData?.reviews, 3)
+  const rating4 = calRating(restaurantData?.reviews, 4)
+  const rating5 = calRating(restaurantData?.reviews, 5)
 
   return (
     <div className="w-full bg-white  p-4 rounded-md  ">
@@ -329,5 +332,5 @@ export function RatingRestaurantCard({ restaurantData }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

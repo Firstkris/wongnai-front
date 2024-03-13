@@ -1,15 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import { imagePlaceHolder } from "../../constants/constant";
-import { ModalNavMerchantImg } from "../MerchantPage/ModalNavMerchantImg";
+import React from "react"
+import { useState } from "react"
+import { imagePlaceHolder } from "../../constants/constant"
+import { ModalNavMerchantImg } from "../MerchantPage/ModalNavMerchantImg"
 export default function NavRestaurantImg({ restaurantImage }) {
-  console.log(restaurantImage);
+  console.log(restaurantImage)
   const array =
     restaurantImage && restaurantImage?.length > 0
       ? restaurantImage
-      : imagePlaceHolder;
+      : imagePlaceHolder
 
-  const [isToggle, setIsToggle] = useState(false);
+  const [isToggle, setIsToggle] = useState(false)
 
   return (
     <div className=" flex justify-center ">
@@ -26,14 +26,6 @@ export default function NavRestaurantImg({ restaurantImage }) {
               </div>
             ))}
           </ModalNavMerchantImg>
-          {/* <div
-            className="cursor-pointer text-4xl flex justify-center items-center"
-            onClick={() => setIsToggle((c) => !c)}
-          >
-            <div className="bg-white px-20 py-12 rounded-[40px] hover:bg-gray-200 hover:font-bold">
-              Hide
-            </div>
-          </div> */}
         </div>
       ) : (
         <div
@@ -84,13 +76,15 @@ export default function NavRestaurantImg({ restaurantImage }) {
                   />
                 </div>
               ))}
-              <div className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 h-1/2 border text-white text-4xl cursor-pointer ">
-                <div>+{array.length - 6}</div>
-              </div>
+              {array.length <= 3 ? null : (
+                <div className="absolute right-0 bottom-0 flex justify-center items-center bg-black opacity-70 aspect-video w-1/2 h-1/2 border text-white text-4xl cursor-pointer ">
+                  <div>+{array.length - 6}</div>
+                </div>
+              )}
             </div>
           )}
         </div>
       )}
     </div>
-  );
+  )
 }

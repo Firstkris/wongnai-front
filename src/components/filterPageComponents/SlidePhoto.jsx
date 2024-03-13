@@ -21,6 +21,10 @@ const customTheme = {
     base: "h-2 w-2 rounded-full",
     wrapper: "absolute bottom-1 left-1/2 flex -translate-x-1/2 space-x-1",
   },
+  scrollContainer: {
+    base: "flex h-full snap-mandatory overflow-y-hidden overflow-x-scroll scroll-smooth rounded-lg",
+    snap: "snap-x",
+  },
 }
 
 const SlidePhoto = () => {
