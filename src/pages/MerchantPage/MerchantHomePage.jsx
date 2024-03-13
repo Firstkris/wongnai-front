@@ -150,9 +150,10 @@ export default function MerchantHomePage() {
                   setOnFetch={setOnFetch}
                   restaurantData={filter}
                   filter={filter}
+                  sideBar={sideBar}
                 />
                 <RestaurantMapCard restaurantData={filter} />
-                <div className=" bg-white w-[722px] min-h-[300px]  mt-8 px-6 py-4 rounded-lg">
+                <div className=" bg-white w-[722px]  mt-8 px-6 py-4 rounded-lg">
                   <div className="flex flex-col gap-6 justify-center ">
                     <div className="flex justify-between">
                       <div className="font-bold text-xl">เมนูแนะนำ</div>
@@ -252,6 +253,11 @@ export default function MerchantHomePage() {
                         ))}
                       </div>
                     )}
+                    {menu.length == 0 ? (
+                      <div className="text-gray-500 pl-6 ">
+                        ร้านนี้ยังไม่มีเมนูแนะนำ เพิ่มเมนูแนะนำของคุณสิ
+                      </div>
+                    ) : null}
                     <hr />
                     {onDelete ? (
                       <>

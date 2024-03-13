@@ -6,6 +6,7 @@ import {
   SearchIcon,
   DownTriangleSolidIcon,
   BarThreeIcon,
+  FilterIcon,
 } from "../icons/icon";
 import HeaderToggle from "../components/HeaderToggle";
 import { useRestaurant } from "../hooks/hooks";
@@ -51,18 +52,31 @@ export default function Header() {
       </Link>
       <div className="flex gap-5">
         <div>
-          <form className="flex">
-            <input
-              value={text}
-              onChange={handleSearch}
-              onClick={() => setIsToggle(true)}
-              className="rounded-l-lg bg-gray_primary pl-3 w-[200px] focus:outline-none"
-              placeholder="ชื่อร้านอาหาร..."
-            />
-            <div className="bg-red_primary w-10 rounded-r-lg cursor-pointer">
-              <button>
+          <form className="flex gap-6">
+            <div className="flex">
+              <input
+                value={text}
+                onChange={handleSearch}
+                onClick={() => setIsToggle(true)}
+                className="rounded-l-lg bg-gray_primary pl-3 w-[200px] focus:outline-none"
+                placeholder="ชื่อร้านอาหาร..."
+              />
+              <div className="bg-red_primary w-10 rounded-r-lg pb-2">
                 <SearchIcon className="w-6 h-6 text-white bg-red_primary mt-2 ml-2" />
-              </button>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 pl-2 bg-gray_primary rounded-lg ">
+              {/* <FilterIcon className="w-5 h-5 " /> */}
+              <div>ค้นหาร้าน ในกรุงเทพและปริมณฑล </div>
+              <Link
+                to={"/restaurants/filter"}
+                className="flex items-center border-l-2 pr-2  bg-red_primary rounded-r-lg border-white pl-1.5 h-full"
+              >
+                <FilterIcon
+                  className="w-6 h-6  cursor-pointer"
+                  stroke="white"
+                />
+              </Link>
             </div>
 
             {isToggle ? (
