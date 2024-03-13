@@ -137,7 +137,7 @@ function RestaurantPage() {
                           ))}
                       </div>
                     )}
-                    {restaurantData?.restaurant?.menus.length == 0 ? (
+                    {restaurantData?.restaurant?.menus?.length == 0 ? (
                       <div className="text-gray-500 pl-6 ">
                         ร้านนี้ยังไม่มีเมนูแนะนำ
                       </div>
