@@ -5,8 +5,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "../../../configs/axios";
 import { toast } from "react-toastify";
+import { useRestaurant } from "../../../hooks/hooks";
+import { Loading } from "../../../components/Loading";
 
 function CreateReviewForm() {
+  const { isLoading, setLoading } = useRestaurant();
+
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [rating, setRating] = useState(null);
@@ -44,20 +48,30 @@ function CreateReviewForm() {
     }
   };
   const handleSubmitform = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", desc);
-    formData.append("star", rating);
-    formData.append("restaurantId", restaurantsId);
-    // formData.append("img", fileInput.current.files);
-    for (let i = 0; i < fileInput.current.files.length; i++) {
-      formData.append("img", fileInput.current.files[i]);
+    try {
+      e.preventDefault();
+      if (!title || !desc || !rating) return toast.error("กรุณากรอกให้ครบ");
+      if (fileInput.current.files.length == 0)
+        return toast.error("กรุณาใส่รูปอย่างน้อย1รูป");
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("description", desc);
+      formData.append("star", rating);
+      formData.append("restaurantId", restaurantsId);
+      // formData.append("img", fileInput.current.files);
+      setLoading(true);
+      for (let i = 0; i < fileInput.current.files.length; i++) {
+        formData.append("img", fileInput.current.files[i]);
+      }
+      console.log(fileInput.current.files[0]);
+      await submitReview(formData);
+      toast.success("เขียนรีวิวสำเร็จ");
+      setLoading(false);
+      navigate(`/restaurants/${restaurantsId}`);
+    } catch (error) {
+      toast.error("กรุณากรอกให้ครบ");
     }
-    console.log(fileInput.current.files[0]);
-    await submitReview(formData);
-    toast.success("เขียนรีวิวสำเร็จ");
-    navigate(`/restaurants/${restaurantsId}`);
   };
 
   //   const fetchRestaurant = async () => {
@@ -73,7 +87,9 @@ function CreateReviewForm() {
       <img src={URL.createObjectURL(img[i])} className="w-24 h-24 rounded-md" />
     );
   }
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <form
       onSubmit={handleSubmitform}
       className=" w-7/12 bg-white h-full p-3 my-4 rounded-md flex flex-col gap-4 "

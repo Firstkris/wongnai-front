@@ -51,9 +51,10 @@ function Select({
                 </>)
                 : (<>
                     <select
-                        onBlur={onChange}
+                        onChange={onChange}
                         name={name}
                         className="select outline-none border-none rounded-lg w-full py-1.5 px-3  mt-2"
+                        value={value}
 
                     >
 

@@ -1,15 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import { imagePlaceHolder } from "../../constants/constant";
-import { ModalNavMerchantImg } from "../MerchantPage/ModalNavMerchantImg";
+import React from "react"
+import { useState } from "react"
+import { imagePlaceHolder } from "../../constants/constant"
+import { ModalNavMerchantImg } from "../MerchantPage/ModalNavMerchantImg"
 export default function NavRestaurantImg({ restaurantImage }) {
-  console.log(restaurantImage);
+  console.log(restaurantImage)
   const array =
     restaurantImage && restaurantImage?.length > 0
       ? restaurantImage
-      : imagePlaceHolder;
+      : imagePlaceHolder
 
-  const [isToggle, setIsToggle] = useState(false);
+  const [isToggle, setIsToggle] = useState(false)
 
   return (
     <div className=" flex justify-center ">
@@ -86,5 +86,5 @@ export default function NavRestaurantImg({ restaurantImage }) {
         </div>
       )}
     </div>
-  );
+  )
 }

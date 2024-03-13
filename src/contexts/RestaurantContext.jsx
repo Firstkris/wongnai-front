@@ -1,75 +1,75 @@
-import io from "socket.io-client";
+import io from "socket.io-client"
 
-const socket = io.connect("http://localhost:8888/");
+const socket = io.connect("http://localhost:8888/")
 
-import { useState, createContext } from "react";
+import { useState, createContext } from "react"
 import {
   filterPageGetRestaurant,
   getFilterRestaurant,
   getAllUserBookmark,
   getRestaurantById,
-} from "../apis/restaurants";
-import { useUser } from "../feature/user/contexts/UserContext";
-import { userBookmark, getUserBookmark } from "../apis/user";
+} from "../apis/restaurants"
+import { useUser } from "../feature/user/contexts/UserContext"
+import { userBookmark, getUserBookmark } from "../apis/user"
 
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
-export const RestaurantContext = createContext();
+export const RestaurantContext = createContext()
 
 export const RestaurantContextProvider = ({ children }) => {
-  const [r, serR] = useState("");
-  const [filterPageData, setFilterPageData] = useState({});
-  const [filterInput, setFilterInput] = useState({ rating: [] });
-  const [isLoading, setLoading] = useState(false);
+  const [r, serR] = useState("")
+  const [filterPageData, setFilterPageData] = useState({})
+  const [filterInput, setFilterInput] = useState({ rating: [] })
+  const [isLoading, setLoading] = useState(false)
 
-  const [restaurantData, setRestaurantPage] = useState({});
-  const [reviewsRating, setReviewsRating] = useState(null);
+  const [restaurantData, setRestaurantPage] = useState({})
+  const [reviewsRating, setReviewsRating] = useState(null)
 
-  const { user } = useUser();
-  const [restaurant, setRestaurant] = useState("");
+  const { user } = useUser()
+  const [restaurant, setRestaurant] = useState("")
 
-  const [nameRestaurant, setNameRestaurant] = useState([]);
+  const [nameRestaurant, setNameRestaurant] = useState([])
   const fetch = async () => {
-    const data = await filterPageGetRestaurant();
-    setNameRestaurant(data.data.restaurants);
-  };
+    const data = await filterPageGetRestaurant()
+    setNameRestaurant(data.data.restaurants)
+  }
 
   useEffect(() => {
-    fetch();
-  }, []);
+    fetch()
+  }, [])
 
   useEffect(() => {
-    socket.auth = { sender: "RESTAURANT" + r };
+    socket.auth = { sender: "RESTAURANT" + r }
     // console.log("first");
-    socket.connect();
-    return () => socket.disconnect();
-  }, [r]);
+    socket.connect()
+    return () => socket.disconnect()
+  }, [r])
 
   const fetchFilterPage = async () => {
     try {
       // setLoading(true)
-      const response = await filterPageGetRestaurant();
-      setFilterPageData(response.data);
+      const response = await filterPageGetRestaurant()
+      setFilterPageData(response.data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     } finally {
       // setLoading(false);
     }
-  };
+  }
 
   const fetchFilterData = async (filterData) => {
     try {
       if (Object.keys(filterData).length === 0) {
-        console.log("no filter");
-        return;
+        console.log("no filter")
+        return
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
         if (user) {
-          console.log("have user");
-          fetchRestaurantWithUserLogin();
+          console.log("have user")
+          fetchRestaurantWithUserLogin()
         } else {
-          console.log("no user");
-          fetchFilterPage();
+          console.log("no user")
+          fetchFilterPage()
         }
       }
       const filterDataParams = {
@@ -78,86 +78,83 @@ export const RestaurantContextProvider = ({ children }) => {
         rating: filterData?.rating,
         priceLength: filterData?.priceLength,
         categoryId: filterData?.categoryName,
-      };
+      }
 
-      const response = await getFilterRestaurant(filterDataParams);
+      const response = await getFilterRestaurant(filterDataParams)
 
       if (response.data?.restaurants?.length > 0) {
         setFilterPageData((prev) => ({
           ...prev,
           restaurants: response.data?.restaurants,
-        }));
+        }))
       } else {
         setFilterPageData((prev) => ({
           ...prev,
           restaurants: [],
-        }));
+        }))
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const clearFilters = () => {
     try {
-      setFilterInput({});
+      setFilterInput({})
       if (!user) {
-        fetchFilterPage();
+        fetchFilterPage()
       } else {
-        fetchRestaurantWithUserLogin();
+        fetchRestaurantWithUserLogin()
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const fetchRestaurantWithUserLogin = async () => {
     //if user is login
     try {
-      const response = await getAllUserBookmark();
-      setFilterPageData((prev) => ({
-        ...prev,
-        restaurants: response.data?.restaurants,
-      }));
+      const response = await getAllUserBookmark()
+      setFilterPageData(response.data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const fetchRestaurantAndBookmarkById = async (restaurantId) => {
     try {
-      setLoading(true);
+      setLoading(true)
       if (user) {
         const [restaurantResponse, bookmarkResponse] = await Promise.all([
           getRestaurantById(restaurantId),
           getUserBookmark(restaurantId),
-        ]);
+        ])
 
         setRestaurantPage({
           restaurant: restaurantResponse.data?.restaurant,
           bookmarks: bookmarkResponse.data?.bookmarks,
-        });
-        return;
+        })
+        return
       }
 
-      const response = await getRestaurantById(restaurantId);
+      const response = await getRestaurantById(restaurantId)
       setRestaurantPage({
         restaurant: response.data?.restaurant,
         bookmarks: [],
-      });
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const filterByRating = (rating) => {
     const reviews = restaurantData?.restaurant?.reviews?.filter(
       (el) => el.star == rating
-    );
-    setReviewsRating(reviews);
-  };
+    )
+    setReviewsRating(reviews)
+  }
   ////////
 
   return (
@@ -186,5 +183,5 @@ export const RestaurantContextProvider = ({ children }) => {
     >
       {children}
     </RestaurantContext.Provider>
-  );
-};
+  )
+}
