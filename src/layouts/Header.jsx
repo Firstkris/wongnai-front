@@ -15,10 +15,10 @@ import { useRef } from "react";
 import { useEffect } from "react";
 
 export default function Header() {
-  const { nameRestaurant } = useRestaurant();
+  const { nameRestaurant, searchBar1 } = useRestaurant();
   const [isToggle, setIsToggle] = useState(true);
 
-  console.log(nameRestaurant);
+  console.log(searchBar1);
   const [text, setText] = useState("");
   const searchBar = useRef(null);
 
@@ -42,7 +42,7 @@ export default function Header() {
     <header
       ref={searchBar}
       className="bg-white py-4 flex 
-     justify-around border-b-2 z-50
+     justify-around border-b-2 z-50 
     "
     >
       <Link to={"/"} className="flex">
@@ -50,7 +50,7 @@ export default function Header() {
 
         <MessageIcon className="w-10 h-10 fill-red_primary" />
       </Link>
-      <div className="flex gap-5">
+      <div className="flex gap-5 max-w-fit">
         <div>
           <form className="flex gap-6">
             <div className="flex">
@@ -92,15 +92,16 @@ export default function Header() {
                     : ""
                 }`}
               >
-                {text
-                  ? nameRestaurant
+                {text ? (
+                  <div className="max-h-[200px] overflow-auto">
+                    {searchBar1.restaurants
                       .filter(
                         (item) =>
                           item.category.categoryName.includes(text) ||
                           item.restaurantName.includes(text)
                       )
 
-                      .slice(0, 4)
+                      // .slice(0, 4)
                       .map((item) => (
                         <Link
                           to={`/restaurants/${item.id}`}
@@ -123,8 +124,9 @@ export default function Header() {
                           </div>
                           <hr />
                         </Link>
-                      ))
-                  : null}
+                      ))}
+                  </div>
+                ) : null}
               </div>
             ) : null}
           </form>

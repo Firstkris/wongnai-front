@@ -94,7 +94,7 @@ export default function HeaderToggle() {
           {!merchant ? (
             <Link
               to={"/login"}
-              className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2"
+              className="flex justify-center items-center border border-10 border-gray-300 rounded-full px-2 "
             >
               <ProfileWithCircleIcon />
               <div>เข้าสู่ระบบ</div>
