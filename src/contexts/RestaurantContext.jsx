@@ -34,6 +34,9 @@ export const RestaurantContextProvider = ({ children }) => {
   const fetch = async () => {
     const data = await filterPageGetRestaurant();
     setNameRestaurant(data.data.restaurants);
+
+    const response = await filterPageGetRestaurant();
+    setSearchBar(response.data);
   };
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export const RestaurantContextProvider = ({ children }) => {
       // setLoading(true)
       const response = await filterPageGetRestaurant();
       setFilterPageData(response.data);
-      setSearchBar(response.data);
+      // setSearchBar(response.data);
     } catch (err) {
       console.log(err);
     } finally {
