@@ -6,7 +6,7 @@ export const ImageRender = ({ restaurantImages }) => {
         restaurantImages.slice(0, 6).map((image, index) => (
           <div
             key={index}
-            className="z-20 max-w-[68px] h-[68px] rounded-md overflow-hidden border border-gray_primary hover:scale-110"
+            className="z-10 w-[68px] h-[68px]  rounded-md overflow-hidden border border-gray_primary hover:scale-110"
             onClick={(e) => {
               e.stopPropagation()
               window.open(image.img)
@@ -24,7 +24,7 @@ export const ImageRender = ({ restaurantImages }) => {
           {restaurantImages.slice(0, 5).map((image, index) => (
             <div
               key={index}
-              className="max-w-[68px] h-[68px] rounded-md overflow-hidden border border-gray_primary hover:scale-110"
+              className="min-w-[68px] h-[68px] rounded-md  overflow-hidden border-gray_primary hover:scale-110"
               onClick={(e) => {
                 e.stopPropagation()
                 window.open(image.img)

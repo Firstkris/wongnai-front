@@ -22,6 +22,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterPageData, setFilterPageData] = useState({})
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
+  const [currentPosition, setCurrentPosition] = useState(null)
 
   const [restaurantData, setRestaurantPage] = useState({})
   const [reviewsRating, setReviewsRating] = useState(null)
@@ -179,6 +180,8 @@ export const RestaurantContextProvider = ({ children }) => {
         setRestaurant,
         socket,
         serR,
+        currentPosition,
+        setCurrentPosition,
       }}
     >
       {children}

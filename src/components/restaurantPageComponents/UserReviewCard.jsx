@@ -1,7 +1,9 @@
 import { rating as ratingConstant } from "../../constants/constant"
 import { Link } from "react-router-dom"
+import { MdOutlineReviews } from "react-icons/md"
 export const UserReviewCard = ({ review }) => {
   const dateCreate = review?.createdAt ? review?.createdAt.split("T")[0] : null
+  console.log(review)
   return (
     <div className="flex flex-col p-2 border rounded-lg gap-2 bg-slate-50">
       <div className="flex gap-4">
@@ -17,9 +19,9 @@ export const UserReviewCard = ({ review }) => {
           <div className="flex gap-2 text-sm">
             <Link
               to={`/profile/${review?.user?.id}`}
-              className="hover:underline text-gray_secondary"
+              className="hover:underline text-gray_secondary flex justify-center items-center gap-0.5"
             >
-              review count
+              {review?.user?.reviews?.length} <MdOutlineReviews />
             </Link>
           </div>
         </div>
@@ -32,7 +34,10 @@ export const UserReviewCard = ({ review }) => {
           </div>
           <div className="flex items-end">{dateCreate}</div>
         </div>
-        <div>{review.description}</div>
+        <div className="flex flex-col">
+          <span>{review.title}</span>
+          <span className="font-light">{review.description}</span>
+        </div>
       </div>
     </div>
   )

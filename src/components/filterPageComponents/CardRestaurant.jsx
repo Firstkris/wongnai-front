@@ -4,16 +4,17 @@ import { ReviewScore } from "../ReviewScore"
 import { ImageRender } from "./ImageRender"
 import { useEffect } from "react"
 import { useState } from "react"
+import { Loading } from "../../components/Loading"
+import { useRestaurant } from "../../hooks/hooks"
 export const CardRestaurant = ({ restaurant }) => {
   const navigate = useNavigate()
+  const { currentPosition, setCurrentPosition, setLoading } = useRestaurant()
   const handleClickCard = () => {
     navigate(`/restaurants/${restaurant.id}`)
   }
 
   const lat = restaurant.lat
   const lng = restaurant.lng
-
-  const [currentPosition, setCurrentPosition] = useState(null)
 
   useEffect(() => {
     if (navigator.geolocation) {
