@@ -3,6 +3,7 @@ import { CrossIcon, StarIcon } from "../../../../icons/icon";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "../../../../feature/user/contexts/UserContext";
+import { Link } from "react-router-dom";
 
 export default function ReviewItem({
   otherUser,
@@ -14,7 +15,8 @@ export default function ReviewItem({
   const { userId } = useParams();
 
   const [isToggle, setIsToggle] = useState(false);
-  // console.log("myReview.id", myReview.id);
+  // console.log("myReview", myReview);
+  // console.log("review", review);
 
   const agoTime = () => {
     let reviewPostTime;
@@ -52,14 +54,20 @@ export default function ReviewItem({
   return (
     <div className="w-1/2 mx-auto bg-white rounded-lg min-h-[300px] p-4 mb-10">
       {userId ? (
-        <h1 className="font-bold text-xl mb-5">
+        <Link
+          to={`/restaurants/${myReview?.restaurantId}`}
+          className="font-bold text-xl mb-5 cursor-pointer"
+        >
           รีวิว {review.restaurant?.restaurantName}
-        </h1>
+        </Link>
       ) : (
         <div className="flex justify-between">
-          <h1 className="font-bold text-xl mb-5">
+          <Link
+            className="font-bold text-xl mb-5 cursor-pointer"
+            to={`/restaurants/${myReview?.restaurantId}`}
+          >
             รีวิว {myReview.restaurant?.restaurantName}
-          </h1>
+          </Link>
           <div
             className="cursor-pointer"
             onClick={() => {
@@ -96,11 +104,15 @@ export default function ReviewItem({
             )}
             {userId ? (
               <span className="font-bold">
-                {review.restaurant?.restaurantName}{" "}
+                <Link to={`/restaurants/${myReview?.restaurantId}`}>
+                  {review.restaurant?.restaurantName}{" "}
+                </Link>
               </span>
             ) : (
               <span className="font-bold">
-                {myReview.restaurant?.restaurantName}{" "}
+                <Link to={`/restaurants/${myReview?.restaurantId}`}>
+                  {myReview.restaurant?.restaurantName}{" "}
+                </Link>
               </span>
             )}
           </div>
