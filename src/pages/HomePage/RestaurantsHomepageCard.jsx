@@ -34,7 +34,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[0]?.restaurants.slice(9, 15).map((restaurant) => (
+            {categoryId[0]?.restaurants.slice(5, 13).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
@@ -52,7 +52,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[8]?.restaurants.slice(0, 5).map((restaurant) => (
+            {categoryId[8]?.restaurants.slice(0, 8).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
@@ -88,7 +88,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[3]?.restaurants.slice(0, 5).map((restaurant) => (
+            {categoryId[3]?.restaurants.slice(0, 8).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>
@@ -106,7 +106,7 @@ function RestaurantsHomepageCard() {
             </a>
           </div>
           <div className="flex gap-2 overflow-y-auto">
-            {categoryId[4]?.restaurants.slice(0, 5).map((restaurant) => (
+            {categoryId[4]?.restaurants.slice(0, 8).map((restaurant) => (
               <RestaurantPreview restaurant={restaurant} />
             ))}
           </div>

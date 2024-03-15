@@ -29,13 +29,23 @@ export const RestaurantContextProvider = ({ children }) => {
 
   const { user } = useUser()
   const [restaurant, setRestaurant] = useState("")
+  const [searchBar1, setSearchBar] = useState([])
 
   const [nameRestaurant, setNameRestaurant] = useState([])
   const fetch = async () => {
     const data = await filterPageGetRestaurant()
     setNameRestaurant(data.data.restaurants)
+    const response = await filterPageGetRestaurant()
+    setSearchBar(response.data)
   }
-
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords
+        setCurrentPosition({ latitude, longitude })
+      })
+    }
+  }, [])
   useEffect(() => {
     fetch()
   }, [])
@@ -182,6 +192,7 @@ export const RestaurantContextProvider = ({ children }) => {
         serR,
         currentPosition,
         setCurrentPosition,
+        searchBar1,
       }}
     >
       {children}

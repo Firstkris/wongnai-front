@@ -120,7 +120,7 @@ export function RestaurantMapCard({ restaurantData }) {
         <div>
           <div
             className="bg-gray-300 w-48 h-48  object-fill flex rounded-md cursor-pointer overflow-hidden"
-            onClick={handleClickDirection}
+            // onClick={handleClickDirection}
           >
             {restaurantData && restaurantData?.lat && restaurantData?.lng ? (
               <MiniMapGoogle
@@ -134,19 +134,19 @@ export function RestaurantMapCard({ restaurantData }) {
             )}
           </div>
         </div>
-        <div className="w-[500px]">
-          <div className="flex justify-between pb-4 border-b-2 min-h-28 ">
+        <div className="w-[500px] flex flex-col justify-between">
+          <div className="flex justify-between pb-4 gap-1 min-h-28 ">
             <p className="text-xsh-30 ">
               {restaurantData?.address}
               {/* 117 1 ถ. ทองหล่อ แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพมหานคร 10110 */}
             </p>
-            <div className="items-center">
+            <div className="items-center min-w-fit">
               <ButtonRestaurantPage onClick={handleClickDirection}>
                 ดูเส้นทาง
               </ButtonRestaurantPage>
             </div>
           </div>
-          <div className="flex justify-between py-2 border-b-2">
+          <div className="flex justify-between py-2 border-b-2 border-t-2">
             <div className="flex gap-1">
               <p className="font-bold ">เบอร์โทร:</p>
               {restaurantData?.mobile ? (
@@ -156,12 +156,6 @@ export function RestaurantMapCard({ restaurantData }) {
               )}
             </div>
             <IconTel />
-          </div>
-          <div className="flex justify-between py-2 border-b-2">
-            <div className="flex gap-1">
-              <p className="font-bold ">เมนูอาหาร</p>
-            </div>
-            <BiFoodMenu />
           </div>
         </div>
       </div>
@@ -178,7 +172,7 @@ export function RestaurantDetailCard({ restaurantData }) {
       : null
 
   return (
-    <div className=" w-full bg-white  p-4 rounded-md ">
+    <div className=" w-full bg-white  p-4 rounded-md">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <p className="text-md font-bold">เวลาเปิดร้าน</p>

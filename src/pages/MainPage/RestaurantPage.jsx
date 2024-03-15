@@ -9,12 +9,15 @@ import {
 import { useRestaurant } from "../../hooks/hooks"
 import { Loading } from "../../components/Loading"
 import NavRestaurantImg from "./NavRestaurantImg"
+import { useState } from "react"
 import { Breadcrumbs } from "../../components/BreadCrumb"
 
 function RestaurantPage() {
   const { fetchRestaurantAndBookmarkById, restaurantData, isLoading } =
     useRestaurant()
   const params = useParams()
+
+  const [toggleMenu, setToggleMenu] = useState(false)
 
   useEffect(() => {
     fetchRestaurantAndBookmarkById(parseInt(params.id))
@@ -30,6 +33,8 @@ function RestaurantPage() {
       label: `${restaurantData?.restaurant?.restaurantName}`,
     },
   ]
+
+  console.log(restaurantData, "restaurantData")
 
   return isLoading ? (
     <Loading />
@@ -57,6 +62,94 @@ function RestaurantPage() {
                 bookmarks={restaurantData?.bookmarks}
               />
               <RestaurantMapCard restaurantData={restaurantData.restaurant} />
+
+              {/*  */}
+              <div className=" bg-white w-[728px] p-4 rounded-lg">
+                <div className="flex flex-col gap-6 justify-center ">
+                  <div className="flex justify-between">
+                    <div className="font-bold text-xl">เมนูแนะนำ</div>
+                    {restaurantData?.restaurant?.menus?.length <=
+                    3 ? null : toggleMenu ? (
+                      <div
+                        className="text-blue_primary cursor-pointer"
+                        onClick={() => setToggleMenu((c) => !c)}
+                      >
+                        ซ่อน
+                      </div>
+                    ) : (
+                      <div
+                        className="text-blue_primary cursor-pointer"
+                        onClick={() => setToggleMenu((c) => !c)}
+                      >
+                        ดูทั้งหมด
+                      </div>
+                    )}
+                  </div>
+                  <hr />
+                  <div className="">
+                    {toggleMenu ? (
+                      <div className=" grid grid-cols-3 gap-8 ">
+                        {restaurantData?.restaurant?.menus?.map((el) => (
+                          <div className=" border rounded-xl shadow-md">
+                            <div className="relative">
+                              <img
+                                className="  aspect-square rounded-t-xl object-cover"
+                                src={el.img}
+                              />
+                            </div>
+                            <div className="flex flex-col gap-1 py-2">
+                              <div className="font-bold  pl-4">
+                                {" "}
+                                {el.menuName}
+                              </div>
+                              <div className="pl-4 text-gray_secondary">
+                                {" "}
+                                ราคา : {el.price} บาท{" "}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-8 ">
+                        {restaurantData?.restaurant?.menus
+                          ?.slice(0, 3)
+                          .map((el, index) => (
+                            <div
+                              key={index}
+                              className="  border rounded-xl shadow-md"
+                            >
+                              <div className="relative">
+                                <img
+                                  className="  aspect-square rounded-t-xl object-cover"
+                                  src={el.img}
+                                />
+                              </div>
+                              <div className="flex flex-col gap-1 py-2">
+                                <div className="font-bold  pl-4">
+                                  {" "}
+                                  {el.menuName}
+                                </div>
+                                <div className="pl-4 text-gray_secondary">
+                                  {" "}
+                                  ราคา : {el.price} บาท{" "}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                    {restaurantData?.restaurant?.menus?.length == 0 ? (
+                      <div className="text-gray-500 pl-6 flex justify-center ">
+                        ร้านนี้ยังไม่มีเมนูแนะนำ
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+
+              {/*  */}
+              {/* {restaurantData?.restaurant?.menus?.map(item=><)} */}
               <RatingRestaurantCard
                 restaurantData={restaurantData.restaurant}
               />

@@ -17,16 +17,18 @@ export const UserReviewCard = ({ review }) => {
         <div>
           <div>{review?.user?.name && review?.user?.name}</div>
           <div className="flex gap-2 text-sm">
-            <Link
-              to={`/profile/${review?.user?.id}`}
-              className="hover:underline text-gray_secondary flex justify-center items-center gap-0.5"
-            >
-              {review?.user?.reviews?.length} <MdOutlineReviews />
-            </Link>
+            {review?.user?.reviews && (
+              <Link
+                to={`/profile/${review?.user?.id}`}
+                className="hover:underline text-gray_secondary flex justify-center items-center gap-0.5"
+              >
+                {review?.user?.reviews?.length} <MdOutlineReviews />
+              </Link>
+            )}
           </div>
         </div>
       </div>
-      <div className="flex flex-col p-1 h-20 gap-2">
+      <div className="flex flex-col p-1  gap-2">
         <div className="flex gap-2 text-xs">
           <div className="flex">
             {review?.star &&
@@ -34,9 +36,21 @@ export const UserReviewCard = ({ review }) => {
           </div>
           <div className="flex items-end">{dateCreate}</div>
         </div>
-        <div className="flex flex-col">
-          <span>{review.title}</span>
-          <span className="font-light">{review.description}</span>
+        <div className="flex flex-col gap-2">
+          <span>{review?.title}</span>
+          <span className="font-light">{review?.description}</span>
+          {review?.reviewImgs.length > 0 && (
+            <div className="flex gap-2 h-24">
+              {review?.reviewImgs.map((item, index) => (
+                <div
+                  key={index}
+                  className="w-24 h-full overflow-hidden flex justify-center bg-slate-50 border rounded-lg"
+                >
+                  <img src={item.img} className="w-full object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

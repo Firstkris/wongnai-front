@@ -8,22 +8,29 @@ import { useUser } from "../feature/user/contexts/UserContext.jsx"
 import { Loading } from "../components/Loading"
 import { Children } from "react"
 import SlidePhoto from "../components/filterPageComponents/SlidePhoto.jsx"
-
-const BackgroundVideo =
-  "https://rr1---sn-30a7yner.googlevideo.com/videoplayback?expire=1710182472&ei=6PvuZfO5IIKE6dsPjZyA0Ac&ip=45.88.97.22&id=o-ALvvR9iZFG1R2N9yHBphu16J3DwFs_tI03hwsrFpaEdt&itag=247&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&spc=UWF9f9v7k_AJKwMsKEkwIi7gqIRaSpDKiPf6-IRT2dbF9lE&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=6315288&dur=88.707&lmt=1696295538704311&keepalive=yes&fexp=24007246,24350255&c=ANDROID&txp=531F224&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRQIhAN0IN1ODWnf95nbyRAe4gXcE8oAj90MJGBtK4W37t6KSAiAtW5SPjj_OIjmEeC76UUXuctF19xmWyI-wgm0PWmFKig%3D%3D&rm=sn-5hness7l&req_id=3212068538eda3ee&redirect_counter=2&cm2rm=sn-uvu-c33le7s&cms_redirect=yes&cmsv=e&ipbypass=yes&mh=rw&mip=101.109.240.124&mm=30&mn=sn-30a7yner&ms=nxu&mt=1710161798&mv=m&mvi=1&pl=20&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=APTiJQcwRAIgKld67kiE66xRBAGJVU6xlf5LlLkbfmK6dgmKMTt4s0YCIHZkSFzNRlFUK_lPkuBN2tsKdK1izewTnS095KJpLiKI"
+import { MiniMapGoogle } from "../feature/MimiMapGoogle.jsx"
+import { Spinner } from "flowbite-react"
+import { GoogleMaps } from "../feature/MapTest.jsx"
+import { useState } from "react"
+import { LocationIcon } from "../icons/icon.jsx"
 
 const breadcrumbs = [
-  { label: "หน้าหลัก", link: "https://www.google.com" },
+  { label: "หน้าหลัก", link: "/" },
   {
     label: "ค้นหาร้านอาหาร",
   },
 ]
 export const FilterPage = () => {
-  const { filterPageData, fetchRestaurantWithUserLogin, isLoading } =
-    useRestaurant()
+  const {
+    filterPageData,
+    fetchRestaurantWithUserLogin,
+    isLoading,
+    currentPosition,
+  } = useRestaurant()
 
   const { restaurants } = filterPageData
   const { user } = useUser()
+  const [isOpenMap, setIsOpenMap] = useState()
 
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
   useEffect(() => {
@@ -47,19 +54,37 @@ export const FilterPage = () => {
             </div>
           </div>
         </div>
+        {/* map */}
+        {isOpenMap && (
+          <div className="w-full flex justify-center">
+            <div className="relative h-72 w-[1020px] bg-white p-4 rounded-lg">
+              <MiniMapGoogle
+                lat={currentPosition?.latitude}
+                lng={currentPosition?.longitude}
+                restaurants={restaurants}
+              />
 
+              <button
+                className="bg-white absolute right-6 py-2 px-4 top-6 text-center rounded-md"
+                onClick={() => setIsOpenMap((prev) => !prev)}
+              >
+                ปิด
+              </button>
+            </div>
+          </div>
+        )}
         {/* layout body*/}
         <div className="md:mx-auto  ">
           <div className=" flex justify-around gap-4 w-[886px] xl:w-[1024px]">
             {/* <Slidebar> */}
-            <div className="flex min-w-fit  shadow-sm">
+            <div className="flex min-w-fit">
               <SlideBar />
             </div>
             <div className="flex flex-col w-3/4  gap-4">
               <div className="flex  rounded-lg shadow-lg bg-white bg-opacity-100 items-center">
                 <SlidePhoto />
               </div>
-              <div className="flex gap-4 justify-around">
+              <div className="flex gap-4 justify-around pb-4">
                 <div className="flex flex-col gap-4 ">
                   {/* restaurants */}
                   {restaurants?.length > 0 ? (
@@ -72,8 +97,50 @@ export const FilterPage = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col bg-white w-2/6 rounded-lg">
-                  <div className="m-1 bg-slate-300 h-36 rounded-lg">ADS</div>
+                <div className="flex flex-col gap-4  w-2/6 rounded-lg h-screen">
+                  {!isOpenMap && (
+                    <div className="w-full rounded-lg h-48 p-2 bg-white  shadow-md flex flex-col gap-1">
+                      <div>ค้นหาจากแผนที่</div>
+                      <div className="relative flex justify-center items-center h-5/6 rounded-lg">
+                        <img
+                          src="https://static2.wongnai.com/static2/images/3dwN7In.png"
+                          className="w-full h-full"
+                        />
+                        <button
+                          className="absolute bg-blue-200 hover:bg-blue-300 p-2 rounded-lg flex items-center gap-1"
+                          onClick={() => setIsOpenMap((prev) => !prev)}
+                        >
+                          <LocationIcon className="w-6 h-6" /> ดูแผนที่
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  <div className=" bg-slate-300 rounded-lg">
+                    <img src="https://res.cloudinary.com/da8uycieq/image/upload/v1710416287/Screenshot_2567-03-14_at_18.36.34_1_uaz6od.png" />
+                  </div>
+                  <div className="w-full rounded-lg gap-2 flex flex-col p-2 bg-white shadow-md">
+                    <div>บทความแนะนำ</div>
+                    <div className="flex flex-col gap-2 max-w-11/12">
+                      <div className="flex gap-2">
+                        <div className="min-w-16 h-16 bg-gray-200 rounded-md"></div>
+                        <div>
+                          <div>บทความแนะนำ 1</div>
+                          <div className="text-md font-light hidden lg:block">
+                            เนื้อหา
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <div className="min-w-16 h-16 bg-gray-200 rounded-md"></div>
+                        <div>
+                          <div>บทความแนะนำ 2</div>
+                          <div className="text-md font-light hidden lg:block">
+                            เนื้อหา
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

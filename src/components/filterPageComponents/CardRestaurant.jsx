@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Loading } from "../../components/Loading"
 import { useRestaurant } from "../../hooks/hooks"
+import { Spinner } from "flowbite-react"
 export const CardRestaurant = ({ restaurant }) => {
   const navigate = useNavigate()
   const { currentPosition, setCurrentPosition, setLoading } = useRestaurant()
@@ -15,15 +16,6 @@ export const CardRestaurant = ({ restaurant }) => {
 
   const lat = restaurant.lat
   const lng = restaurant.lng
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords
-        setCurrentPosition({ latitude, longitude })
-      })
-    }
-  }, [])
 
   return (
     <div onClick={handleClickCard} className="w-full cursor-pointer">
@@ -69,23 +61,29 @@ export const CardRestaurant = ({ restaurant }) => {
               <BookmarkIcon restaurant={restaurant} />
             </div>
             <div>
-              {currentPosition
-                ? (Math.abs(lat - currentPosition?.latitude) ** 2 +
-                    Math.abs(lng - currentPosition?.longitude)) **
-                    0.5 >
-                  1
-                  ? (
-                      (Math.abs(lat - currentPosition?.latitude) ** 2 +
-                        Math.abs(lng - currentPosition?.longitude)) **
-                      0.5
-                    ).toFixed(1) + " กม."
-                  : (
-                      (Math.abs(lat - currentPosition?.latitude) ** 2 +
-                        Math.abs(lng - currentPosition?.longitude)) **
-                        0.5 *
-                      1000
-                    ).toFixed(1) + " ม."
-                : null}
+              {currentPosition ? (
+                (Math.abs(lat - currentPosition?.latitude) ** 2 +
+                  Math.abs(lng - currentPosition?.longitude)) **
+                  0.5 >
+                1 ? (
+                  (
+                    (Math.abs(lat - currentPosition?.latitude) ** 2 +
+                      Math.abs(lng - currentPosition?.longitude)) **
+                    0.5
+                  ).toFixed(1) + " กม."
+                ) : (
+                  (
+                    (Math.abs(lat - currentPosition?.latitude) ** 2 +
+                      Math.abs(lng - currentPosition?.longitude)) **
+                      0.5 *
+                    1000
+                  ).toFixed(1) + " ม."
+                )
+              ) : (
+                <span className="flex gap-1 items-center">
+                  <Spinner size="xs" /> ม.
+                </span>
+              )}
             </div>
           </div>
         </div>

@@ -2,10 +2,14 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { CrossIcon } from "../../../../icons/icon";
 import { useUser } from "../../../../feature/user/contexts/UserContext";
+import { Link } from "react-router-dom";
 
 export default function BookmarkItem({ bookmark, myBookmark, setMyBookmarks }) {
   const { userId } = useParams();
   const { deleteBookmarkById } = useUser();
+
+  // console.log("bookmark", bookmark);
+  console.log("myBookmark", myBookmark);
 
   return (
     <div className=" bg-white w-1/2 mx-auto rounded-lg mb-5">
@@ -27,12 +31,18 @@ export default function BookmarkItem({ bookmark, myBookmark, setMyBookmarks }) {
         >
           {userId ? (
             <>
-              <div className="font-bolds">
+              <Link
+                to={`/restaurants/${bookmark?.restaurantId}`}
+                className="font-bolds"
+              >
                 {bookmark?.restaurant.restaurantName}
-              </div>
+              </Link>
             </>
           ) : (
-            <div className="flex justify-between font-bolds pr-4 ">
+            <Link
+              to={`/restaurants/${myBookmark?.restaurantId}`}
+              className="flex justify-between font-bolds pr-4 "
+            >
               {myBookmark?.restaurant.restaurantName}
               <div
                 onClick={() => {
@@ -46,7 +56,7 @@ export default function BookmarkItem({ bookmark, myBookmark, setMyBookmarks }) {
               >
                 <CrossIcon className={"cursor-pointer"} />
               </div>
-            </div>
+            </Link>
           )}
           {userId ? (
             <div className="text-gray_secondary text-sm">

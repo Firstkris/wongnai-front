@@ -7,9 +7,20 @@ export function SlideImg() {
   const handleclickCard = () => {
     navigate(`/restaurants/filter`);
   };
+  const array = [
+    {
+      img: "https://www.ansto.gov.au/sites/default/files/styles/hero_image_2z/public/hero-images/Healthy%20food.jpg?h=10d202d3&itok=yuZT70xV",
+    },
+    {
+      img: "https://as1.ftcdn.net/v2/jpg/02/48/92/96/1000_F_248929619_JkVBYroM1rSrshWJemrcjriggudHMUhV.jpg",
+    },
+    {
+      img: "https://befoodnv.be/static/uploads-cms2/home-banner-befood-1800-def.jpg",
+    },
+  ];
   return (
     <Carousel
-      className="rounded-xl h-96 object-cover"
+      className=" rounded-xl h-96 object-cover "
       navigation={({ setActiveIndex, activeIndex, length }) => (
         <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
           {new Array(length).fill("").map((_, i) => (
@@ -24,24 +35,21 @@ export function SlideImg() {
         </div>
       )}
     >
-      <img
-        onClick={handleclickCard}
-        src="https://s3-ap-southeast-1.amazonaws.com/wpimage.powermag.kingpower.com/wp-content/uploads/2022/05/30164928/Headbackground118.jpg"
-        alt="image 1"
-        className="h-full w-full object-cover"
-      />
-      <img
-        onClick={handleclickCard}
-        src="https://www.dasta.or.th/uploads/article/202107/1625972225_a10cd7a5d176826b0b5d.jpg"
-        alt="image 2"
-        className="h-full w-full object-cover"
-      />
-      <img
-        onClick={handleclickCard}
-        src="https://blog.hungryhub.com/wp-content/uploads/2023/05/%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%B9%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B9%84%E0%B8%97%E0%B8%A2.jpg"
-        alt="image 3"
-        className="h-full w-full object-cover"
-      />
+      {array.map((a) => (
+        <div className="relative cursor-pointer  " onClick={handleclickCard}>
+          <img
+            src={a.img}
+            alt="image 1"
+            className="h-96 w-full aspect-video object-cover"
+          />
+          <div
+            className=" absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2  bg-red_primary text-white px-8 py-4 rounded-2xl shadow-xl border border-white text-[30px] 
+          md:text-[50px]"
+          >
+            ค้นหาร้าน ในกรุงเทพและปริมณฑล
+          </div>
+        </div>
+      ))}
     </Carousel>
   );
 }

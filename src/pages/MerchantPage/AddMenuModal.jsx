@@ -51,7 +51,7 @@ export default function AddMenuModal({ setAddMenu, setMenu }) {
               {restaurantImg?.img ? (
                 <img
                   src={URL.createObjectURL(restaurantImg?.img)}
-                  className="w-[80px] h-[80px] aspect-ratio "
+                  className="w-[80px] h-[80px] aspect-ratio object-cover "
                 />
               ) : null}
               <div

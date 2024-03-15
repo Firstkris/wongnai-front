@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import RestaurantPreview from "../../components/RestaurantPreview";
+import React, { useEffect, useState } from "react"
+import RestaurantPreview from "../../components/RestaurantPreview"
 
-import { Link } from "react-router-dom";
-import { useRestaurant } from "../../hooks/hooks";
-import { SlideImg } from "./SlideImg";
-import Footer from "../../layouts/Footer";
-import RestaurantsHomepageCard from "./RestaurantsHomepageCard";
+import { Link } from "react-router-dom"
+import { useRestaurant } from "../../hooks/hooks"
+import { SlideImg } from "./SlideImg"
+import Footer from "../../layouts/Footer"
+import RestaurantsHomepageCard from "./RestaurantsHomepageCard"
 
 function HomePage() {
-  const { nameRestaurant: restaurants } = useRestaurant();
+  const { nameRestaurant: restaurants } = useRestaurant()
   return (
     <div>
       <div>
@@ -18,7 +18,7 @@ function HomePage() {
         <RestaurantsHomepageCard />
       </div>
     </div>
-  );
+  )
 }
 
 {
@@ -55,4 +55,4 @@ function HomePage() {
 </div>; */
 }
 
-export default HomePage;
+export default HomePage
