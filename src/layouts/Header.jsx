@@ -83,7 +83,7 @@ export default function Header() {
               <div
                 className={`${
                   text &&
-                  nameRestaurant.filter(
+                  nameRestaurant?.filter(
                     (item) =>
                       item.category.categoryName.includes(text) ||
                       item.restaurantName.includes(text)
@@ -94,7 +94,7 @@ export default function Header() {
               >
                 {text ? (
                   <div className="max-h-[200px] overflow-auto">
-                    {searchBar1.restaurants
+                    {searchBar1?.restaurants
                       .filter(
                         (item) =>
                           item.category.categoryName.includes(text) ||
