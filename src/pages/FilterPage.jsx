@@ -83,14 +83,14 @@ export const FilterPage = () => {
         <div className="md:mx-auto  ">
           <div className=" flex justify-around gap-4 w-[886px] xl:w-[1024px]">
             {/* <Slidebar> */}
-            <div className="flex min-w-fit">
+            <div className="flex min-w-fit mb-4">
               <SlideBar />
             </div>
             <div className="flex flex-col w-3/4  gap-4">
               <div className="flex  rounded-lg shadow-lg bg-white bg-opacity-100 items-center">
                 <SlidePhoto />
               </div>
-              <div className="flex gap-4 justify-around pb-4">
+              <div className="flex gap-4 justify-around mb-4">
                 <div className="flex flex-col gap-4 ">
                   {/* restaurants */}
                   {restaurants?.length > 0 ? (

@@ -76,6 +76,7 @@ export const RestaurantContextProvider = ({ children }) => {
         console.log("no filter")
         return
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
+        // setLoading(true)
         if (!user) {
           console.log("no user")
           fetchFilterPage()
@@ -107,6 +108,8 @@ export const RestaurantContextProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err)
+    } finally {
+      // setLoading(false)
     }
   }
 
@@ -163,6 +166,8 @@ export const RestaurantContextProvider = ({ children }) => {
   }
 
   const filterByRating = (rating) => {
+    if (!rating && restaurantData?.restaurant?.reviews)
+      return setReviewsRating(restaurantData?.restaurant?.reviews)
     const reviews = restaurantData?.restaurant?.reviews?.filter(
       (el) => el.star == rating
     )

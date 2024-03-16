@@ -54,7 +54,7 @@ function RestaurantPage() {
             restaurantImage={restaurantData?.restaurant?.restaurantImages}
           />
         </div>
-        <div className="w-full">
+        <div className="w-full mb-4">
           <div className="mx-auto flex justify-center  w-full gap-4 mt-4">
             <div className="min-w-[567px] flex flex-col gap-4">
               <TitleRestaurantCard

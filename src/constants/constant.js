@@ -12,6 +12,7 @@ export const rating = [
   { id: 3, rating: 3, icon: "⭐️ ⭐️ ⭐️" },
   { id: 4, rating: 4, icon: "⭐️ ⭐️ ⭐️ ⭐️" },
   { id: 5, rating: 5, icon: "⭐️ ⭐️ ⭐️ ⭐️ ⭐️" },
+  { id: 5, rating: 0, icon: "ทั้งหมด" },
 ]
 
 export const GISTDA_API_KEY = "8E4599F4CCFC4F41ADE5CCB30E5D1A3C"
