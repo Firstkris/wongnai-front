@@ -1,7 +1,9 @@
 import { useRestaurant } from "../../hooks/hooks"
 import { FilterTag } from "./FilterTag"
+import { categories } from "../../constants/constant"
 export const FilterTags = () => {
   const { filterPageData, filterInput, clearFilters } = useRestaurant()
+
   return (
     // filter
     (filterInput.categoryName && filterInput.categoryName?.length != 0) ||
@@ -61,10 +63,7 @@ export const FilterTags = () => {
           {filterInput?.categoryName &&
             filterInput?.categoryName?.map((id) => {
               return (
-                <FilterTag
-                  key={id}
-                  text={filterPageData?.categories[id - 1]?.categoryName}
-                />
+                <FilterTag key={id} text={categories[id - 1]?.categoryName} />
               )
             })}
         </div>

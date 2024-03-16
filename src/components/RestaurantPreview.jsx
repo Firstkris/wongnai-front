@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import { StarIcon } from "../icons/icon";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
+import { StarIcon } from "../icons/icon"
+import { useNavigate } from "react-router-dom"
 
 export default function RestaurantPreview({ restaurant }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleclickCard = () => {
-    navigate(`/restaurants/${restaurant?.id}`);
-  };
+    navigate(`/restaurants/${restaurant?.id}`)
+  }
   return (
-    <div className=" mt-2 ">
+    <div className=" mb-1 mt-3">
       {restaurant && (
         <>
           <div
@@ -27,8 +27,12 @@ export default function RestaurantPreview({ restaurant }) {
               {restaurant?.subtitle}
             </p>
             <p className="m-1 text-gray-500 text-[15px] flex gap-2">
-              <div className="bg-red-600 mb-2 flex w-10 rounded-md text-white items-center">
-                <p className="ml-2">{restaurant?.reviewPoint}</p>
+              <div className="bg-red-600  flex justify-center w-10 rounded-md text-white items-center px-0.5">
+                <p>
+                  {restaurant?.rating.toFixed(1) != 0
+                    ? restaurant?.rating.toFixed(1)
+                    : "0"}
+                </p>
                 <StarIcon className="fill-white w-4 h-4" />
               </div>{" "}
               {restaurant?.reviewCount} รีวิว
@@ -37,5 +41,5 @@ export default function RestaurantPreview({ restaurant }) {
         </>
       )}
     </div>
-  );
+  )
 }

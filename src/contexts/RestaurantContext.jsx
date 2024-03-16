@@ -48,6 +48,7 @@ export const RestaurantContextProvider = ({ children }) => {
   }, [])
   useEffect(() => {
     fetch()
+    fetchRestaurantWithUserLogin() // new
   }, [])
 
   useEffect(() => {
@@ -75,12 +76,12 @@ export const RestaurantContextProvider = ({ children }) => {
         console.log("no filter")
         return
       } else if (Object.values(filterData).every((arr) => arr.length === 0)) {
-        if (user) {
-          console.log("have user")
-          fetchRestaurantWithUserLogin()
-        } else {
+        if (!user) {
           console.log("no user")
           fetchFilterPage()
+        } else {
+          console.log("have user")
+          fetchRestaurantWithUserLogin()
         }
       }
       const filterDataParams = {
@@ -126,6 +127,7 @@ export const RestaurantContextProvider = ({ children }) => {
     //if user is login
     try {
       const response = await getAllUserBookmark()
+      //  console.log("this bookmark", response.data)
       setFilterPageData(response.data)
     } catch (err) {
       console.log(err)

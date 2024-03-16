@@ -120,7 +120,7 @@ export function RestaurantMapCard({ restaurantData }) {
         <div>
           <div
             className="bg-gray-300 w-48 h-48  object-fill flex rounded-md cursor-pointer overflow-hidden"
-            // onClick={handleClickDirection}
+            onClick={handleClickDirection}
           >
             {restaurantData && restaurantData?.lat && restaurantData?.lng ? (
               <MiniMapGoogle

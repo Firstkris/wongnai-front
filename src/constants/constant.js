@@ -101,3 +101,66 @@ export const dayOfWeek = [
   { dateTh: "เสาร์", dateEn: "saturday" },
   { dateTh: "อาทิตย์", dateEn: "sunday" },
 ]
+
+export const categories = [
+  {
+    id: 1,
+    categoryName: "ร้านกาแฟ",
+  },
+  {
+    id: 2,
+    categoryName: "ร้านข้าวต้ม",
+  },
+  {
+    id: 3,
+    categoryName: "ผับ/เที่ยวกลางคืน",
+  },
+  {
+    id: 4,
+    categoryName: "สตรีทฟู้ด/รถเข็น",
+  },
+  {
+    id: 5,
+    categoryName: "ร้านอาหารตามสั่ง",
+  },
+  {
+    id: 6,
+    categoryName: "ร้านไวน์",
+  },
+  {
+    id: 7,
+    categoryName: "อาหารกล่อง/ข้าวกล่อง เดลิเวอรี่",
+  },
+  {
+    id: 8,
+    categoryName: "ร้านริมน้ำ",
+  },
+  {
+    id: 9,
+    categoryName: "ร้านอาหารญี่ปุ่น",
+  },
+  {
+    id: 10,
+    categoryName: "คาเฟ่",
+  },
+  {
+    id: 11,
+    categoryName: "คาราโอเกะ",
+  },
+  {
+    id: 12,
+    categoryName: "บุปเฟ่ต์โรงแรม",
+  },
+  {
+    id: 13,
+    categoryName: "กึ่งผับ/ร้านเหล้า/บาร์",
+  },
+  {
+    id: 14,
+    categoryName: "อาหารเจ",
+  },
+  {
+    id: 15,
+    categoryName: "ร้านบนดาดฟ้า",
+  },
+]

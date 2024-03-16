@@ -41,7 +41,7 @@ export const MiniMapGoogle = ({ lat, lng, restaurants }) => {
           }}
           center={center}
           zoom={15}
-          //options={defaultMapOptions}
+          options={defaultMapOptions}
         >
           <Marker position={center} />
           {restaurants &&

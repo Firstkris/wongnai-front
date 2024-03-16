@@ -6,13 +6,12 @@ import { useEffect } from "react"
 import { Breadcrumbs } from "../components/BreadCrumb.jsx"
 import { useUser } from "../feature/user/contexts/UserContext.jsx"
 import { Loading } from "../components/Loading"
-import { Children } from "react"
+
 import SlidePhoto from "../components/filterPageComponents/SlidePhoto.jsx"
 import { MiniMapGoogle } from "../feature/MimiMapGoogle.jsx"
-import { Spinner } from "flowbite-react"
-import { GoogleMaps } from "../feature/MapTest.jsx"
 import { useState } from "react"
 import { LocationIcon } from "../icons/icon.jsx"
+import { useLocation } from "react-router-dom"
 
 const breadcrumbs = [
   { label: "หน้าหลัก", link: "/" },
@@ -26,16 +25,23 @@ export const FilterPage = () => {
     fetchRestaurantWithUserLogin,
     isLoading,
     currentPosition,
+    fetchFilterData,
   } = useRestaurant()
 
   const { restaurants } = filterPageData
   const { user } = useUser()
   const [isOpenMap, setIsOpenMap] = useState()
 
+  const location = useLocation()
+
+  // Access the state from the location object
+  const categoryName = location.state?.categoryName
+
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
-  useEffect(() => {
-    fetchRestaurantWithUserLogin()
-  }, [user])
+
+  // useEffect(() => {
+  //   fetchRestaurantWithUserLogin()
+  // }, [user])
 
   return (
     //layout
@@ -88,15 +94,18 @@ export const FilterPage = () => {
                 <div className="flex flex-col gap-4 ">
                   {/* restaurants */}
                   {restaurants?.length > 0 ? (
-                    restaurants?.map((restaurant, index) => (
-                      <CardRestaurant key={index} restaurant={restaurant} />
-                    ))
+                    restaurants
+                      .sort((a, b) => b.rating - a.rating)
+                      .map((restaurant, index) => (
+                        <CardRestaurant key={index} restaurant={restaurant} />
+                      ))
                   ) : (
                     <div className="flex justify-center gap-2 p-4 bg-white rounded-lg font-semibold  w-[480px] text-gray-400">
                       NO FILTERS
                     </div>
                   )}
                 </div>
+                {/* right bar */}
                 <div className="flex flex-col gap-4  w-2/6 rounded-lg h-screen">
                   {!isOpenMap && (
                     <div className="w-full rounded-lg h-48 p-2 bg-white  shadow-md flex flex-col gap-1">

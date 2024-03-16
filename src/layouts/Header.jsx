@@ -18,7 +18,6 @@ export default function Header() {
   const { nameRestaurant, searchBar1 } = useRestaurant()
   const [isToggle, setIsToggle] = useState(true)
 
-  console.log(searchBar1)
   const [text, setText] = useState("")
   const searchBar = useRef(null)
 
