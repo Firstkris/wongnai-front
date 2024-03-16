@@ -26,22 +26,19 @@ export const FilterPage = () => {
     isLoading,
     currentPosition,
     fetchFilterData,
+    filterInput,
+    fetchSidebar,
   } = useRestaurant()
 
   const { restaurants } = filterPageData
   const { user } = useUser()
   const [isOpenMap, setIsOpenMap] = useState()
 
-  const location = useLocation()
-
-  // Access the state from the location object
-  const categoryName = location.state?.categoryName
-
   //if user is login ? fetchRestaurantWithUserLogin : fetchFilterPage
 
-  // useEffect(() => {
-  //   fetchRestaurantWithUserLogin()
-  // }, [user])
+  useEffect(() => {
+    fetchSidebar()
+  }, [])
 
   return (
     //layout

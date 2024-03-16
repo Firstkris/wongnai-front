@@ -4,10 +4,12 @@ import { useEffect } from "react"
 import { FilterTags } from "./FilterTags.jsx"
 
 export const SlideBar = () => {
-  const { filterPageData, setFilterInput, filterInput, fetchFilterData } =
+  const { setFilterInput, filterInput, fetchFilterData, sideBarData } =
     useRestaurant()
   const { renderCheckbox } = useRenderCheckbox()
-  const { facilities, districts, categories } = filterPageData
+  const { facilities, districts, categories } = sideBarData
+
+  console.log(sideBarData)
   // fetchData when checked
 
   useEffect(() => {

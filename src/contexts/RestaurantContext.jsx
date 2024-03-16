@@ -10,10 +10,9 @@ import {
   getRestaurantById,
 } from "../apis/restaurants"
 import { useUser } from "../feature/user/contexts/UserContext"
-import { userBookmark, getUserBookmark } from "../apis/user"
+import { getUserBookmark } from "../apis/user"
 
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
 
 export const RestaurantContext = createContext()
 
@@ -23,6 +22,7 @@ export const RestaurantContextProvider = ({ children }) => {
   const [filterInput, setFilterInput] = useState({ rating: [] })
   const [isLoading, setLoading] = useState(false)
   const [currentPosition, setCurrentPosition] = useState(null)
+  const [sideBarData, setSideBarData] = useState({})
 
   const [restaurantData, setRestaurantPage] = useState({})
   const [reviewsRating, setReviewsRating] = useState(null)
@@ -48,7 +48,6 @@ export const RestaurantContextProvider = ({ children }) => {
   }, [])
   useEffect(() => {
     fetch()
-    fetchRestaurantWithUserLogin() // new
   }, [])
 
   useEffect(() => {
@@ -57,6 +56,20 @@ export const RestaurantContextProvider = ({ children }) => {
     socket.connect()
     return () => socket.disconnect()
   }, [r])
+
+  const fetchSidebar = async () => {
+    try {
+      const response = await filterPageGetRestaurant()
+      console.log(response.data)
+      setSideBarData({
+        districts: response.data.districts,
+        facilities: response.data.facilities,
+        categories: response.data.categories,
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const fetchFilterPage = async () => {
     try {
@@ -82,9 +95,10 @@ export const RestaurantContextProvider = ({ children }) => {
           fetchFilterPage()
         } else {
           console.log("have user")
-          fetchRestaurantWithUserLogin()
         }
       }
+
+      //fetchRestaurantWithUserLogin()
       const filterDataParams = {
         districtId: filterData?.districtNameTh,
         facilityId: filterData?.facilityName,
@@ -200,6 +214,8 @@ export const RestaurantContextProvider = ({ children }) => {
         currentPosition,
         setCurrentPosition,
         searchBar1,
+        sideBarData,
+        fetchSidebar,
       }}
     >
       {children}
