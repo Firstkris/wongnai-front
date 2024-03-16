@@ -95,7 +95,7 @@ export const FilterPage = () => {
                   {/* restaurants */}
                   {restaurants?.length > 0 ? (
                     restaurants
-                      .sort((a, b) => b.rating - a.rating)
+                      .sort((a, b) => a.id - b.id)
                       .map((restaurant, index) => (
                         <CardRestaurant key={index} restaurant={restaurant} />
                       ))
